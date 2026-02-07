@@ -1,32 +1,36 @@
-import React, { useState, useMemo } from 'react';
-import { Wifi, Smartphone, Home, ChevronRight, Check, MapPin, X, Award, TrendingUp, DollarSign, Menu, Info, ArrowRight, Zap, Building2, MousePointerClick } from 'lucide-react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { Wifi, Smartphone, Home, ChevronRight, Check, MapPin, X, Award, TrendingUp, DollarSign, Menu, Info, ArrowRight, Zap, Building2, MousePointerClick, Edit, Save, Copy, RotateCcw, Settings, Lock } from 'lucide-react';
 
-// --- モックデータ (戸建て・マンション両対応) ---
-const INITIAL_PROVIDERS = [
+// --- 設定 ---
+const ADMIN_PASSWORD = "mysecret123"; // ★ここに管理者用パスワードを設定してください
+
+// --- 初期データ (ここをベースに管理画面で編集します) ---
+const DEFAULT_PROVIDERS = [
   // --- 戸建て (House) データ ---
   {
     id: 1,
-    name: "九州トクトク光 ホーム",
-    providerName: "Kyushu Power Net",
+    name: "BBIQ (ビビック) ホームタイプ", 
+    providerName: "株式会社QTnet",
     type: "fiber",
-    buildingType: "house", // 戸建て
+    buildingType: "house",
     carrier: "au",
-    monthlyFee: 5200,
-    cashback: 45000,
+    monthlyFee: 5500, 
+    cashback: 30000, 
     contractYear: 3,
     maxSpeed: "1Gbps",
-    avgSpeed: "480Mbps",
-    features: ["鹿児島県内シェアNo.1", "auスマホセット割あり", "開通工事費実質無料"],
-    points: ["九州電力グループの独自回線で混雑知らず", "auユーザーならスマホ代が毎月割引", "セキュリティソフトが永年無料"],
+    avgSpeed: "500Mbps", 
+    features: ["九州エリア顧客満足度No.1", "auスマホとセットで割引", "開通工事費実質無料"],
+    points: ["九州電力グループの独自回線で、混雑しにくく速度が安定", "auユーザーなら「auスマートバリュー」で毎月のスマホ代が安くなる", "セキュリティソフト（マカフィー）が標準装備で無料"],
     badge: "recommend",
     rank: 1,
-    link: "#",
-    description: "九州限定の電力系光回線。独自の回線網を使うため混雑が少なく、鹿児島市〜霧島市エリアで圧倒的人気。"
+    link: "#", 
+    imageUrl: "", // 画像URLを設定可能
+    description: "鹿児島県民ならまずはコレ。九州電力グループが提供する独自回線で、安定した速度と手厚いサポートが魅力。"
   },
   {
     id: 2,
-    name: "ドコモ光 戸建てプラン",
-    providerName: "NTT Docomo",
+    name: "ドコモ光",
+    providerName: "NTTドコモ",
     type: "fiber",
     buildingType: "house",
     carrier: "docomo",
@@ -34,115 +38,121 @@ const INITIAL_PROVIDERS = [
     cashback: 20000,
     contractYear: 2,
     maxSpeed: "1Gbps",
-    avgSpeed: "280Mbps",
-    features: ["ドコモスマホが毎月割引", "dポイント還元", "提供エリア全国カバー"],
-    points: ["ドコモユーザーならセット割で最安級", "次世代技術v6プラス対応でサクサク", "訪問設定サポートが初回無料"],
+    avgSpeed: "320Mbps",
+    features: ["ドコモスマホセット割", "dポイントプレゼント", "全国エリア対応"],
+    points: ["ドコモユーザーならセット割で家族全員のスマホ代が割引", "選べるプロバイダが豊富（GMOとくとくBBなどが人気）", "提供エリアが広く、離島や山間部でも繋がりやすい"],
     badge: "popularity",
     rank: 2,
     link: "#",
-    description: "ドコモユーザーならこれ一択。家族全員のスマホ代が安くなるセット割が強力。離島エリアもカバー率高め。"
+    imageUrl: "",
+    description: "ドコモユーザーなら迷わずこれ。スマホセット割が適用される唯一の光回線。信頼と実績のNTTドコモ提供。"
   },
   {
     id: 3,
-    name: "ソフトバンク光 ファミリー",
-    providerName: "SoftBank",
+    name: "SoftBank 光",
+    providerName: "ソフトバンク株式会社",
     type: "fiber",
     buildingType: "house",
     carrier: "softbank",
     monthlyFee: 5720,
-    cashback: 36000,
+    cashback: 40000, 
     contractYear: 2,
     maxSpeed: "1Gbps",
-    avgSpeed: "320Mbps",
-    features: ["SoftBank/Y!mobile割引", "他社違約金・撤去費全額還元", "最短開通"],
-    points: ["他社からの乗り換え費用を全額負担", "Y!mobileユーザーも割引対象", "ルーター機能付きユニットが便利"],
+    avgSpeed: "310Mbps",
+    features: ["他社違約金・撤去費全額還元", "SoftBank/Y!mobile割引", "開通前Wi-Fiレンタル無料"],
+    points: ["他社からの乗り換えにかかる違約金を全額負担してくれるキャンペーンが強力", "SoftBankやY!mobileユーザーはおうち割でスマホ代がお得に", "開通工事までの間、無料でAirターミナル等をレンタル可能"],
     badge: null,
     rank: 3,
     link: "#",
-    description: "他社からの乗り換えキャンペーンが強力。違約金を負担してくれるので、既存回線からの切り替えにおすすめ。"
+    imageUrl: "",
+    description: "乗り換え時のコストを抑えたい方に最適。違約金負担キャンペーンが充実しており、Y!mobileユーザーにもおすすめ。"
   },
   {
     id: 4,
-    name: "ホームルーター AIR 5G",
-    providerName: "Mobile 5G",
+    name: "home 5G (ドコモ)",
+    providerName: "NTTドコモ",
     type: "home",
-    buildingType: "house", // 戸建て扱い（工事不可物件用）
+    buildingType: "house",
     carrier: "docomo",
     monthlyFee: 4950,
     cashback: 15000,
     contractYear: 0,
     maxSpeed: "4.2Gbps",
-    avgSpeed: "110Mbps",
-    features: ["工事不要でコンセントに挿すだけ", "契約縛りなし", "データ無制限"],
-    points: ["工事なし！届いたその日から使える", "データ容量無制限で使い放題", "契約期間の縛りなしで解約金0円"],
+    avgSpeed: "180Mbps", 
+    features: ["工事不要でコンセントに挿すだけ", "データ量無制限", "契約期間の縛りなし"],
+    points: ["光回線の工事ができない建物でも、コンセントに挿すだけでWi-Fi環境が完成", "ドコモのプラチナバンドを利用するため繋がりやすい", "契約期間の縛りがないため、いつ解約しても違約金0円"],
     badge: "cheapest",
     rank: 4,
     link: "#",
-    description: "鹿児島市内の5Gエリアなら光回線並みの速度。借家や古い戸建てで工事ができない場合に最適。"
+    imageUrl: "",
+    description: "工事をしたくない、すぐにネットを使いたい方に。光回線に匹敵する速度が出る人気ホームルーター。"
   },
   {
     id: 5,
-    name: "さつま高速ネット (NURO系)",
-    providerName: "HighSpeed Kagoshima",
+    name: "auひかり ホーム",
+    providerName: "KDDI",
     type: "fiber",
     buildingType: "house",
-    carrier: "softbank",
-    monthlyFee: 5200,
+    carrier: "au",
+    monthlyFee: 5610,
     cashback: 60000,
     contractYear: 3,
-    maxSpeed: "2Gbps",
-    avgSpeed: "850Mbps",
-    features: ["下り最大2Gbps", "独自回線で高速", "高額キャッシュバック"],
-    points: ["下り最大2Gbpsの爆速回線", "高額キャッシュバックキャンペーン中", "専用ONUで無線LAN機能も標準装備"],
+    maxSpeed: "1Gbps",
+    avgSpeed: "480Mbps",
+    features: ["独自回線で高速", "高額キャッシュバック", "au/UQセット割"],
+    points: ["NTT回線を使わない独自回線（一部NTT使用）のため混雑に強い", "BBIQがエリア外だった場合のauユーザーの最有力候補", "代理店経由の申し込みで高額キャッシュバックが狙える"],
     badge: null,
     rank: 5,
     link: "#",
-    description: "速度重視のゲーマー向け。提供エリアが主要都市部に限られるため、事前にエリア確認が必須。"
+    imageUrl: "",
+    description: "BBIQと並んでauユーザーにおすすめ。高額キャッシュバックと安定した通信速度が魅力。"
   },
 
   // --- マンション (Mansion) データ ---
   {
     id: 101,
-    name: "九州トクトク光 マンション",
-    providerName: "Kyushu Power Net",
+    name: "BBIQ (ビビック) マンションタイプ",
+    providerName: "株式会社QTnet",
     type: "fiber",
-    buildingType: "mansion", // マンション
+    buildingType: "mansion",
     carrier: "au",
-    monthlyFee: 3960, // マンションは安い
-    cashback: 35000,
+    monthlyFee: 4070, 
+    cashback: 25000,
     contractYear: 2,
     maxSpeed: "1Gbps",
-    avgSpeed: "420Mbps",
-    features: ["鹿児島マンションシェアNo.1", "auスマホセット割", "建物導入済みなら工事不要"],
-    points: ["県内の分譲・賃貸マンションへの導入率が高い", "電力セット割でさらに月額がお得に", "配線方式に関わらず安定した速度"],
+    avgSpeed: "450Mbps",
+    features: ["鹿児島県内導入マンション多数", "auスマホセット割", "電気とセットで割引"],
+    points: ["鹿児島県内の分譲・賃貸マンションへの導入率が高く契約しやすい", "建物内の契約戸数に関わらず直接配線方式なら高速", "九電グループならではの安心感とサポート体制"],
     badge: "recommend",
     rank: 1,
     link: "#",
-    description: "九州電力管内のマンションならまず確認すべき回線。導入済み物件が多く、工事なしで即日開通できることも。"
+    imageUrl: "",
+    description: "九州のマンションにお住まいなら、まずはBBIQが導入されているかチェック。電力系ならではの安定感が魅力。"
   },
   {
     id: 102,
-    name: "さつま高速ネット for マンション",
-    providerName: "HighSpeed Kagoshima",
+    name: "GMOとくとくBB光 (GMO光アクセス)",
+    providerName: "GMOインターネット",
     type: "fiber",
     buildingType: "mansion",
-    carrier: "softbank",
-    monthlyFee: 2090, // 設備導入済みの場合の最安値
-    cashback: 25000,
-    contractYear: 3,
-    maxSpeed: "2Gbps",
-    avgSpeed: "780Mbps",
-    features: ["月額2,090円〜の驚異的安さ", "利用者数で料金変動", "爆速2Gbps"],
-    points: ["建物内の利用者が多いほど料金が安くなる仕組み", "マンションでも専用回線を引き込むため高速", "SoftBankスマホとのセット割も適用可"],
+    carrier: "all",
+    monthlyFee: 3773, 
+    cashback: 30000,
+    contractYear: 0,
+    maxSpeed: "1Gbps",
+    avgSpeed: "300Mbps",
+    features: ["月額料金がシンプルに安い", "契約期間の縛りなし", "解約違約金0円"],
+    points: ["スマホセット割がなくても元々の月額料金が安い", "「v6プラス」対応で混雑する夜間でも快適", "いつ解約しても違約金がかからないので安心"],
     badge: "cheapest",
     rank: 2,
     link: "#",
-    description: "導入済みマンションにお住まいなら最強のコスパ。月額2,000円台で2Gbpsが使える破格のプラン。"
+    imageUrl: "",
+    description: "格安SIMユーザーや、縛られたくない方に最適。シンプルに安く、高性能なWi-Fiルーターも無料レンタル可能。"
   },
   {
     id: 103,
     name: "ドコモ光 マンションプラン",
-    providerName: "NTT Docomo",
+    providerName: "NTTドコモ",
     type: "fiber",
     buildingType: "mansion",
     carrier: "docomo",
@@ -150,18 +160,19 @@ const INITIAL_PROVIDERS = [
     cashback: 20000,
     contractYear: 2,
     maxSpeed: "1Gbps",
-    avgSpeed: "220Mbps",
-    features: ["全国のマンション対応", "ドコモセット割", "プロバイダ選択可能"],
-    points: ["フレッツ光導入マンションならほぼ確実に利用可能", "ドコモユーザーなら家族全員のスマホ代割引", "v6プラス対応プロバイダを選べば快適"],
+    avgSpeed: "250Mbps",
+    features: ["全国のマンション対応", "ドコモセット割", "v6プラス対応"],
+    points: ["フレッツ光の設備があるマンションならほぼ確実に利用可能", "ドコモユーザーならセット割で通信費をトータル節約", "プロバイダ特典でWi-Fiルーター無料レンタルも"],
     badge: "popularity",
     rank: 3,
     link: "#",
-    description: "最も無難で確実な選択肢。フレッツ光の設備があれば使えるため、賃貸アパートでも契約しやすい。"
+    imageUrl: "",
+    description: "全国ほとんどのマンションで契約可能。ドコモユーザーがマンションで光回線を使うなら第一候補。"
   },
   {
     id: 104,
-    name: "ソフトバンク光 マンション",
-    providerName: "SoftBank",
+    name: "SoftBank 光 マンション",
+    providerName: "ソフトバンク株式会社",
     type: "fiber",
     buildingType: "mansion",
     carrier: "softbank",
@@ -169,36 +180,180 @@ const INITIAL_PROVIDERS = [
     cashback: 36000,
     contractYear: 2,
     maxSpeed: "1Gbps",
-    avgSpeed: "250Mbps",
+    avgSpeed: "260Mbps",
     features: ["違約金全額負担", "Y!mobile割引", "おうち割光セット"],
-    points: ["他社からの乗り換え費用を全額キャッシュバック", "Y!mobileユーザーも割引対象で節約効果大", "10Gbpsプラン対応マンションも拡大中"],
+    points: ["他社のネット回線からの乗り換え費用を全額負担してくれる", "Y!mobileユーザーも割引対象になるため節約効果が大きい", "フレッツ光回線を利用するため対応物件が多い"],
     badge: null,
     rank: 4,
     link: "#",
-    description: "違約金負担キャンペーンが強力。今のネットが遅い・高いと悩んでいるマンション住まいの方の乗り換え先に。"
+    imageUrl: "",
+    description: "マンション備え付けのネットが遅い場合の乗り換え先に。違約金負担があるため、契約更新月を待たずに乗り換えやすい。"
   },
   {
     id: 105,
-    name: "ホームルーター AIR 5G (マンション)",
-    providerName: "Mobile 5G",
+    name: "SoftBank Air (Airターミナル5)",
+    providerName: "ソフトバンク株式会社",
     type: "home",
     buildingType: "mansion",
-    carrier: "docomo",
-    monthlyFee: 4950,
-    cashback: 15000,
+    carrier: "softbank",
+    monthlyFee: 5368,
+    cashback: 30000,
     contractYear: 0,
-    maxSpeed: "4.2Gbps",
-    avgSpeed: "110Mbps",
-    features: ["工事不可でもOK", "引越し先でもすぐ使える", "配線スッキリ"],
-    points: ["VDSL方式で速度が出ないマンションの救世主", "コンセントに挿すだけなので配線がごちゃつかない", "転勤族でも手続きなしで移動可能"],
+    maxSpeed: "2.1Gbps",
+    avgSpeed: "100Mbps", 
+    features: ["工事不要・置くだけ", "データ容量無制限", "SoftBankスマホ割引"],
+    points: ["工事ができない賃貸マンションでも、コンセントに挿すだけで使える", "データ容量無制限で動画も見放題", "SoftBank/Y!mobileユーザーならセット割が適用される"],
     badge: null,
     rank: 5,
     link: "#",
-    description: "建物が古くて光回線が引けない、またはVDSLで速度が遅い場合の解決策としておすすめ。"
+    imageUrl: "",
+    description: "工事不可物件の救世主。Airターミナル5になり5G対応で速度も向上。SoftBankユーザーにおすすめ。"
   }
 ];
 
 // --- コンポーネント ---
+
+const AdminPanel = ({ providers, setProviders, onClose }) => {
+  const [editingId, setEditingId] = useState(null);
+  const [editForm, setEditForm] = useState({});
+  const [generatedCode, setGeneratedCode] = useState('');
+
+  const handleEdit = (provider) => {
+    setEditingId(provider.id);
+    setEditForm({ ...provider });
+  };
+
+  const handleSave = () => {
+    const updatedProviders = providers.map(p => 
+      p.id === editingId ? editForm : p
+    );
+    setProviders(updatedProviders);
+    setEditingId(null);
+  };
+
+  const handleGenerateCode = () => {
+    const code = `const DEFAULT_PROVIDERS = ${JSON.stringify(providers, null, 2)};`;
+    setGeneratedCode(code);
+  };
+
+  const handleCopyCode = () => {
+    const textarea = document.createElement('textarea');
+    textarea.value = generatedCode;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    alert('コードをコピーしました！VS Codeの「DEFAULT_PROVIDERS」部分に上書きで貼り付けてください。');
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/50 z-[100] flex items-center justify-center p-4 overflow-y-auto">
+      <div className="bg-white w-full max-w-4xl rounded-xl shadow-2xl max-h-[90vh] overflow-y-auto flex flex-col">
+        <div className="p-4 border-b bg-gray-800 text-white flex justify-between items-center sticky top-0 z-10">
+          <h2 className="font-bold text-lg flex items-center gap-2">
+            <Settings /> 管理モード：データ編集
+          </h2>
+          <button onClick={onClose} className="p-2 hover:bg-gray-700 rounded-full"><X /></button>
+        </div>
+
+        <div className="p-6 space-y-8">
+          
+          {/* 1. リスト編集エリア */}
+          <div>
+            <h3 className="font-bold text-gray-800 mb-4 border-l-4 border-blue-600 pl-3">掲載サービスの編集</h3>
+            <div className="space-y-4">
+              {providers.map((p) => (
+                <div key={p.id} className="border rounded-lg p-4 bg-gray-50 flex flex-col md:flex-row gap-4 items-start">
+                  {editingId === p.id ? (
+                    <div className="w-full space-y-3">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-xs font-bold text-gray-500">サービス名</label>
+                          <input type="text" className="w-full border p-2 rounded" value={editForm.name} onChange={e => setEditForm({...editForm, name: e.target.value})} />
+                        </div>
+                        <div>
+                          <label className="text-xs font-bold text-gray-500">アフィリエイトリンク (URL)</label>
+                          <input type="text" className="w-full border p-2 rounded border-red-300 bg-red-50" value={editForm.link} onChange={e => setEditForm({...editForm, link: e.target.value})} placeholder="https://..." />
+                        </div>
+                        <div>
+                          <label className="text-xs font-bold text-gray-500">画像URL (任意)</label>
+                          <input type="text" className="w-full border p-2 rounded" value={editForm.imageUrl || ''} onChange={e => setEditForm({...editForm, imageUrl: e.target.value})} placeholder="https://..." />
+                        </div>
+                        <div>
+                          <label className="text-xs font-bold text-gray-500">月額料金 (円)</label>
+                          <input type="number" className="w-full border p-2 rounded" value={editForm.monthlyFee} onChange={e => setEditForm({...editForm, monthlyFee: Number(e.target.value)})} />
+                        </div>
+                        <div>
+                          <label className="text-xs font-bold text-gray-500">キャッシュバック (円)</label>
+                          <input type="number" className="w-full border p-2 rounded" value={editForm.cashback} onChange={e => setEditForm({...editForm, cashback: Number(e.target.value)})} />
+                        </div>
+                        <div className="md:col-span-2">
+                          <label className="text-xs font-bold text-gray-500">説明文</label>
+                          <textarea className="w-full border p-2 rounded" rows="2" value={editForm.description} onChange={e => setEditForm({...editForm, description: e.target.value})}></textarea>
+                        </div>
+                      </div>
+                      <div className="flex gap-2 justify-end mt-2">
+                        <button onClick={() => setEditingId(null)} className="px-4 py-2 text-sm text-gray-600 bg-white border rounded hover:bg-gray-100">キャンセル</button>
+                        <button onClick={handleSave} className="px-4 py-2 text-sm text-white bg-blue-600 rounded hover:bg-blue-700 flex items-center gap-1"><Save size={16}/> 保存</button>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className={`text-[10px] px-2 py-0.5 rounded text-white ${p.buildingType === 'house' ? 'bg-blue-500' : 'bg-green-500'}`}>{p.buildingType === 'house' ? '戸建て' : 'マンション'}</span>
+                          <span className="font-bold">{p.name}</span>
+                        </div>
+                        <p className="text-xs text-gray-500 truncate">{p.link === '#' ? '⚠️リンク未設定' : p.link}</p>
+                      </div>
+                      <button onClick={() => handleEdit(p)} className="px-3 py-1.5 text-xs border border-blue-600 text-blue-600 rounded hover:bg-blue-50 flex items-center gap-1 shrink-0">
+                        <Edit size={14} /> 編集
+                      </button>
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* 2. コード生成エリア */}
+          <div className="bg-slate-900 text-slate-200 p-6 rounded-xl">
+            <h3 className="font-bold text-white mb-2 flex items-center gap-2">
+              <Copy size={20} /> 設定の書き出し
+            </h3>
+            <p className="text-sm mb-4 text-slate-400">
+              編集が終わったら、下のボタンを押してコードを生成してください。<br/>
+              生成されたコードをコピーし、VS Codeの `DEFAULT_PROVIDERS` 部分に上書き貼り付けすることで、変更が永続化されます。
+            </p>
+            <button 
+              onClick={handleGenerateCode} 
+              className="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition mb-4"
+            >
+              最新のデータでコードを生成する
+            </button>
+
+            {generatedCode && (
+              <div className="relative">
+                <textarea 
+                  className="w-full h-40 bg-slate-800 p-4 rounded text-xs font-mono border border-slate-700 focus:outline-none"
+                  readOnly
+                  value={generatedCode}
+                />
+                <button 
+                  onClick={handleCopyCode}
+                  className="absolute top-2 right-2 bg-white text-slate-900 px-3 py-1 rounded text-xs font-bold hover:bg-gray-200"
+                >
+                  コピー
+                </button>
+              </div>
+            )}
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const Header = () => (
   <header className="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
@@ -290,11 +445,17 @@ const ProviderRow = ({ provider, rank }) => {
           <div className="lg:w-1/3 shrink-0">
             {/* Image Placeholder */}
             <div className="bg-gray-100 rounded-lg aspect-video flex items-center justify-center text-gray-400 mb-4 border border-gray-200 relative overflow-hidden group">
-               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition"></div>
-               <div className="text-center">
-                 <span className="text-sm font-bold block mb-1">サービス画像</span>
-                 <span className="text-xs text-gray-400">{provider.providerName}</span>
-               </div>
+               {provider.imageUrl ? (
+                 <img src={provider.imageUrl} alt={provider.name} className="w-full h-full object-cover" onError={(e) => e.target.style.display = 'none'} />
+               ) : (
+                 <>
+                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition"></div>
+                   <div className="text-center">
+                     <span className="text-sm font-bold block mb-1">サービス画像</span>
+                     <span className="text-xs text-gray-400">{provider.providerName}</span>
+                   </div>
+                 </>
+               )}
                {/* Badge overlay for mobile */}
                {provider.badge && (
                  <div className="absolute top-2 left-2 md:hidden bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">
@@ -352,8 +513,8 @@ const ProviderRow = ({ provider, rank }) => {
                   <tr>
                     <th className="py-3 px-2 bg-gray-50 font-bold text-gray-600">スマホセット割</th>
                     <td className="py-3 px-2">
-                       <span className={`text-xs font-bold px-2 py-1 rounded text-white inline-block ${provider.carrier === 'docomo' ? 'bg-red-500' : provider.carrier === 'au' ? 'bg-orange-500' : 'bg-blue-500'}`}>
-                        {provider.carrier === 'docomo' ? 'ドコモ' : provider.carrier === 'au' ? 'au' : 'SoftBank'}
+                       <span className={`text-xs font-bold px-2 py-1 rounded text-white inline-block ${provider.carrier === 'docomo' ? 'bg-red-500' : provider.carrier === 'au' ? 'bg-orange-500' : provider.carrier === 'softbank' ? 'bg-blue-500' : 'bg-gray-500'}`}>
+                        {provider.carrier === 'docomo' ? 'ドコモ' : provider.carrier === 'au' ? 'au' : provider.carrier === 'softbank' ? 'SoftBank' : 'なし'}
                       </span>
                     </td>
                   </tr>
@@ -366,7 +527,7 @@ const ProviderRow = ({ provider, rank }) => {
               <a href={provider.link} className="flex-1 bg-white border border-gray-300 text-gray-700 font-bold py-3 px-4 rounded-lg text-center hover:bg-gray-50 transition shadow-sm text-sm flex items-center justify-center" onClick={e => e.preventDefault()}>
                 詳細を見る
               </a>
-              <a href={provider.link} className="flex-1 bg-gradient-to-b from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold py-3 px-4 rounded-lg text-center shadow-md hover:shadow-lg transition text-sm flex items-center justify-center gap-2 transform active:scale-95 border-b-4 border-orange-700" onClick={e => e.preventDefault()}>
+              <a href={provider.link} className="flex-1 bg-gradient-to-b from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold py-3 px-4 rounded-lg text-center shadow-md hover:shadow-lg transition text-sm flex items-center justify-center gap-2 transform active:scale-95 border-b-4 border-orange-700" target="_blank" rel="noopener noreferrer">
                 公式サイトへ
                 <ArrowRight size={18} />
               </a>
@@ -493,7 +654,7 @@ const AreaGuide = () => (
   </section>
 );
 
-const Footer = () => (
+const Footer = ({ onOpenAdmin }) => (
   <footer className="bg-gray-100 border-t border-gray-200 pt-12 pb-6 text-sm text-gray-600">
     <div className="container mx-auto px-4">
       <div className="grid md:grid-cols-4 gap-8 mb-8">
@@ -522,8 +683,15 @@ const Footer = () => (
           </ul>
         </div>
       </div>
-      <div className="border-t border-gray-200 pt-6 text-center text-xs text-gray-500">
+      <div className="border-t border-gray-200 pt-6 text-center text-xs text-gray-500 relative">
         &copy; 2026 Kagoshima Internet Navi. All rights reserved.
+        <button 
+          onClick={onOpenAdmin} 
+          className="absolute right-0 top-6 text-gray-300 hover:text-gray-500 transition p-2"
+          aria-label="管理者メニュー"
+        >
+          <Settings size={14} />
+        </button>
       </div>
     </div>
   </footer>
@@ -533,10 +701,22 @@ const Footer = () => (
 
 const App = () => {
   const [carrier, setCarrier] = useState('docomo');
-  const [buildingType, setBuildingType] = useState('house'); // 'house' or 'mansion'
+  const [buildingType, setBuildingType] = useState('house');
+  const [providers, setProviders] = useState(DEFAULT_PROVIDERS);
+  const [isAdminOpen, setIsAdminOpen] = useState(false);
+
+  // パスワードチェック関数
+  const handleOpenAdmin = () => {
+    const input = prompt("管理者パスワードを入力してください");
+    if (input === ADMIN_PASSWORD) {
+      setIsAdminOpen(true);
+    } else if (input !== null) {
+      alert("パスワードが間違っています");
+    }
+  };
 
   const filteredProviders = useMemo(() => {
-    let result = [...INITIAL_PROVIDERS];
+    let result = [...providers];
     
     // 1. Building Type Filter
     result = result.filter(p => p.buildingType === buildingType);
@@ -552,7 +732,7 @@ const App = () => {
       result = result.sort((a, b) => a.rank - b.rank);
     }
     return result;
-  }, [carrier, buildingType]);
+  }, [carrier, buildingType, providers]);
 
   return (
     <div className="min-h-screen bg-white font-sans text-gray-800">
@@ -598,7 +778,16 @@ const App = () => {
         <AreaGuide />
       </main>
 
-      <Footer />
+      <Footer onOpenAdmin={handleOpenAdmin} />
+
+      {/* Admin Panel Modal */}
+      {isAdminOpen && (
+        <AdminPanel 
+          providers={providers} 
+          setProviders={setProviders} 
+          onClose={() => setIsAdminOpen(false)} 
+        />
+      )}
     </div>
   );
 };
