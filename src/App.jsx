@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { Wifi, Smartphone, Home, ChevronRight, Check, MapPin, X, Award, TrendingUp, DollarSign, Menu, Info, ArrowRight, Zap, Building2, MousePointerClick, Edit, Save, Copy, RotateCcw, Settings, Lock } from 'lucide-react';
+import { Wifi, Smartphone, Home, ChevronRight, Check, MapPin, X, Award, TrendingUp, DollarSign, Menu, Info, ArrowRight, Zap, Building2, MousePointerClick, Edit, Save, Copy, RotateCcw, Settings, Lock, Plus, Trash2 } from 'lucide-react';
 
 // --- 設定 ---
 const ADMIN_PASSWORD = "mysecret123"; // ★ここに管理者用パスワードを設定してください
@@ -107,6 +107,46 @@ const DEFAULT_PROVIDERS = [
     imageUrl: "",
     description: "BBIQと並んでauユーザーにおすすめ。高額キャッシュバックと安定した通信速度が魅力。"
   },
+  {
+    id: 6,
+    name: "ビッグローブ光",
+    providerName: "ビッグローブ株式会社",
+    type: "fiber",
+    buildingType: "house",
+    carrier: "au",
+    monthlyFee: 5478,
+    cashback: 40000,
+    contractYear: 3,
+    maxSpeed: "1Gbps",
+    avgSpeed: "280Mbps",
+    features: ["au・UQモバイルセット割", "老舗プロバイダの安心感", "IPv6標準対応"],
+    points: ["auスマートバリュー・UQ自宅セット割が適用可能でスマホ代がお得", "引っ越し時の工事費が何度でも無料になる特典あり（3年プラン）", "老舗プロバイダならではの信頼性と充実したサポート"],
+    badge: null,
+    rank: 6,
+    link: "#",
+    imageUrl: "",
+    description: "KDDIグループの老舗プロバイダ。au・UQユーザーなら割引が効くため、BBIQやauひかりがエリア外だった場合の有力な選択肢。"
+  },
+  {
+    id: 7,
+    name: "フレッツ光 (プロバイダ選択型)",
+    providerName: "NTT西日本 / 各種プロバイダ",
+    type: "fiber",
+    buildingType: "house",
+    carrier: "all",
+    monthlyFee: 6000,
+    cashback: 10000,
+    contractYear: 2,
+    maxSpeed: "1Gbps",
+    avgSpeed: "250Mbps",
+    features: ["圧倒的な知名度とエリア", "300社以上からプロバイダ選択可", "サポート充実"],
+    points: ["NTT西日本の回線を利用するため、離島や山間部を含めた広いエリアをカバー", "好きなプロバイダを自由に選んで使える", "法人契約やSOHO利用にも選ばれる高い信頼性"],
+    badge: null,
+    rank: 7,
+    link: "#",
+    imageUrl: "",
+    description: "知名度No.1。特定のプロバイダを使いたい方や、仕事で使うため信頼性を最優先したい方におすすめ。"
+  },
 
   // --- マンション (Mansion) データ ---
   {
@@ -208,6 +248,46 @@ const DEFAULT_PROVIDERS = [
     link: "#",
     imageUrl: "",
     description: "工事不可物件の救世主。Airターミナル5になり5G対応で速度も向上。SoftBankユーザーにおすすめ。"
+  },
+  {
+    id: 106,
+    name: "ビッグローブ光 マンション",
+    providerName: "ビッグローブ株式会社",
+    type: "fiber",
+    buildingType: "mansion",
+    carrier: "au",
+    monthlyFee: 4378,
+    cashback: 40000,
+    contractYear: 3,
+    maxSpeed: "1Gbps",
+    avgSpeed: "260Mbps",
+    features: ["au・UQモバイルセット割", "IPv6対応", "移転工事費無料"],
+    points: ["マンションでもauスマートバリュー・UQ自宅セット割が使える", "3年プランなら引っ越し時の工事費が何度でも無料", "IPv6オプションで夜間も快適通信"],
+    badge: null,
+    rank: 6,
+    link: "#",
+    imageUrl: "",
+    description: "au/UQユーザーで、マンションがBBIQ非対応だった場合の有力候補。信頼性の高い老舗プロバイダ。"
+  },
+  {
+    id: 107,
+    name: "フレッツ光 マンション (プロバイダ選択型)",
+    providerName: "NTT西日本 / 各種プロバイダ",
+    type: "fiber",
+    buildingType: "mansion",
+    carrier: "all",
+    monthlyFee: 4500,
+    cashback: 5000,
+    contractYear: 2,
+    maxSpeed: "1Gbps",
+    avgSpeed: "200Mbps",
+    features: ["対応物件数No.1", "プロバイダ自由選択", "安定のNTT回線"],
+    points: ["ほとんどのマンションに設備が導入されており、すぐに開通しやすい", "好みのプロバイダを選んで契約できる", "光コラボ（ドコモ光など）への転用もスムーズ"],
+    badge: null,
+    rank: 7,
+    link: "#",
+    imageUrl: "",
+    description: "対応物件数が最も多い。プロバイダにこだわりがある方や、他の光回線が導入できなかった場合に。"
   }
 ];
 
@@ -215,20 +295,70 @@ const DEFAULT_PROVIDERS = [
 
 const AdminPanel = ({ providers, setProviders, onClose }) => {
   const [editingId, setEditingId] = useState(null);
-  const [editForm, setEditForm] = useState({});
+  
+  // 新規作成用のデフォルト値
+  const initialFormState = {
+    name: "新しいサービス",
+    providerName: "",
+    type: "fiber",
+    buildingType: "house",
+    carrier: "docomo",
+    monthlyFee: 0,
+    cashback: 0,
+    contractYear: 2,
+    maxSpeed: "1Gbps",
+    avgSpeed: "",
+    features: ["特徴1", "特徴2", "特徴3"],
+    points: ["おすすめポイント1", "おすすめポイント2", "おすすめポイント3"],
+    badge: null,
+    rank: 99,
+    link: "#",
+    imageUrl: "",
+    description: "サービスの説明文を入力してください。"
+  };
+
+  const [editForm, setEditForm] = useState(initialFormState);
   const [generatedCode, setGeneratedCode] = useState('');
 
+  // 新規追加
+  const handleAddNew = () => {
+    setEditingId('new');
+    setEditForm({ ...initialFormState, id: Date.now() });
+  };
+
+  // 編集開始
   const handleEdit = (provider) => {
     setEditingId(provider.id);
     setEditForm({ ...provider });
   };
 
+  // 削除
+  const handleDelete = (id) => {
+    if (window.confirm("本当に削除しますか？\nこの操作は元に戻せません（コードを書き出すまで反映されません）。")) {
+      const updatedProviders = providers.filter(p => p.id !== id);
+      setProviders(updatedProviders);
+      if (editingId === id) setEditingId(null);
+    }
+  };
+
+  // 保存
   const handleSave = () => {
-    const updatedProviders = providers.map(p => 
-      p.id === editingId ? editForm : p
-    );
-    setProviders(updatedProviders);
+    if (editingId === 'new') {
+      setProviders([...providers, { ...editForm, id: Date.now() }]);
+    } else {
+      const updatedProviders = providers.map(p => 
+        p.id === editingId ? editForm : p
+      );
+      setProviders(updatedProviders);
+    }
     setEditingId(null);
+  };
+
+  // 配列形式の入力をハンドリング (features, points)
+  const handleArrayInput = (key, index, value) => {
+    const newArray = [...editForm[key]];
+    newArray[index] = value;
+    setEditForm({ ...editForm, [key]: newArray });
   };
 
   const handleGenerateCode = () => {
@@ -246,6 +376,84 @@ const AdminPanel = ({ providers, setProviders, onClose }) => {
     alert('コードをコピーしました！VS Codeの「DEFAULT_PROVIDERS」部分に上書きで貼り付けてください。');
   };
 
+  // 編集フォーム（共通部品）
+  const renderForm = () => (
+    <div className="w-full space-y-3 bg-white p-4 rounded border border-blue-200">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div>
+          <label className="text-xs font-bold text-gray-500">サービス名</label>
+          <input type="text" className="w-full border p-2 rounded" value={editForm.name} onChange={e => setEditForm({...editForm, name: e.target.value})} />
+        </div>
+        <div>
+          <label className="text-xs font-bold text-gray-500">会社名・プロバイダ名</label>
+          <input type="text" className="w-full border p-2 rounded" value={editForm.providerName} onChange={e => setEditForm({...editForm, providerName: e.target.value})} />
+        </div>
+        <div className="flex gap-2">
+          <div className="flex-1">
+            <label className="text-xs font-bold text-gray-500">住居タイプ</label>
+            <select className="w-full border p-2 rounded" value={editForm.buildingType} onChange={e => setEditForm({...editForm, buildingType: e.target.value})}>
+              <option value="house">戸建て</option>
+              <option value="mansion">マンション</option>
+            </select>
+          </div>
+          <div className="flex-1">
+            <label className="text-xs font-bold text-gray-500">対応キャリア</label>
+            <select className="w-full border p-2 rounded" value={editForm.carrier} onChange={e => setEditForm({...editForm, carrier: e.target.value})}>
+              <option value="docomo">docomo</option>
+              <option value="au">au</option>
+              <option value="softbank">SoftBank</option>
+              <option value="all">全対応/その他</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label className="text-xs font-bold text-gray-500">順位 (Rank)</label>
+          <input type="number" className="w-full border p-2 rounded" value={editForm.rank} onChange={e => setEditForm({...editForm, rank: Number(e.target.value)})} />
+        </div>
+        <div>
+          <label className="text-xs font-bold text-gray-500">アフィリエイトリンク (URL)</label>
+          <input type="text" className="w-full border p-2 rounded border-red-300 bg-red-50" value={editForm.link} onChange={e => setEditForm({...editForm, link: e.target.value})} placeholder="https://..." />
+        </div>
+        <div>
+          <label className="text-xs font-bold text-gray-500">画像URL (任意)</label>
+          <input type="text" className="w-full border p-2 rounded" value={editForm.imageUrl || ''} onChange={e => setEditForm({...editForm, imageUrl: e.target.value})} placeholder="https://..." />
+        </div>
+        <div>
+          <label className="text-xs font-bold text-gray-500">月額料金 (円)</label>
+          <input type="number" className="w-full border p-2 rounded" value={editForm.monthlyFee} onChange={e => setEditForm({...editForm, monthlyFee: Number(e.target.value)})} />
+        </div>
+        <div>
+          <label className="text-xs font-bold text-gray-500">キャッシュバック (円)</label>
+          <input type="number" className="w-full border p-2 rounded" value={editForm.cashback} onChange={e => setEditForm({...editForm, cashback: Number(e.target.value)})} />
+        </div>
+        <div className="md:col-span-2">
+          <label className="text-xs font-bold text-gray-500">特徴タグ (3つまで)</label>
+          <div className="flex gap-2">
+            {[0, 1, 2].map(i => (
+              <input key={i} type="text" className="w-full border p-2 rounded text-xs" value={editForm.features[i] || ''} onChange={e => handleArrayInput('features', i, e.target.value)} placeholder={`特徴 ${i+1}`} />
+            ))}
+          </div>
+        </div>
+        <div className="md:col-span-2">
+          <label className="text-xs font-bold text-gray-500">おすすめポイント (3つまで)</label>
+          <div className="space-y-2">
+            {[0, 1, 2].map(i => (
+              <input key={i} type="text" className="w-full border p-2 rounded text-xs" value={editForm.points[i] || ''} onChange={e => handleArrayInput('points', i, e.target.value)} placeholder={`ポイント ${i+1}`} />
+            ))}
+          </div>
+        </div>
+        <div className="md:col-span-2">
+          <label className="text-xs font-bold text-gray-500">説明文</label>
+          <textarea className="w-full border p-2 rounded" rows="2" value={editForm.description} onChange={e => setEditForm({...editForm, description: e.target.value})}></textarea>
+        </div>
+      </div>
+      <div className="flex gap-2 justify-end mt-4 pt-4 border-t">
+        <button onClick={() => setEditingId(null)} className="px-4 py-2 text-sm text-gray-600 bg-gray-100 border rounded hover:bg-gray-200">キャンセル</button>
+        <button onClick={handleSave} className="px-6 py-2 text-sm text-white bg-blue-600 rounded hover:bg-blue-700 flex items-center gap-1 shadow-sm font-bold"><Save size={16}/> 保存する</button>
+      </div>
+    </div>
+  );
+
   return (
     <div className="fixed inset-0 bg-black/50 z-[100] flex items-center justify-center p-4 overflow-y-auto">
       <div className="bg-white w-full max-w-4xl rounded-xl shadow-2xl max-h-[90vh] overflow-y-auto flex flex-col">
@@ -260,56 +468,49 @@ const AdminPanel = ({ providers, setProviders, onClose }) => {
           
           {/* 1. リスト編集エリア */}
           <div>
-            <h3 className="font-bold text-gray-800 mb-4 border-l-4 border-blue-600 pl-3">掲載サービスの編集</h3>
+            <div className="flex justify-between items-center mb-4 border-l-4 border-blue-600 pl-3">
+              <h3 className="font-bold text-gray-800">掲載サービスの編集</h3>
+            </div>
+
+            {/* 新規追加ボタン */}
+            <div className="mb-6">
+              {editingId === 'new' ? (
+                <div className="border-2 border-blue-500 rounded-lg p-4 bg-blue-50 mb-4">
+                  <h4 className="font-bold text-blue-800 mb-3 flex items-center gap-2"><Plus size={18}/> 新しいサービスを作成中</h4>
+                  {renderForm()}
+                </div>
+              ) : (
+                <button onClick={handleAddNew} className="w-full py-4 border-2 border-dashed border-gray-300 text-gray-500 rounded-lg hover:border-blue-500 hover:text-blue-500 hover:bg-blue-50 font-bold flex items-center justify-center gap-2 transition group">
+                  <div className="bg-gray-200 group-hover:bg-blue-500 group-hover:text-white rounded-full p-1 transition"><Plus size={20} /></div>
+                  新しいサービスを追加する
+                </button>
+              )}
+            </div>
+
             <div className="space-y-4">
               {providers.map((p) => (
-                <div key={p.id} className="border rounded-lg p-4 bg-gray-50 flex flex-col md:flex-row gap-4 items-start">
+                <div key={p.id} className={`border rounded-lg p-4 transition ${editingId === p.id ? 'bg-blue-50 border-blue-300 shadow-md' : 'bg-gray-50'}`}>
                   {editingId === p.id ? (
-                    <div className="w-full space-y-3">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <div>
-                          <label className="text-xs font-bold text-gray-500">サービス名</label>
-                          <input type="text" className="w-full border p-2 rounded" value={editForm.name} onChange={e => setEditForm({...editForm, name: e.target.value})} />
-                        </div>
-                        <div>
-                          <label className="text-xs font-bold text-gray-500">アフィリエイトリンク (URL)</label>
-                          <input type="text" className="w-full border p-2 rounded border-red-300 bg-red-50" value={editForm.link} onChange={e => setEditForm({...editForm, link: e.target.value})} placeholder="https://..." />
-                        </div>
-                        <div>
-                          <label className="text-xs font-bold text-gray-500">画像URL (任意)</label>
-                          <input type="text" className="w-full border p-2 rounded" value={editForm.imageUrl || ''} onChange={e => setEditForm({...editForm, imageUrl: e.target.value})} placeholder="https://..." />
-                        </div>
-                        <div>
-                          <label className="text-xs font-bold text-gray-500">月額料金 (円)</label>
-                          <input type="number" className="w-full border p-2 rounded" value={editForm.monthlyFee} onChange={e => setEditForm({...editForm, monthlyFee: Number(e.target.value)})} />
-                        </div>
-                        <div>
-                          <label className="text-xs font-bold text-gray-500">キャッシュバック (円)</label>
-                          <input type="number" className="w-full border p-2 rounded" value={editForm.cashback} onChange={e => setEditForm({...editForm, cashback: Number(e.target.value)})} />
-                        </div>
-                        <div className="md:col-span-2">
-                          <label className="text-xs font-bold text-gray-500">説明文</label>
-                          <textarea className="w-full border p-2 rounded" rows="2" value={editForm.description} onChange={e => setEditForm({...editForm, description: e.target.value})}></textarea>
-                        </div>
-                      </div>
-                      <div className="flex gap-2 justify-end mt-2">
-                        <button onClick={() => setEditingId(null)} className="px-4 py-2 text-sm text-gray-600 bg-white border rounded hover:bg-gray-100">キャンセル</button>
-                        <button onClick={handleSave} className="px-4 py-2 text-sm text-white bg-blue-600 rounded hover:bg-blue-700 flex items-center gap-1"><Save size={16}/> 保存</button>
-                      </div>
-                    </div>
+                    renderForm()
                   ) : (
-                    <>
+                    <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
                           <span className={`text-[10px] px-2 py-0.5 rounded text-white ${p.buildingType === 'house' ? 'bg-blue-500' : 'bg-green-500'}`}>{p.buildingType === 'house' ? '戸建て' : 'マンション'}</span>
-                          <span className="font-bold">{p.name}</span>
+                          <span className="font-bold text-lg">{p.name}</span>
+                          <span className="text-xs text-gray-500 bg-white border px-2 py-0.5 rounded">Rank: {p.rank}</span>
                         </div>
-                        <p className="text-xs text-gray-500 truncate">{p.link === '#' ? '⚠️リンク未設定' : p.link}</p>
+                        <p className="text-xs text-gray-500 truncate max-w-md">{p.link === '#' ? '⚠️リンク未設定' : p.link}</p>
                       </div>
-                      <button onClick={() => handleEdit(p)} className="px-3 py-1.5 text-xs border border-blue-600 text-blue-600 rounded hover:bg-blue-50 flex items-center gap-1 shrink-0">
-                        <Edit size={14} /> 編集
-                      </button>
-                    </>
+                      <div className="flex items-center gap-2 shrink-0">
+                        <button onClick={() => handleEdit(p)} className="px-3 py-2 text-xs border border-blue-600 text-blue-600 bg-white rounded hover:bg-blue-50 flex items-center gap-1">
+                          <Edit size={14} /> 編集
+                        </button>
+                        <button onClick={() => handleDelete(p.id)} className="px-3 py-2 text-xs border border-red-200 text-red-600 bg-white rounded hover:bg-red-50 flex items-center gap-1">
+                          <Trash2 size={14} /> 削除
+                        </button>
+                      </div>
+                    </div>
                   )}
                 </div>
               ))}
