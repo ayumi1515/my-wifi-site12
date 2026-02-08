@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { Wifi, Smartphone, Home, ChevronRight, Check, MapPin, X, Award, TrendingUp, DollarSign, Menu, Info, ArrowRight, Zap, Building2, MousePointerClick, Edit, Save, Copy, RotateCcw, Settings, Lock, Plus, Trash2 } from 'lucide-react';
+import { Wifi, Smartphone, Home, ChevronRight, Check, MapPin, X, Award, TrendingUp, DollarSign, Menu, Info, ArrowRight, Zap, Building2, MousePointerClick, Edit, Save, Copy, RotateCcw, Settings, Lock, Plus, Trash2, AlertCircle } from 'lucide-react';
 
 // --- 設定 ---
 const ADMIN_PASSWORD = "mysecret123"; // ★ここに管理者用パスワードを設定してください
 
-// --- 初期データ (ここをベースに管理画面で編集します) ---
+// --- 初期データ (リセット時に使用) ---
 const DEFAULT_PROVIDERS = [
   // --- 戸建て (House) データ ---
   {
@@ -293,7 +293,7 @@ const DEFAULT_PROVIDERS = [
 
 // --- コンポーネント ---
 
-const AdminPanel = ({ providers, setProviders, onClose }) => {
+const AdminPanel = ({ providers, setProviders, onClose, onReset }) => {
   const [editingId, setEditingId] = useState(null);
   
   // 新規作成用のデフォルト値
@@ -334,7 +334,7 @@ const AdminPanel = ({ providers, setProviders, onClose }) => {
 
   // 削除
   const handleDelete = (id) => {
-    if (window.confirm("本当に削除しますか？\nこの操作は元に戻せません（コードを書き出すまで反映されません）。")) {
+    if (window.confirm("本当に削除しますか？")) {
       const updatedProviders = providers.filter(p => p.id !== id);
       setProviders(updatedProviders);
       if (editingId === id) setEditingId(null);
@@ -354,7 +354,7 @@ const AdminPanel = ({ providers, setProviders, onClose }) => {
     setEditingId(null);
   };
 
-  // 配列形式の入力をハンドリング (features, points)
+  // 配列形式の入力をハンドリング
   const handleArrayInput = (key, index, value) => {
     const newArray = [...editForm[key]];
     newArray[index] = value;
@@ -378,7 +378,7 @@ const AdminPanel = ({ providers, setProviders, onClose }) => {
 
   // 編集フォーム（共通部品）
   const renderForm = () => (
-    <div className="w-full space-y-3 bg-white p-4 rounded border border-blue-200">
+    <div className="w-full space-y-3 bg-white p-4 rounded border border-blue-200 shadow-sm animate-fade-in">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         <div>
           <label className="text-xs font-bold text-gray-500">サービス名</label>
@@ -412,11 +412,11 @@ const AdminPanel = ({ providers, setProviders, onClose }) => {
         </div>
         <div>
           <label className="text-xs font-bold text-gray-500">アフィリエイトリンク (URL)</label>
-          <input type="text" className="w-full border p-2 rounded border-red-300 bg-red-50" value={editForm.link} onChange={e => setEditForm({...editForm, link: e.target.value})} placeholder="https://..." />
+          <input type="text" className="w-full border p-2 rounded border-red-300 bg-red-50 font-mono text-sm" value={editForm.link} onChange={e => setEditForm({...editForm, link: e.target.value})} placeholder="https://..." />
         </div>
         <div>
           <label className="text-xs font-bold text-gray-500">画像URL (任意)</label>
-          <input type="text" className="w-full border p-2 rounded" value={editForm.imageUrl || ''} onChange={e => setEditForm({...editForm, imageUrl: e.target.value})} placeholder="https://..." />
+          <input type="text" className="w-full border p-2 rounded font-mono text-sm" value={editForm.imageUrl || ''} onChange={e => setEditForm({...editForm, imageUrl: e.target.value})} placeholder="https://..." />
         </div>
         <div>
           <label className="text-xs font-bold text-gray-500">月額料金 (円)</label>
@@ -449,7 +449,7 @@ const AdminPanel = ({ providers, setProviders, onClose }) => {
       </div>
       <div className="flex gap-2 justify-end mt-4 pt-4 border-t">
         <button onClick={() => setEditingId(null)} className="px-4 py-2 text-sm text-gray-600 bg-gray-100 border rounded hover:bg-gray-200">キャンセル</button>
-        <button onClick={handleSave} className="px-6 py-2 text-sm text-white bg-blue-600 rounded hover:bg-blue-700 flex items-center gap-1 shadow-sm font-bold"><Save size={16}/> 保存する</button>
+        <button onClick={handleSave} className="px-6 py-2 text-sm text-white bg-blue-600 rounded hover:bg-blue-700 flex items-center gap-1 shadow-sm font-bold"><Save size={16}/> 保存して更新</button>
       </div>
     </div>
   );
@@ -459,28 +459,44 @@ const AdminPanel = ({ providers, setProviders, onClose }) => {
       <div className="bg-white w-full max-w-4xl rounded-xl shadow-2xl max-h-[90vh] overflow-y-auto flex flex-col">
         <div className="p-4 border-b bg-gray-800 text-white flex justify-between items-center sticky top-0 z-10">
           <h2 className="font-bold text-lg flex items-center gap-2">
-            <Settings /> 管理モード：データ編集
+            <Settings /> 管理モード
           </h2>
-          <button onClick={onClose} className="p-2 hover:bg-gray-700 rounded-full"><X /></button>
+          <div className="flex gap-2">
+            <button onClick={onReset} className="text-xs text-gray-400 hover:text-white underline px-2">
+              データを初期状態に戻す
+            </button>
+            <button onClick={onClose} className="p-2 hover:bg-gray-700 rounded-full"><X /></button>
+          </div>
         </div>
 
-        <div className="p-6 space-y-8">
+        <div className="p-6 space-y-8 bg-gray-100">
           
+          {/* アラート */}
+          <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 text-sm flex items-start gap-3">
+            <AlertCircle className="shrink-0" />
+            <div>
+              <p className="font-bold">編集内容はあなたのブラウザに自動保存されます。</p>
+              <p>編集した内容は即座に反映され、ブラウザを閉じても消えません。<br/>
+              ただし、インターネット上のサイト（他の人の画面）にはまだ反映されていません。<br/>
+              本番反映するには、一番下の「コード生成」ボタンを使って更新してください。</p>
+            </div>
+          </div>
+
           {/* 1. リスト編集エリア */}
           <div>
-            <div className="flex justify-between items-center mb-4 border-l-4 border-blue-600 pl-3">
-              <h3 className="font-bold text-gray-800">掲載サービスの編集</h3>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="font-bold text-gray-800 border-l-4 border-blue-600 pl-3">掲載サービスの管理</h3>
             </div>
 
             {/* 新規追加ボタン */}
             <div className="mb-6">
               {editingId === 'new' ? (
-                <div className="border-2 border-blue-500 rounded-lg p-4 bg-blue-50 mb-4">
-                  <h4 className="font-bold text-blue-800 mb-3 flex items-center gap-2"><Plus size={18}/> 新しいサービスを作成中</h4>
+                <div className="mb-4">
+                  <h4 className="font-bold text-blue-800 mb-3 flex items-center gap-2 bg-blue-100 p-2 rounded"><Plus size={18}/> 新しいサービスを作成中</h4>
                   {renderForm()}
                 </div>
               ) : (
-                <button onClick={handleAddNew} className="w-full py-4 border-2 border-dashed border-gray-300 text-gray-500 rounded-lg hover:border-blue-500 hover:text-blue-500 hover:bg-blue-50 font-bold flex items-center justify-center gap-2 transition group">
+                <button onClick={handleAddNew} className="w-full py-4 border-2 border-dashed border-gray-300 text-gray-500 bg-white rounded-lg hover:border-blue-500 hover:text-blue-500 hover:bg-blue-50 font-bold flex items-center justify-center gap-2 transition group shadow-sm">
                   <div className="bg-gray-200 group-hover:bg-blue-500 group-hover:text-white rounded-full p-1 transition"><Plus size={20} /></div>
                   新しいサービスを追加する
                 </button>
@@ -489,7 +505,7 @@ const AdminPanel = ({ providers, setProviders, onClose }) => {
 
             <div className="space-y-4">
               {providers.map((p) => (
-                <div key={p.id} className={`border rounded-lg p-4 transition ${editingId === p.id ? 'bg-blue-50 border-blue-300 shadow-md' : 'bg-gray-50'}`}>
+                <div key={p.id} className={`border rounded-lg p-4 transition bg-white shadow-sm ${editingId === p.id ? 'ring-2 ring-blue-400' : ''}`}>
                   {editingId === p.id ? (
                     renderForm()
                   ) : (
@@ -498,15 +514,15 @@ const AdminPanel = ({ providers, setProviders, onClose }) => {
                         <div className="flex items-center gap-2 mb-1">
                           <span className={`text-[10px] px-2 py-0.5 rounded text-white ${p.buildingType === 'house' ? 'bg-blue-500' : 'bg-green-500'}`}>{p.buildingType === 'house' ? '戸建て' : 'マンション'}</span>
                           <span className="font-bold text-lg">{p.name}</span>
-                          <span className="text-xs text-gray-500 bg-white border px-2 py-0.5 rounded">Rank: {p.rank}</span>
+                          <span className="text-xs text-gray-500 bg-gray-100 border px-2 py-0.5 rounded">Rank: {p.rank}</span>
                         </div>
-                        <p className="text-xs text-gray-500 truncate max-w-md">{p.link === '#' ? '⚠️リンク未設定' : p.link}</p>
+                        <p className="text-xs text-gray-500 truncate max-w-md font-mono">{p.link === '#' ? '⚠️リンク未設定' : p.link}</p>
                       </div>
                       <div className="flex items-center gap-2 shrink-0">
-                        <button onClick={() => handleEdit(p)} className="px-3 py-2 text-xs border border-blue-600 text-blue-600 bg-white rounded hover:bg-blue-50 flex items-center gap-1">
+                        <button onClick={() => handleEdit(p)} className="px-3 py-2 text-xs border border-blue-600 text-blue-600 bg-white rounded hover:bg-blue-50 flex items-center gap-1 transition">
                           <Edit size={14} /> 編集
                         </button>
-                        <button onClick={() => handleDelete(p.id)} className="px-3 py-2 text-xs border border-red-200 text-red-600 bg-white rounded hover:bg-red-50 flex items-center gap-1">
+                        <button onClick={() => handleDelete(p.id)} className="px-3 py-2 text-xs border border-red-200 text-red-600 bg-white rounded hover:bg-red-50 flex items-center gap-1 transition">
                           <Trash2 size={14} /> 削除
                         </button>
                       </div>
@@ -520,17 +536,17 @@ const AdminPanel = ({ providers, setProviders, onClose }) => {
           {/* 2. コード生成エリア */}
           <div className="bg-slate-900 text-slate-200 p-6 rounded-xl">
             <h3 className="font-bold text-white mb-2 flex items-center gap-2">
-              <Copy size={20} /> 設定の書き出し
+              <Copy size={20} /> 本番反映用コード書き出し
             </h3>
             <p className="text-sm mb-4 text-slate-400">
-              編集が終わったら、下のボタンを押してコードを生成してください。<br/>
-              生成されたコードをコピーし、VS Codeの `DEFAULT_PROVIDERS` 部分に上書き貼り付けすることで、変更が永続化されます。
+              編集が終わったら、ここでコードをコピーして VS Code に貼り付け、GitHubへプッシュしてください。<br/>
+              これを行うことで、インターネット上のサイト（本番環境）に変更が反映されます。
             </p>
             <button 
               onClick={handleGenerateCode} 
               className="w-full py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition mb-4"
             >
-              最新のデータでコードを生成する
+              現在のデータでコードを生成する
             </button>
 
             {generatedCode && (
@@ -903,8 +919,25 @@ const Footer = ({ onOpenAdmin }) => (
 const App = () => {
   const [carrier, setCarrier] = useState('docomo');
   const [buildingType, setBuildingType] = useState('house');
-  const [providers, setProviders] = useState(DEFAULT_PROVIDERS);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
+
+  // データ初期化 (LocalStorage -> Default)
+  const [providers, setProviders] = useState(() => {
+    const saved = localStorage.getItem('wifi_providers_data');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error("Failed to parse saved data:", e);
+      }
+    }
+    return DEFAULT_PROVIDERS;
+  });
+
+  // 自動保存
+  useEffect(() => {
+    localStorage.setItem('wifi_providers_data', JSON.stringify(providers));
+  }, [providers]);
 
   // パスワードチェック関数
   const handleOpenAdmin = () => {
@@ -913,6 +946,14 @@ const App = () => {
       setIsAdminOpen(true);
     } else if (input !== null) {
       alert("パスワードが間違っています");
+    }
+  };
+
+  // リセット関数
+  const handleResetData = () => {
+    if (window.confirm("全てのデータを初期状態に戻しますか？\n（これまで編集した内容はすべて消えます）")) {
+      setProviders(DEFAULT_PROVIDERS);
+      alert("初期化しました。");
     }
   };
 
@@ -986,7 +1027,8 @@ const App = () => {
         <AdminPanel 
           providers={providers} 
           setProviders={setProviders} 
-          onClose={() => setIsAdminOpen(false)} 
+          onClose={() => setIsAdminOpen(false)}
+          onReset={handleResetData}
         />
       )}
     </div>
