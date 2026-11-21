@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-50: #eff6ff;
+  --color-brand-100: #dbeafe;
+  --color-brand-600: #1d5fd1;
+  --color-brand-700: #174ea8;
+  --color-cta-500: #ea6a12;
+  --color-cta-600: #cf5a0a;
+  --font-sans: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", Meiryo, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body { -webkit-font-smoothing: antialiased; }
+
+/* 記事本文の見た目 */
+.prose-ja h2 { font-size: 1.375rem; font-weight: 700; margin: 2.5rem 0 1rem; padding-left: .75rem; border-left: 4px solid var(--color-brand-600); line-height: 1.5; }
+.prose-ja h3 { font-size: 1.125rem; font-weight: 700; margin: 1.75rem 0 .75rem; line-height: 1.5; }
+.prose-ja p { line-height: 1.95; margin: 0 0 1rem; }
+.prose-ja ul { list-style: disc; padding-left: 1.4rem; margin: 0 0 1rem; }
+.prose-ja ol { list-style: decimal; padding-left: 1.4rem; margin: 0 0 1rem; }
+.prose-ja li { line-height: 1.85; margin: .25rem 0; }
+.prose-ja a { color: var(--color-brand-600); text-decoration: underline; text-underline-offset: 3px; }
+.prose-ja table { width: 100%; border-collapse: collapse; font-size: .9rem; margin: 0 0 1.25rem; }
+.prose-ja th, .prose-ja td { border: 1px solid #e5e7eb; padding: .6rem .7rem; text-align: left; vertical-align: top; }
+.prose-ja th { background: #f8fafc; font-weight: 700; }

@@ -1,0 +1,43 @@
+---
+// 広告リンクのボタン。A8のタグは「リンク先」「バナー画像」「計測用の画像」に分けて持ち、
+// HTMLをそのまま埋めこまない（安全のため）。リンクには rel="sponsored" をつける。
+interface Affiliate {
+  href: string; label: string;
+  banner?: { href: string; src: string; width: number; height: number; pixel?: string | null } | null;
+  pixel?: string | null;
+}
+const { provider, showBanner = false } = Astro.props as {
+  provider: { name: string; officialUrl: string; affiliate: Affiliate | null };
+  showBanner?: boolean;
+};
+const a = provider.affiliate;
+---
+<div class="flex flex-col gap-2">
+  {a ? (
+    <>
+      <a href={a.href} rel="sponsored noopener" target="_blank"
+         class="flex items-center justify-center gap-2 rounded-lg bg-cta-500 hover:bg-cta-600 text-white font-bold py-3.5 px-4 shadow-sm transition focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-200">
+        {a.label}
+        <span aria-hidden="true">→</span>
+      </a>
+      {a.pixel && <img src={a.pixel} width="1" height="1" alt="" class="inline-block w-px h-px border-0" />}
+      <p class="text-[11px] leading-relaxed text-gray-500">
+        <span class="font-bold">PR</span>・リンク先は販売代理店などの申込み窓口です。特典の内容は窓口ごとに違います。
+      </p>
+      {showBanner && a.banner && (
+        <div class="flex justify-center mt-2">
+          <a href={a.banner.href} rel="sponsored noopener" target="_blank">
+            <img src={a.banner.src} width={a.banner.width} height={a.banner.height} alt={`${provider.name}の広告バナー`} loading="lazy" class="max-w-full h-auto" />
+          </a>
+          {a.banner.pixel && <img src={a.banner.pixel} width="1" height="1" alt="" class="inline-block w-px h-px border-0" />}
+        </div>
+      )}
+    </>
+  ) : (
+    <a href={provider.officialUrl} target="_blank" rel="noopener"
+       class="flex items-center justify-center gap-2 rounded-lg border-2 border-brand-600 text-brand-700 hover:bg-brand-50 font-bold py-3 px-4 transition">
+      {provider.name}の公式サイトを見る
+      <span aria-hidden="true">↗</span>
+    </a>
+  )}
+</div>

@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../site.config.mjs';
+---
+<Base title="お問い合わせ" description={`${SITE.name}へのお問い合わせ。`} pr={false}>
+  <div class="mx-auto max-w-3xl px-4 pt-8 prose-ja">
+    <h1 class="text-2xl font-bold text-gray-900 mb-6">お問い合わせ</h1>
+    <p>掲載内容のまちがい、ご意見などは、下のフォームからお送りください。内容によってはお返事できない場合があります。</p>
+    <p>なお、このサイトはサービスの申込み窓口ではありません。契約や料金についてのご相談は、各社の公式窓口にお問い合わせください。</p>
+    {SITE.contactFormUrl ? (
+      <p><a href={SITE.contactFormUrl} target="_blank" rel="noopener" class="inline-block rounded-lg bg-brand-600 !text-white !no-underline font-bold px-5 py-3">お問い合わせフォームを開く</a></p>
+    ) : (
+      <p class="rounded-lg bg-gray-50 border border-gray-200 p-4 text-sm">お問い合わせフォームは準備中です。</p>
+    )}
+  </div>
+</Base>

@@ -1,0 +1,71 @@
+---
+import type { Provider, Building } from '../lib/data';
+import AffiliateButton from './AffiliateButton.astro';
+import CheckedNote from './CheckedNote.astro';
+
+interface Props { provider: Provider; building: Building; rank?: number; headingLevel?: 'h2' | 'h3' }
+const { provider: p, building, rank, headingLevel = 'h3' } = Astro.props;
+const price = p[building]!;
+const H = headingLevel;
+---
+<article class="rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden" id={p.id}>
+  <div class="flex items-center gap-3 bg-gray-50 border-b border-gray-200 px-4 py-3">
+    {rank && (
+      <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-600 text-white font-bold">{rank}</span>
+    )}
+    <div class="min-w-0">
+      <H class="text-lg sm:text-xl font-bold text-gray-900 leading-snug">{p.name}</H>
+      <p class="text-xs text-gray-500">{p.company}・{p.network}</p>
+    </div>
+  </div>
+
+  <div class="p-4 sm:p-6 grid gap-6 md:grid-cols-5">
+    <div class="md:col-span-3 space-y-4">
+      <p class="text-[15px] leading-7">{p.summary}</p>
+
+      <table class="w-full text-sm border-collapse">
+        <tbody>
+          <tr class="border-b border-gray-100">
+            <th class="w-28 py-2.5 pr-2 text-left align-top font-bold text-gray-600">月額（税込）</th>
+            <td class="py-2.5">
+              <span class="text-lg font-bold text-gray-900">{price.label}</span>
+              <p class="text-xs text-gray-500 leading-relaxed mt-1">{price.note}</p>
+            </td>
+          </tr>
+          <tr class="border-b border-gray-100">
+            <th class="py-2.5 pr-2 text-left align-top font-bold text-gray-600">速さ</th>
+            <td class="py-2.5 text-gray-700">{p.speed}</td>
+          </tr>
+          <tr class="border-b border-gray-100">
+            <th class="py-2.5 pr-2 text-left align-top font-bold text-gray-600">スマホのセット割</th>
+            <td class="py-2.5 text-gray-700">{p.mobileSet.length ? p.mobileSet.join('／') : 'なし'}</td>
+          </tr>
+          <tr>
+            <th class="py-2.5 pr-2 text-left align-top font-bold text-gray-600">初期費用</th>
+            <td class="py-2.5 text-gray-700 text-[13px] leading-relaxed">{p.initialCost}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="md:col-span-2 space-y-4">
+      <div class="rounded-lg bg-green-50 border border-green-100 p-4">
+        <p class="font-bold text-green-800 text-sm mb-2">よいところ</p>
+        <ul class="space-y-1.5 text-sm text-gray-700">
+          {p.points.map((t) => <li class="flex gap-1.5"><span class="text-green-600" aria-hidden="true">●</span><span>{t}</span></li>)}
+        </ul>
+      </div>
+      {p.cautions.length > 0 && (
+        <div class="rounded-lg bg-gray-50 border border-gray-200 p-4">
+          <p class="font-bold text-gray-700 text-sm mb-2">気をつけること</p>
+          <ul class="space-y-1.5 text-sm text-gray-700">
+            {p.cautions.map((t) => <li class="flex gap-1.5"><span class="text-gray-400" aria-hidden="true">●</span><span>{t}</span></li>)}
+          </ul>
+        </div>
+      )}
+      <AffiliateButton provider={p} />
+      <a href={`/hikari/${p.id}/`} class="block text-center text-sm font-bold text-brand-600 hover:underline">{p.name}のくわしい解説を読む</a>
+      <CheckedNote provider={p} />
+    </div>
+  </div>
+</article>

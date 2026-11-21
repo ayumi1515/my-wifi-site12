@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../site.config.mjs';
+---
+<Base title="運営者情報" description={`${SITE.name}の運営者情報と、情報の調べ方・更新のしかたについて。`} pr={false}>
+  <div class="mx-auto max-w-3xl px-4 pt-8 prose-ja">
+    <h1 class="text-2xl font-bold text-gray-900 mb-6">運営者情報</h1>
+    <table>
+      <tbody>
+        <tr><th class="w-32">サイト名</th><td>{SITE.name}</td></tr>
+        <tr><th>運営者</th><td>{SITE.operator}</td></tr>
+        <tr><th>URL</th><td>{SITE.url}/</td></tr>
+        <tr><th>お問い合わせ</th><td><a href="/contact/">お問い合わせページ</a>から受け付けています</td></tr>
+      </tbody>
+    </table>
+    <h2>このサイトについて</h2>
+    <p>{SITE.name}は、インターネット回線などのくらしのサービスを、公式の情報をもとにくらべて整理するサイトです。</p>
+    <h2>情報の調べ方</h2>
+    <ul>
+      <li>料金・提供エリア・キャンペーンは、各社の公式サイトで確かめ、確かめた日と出典を各ページに書いています。</li>
+      <li>「最安」「No.1」などの言葉は、はっきりした根拠がない限り使いません。</li>
+      <li>公式で確かめられなかった内容は、「確認が必要」と書くか、のせないようにしています。</li>
+    </ul>
+    <h2>広告について</h2>
+    <p>このサイトは、アフィリエイトプログラムによる広告収入で運営しています。くわしくは<a href="/ad-policy/">広告について</a>をご覧ください。</p>
+  </div>
+</Base>

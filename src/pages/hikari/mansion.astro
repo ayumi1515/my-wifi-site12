@@ -1,0 +1,34 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProviderCard from '../../components/ProviderCard.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { SITE } from '../../site.config.mjs';
+import { ranked, breadcrumbLd, jpDate, lastChecked } from '../../lib/data';
+const list = ranked('mansion', 'fiber');
+const crumbs = [{ name: 'ホーム', href: '/' }, { name: 'マンション向けの光回線', href: '/hikari/mansion/' }];
+---
+<Base title="鹿児島県のマンション・アパート向け光回線をくらべる"
+  description="鹿児島県のマンション・アパートで使える光回線を、公式サイトの料金をもとに比較。建物の設備の確かめ方、工事の許可、BBIQ・ドコモ光・SoftBank 光などの月額をまとめました。"
+  jsonLd={[breadcrumbLd(SITE.url, crumbs)]}>
+  <div class="mx-auto max-w-5xl px-4 pt-8">
+    <Breadcrumbs items={[{ name: 'ホーム', href: '/' }, { name: 'マンション向けの光回線' }]} />
+    <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 leading-snug">鹿児島県のマンション・アパート向け光回線をくらべる</h1>
+    <div class="prose-ja mt-4">
+      <p>マンション・アパートでは、建物にすでに入っている光回線の設備によって、選べる回線や月額が変わります。まずは管理会社や大家さんに「どの回線の設備が入っているか」「工事をしてもよいか」を聞いてみましょう。</p>
+      <p>設備が入っていない、または工事の許可がおりない場合は、<a href="/hikari/home-router/">工事のいらないホームルーター</a>も選択肢になります。</p>
+      <p class="text-xs text-gray-500">料金はすべて税込。最終確認日：{jpDate(lastChecked)}</p>
+    </div>
+    <div class="mt-8 space-y-8">
+      {list.map((p, i) => <ProviderCard provider={p} building="mansion" rank={i + 1} headingLevel="h2" />)}
+    </div>
+    <section class="prose-ja mt-12">
+      <h2>管理会社に聞いておくこと</h2>
+      <ol>
+        <li>建物に入っている光回線の設備（NTT西日本のフレッツ光、BBIQ など）</li>
+        <li>部屋に「光コンセント」があるか</li>
+        <li>壁に穴をあけるなどの工事をしてもよいか</li>
+      </ol>
+      <p>同じ回線でも、建物の戸数や配線のしかたで月額が変わることがあります（BBIQやフレッツ光は、料金に幅があります）。</p>
+    </section>
+  </div>
+</Base>

@@ -1,0 +1,529 @@
+[
+  {
+    "id": "bbiq",
+    "published": true,
+    "name": "BBIQ（ビビック）",
+    "company": "株式会社QTnet（九州電力グループ）",
+    "kind": "fiber",
+    "network": "九州電力グループの独自の光回線",
+    "carriers": [
+      "au",
+      "uq",
+      "qt"
+    ],
+    "order": {
+      "house": 1,
+      "mansion": 1
+    },
+    "summary": "九州電力グループのQTnetが運営する、九州の独自の光回線です。auスマホ・UQ mobileのセット割に対応し、Webか電話の申込みなら1年目の月額が下がる割引があります。",
+    "house": {
+      "monthly": 5500,
+      "label": "5,500円",
+      "note": "1ギガ・13ヵ月目以降。BBIQつづけて割（36ヵ月の自動更新、550円引き）と九電グループまとめてあんしん割（九州電力の電気とセット、最大330円引き）をふくむ金額です。Web・電話申込みは開通月0円、2〜12ヵ月目2,970円（2027年1月28日申込み分まで）。"
+    },
+    "mansion": {
+      "monthly": 4400,
+      "label": "4,400〜6,270円",
+      "note": "1ギガ・13ヵ月目以降。建物の戸数などで変わります（棟内LAN方式は4,180〜5,280円）。Web・電話申込みは2〜12ヵ月目2,200〜4,070円。"
+    },
+    "speed": "最大1Gbps（6ギガ・10ギガコースは福岡・長崎・宮崎・熊本の一部のみで、鹿児島は対象外）",
+    "contract": "最低利用期間24ヵ月。ホームタイプでBBIQつづけて割を使うと36ヵ月ごとの自動更新",
+    "initialCost": "契約事務手数料880円。標準工事費43,560円は「標準工事費相当割」で実質無料（過去6ヵ月以内にBBIQを使っていた場合などは対象外）",
+    "mobileSet": [
+      "auスマートバリュー（au）",
+      "自宅セット割（UQ mobile）",
+      "BBIQ×QTモバイル セット割"
+    ],
+    "area": "1ギガコースは九州全県が対象。離島で使えるかは公式のページで確かめられませんでした。住所ごとの可否は公式のエリア確認で調べてください。",
+    "goodFor": [
+      "auスマホ・UQ mobileを使っている",
+      "九州電力の電気を使っている",
+      "1年目の支払いを軽くしたい"
+    ],
+    "points": [
+      "九州電力グループのQTnetが運営する、九州の独自の光回線",
+      "auスマートバリュー・UQ mobileの自宅セット割に対応",
+      "Web・電話申込みなら開通月0円、2〜12ヵ月目は割引料金（期限つき）",
+      "セキュリティソフト5台まで無料（公式の料金ページより）"
+    ],
+    "cautions": [
+      "鹿児島では10ギガ・6ギガコースが選べません（1ギガのみ）",
+      "表示の月額は、36ヵ月の自動更新と九州電力の電気のセットをふくむ金額です",
+      "解約するとき引込線を撤去する場合は11,000円かかります"
+    ],
+    "affiliate": {
+      "href": "https://px.a8.net/svt/ejp?a8mat=4AX6CE+CULUL6+348K+2Z6GBM",
+      "label": "BBIQの申込み窓口を見る",
+      "banner": null,
+      "pixel": null
+    },
+    "officialUrl": "https://www.bbiq.jp/hikari/internet/",
+    "sources": [
+      {
+        "label": "BBIQ 料金",
+        "url": "https://www.bbiq.jp/hikari/internet/price/"
+      },
+      {
+        "label": "BBIQ 初期費用・工事費",
+        "url": "https://www.bbiq.jp/hikari/recommend/initial/"
+      },
+      {
+        "label": "BBIQ auスマートバリュー",
+        "url": "https://www.bbiq.jp/hikari/recommend/smartvalue/"
+      }
+    ],
+    "checkedAt": "2026-11-21"
+  },
+  {
+    "id": "docomo-hikari",
+    "published": true,
+    "name": "ドコモ光",
+    "company": "株式会社NTTドコモ",
+    "kind": "fiber",
+    "network": "NTT西日本のフレッツ光の回線（光コラボ）",
+    "carriers": [
+      "docomo"
+    ],
+    "order": {
+      "house": 2,
+      "mansion": 2
+    },
+    "summary": "NTT西日本の回線を使うので、鹿児島県内の広い範囲と一部の離島で使えます。ドコモのスマホとのセット割「ドコモ光セット割」があり、10ギガも一部の市町で選べます。",
+    "house": {
+      "monthly": 5720,
+      "label": "5,720円",
+      "note": "1ギガ・戸建・タイプA（2年定期契約）。定期契約なしは7,370円。別にブロードバンドユニバーサルサービス料がかかります。"
+    },
+    "mansion": {
+      "monthly": 4400,
+      "label": "4,400円",
+      "note": "1ギガ・マンション・タイプA（2年定期契約）。定期契約なしは5,500円。"
+    },
+    "speed": "最大1Gbps。10ギガ（タイプA 6,380円・2年定期）はフレッツ 光クロスの提供地域で選べます",
+    "contract": "2年定期契約（自動更新）か定期契約なし。2年定期の解約金は戸建5,500円・マンション4,180円（契約満了月の当月・翌月・翌々月などの更新期間はかからない）",
+    "initialCost": "契約事務手数料4,950円。新規工事料28,600円（屋内配線工事あり・2026年6月1日以降の申込み）。「新規工事料実質0円特典」で工事料相当のdポイント（期間・用途限定）を24回に分けて進呈",
+    "mobileSet": [
+      "ドコモ光セット割（ドコモ）"
+    ],
+    "area": "NTT西日本の回線を使うため、県内の多くの地域と一部の離島が対象。住所ごとの可否は公式で確認してください。",
+    "goodFor": [
+      "ドコモのスマホを使っている",
+      "10ギガを使いたい（鹿児島市など）",
+      "離島に住んでいる"
+    ],
+    "points": [
+      "ドコモのスマホと組み合わせると「ドコモ光セット割」で1回線あたり最大1,210円/月引き（プランによる）",
+      "NTT西日本の回線なので、県内の広い範囲で使える",
+      "10ギガのプランもある（フレッツ 光クロスの提供地域）"
+    ],
+    "cautions": [
+      "工事料の特典は値引きではなく、dポイントを後から分けてもらう形です",
+      "ahamoはドコモ光セット割の対象外です",
+      "プロバイダによって「タイプA」「タイプB」で料金が少し変わります"
+    ],
+    "affiliate": {
+      "href": "https://px.a8.net/svt/ejp?a8mat=4AX6CD+G8NPLM+3SPO+NTJWY",
+      "label": "ドコモ光の申込み窓口を見る",
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4AX6CD+G8NPLM+3SPO+NY9O1",
+        "src": "https://www24.a8.net/svt/bgt?aid=260208733982&wid=002&eno=01&mid=s00000017718004023000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www16.a8.net/0.gif?a8mat=4AX6CD+G8NPLM+3SPO+NY9O1"
+      },
+      "pixel": null
+    },
+    "officialUrl": "https://www.docomo.ne.jp/hikari/",
+    "sources": [
+      {
+        "label": "ドコモ光 料金",
+        "url": "https://www.docomo.ne.jp/hikari/charge/"
+      },
+      {
+        "label": "ドコモ光セット割",
+        "url": "https://www.docomo.ne.jp/charge/hikari_set/"
+      },
+      {
+        "label": "新規工事料実質0円特典",
+        "url": "https://www.docomo.ne.jp/campaign_event/hikari_shinkikojiryo_free/"
+      },
+      {
+        "label": "工事料の改定（2026年6月）",
+        "url": "https://www.docomo.ne.jp/info/notice/page/260423_00.html"
+      }
+    ],
+    "checkedAt": "2026-11-21"
+  },
+  {
+    "id": "softbank-hikari",
+    "published": true,
+    "name": "SoftBank 光",
+    "company": "ソフトバンク株式会社",
+    "kind": "fiber",
+    "network": "NTT西日本のフレッツ光の回線（光コラボ）",
+    "carriers": [
+      "softbank",
+      "ymobile"
+    ],
+    "order": {
+      "house": 3,
+      "mansion": 3
+    },
+    "summary": "ソフトバンク・ワイモバイルのスマホとのセット割「おうち割 光セット」があります。他社から乗り換えるときの解約金などを負担する特典もあります。2026年12月1日に名前と料金が変わる予定です。",
+    "house": {
+      "monthly": 5720,
+      "label": "5,720円",
+      "note": "1ギガ・ファミリー（2年自動更新）。2026年12月1日から「SoftBank 光＋」に名前が変わり、月額が330円上がる予定です（公式の案内）。"
+    },
+    "mansion": {
+      "monthly": 4180,
+      "label": "4,180円",
+      "note": "1ギガ・マンション（2年自動更新）。2026年12月1日から330円上がる予定です。"
+    },
+    "speed": "最大1Gbps。10ギガ（戸建6,930円・2年自動更新、別にオプションが必要）はエリア限定",
+    "contract": "2年自動更新が基本。更新月とその翌月・翌々月以外の解約は解除料（1ギガ ファミリー5,720円）",
+    "initialCost": "工事費は公式ページで表記が分かれているため、申込み時に確認してください（新規の回線工事費割引キャンペーンで、工事費相当を月額から割引）",
+    "mobileSet": [
+      "おうち割 光セット（ソフトバンク 1回線あたり1,100円/月引き）",
+      "おうち割 光セット（A）（ワイモバイル 1回線あたり1,650円/月引き）"
+    ],
+    "area": "NTT西日本の回線を使うため、県内の多くの地域が対象。住所ごとの可否は公式で確認してください。",
+    "goodFor": [
+      "ソフトバンク・ワイモバイルのスマホを使っている",
+      "今の回線の解約金が気になる"
+    ],
+    "points": [
+      "ソフトバンク・ワイモバイルのスマホ代が、家族の回線ぶん毎月割引（1回線あたり1,100円/1,650円）",
+      "「SoftBank あんしん乗り換えキャンペーン」で他社の解約金・撤去費などを最大10万円まで還元（条件あり）",
+      "NTT西日本の回線なので、県内の広い範囲で使える"
+    ],
+    "cautions": [
+      "おうち割には、光電話やWi-Fiマルチパックなどのオプション（月550円〜）への加入が必要です",
+      "2026年12月1日から名前と料金が変わる予定です。申込み前に最新の料金を確認してください",
+      "乗り換えの還元は、証明書の提出などの手続きが必要です"
+    ],
+    "affiliate": {
+      "href": "https://px.a8.net/svt/ejp?a8mat=4AX6CE+9NP6U2+3IB8+61JSI",
+      "label": "SoftBank 光の申込み窓口を見る",
+      "banner": null,
+      "pixel": null
+    },
+    "officialUrl": "https://www.softbank.jp/internet/sbhikari/",
+    "sources": [
+      {
+        "label": "SoftBank 光",
+        "url": "https://www.softbank.jp/internet/sbhikari/"
+      },
+      {
+        "label": "おうち割 光セット",
+        "url": "https://www.softbank.jp/mobile/special/ouchiwari-hikari/"
+      },
+      {
+        "label": "あんしん乗り換えキャンペーン",
+        "url": "https://www.softbank.jp/internet/campaigns/list/anshin-norikae01/"
+      },
+      {
+        "label": "回線工事費割引キャンペーン",
+        "url": "https://www.softbank.jp/internet/campaigns/list/sbhikari-koujihi-2026/"
+      }
+    ],
+    "checkedAt": "2026-11-21"
+  },
+  {
+    "id": "biglobe-hikari",
+    "published": true,
+    "name": "ビッグローブ光",
+    "company": "ビッグローブ株式会社",
+    "kind": "fiber",
+    "network": "NTT西日本のフレッツ光の回線（光コラボ）",
+    "carriers": [
+      "au",
+      "uq"
+    ],
+    "order": {
+      "house": 4,
+      "mansion": 4
+    },
+    "summary": "auスマホ・UQ mobileのセット割に対応した、NTT西日本の回線を使う光回線です。BBIQのエリアから外れる住所で、auやUQ mobileを使っている人の候補になります。",
+    "house": {
+      "monthly": 5478,
+      "label": "5,478円",
+      "note": "1ギガ・戸建（3年プラン）。10ギガ（2年プラン）は6,270円。"
+    },
+    "mansion": {
+      "monthly": 4378,
+      "label": "4,378円",
+      "note": "1ギガ・マンション（3年プラン）。10ギガ（2年プラン）は6,270円。"
+    },
+    "speed": "最大1Gbps。10ギガプランはフレッツ 光クロスの提供地域で選べます",
+    "contract": "1ギガは3年（36ヵ月）、10ギガは2年（24ヵ月）。違約金は1ギガ戸建4,100円・マンション3,000円、10ギガ4,620円（更新月とその翌月・翌々月は不要）",
+    "initialCost": "申込手数料（回線新規）1ギガ3,300円・10ギガ1,100円。新規の工事費28,600円は「新規工事費実質無料特典」で分割相当額を値引き",
+    "mobileSet": [
+      "auスマートバリュー（au）",
+      "自宅セット割（UQ mobile）"
+    ],
+    "area": "NTT西日本の回線を使うため、県内の多くの地域が対象。住所ごとの可否は公式で確認してください。",
+    "goodFor": [
+      "auスマホ・UQ mobileを使っていて、BBIQのエリア外",
+      "10ギガを使いたい（鹿児島市など）"
+    ],
+    "points": [
+      "auスマートバリュー・UQ mobileの自宅セット割に対応",
+      "フレッツ光などからの乗り換え（転用・事業者変更）は工事費不要",
+      "10ギガプランもある"
+    ],
+    "cautions": [
+      "1ギガは3年プランです。途中で解約すると違約金がかかります",
+      "公式のキャッシュバック特典は2026年9月30日で期間が終わっていました（11月21日時点）。申込み窓口ごとの特典を確認してください"
+    ],
+    "affiliate": {
+      "href": "https://px.a8.net/svt/ejp?a8mat=4AX5KH+11ICNU+3SPO+7LW1F7",
+      "label": "ビッグローブ光の申込み窓口を見る",
+      "banner": null,
+      "pixel": null
+    },
+    "officialUrl": "https://join.biglobe.ne.jp/ftth/hikari/",
+    "sources": [
+      {
+        "label": "ビッグローブ光 料金",
+        "url": "https://join.biglobe.ne.jp/ftth/hikari/price/"
+      },
+      {
+        "label": "ビッグローブ光 キャンペーン",
+        "url": "https://join.biglobe.ne.jp/ftth/hikari/campaign/"
+      },
+      {
+        "label": "auスマートバリュー",
+        "url": "https://join.biglobe.ne.jp/ftth/hikari/set/smartvalue.html"
+      }
+    ],
+    "checkedAt": "2026-11-21"
+  },
+  {
+    "id": "flets-hikari",
+    "published": true,
+    "name": "フレッツ光（NTT西日本）",
+    "company": "西日本電信電話株式会社",
+    "kind": "fiber",
+    "network": "NTT西日本の光回線（プロバイダは別に契約）",
+    "carriers": [],
+    "order": {
+      "house": 5,
+      "mansion": 5
+    },
+    "summary": "回線をNTT西日本と、プロバイダを別の会社と、2つ契約する形です。プロバイダを自分で選びたい人向けです。光コラボ（ドコモ光など）と同じ回線を使います。",
+    "house": {
+      "monthly": 5940,
+      "label": "5,940円＋プロバイダ料金",
+      "note": "フレッツ 光ネクスト（1ギガ）・ファミリー。10ギガのフレッツ 光クロスは6,930円（光はじめ割クロスで1・2年目4,180円、3年目以降5,720円）＋プロバイダ料金。"
+    },
+    "mansion": {
+      "monthly": 3520,
+      "label": "3,520〜4,950円＋プロバイダ料金",
+      "note": "フレッツ 光ネクスト・マンション（ひかり配線方式）。建物ごとの契約見込み数でプランが決まります。"
+    },
+    "speed": "光ネクストは最大1Gbps、光クロスは最大10Gbps（提供地域は下の地域ページ参照）",
+    "contract": "光はじめ割クロスは2年ごとの自動延伸。満了月とその翌月・翌々月以外の解約は解約金4,180円",
+    "initialCost": "新規の初期費用は22,880円（契約料880円＋工事費22,000円、NTT西日本公式サイトからの申込み、2027年3月31日まで）。2027年4月1日からは28,380円",
+    "mobileSet": [],
+    "area": "鹿児島県内の多くの地域と一部の離島が対象。10ギガ（光クロス）は12市町（2026年9月28日時点）。",
+    "goodFor": [
+      "プロバイダを自分で選びたい",
+      "スマホのセット割にこだわらない"
+    ],
+    "points": [
+      "プロバイダを自由に選べる",
+      "10ギガの光クロスは「光はじめ割クロス」で1・2年目の料金が下がる",
+      "離島の一部（自治体が整備した光ファイバーの地域をふくむ）でも提供"
+    ],
+    "cautions": [
+      "表示の料金にプロバイダ料金はふくまれません",
+      "スマホとのセット割はありません"
+    ],
+    "affiliate": null,
+    "officialUrl": "https://flets-w.com/",
+    "sources": [
+      {
+        "label": "フレッツ 光ネクスト 料金",
+        "url": "https://flets-w.com/service/next/price/new/"
+      },
+      {
+        "label": "フレッツ 光クロス",
+        "url": "https://flets-w.com/service/cross/"
+      },
+      {
+        "label": "光はじめ割クロス",
+        "url": "https://flets-w.com/limited/hajimecross/"
+      },
+      {
+        "label": "料金プラン（初期費用）",
+        "url": "https://flets-w.com/priceplan/"
+      }
+    ],
+    "checkedAt": "2026-11-21"
+  },
+  {
+    "id": "home5g",
+    "published": true,
+    "name": "home 5G（ドコモ）",
+    "company": "株式会社NTTドコモ",
+    "kind": "router",
+    "network": "ドコモのスマホ用の電波を使うホームルーター",
+    "carriers": [
+      "docomo"
+    ],
+    "order": {
+      "house": 6,
+      "mansion": 6
+    },
+    "summary": "工事がいらず、届いた機械をコンセントにさすだけで使えるホームルーターです。光回線の工事ができない建物や、すぐにネットを使いたい人の候補です。",
+    "house": {
+      "monthly": 5280,
+      "label": "5,280円",
+      "note": "home 5G プラン（プロバイダ料金込み）。別にブロードバンドユニバーサルサービス料がかかります。"
+    },
+    "mansion": {
+      "monthly": 5280,
+      "label": "5,280円",
+      "note": "戸建て・マンションで同じ料金です。"
+    },
+    "speed": "5Gの電波が届く場所で5G通信。速さは場所や時間帯で大きく変わります",
+    "contract": "定期契約・解約金の設定なし（ただし機械代の割引「月々サポート」は解約で終わります）",
+    "initialCost": "契約事務手数料4,950円（ドコモオンラインショップは無料）。専用機HR02は73,260円で、月々サポート（最大48回）を使うと実質0円",
+    "mobileSet": [
+      "home 5G セット割（ドコモ）"
+    ],
+    "area": "登録した住所でだけ使えます。5Gかどうかは住所の電波状況によります。",
+    "goodFor": [
+      "工事ができない・したくない",
+      "すぐにネットを使いたい",
+      "ドコモのスマホを使っている"
+    ],
+    "points": [
+      "工事なし。コンセントにさすだけで使える",
+      "定期契約・解約金の設定がない",
+      "ドコモのスマホとのセット割「home 5G セット割」がある"
+    ],
+    "cautions": [
+      "登録した住所以外では使えません",
+      "混雑する時間帯や、直近3日間にたくさん使ったときは遅くなることがあります",
+      "48ヵ月より前に解約すると、機械代の残りを払うことになります"
+    ],
+    "affiliate": null,
+    "officialUrl": "https://www.docomo.ne.jp/home_5g/",
+    "sources": [
+      {
+        "label": "home 5G",
+        "url": "https://www.docomo.ne.jp/home_5g/"
+      },
+      {
+        "label": "home 5G 料金",
+        "url": "https://www.docomo.ne.jp/home_5g/charge/"
+      },
+      {
+        "label": "home 5G セット割",
+        "url": "https://www.docomo.ne.jp/charge/home_5g_set/"
+      }
+    ],
+    "checkedAt": "2026-11-21"
+  },
+  {
+    "id": "softbank-air",
+    "published": true,
+    "name": "SoftBank Air",
+    "company": "ソフトバンク株式会社",
+    "kind": "router",
+    "network": "ソフトバンクの電波を使うホームルーター",
+    "carriers": [
+      "softbank",
+      "ymobile"
+    ],
+    "order": {
+      "house": 7,
+      "mansion": 7
+    },
+    "summary": "工事がいらない、置くだけのホームルーターです。ソフトバンク・ワイモバイルのセット割「おうち割 光セット」の対象になります。",
+    "house": {
+      "monthly": 5368,
+      "label": "5,368円",
+      "note": "Air 4G/5G共通プラン。2026年12月1日から5,698円になる予定です（公式の案内）。"
+    },
+    "mansion": {
+      "monthly": 5368,
+      "label": "5,368円",
+      "note": "戸建て・マンションで同じ料金です。2026年12月1日から5,698円の予定。"
+    },
+    "speed": "5Gの対象エリアは限られます。速さは場所や時間帯で大きく変わります",
+    "contract": "契約期間・解除料は公式ページで確認できませんでした。申込み前に確認してください",
+    "initialCost": "契約事務手数料4,950円。Airターミナル6は95,040円（分割払い可。レンタルは月539円・5G対応機種はレンタル対象外）",
+    "mobileSet": [
+      "おうち割 光セット（ソフトバンク 1,100円/月・ワイモバイル 1,650円/月）"
+    ],
+    "area": "住所ごとの電波状況は公式のエリアページで確認してください。",
+    "goodFor": [
+      "工事ができない・したくない",
+      "ソフトバンク・ワイモバイルのスマホを使っている"
+    ],
+    "points": [
+      "工事なし。即日開通の案内あり（公式サイトより）",
+      "ソフトバンク・ワイモバイルのセット割の対象",
+      "データ容量の上限なし（混雑する時間帯は速度制限あり）"
+    ],
+    "cautions": [
+      "機械代が高めです。分割の残りや割引の条件を確認してください",
+      "2026年12月1日から月額が上がる予定です"
+    ],
+    "affiliate": null,
+    "officialUrl": "https://www.softbank.jp/internet/air/",
+    "sources": [
+      {
+        "label": "SoftBank Air",
+        "url": "https://www.softbank.jp/internet/air/"
+      },
+      {
+        "label": "SoftBank Air 料金",
+        "url": "https://www.softbank.jp/internet/air/price/"
+      }
+    ],
+    "checkedAt": "2026-11-21"
+  },
+  {
+    "id": "au-hikari",
+    "published": false,
+    "name": "auひかり",
+    "company": "KDDI株式会社",
+    "kind": "fiber",
+    "network": "KDDIの光回線",
+    "carriers": [
+      "au",
+      "uq"
+    ],
+    "order": {
+      "house": 99,
+      "mansion": 99
+    },
+    "summary": "【非公開】鹿児島県で戸建てタイプが使えるか、公式で確かめられていません。確かめたら published を true にして料金を書き直します。",
+    "house": null,
+    "mansion": null,
+    "speed": "",
+    "contract": "",
+    "initialCost": "",
+    "mobileSet": [
+      "auスマートバリュー（au）",
+      "自宅セット割（UQ mobile）"
+    ],
+    "area": "要確認",
+    "goodFor": [],
+    "points": [],
+    "cautions": [],
+    "affiliate": {
+      "href": "https://px.a8.net/svt/ejp?a8mat=4AX6CE+9ICAE2+42Y0+5ZMCH",
+      "label": "auひかりの申込み窓口を見る",
+      "banner": null,
+      "pixel": null
+    },
+    "officialUrl": "https://www.au.com/internet/",
+    "sources": [],
+    "checkedAt": ""
+  }
+]

@@ -1,0 +1,73 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import { SITE } from '../../../site.config.mjs';
+import { areas, providers, carrierGuide, byId, breadcrumbLd, type Area } from '../../../lib/data';
+
+export function getStaticPaths() {
+  return areas.map((a) => ({ params: { slug: a.slug }, props: { a } }));
+}
+const { a } = Astro.props as { a: Area };
+const crumbs = [{ name: 'ホーム', href: '/' }, { name: '地域別', href: '/hikari/area/' }, { name: a.name, href: `/hikari/area/${a.slug}/` }];
+const others = areas.filter((o) => o.slug !== a.slug);
+const isIsland = a.slug === 'ritou';
+const islandNote = (id: string) => (isIsland && id === 'bbiq' ? '（離島は要エリア確認）' : '');
+const title = `${a.name}の光回線おすすめ｜使える回線・10ギガ・選び方`;
+const description = `${a.name}で使える光回線とホームルーターを、公式の提供エリア情報をもとにまとめました。${a.tenGiga ? '10ギガが使える地域かどうか、' : ''}スマホ会社別の選び方と、申込み前に確認することを紹介します。`;
+---
+<Base title={title} description={description} jsonLd={[breadcrumbLd(SITE.url, crumbs)]} pr={false}>
+  <div class="mx-auto max-w-3xl px-4 pt-8">
+    <Breadcrumbs items={[{ name: 'ホーム', href: '/' }, { name: '地域別', href: '/hikari/area/' }, { name: a.name }]} />
+    <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 leading-snug">{a.name}の光回線の選び方</h1>
+    <p class="mt-4 text-[15px] leading-8">{a.lead}</p>
+
+    <div class="prose-ja">
+      {a.sections.map((s) => (
+        <>
+          <h2>{s.title}</h2>
+          {s.body.map((b) => <p>{b}</p>)}
+        </>
+      ))}
+
+      <h2>スマホ会社別のおすすめ</h2>
+      <table>
+        <thead><tr><th>スマホ</th><th>候補</th></tr></thead>
+        <tbody>
+          {carrierGuide.map((c) => (
+            <tr><th>{c.label}</th><td>{c.ids.map((id) => byId(id)).filter(Boolean).map((p, i) => (
+              <>{i > 0 && '、'}<a href={`/hikari/${p!.id}/`}>{p!.name}</a>{islandNote(p!.id)}</>
+            ))}</td></tr>
+          ))}
+        </tbody>
+      </table>
+
+      <h2>申込み前に確認すること</h2>
+      <ol>
+        <li>各社の公式サイトで、住所（郵便番号）を入れて提供エリアを確認する</li>
+        <li>マンション・アパートなら、建物に入っている設備と工事の可否を管理会社に聞く</li>
+        <li>スマホのセット割の条件（対象のプラン、オプションへの加入など）を確認する</li>
+      </ol>
+      <p class="text-xs text-gray-500">{a.sourceNote}（2026年11月21日に確認）</p>
+    </div>
+
+    <section class="mt-10">
+      <h2 class="text-lg font-bold text-gray-900 mb-3">{isIsland ? 'くらべられる主なサービス' : `${a.name}で使える主なサービス`}</h2>
+      <ul class="grid gap-2 sm:grid-cols-2">
+        {providers.map((p) => (
+          <li><a href={`/hikari/${p.id}/`} class="block rounded-lg border border-gray-200 px-4 py-3 hover:border-brand-600 transition">
+            <span class="font-bold">{p.name}</span><span class="text-xs text-amber-700">{islandNote(p.id)}</span>
+            <span class="block text-xs text-gray-500">{p.kind === 'router' ? '工事なし・' : ''}戸建て {p.house?.label ?? '—'}</span>
+          </a></li>
+        ))}
+      </ul>
+      <p class="mt-2 text-xs text-gray-500">※住所によっては使えないサービスがあります。</p>
+    </section>
+
+    <section class="mt-10">
+      <h2 class="text-lg font-bold text-gray-900 mb-3">ほかの地域</h2>
+      <ul class="flex flex-wrap gap-2">
+        {others.map((o) => <li><a href={`/hikari/area/${o.slug}/`} class="inline-block rounded-full border border-gray-300 px-3 py-1.5 text-sm hover:border-brand-600">{o.name}</a></li>)}
+      </ul>
+    </section>
+  </div>
+</Base>

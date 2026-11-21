@@ -1,16 +1,46 @@
-# React + Vite
+# 鹿児島の光回線比較サイト（くらしの比較ノート）
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Astro で作った、ページごとにでき上がったHTMLを出す（静的な）サイトです。
+GitHub の `main` に入ると、Vercel が自動で組み立てて公開します。
 
-Currently, two official plugins are available:
+## 料金などを直すとき（いちばんよく使う）
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. GitHub の画面で `src/data/providers.json` を開き、えんぴつのマーク（Edit）を押す
+2. 直したい回線の `label`（表示する金額）と `note`（条件の説明）を書きかえる
+3. **公式サイトで確かめた日を `checkedAt` に書く**（例 `"2026-12-01"`）。出典のURLは `sources` に
+4. 下の「Commit changes」で保存 → 数分で公開されます
 
-## React Compiler
+- 「最安」「No.1」「満足度」などは、はっきりした根拠がない限り書かない（景品表示法）
+- まだ確かめられない回線は `"published": false` にすると、ページから消えます（例：auひかり）
+- おすすめの順番は `order`（`house`＝戸建て、`mansion`＝マンション）の数字が小さい順
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ファイルの場所
 
-## Expanding the ESLint configuration
+| 何を | どこ |
+|---|---|
+| 回線の料金・説明・広告リンク | `src/data/providers.json` |
+| 地域ページの文章 | `src/data/areas.json` |
+| よくある質問 | `src/data/faqs.json` |
+| サイト名・アドレス・問い合わせフォーム | `src/site.config.mjs` |
+| ページの作り | `src/pages/` |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## A8.net の広告タグを入れるとき
+
+A8 のタグ（`<a href=...><img ...></a><img ...>`）は、そのまま貼らずに、次で `affiliate` の形に直してから `providers.json` に入れます。
+
+```bash
+node scripts/a8-to-json.mjs '<A8のタグをそのまま貼る>'
+```
+
+出てきた `label` の「〇〇」をサービス名に直してください。
+リンクは自動で `rel="sponsored"`（広告リンクの印）つきで出ます。
+**入れる前に、リンク先が本当にそのサービスの申込み窓口かを確かめてください。**
+
+## パソコンで確かめるとき
+
+```bash
+npm install
+npm run check-data   # データの点検（確認日・出典・言いすぎの言葉）
+npm run build        # 組み立て
+npm run preview      # http://localhost:4321 で見る
+```

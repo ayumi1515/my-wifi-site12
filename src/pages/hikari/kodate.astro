@@ -1,0 +1,33 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProviderCard from '../../components/ProviderCard.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { SITE } from '../../site.config.mjs';
+import { ranked, breadcrumbLd, jpDate, lastChecked } from '../../lib/data';
+const list = ranked('house', 'fiber');
+const crumbs = [{ name: 'ホーム', href: '/' }, { name: '戸建て向けの光回線', href: '/hikari/kodate/' }];
+---
+<Base title="鹿児島県の戸建て向け光回線をくらべる｜月額・工事費・セット割"
+  description="鹿児島県の一戸建てで使える光回線を、公式サイトの料金をもとに比較。BBIQ・ドコモ光・SoftBank 光・ビッグローブ光・フレッツ光の月額、工事費、スマホのセット割、10ギガの有無をまとめました。"
+  jsonLd={[breadcrumbLd(SITE.url, crumbs)]}>
+  <div class="mx-auto max-w-5xl px-4 pt-8">
+    <Breadcrumbs items={[{ name: 'ホーム', href: '/' }, { name: '戸建て向けの光回線' }]} />
+    <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 leading-snug">鹿児島県の戸建て向け光回線をくらべる</h1>
+    <div class="prose-ja mt-4">
+      <p>一戸建ての光回線は、電柱から家まで光ファイバーを引きこむ工事が必要です。工事費は多くの回線で「実質無料」の特典がありますが、分割の割引を途中でやめると残りを払う形がほとんどなので、長く使う前提で選びましょう。</p>
+      <p>月額は、戸建てのほうがマンションより高めです。スマホとのセット割を組み合わせると、家族全体の通信費が下がりやすくなります。</p>
+      <p class="text-xs text-gray-500">料金はすべて税込。最終確認日：{jpDate(lastChecked)}</p>
+    </div>
+    <div class="mt-8 space-y-8">
+      {list.map((p, i) => <ProviderCard provider={p} building="house" rank={i + 1} headingLevel="h2" />)}
+    </div>
+    <section class="prose-ja mt-12">
+      <h2>戸建てで気をつけること</h2>
+      <ul>
+        <li><strong>新築・建て替え</strong>：入居日が決まったら早めに申し込むと、入居から使えるまでの期間を短くできます。</li>
+        <li><strong>工事の立ち会い</strong>：家の中の工事には立ち会いが必要なことが多く、土日祝の工事は追加料金がかかる場合があります。</li>
+        <li><strong>10ギガ</strong>：鹿児島県ではNTT西日本の「フレッツ 光クロス」の提供地域（12市町）が目安です。<a href="/hikari/area/">地域別の情報</a>も見てください。</li>
+      </ul>
+    </section>
+  </div>
+</Base>

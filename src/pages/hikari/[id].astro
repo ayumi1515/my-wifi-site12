@@ -1,0 +1,90 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import AffiliateButton from '../../components/AffiliateButton.astro';
+import CheckedNote from '../../components/CheckedNote.astro';
+import { SITE } from '../../site.config.mjs';
+import { providers, breadcrumbLd, jpDate, type Provider } from '../../lib/data';
+
+export function getStaticPaths() {
+  return providers.map((p) => ({ params: { id: p.id }, props: { p } }));
+}
+const { p } = Astro.props as { p: Provider };
+const isRouter = p.kind === 'router';
+const parent = isRouter ? { name: '工事なしのホームルーター', href: '/hikari/home-router/' } : { name: '鹿児島の光回線', href: '/' };
+const crumbs = [{ name: 'ホーム', href: '/' }, ...(isRouter ? [parent] : []), { name: p.name, href: `/hikari/${p.id}/` }];
+const others = providers.filter((o) => o.id !== p.id && o.kind === p.kind);
+const title = `${p.name}は鹿児島で使える？料金・エリア・セット割を公式情報で解説`;
+const description = `${p.name}を鹿児島県で使うときの月額（戸建て・マンション）、工事費、スマホのセット割、提供エリア、気をつけることを、公式サイトの情報（${jpDate(p.checkedAt)}確認）をもとにまとめました。`;
+---
+<Base title={title} description={description} jsonLd={[breadcrumbLd(SITE.url, crumbs)]} pr={!!p.affiliate}>
+  <div class="mx-auto max-w-3xl px-4 pt-8">
+    <Breadcrumbs items={[...crumbs.slice(0, -1), { name: p.name }]} />
+    <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 leading-snug">{p.name}を鹿児島で使うときの料金・エリア・注意点</h1>
+    <p class="mt-2 text-sm text-gray-500">{p.company}・{p.network}</p>
+
+    <div class="mt-6 rounded-xl border-2 border-brand-100 bg-brand-50 p-5">
+      <p class="font-bold text-gray-900 mb-2">まとめ</p>
+      <p class="text-[15px] leading-8">{p.summary}</p>
+      {p.goodFor.length > 0 && (
+        <>
+          <p class="font-bold text-gray-900 mt-4 mb-1 text-sm">こんな人に向いています</p>
+          <ul class="text-sm space-y-1">{p.goodFor.map((g) => <li>・{g}</li>)}</ul>
+        </>
+      )}
+      <div class="mt-5"><AffiliateButton provider={p} /></div>
+    </div>
+
+    <div class="prose-ja">
+      <h2>月額料金（税込）</h2>
+      <table>
+        <tbody>
+          {p.house && <tr><th class="w-28">戸建て</th><td><strong>{p.house.label}</strong><br /><span class="text-xs text-gray-600">{p.house.note}</span></td></tr>}
+          {p.mansion && <tr><th>マンション</th><td><strong>{p.mansion.label}</strong><br /><span class="text-xs text-gray-600">{p.mansion.note}</span></td></tr>}
+        </tbody>
+      </table>
+
+      <h2>契約期間・初期費用</h2>
+      <table>
+        <tbody>
+          <tr><th class="w-28">契約期間</th><td>{p.contract}</td></tr>
+          <tr><th>初期費用</th><td>{p.initialCost}</td></tr>
+          <tr><th>速さ</th><td>{p.speed}</td></tr>
+        </tbody>
+      </table>
+
+      <h2>スマホのセット割</h2>
+      {p.mobileSet.length ? <ul>{p.mobileSet.map((s) => <li>{s}</li>)}</ul> : <p>スマホとのセット割はありません。</p>}
+
+      <h2>鹿児島県で使えるか</h2>
+      <p>{p.area}</p>
+      <p>地域ごとのくわしい情報は、<a href="/hikari/area/">地域別の光回線情報</a>を見てください。</p>
+
+      <h2>よいところ</h2>
+      <ul>{p.points.map((t) => <li>{t}</li>)}</ul>
+
+      {p.cautions.length > 0 && (<>
+        <h2>気をつけること</h2>
+        <ul>{p.cautions.map((t) => <li>{t}</li>)}</ul>
+      </>)}
+    </div>
+
+    <div class="mt-8 rounded-xl border border-gray-200 p-5">
+      <AffiliateButton provider={p} showBanner />
+      <p class="mt-4 text-sm"><a href={p.officialUrl} target="_blank" rel="noopener" class="text-brand-600 underline underline-offset-2">{p.name}の公式サイト（情報の出典）</a></p>
+      <CheckedNote provider={p} />
+    </div>
+
+    <section class="mt-12">
+      <h2 class="text-lg font-bold text-gray-900 mb-3">ほかの{isRouter ? 'ホームルーター' : '光回線'}もくらべる</h2>
+      <ul class="grid gap-2 sm:grid-cols-2">
+        {others.map((o) => (
+          <li><a href={`/hikari/${o.id}/`} class="block rounded-lg border border-gray-200 px-4 py-3 hover:border-brand-600 transition">
+            <span class="font-bold">{o.name}</span>
+            <span class="block text-xs text-gray-500">戸建て {o.house?.label ?? '—'}／マンション {o.mansion?.label ?? '—'}</span>
+          </a></li>
+        ))}
+      </ul>
+    </section>
+  </div>
+</Base>

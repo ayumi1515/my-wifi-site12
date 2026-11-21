@@ -1,0 +1,41 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProviderCard from '../../components/ProviderCard.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { SITE } from '../../site.config.mjs';
+import { ranked, breadcrumbLd, jpDate, lastChecked } from '../../lib/data';
+const list = ranked('house', 'router');
+const crumbs = [{ name: 'ホーム', href: '/' }, { name: '工事なしのホームルーター', href: '/hikari/home-router/' }];
+---
+<Base title="鹿児島で工事なしで使えるネット｜ホームルーターと光回線のちがい"
+  description="工事ができない・すぐにネットを使いたい人向けに、鹿児島で使えるホームルーター（home 5G・SoftBank Air）を公式情報で比較。光回線とのちがい、住所の制限、機械代の注意点をまとめました。"
+  jsonLd={[breadcrumbLd(SITE.url, crumbs)]} pr={false}>
+  <div class="mx-auto max-w-5xl px-4 pt-8">
+    <Breadcrumbs items={[{ name: 'ホーム', href: '/' }, { name: '工事なしのホームルーター' }]} />
+    <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 leading-snug">工事なしで使えるネット（ホームルーター）</h1>
+    <div class="prose-ja mt-4">
+      <p>ホームルーターは、スマホと同じ電波を使う、置くだけのWi-Fiの機械です。工事がいらず、機械が届けばすぐに使い始められます。</p>
+      <table>
+        <thead><tr><th></th><th>光回線</th><th>ホームルーター</th></tr></thead>
+        <tbody>
+          <tr><th>工事</th><td>必要（建物による）</td><td>いらない</td></tr>
+          <tr><th>使えるまで</th><td>工事日しだい</td><td>機械が届けばすぐ</td></tr>
+          <tr><th>通信の安定</th><td>安定しやすい</td><td>場所・時間帯で変わりやすい</td></tr>
+          <tr><th>使える場所</th><td>契約した住所</td><td>登録した住所など（サービスごとの決まりを確認）</td></tr>
+        </tbody>
+      </table>
+      <p class="text-xs text-gray-500">料金はすべて税込。最終確認日：{jpDate(lastChecked)}</p>
+    </div>
+    <div class="mt-8 space-y-8">
+      {list.map((p, i) => <ProviderCard provider={p} building="house" rank={i + 1} headingLevel="h2" />)}
+    </div>
+    <section class="prose-ja mt-12">
+      <h2>ホームルーターで気をつけること</h2>
+      <ul>
+        <li>電波の届き方は場所で変わります。山あいや離島では、公式のエリアページで確認してから選びましょう。</li>
+        <li>機械代を分割で払い、その分を毎月割り引く形が多いです。途中で解約すると残りを払うことになります。</li>
+        <li>停電すると使えなくなるのは光回線と同じです。</li>
+      </ul>
+    </section>
+  </div>
+</Base>
