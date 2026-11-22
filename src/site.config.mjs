@@ -12,5 +12,6 @@ export const SITE = {
   googleSiteVerifications: [
     'kdvPCZAmn4Wxz2Qz0aq9_IMvvtZhh_HmEIwIC3VLBNU',
     '9NfaYyy-ki71BXEBC8drRW87FSaw0KegoMjQc67b2Gs',
+    '5x1m8swsitDeFI1sRFkq7gF0SpAwKKV4uWgeEGIRxXk',
   ],
 };
