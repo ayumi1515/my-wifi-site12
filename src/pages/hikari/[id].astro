@@ -11,32 +11,59 @@ export function getStaticPaths() {
 }
 const { p } = Astro.props as { p: Provider };
 const isRouter = p.kind === 'router';
-const parent = isRouter ? { name: '工事なしのホームルーター', href: '/hikari/home-router/' } : { name: '鹿児島の光回線', href: '/' };
-const crumbs = [{ name: 'ホーム', href: '/' }, ...(isRouter ? [parent] : []), { name: p.name, href: `/hikari/${p.id}/` }];
+const parent = isRouter ? { name: '工事なしのホームルーター', href: '/hikari/home-router/' } : { name: '鹿児島の光回線', href: '/hikari/' };
+const crumbs = [{ name: 'ホーム', href: '/' }, parent, { name: p.name, href: `/hikari/${p.id}/` }];
 const others = providers.filter((o) => o.id !== p.id && o.kind === p.kind);
+const sections = [
+  { id: 'price', label: '月額料金' },
+  { id: 'contract', label: '契約・初期費用' },
+  { id: 'mobile', label: 'スマホのセット割' },
+  { id: 'area', label: '鹿児島の提供エリア' },
+  { id: 'cautions', label: '注意点' },
+  { id: 'before-apply', label: '申込み前の確認' },
+];
 const title = `${p.name}は鹿児島で使える？料金・エリア・セット割を公式情報で解説`;
 const description = `${p.name}を鹿児島県で使うときの月額（戸建て・マンション）、工事費、スマホのセット割、提供エリア、気をつけることを、公式サイトの情報（${jpDate(p.checkedAt)}確認）をもとにまとめました。`;
 ---
 <Base title={title} description={description} jsonLd={[breadcrumbLd(SITE.url, crumbs)]} pr={!!p.affiliate}>
   <div class="mx-auto max-w-3xl px-4 pt-8">
     <Breadcrumbs items={[...crumbs.slice(0, -1), { name: p.name }]} />
+    <p class="section-kicker mt-6">通信・インターネットの選び方</p>
     <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 leading-snug">{p.name}を鹿児島で使うときの料金・エリア・注意点</h1>
     <p class="mt-2 text-sm text-gray-500">{p.company}・{p.network}</p>
+    <p class="mt-3 text-xs text-gray-500">公式情報の確認日：<time datetime={p.checkedAt}>{jpDate(p.checkedAt)}</time> ／ 料金はすべて税込</p>
 
-    <div class="mt-6 rounded-xl border-2 border-brand-100 bg-brand-50 p-5">
-      <p class="font-bold text-gray-900 mb-2">まとめ</p>
+    <section class="mt-6 rounded-2xl border border-brand-100 bg-brand-50 p-5 sm:p-7" aria-labelledby="conclusion">
+      <h2 id="conclusion" class="font-bold text-gray-900 mb-2 text-lg">先に結論</h2>
       <p class="text-[15px] leading-8">{p.summary}</p>
-      {p.goodFor.length > 0 && (
-        <>
-          <p class="font-bold text-gray-900 mt-4 mb-1 text-sm">こんな人に向いています</p>
-          <ul class="text-sm space-y-1">{p.goodFor.map((g) => <li>・{g}</li>)}</ul>
-        </>
-      )}
+      <div class="mt-5 grid gap-3 sm:grid-cols-2">
+        {p.goodFor.length > 0 && (
+          <div class="rounded-xl bg-white p-4">
+            <h3 class="font-bold text-brand-700 mb-2 text-sm">候補になる人</h3>
+            <ul class="text-sm space-y-2 leading-relaxed">{p.goodFor.map((g) => <li class="flex gap-2"><span class="text-brand-600" aria-hidden="true">✓</span><span>{g}</span></li>)}</ul>
+          </div>
+        )}
+        {p.cautions.length > 0 && (
+          <div class="rounded-xl bg-white p-4">
+            <h3 class="font-bold text-gray-800 mb-2 text-sm">先に確認したい条件</h3>
+            <ul class="text-sm space-y-2 leading-relaxed text-gray-700">{p.cautions.slice(0, 2).map((c) => <li class="flex gap-2"><span class="text-amber-700" aria-hidden="true">!</span><span>{c}</span></li>)}</ul>
+          </div>
+        )}
+      </div>
       <div class="mt-5"><AffiliateButton provider={p} /></div>
-    </div>
+      <p class="mt-3 text-xs leading-relaxed text-gray-600">住所によって使えるプランが変わります。対象エリアと料金の条件が合うかを確認してから選びましょう。</p>
+    </section>
+
+    <nav class="mt-7 rounded-xl border border-gray-200 bg-white p-4 sm:p-5" aria-label="この記事の目次">
+      <p class="text-xs font-bold tracking-wide text-gray-500 mb-3">この記事で確認できること</p>
+      <ul class="grid gap-x-5 gap-y-2 sm:grid-cols-2 text-sm">
+        {sections.map((s) => <li><a href={`#${s.id}`} class="inline-flex gap-2 text-brand-700 underline decoration-brand-100 underline-offset-4"><span aria-hidden="true">↓</span>{s.label}</a></li>)}
+      </ul>
+    </nav>
 
     <div class="prose-ja">
-      <h2>月額料金（税込）</h2>
+      <h2 id="price" class="scroll-mt-28">月額料金（税込）</h2>
+      <p>月額の数字だけでなく、割引が終わった後の金額と、割引を受ける条件を一緒に確認してください。</p>
       <table>
         <tbody>
           {p.house && <tr><th class="w-28">戸建て</th><td><strong>{p.house.label}</strong><br /><span class="text-xs text-gray-600">{p.house.note}</span></td></tr>}
@@ -44,7 +71,7 @@ const description = `${p.name}を鹿児島県で使うときの月額（戸建�
         </tbody>
       </table>
 
-      <h2>契約期間・初期費用</h2>
+      <h2 id="contract" class="scroll-mt-28">契約期間・初期費用</h2>
       <table>
         <tbody>
           <tr><th class="w-28">契約期間</th><td>{p.contract}</td></tr>
@@ -52,11 +79,13 @@ const description = `${p.name}を鹿児島県で使うときの月額（戸建�
           <tr><th>速さ</th><td>{p.speed}</td></tr>
         </tbody>
       </table>
+      <p class="text-sm">「実質無料」は、途中で解約しても支払いがないという意味ではありません。工事費や端末代の分割払いと、毎月の割引がいつまで続くかを確認しましょう。</p>
 
-      <h2>スマホのセット割</h2>
+      <h2 id="mobile" class="scroll-mt-28">スマホのセット割</h2>
       {p.mobileSet.length ? <ul>{p.mobileSet.map((s) => <li>{s}</li>)}</ul> : <p>スマホとのセット割はありません。</p>}
+      {p.mobileSet.length > 0 && <p class="text-sm">対象外のスマホ料金プランや、光電話などの追加オプションが条件になる場合があります。家族の対象回線数とオプション料金を合わせて比較してください。</p>}
 
-      <h2>鹿児島県で使えるか</h2>
+      <h2 id="area" class="scroll-mt-28">鹿児島県で使えるか</h2>
       <p>{p.area}</p>
       <p>地域ごとのくわしい情報は、<a href="/hikari/area/">地域別の光回線情報</a>を見てください。</p>
 
@@ -64,16 +93,36 @@ const description = `${p.name}を鹿児島県で使うときの月額（戸建�
       <ul>{p.points.map((t) => <li>{t}</li>)}</ul>
 
       {p.cautions.length > 0 && (<>
-        <h2>気をつけること</h2>
+        <h2 id="cautions" class="scroll-mt-28">気をつけること</h2>
         <ul>{p.cautions.map((t) => <li>{t}</li>)}</ul>
       </>)}
+
+      <h2 id="before-apply" class="scroll-mt-28">申込み前に確認すること</h2>
+      <ol>
+        <li><strong>提供エリア</strong>：郵便番号だけでなく、番地・建物名・部屋番号まで確認する。賃貸なら設備と工事の可否も管理会社に聞く。</li>
+        <li><strong>毎月の支払い</strong>：割引期間の料金と通常料金、必要なオプション、工事費や端末代の分割払いを確認する。</li>
+        <li><strong>やめるときの支払い</strong>：契約期間、解約金、分割払いの残額、返却する機器の有無を確認する。</li>
+        <li><strong>窓口の特典</strong>：対象プラン、申請方法、受取時期、継続利用などの条件を確認する。</li>
+      </ol>
+      <p>住所と契約条件を確かめたうえで、料金・サービス内容に納得できる窓口を選んでください。</p>
     </div>
 
-    <div class="mt-8 rounded-xl border border-gray-200 p-5">
+    <section class="mt-8 rounded-2xl border border-brand-100 bg-brand-50 p-5 sm:p-6" aria-labelledby="next-step">
+      <h2 id="next-step" class="font-bold text-lg text-gray-900 mb-2">条件が合えば、窓口で最新情報を確認</h2>
+      <p class="text-sm leading-relaxed text-gray-600 mb-4">このページの料金は確認日時点の情報です。最後にリンク先で、住所・見積り・特典の条件を確認しましょう。</p>
       <AffiliateButton provider={p} showBanner />
       <p class="mt-4 text-sm"><a href={p.officialUrl} target="_blank" rel="noopener" class="text-brand-600 underline underline-offset-2">{p.name}の公式サイト（情報の出典）</a></p>
       <CheckedNote provider={p} />
-    </div>
+    </section>
+
+    <section class="mt-10 rounded-xl border border-gray-200 p-5">
+      <h2 class="font-bold text-gray-900 mb-3">まだ迷うときは、住まい別にくらべる</h2>
+      <div class="grid gap-2 text-sm sm:grid-cols-3">
+        <a href="/hikari/kodate/" class="rounded-lg bg-gray-50 p-3 font-bold text-brand-700 hover:bg-brand-50">戸建ての光回線 →</a>
+        <a href="/hikari/mansion/" class="rounded-lg bg-gray-50 p-3 font-bold text-brand-700 hover:bg-brand-50">マンションの光回線 →</a>
+        <a href="/hikari/home-router/" class="rounded-lg bg-gray-50 p-3 font-bold text-brand-700 hover:bg-brand-50">工事なしのネット →</a>
+      </div>
+    </section>
 
     <section class="mt-12">
       <h2 class="text-lg font-bold text-gray-900 mb-3">ほかの{isRouter ? 'ホームルーター' : '光回線'}もくらべる</h2>

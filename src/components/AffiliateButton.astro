@@ -16,13 +16,15 @@ const a = provider.affiliate;
   {a ? (
     <>
       <a href={a.href} rel="sponsored noopener" target="_blank"
-         class="flex items-center justify-center gap-2 rounded-lg bg-cta-500 hover:bg-cta-600 text-white font-bold py-3.5 px-4 shadow-sm transition focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-200">
+         aria-label={`${a.label}（広告・新しいタブで開きます）`}
+         data-affiliate-link={provider.name}
+         class="flex items-center justify-center gap-2 rounded-lg bg-cta-500 hover:bg-cta-600 text-white text-center font-bold py-3.5 px-4 shadow-sm transition focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-200">
         {a.label}
         <span aria-hidden="true">→</span>
       </a>
       {a.pixel && <img src={a.pixel} width="1" height="1" alt="" class="inline-block w-px h-px border-0" />}
       <p class="text-[11px] leading-relaxed text-gray-500">
-        <span class="font-bold">PR</span>・リンク先は販売代理店などの申込み窓口です。特典の内容は窓口ごとに違います。
+        <span class="font-bold">PR</span>・申込み前に、料金・追加費用・適用条件をリンク先で確認してください。
       </p>
       {showBanner && a.banner && (
         <div class="flex justify-center mt-2">
@@ -35,7 +37,8 @@ const a = provider.affiliate;
     </>
   ) : (
     <a href={provider.officialUrl} target="_blank" rel="noopener"
-       class="flex items-center justify-center gap-2 rounded-lg border-2 border-brand-600 text-brand-700 hover:bg-brand-50 font-bold py-3 px-4 transition">
+       aria-label={`${provider.name}の公式サイト（新しいタブで開きます）`}
+       class="flex items-center justify-center gap-2 rounded-lg border-2 border-brand-600 text-brand-700 hover:bg-brand-50 text-center font-bold py-3 px-4 transition">
       {provider.name}の公式サイトを見る
       <span aria-hidden="true">↗</span>
     </a>

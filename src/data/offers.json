@@ -1,0 +1,32 @@
+[
+  {
+    "id": "study-sapuri-toeic",
+    "name": "スタディサプリENGLISH TOEIC L&R TEST対策コース",
+    "officialUrl": "https://eigosapuri.jp/toeic/",
+    "affiliate": {
+      "href": "https://px.a8.net/svt/ejp?a8mat=2ZPIW9+EFRGNU+3AQG+C6QR6",
+      "label": "TOEICテスト対策",
+      "pixel": "https://www14.a8.net/0.gif?a8mat=2ZPIW9+EFRGNU+3AQG+C6QR6",
+      "banner": null
+    },
+    "note": "TOEIC L&R TEST対策の自習用コースです。無料対象・課金開始日・申込プランはリンク先で確認してください。",
+    "guideSlugs": [
+      "study-sapuri-toeic-vs-eikaiwa"
+    ]
+  },
+  {
+    "id": "study-sapuri-daily",
+    "name": "スタディサプリENGLISH 新日常英会話コース",
+    "officialUrl": "https://eigosapuri.jp/conversation/daily/",
+    "affiliate": {
+      "href": "https://px.a8.net/svt/ejp?a8mat=35SIQO+OETCQ+3AQG+ZQ80I",
+      "label": "スタディサプリENGLISH（新日常英会話コース）",
+      "pixel": "https://www17.a8.net/0.gif?a8mat=35SIQO+OETCQ+3AQG+ZQ80I",
+      "banner": null
+    },
+    "note": "紹介するベーシックは自習アプリです。講師との会話は別の英会話セットプランで、料金・体験条件も異なります。",
+    "guideSlugs": [
+      "study-sapuri-toeic-vs-eikaiwa"
+    ]
+  }
+]

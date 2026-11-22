@@ -19,6 +19,8 @@ GitHub の `main` に入ると、Vercel が自動で組み立てて公開しま�
 | 何を | どこ |
 |---|---|
 | 回線の料金・説明・広告リンク | `src/data/providers.json` |
+| 選び方・比較ガイド | `src/data/guides-*.json` |
+| 通信以外の広告リンク | `src/data/offers.json` |
 | 地域ページの文章 | `src/data/areas.json` |
 | よくある質問 | `src/data/faqs.json` |
 | サイト名・アドレス・問い合わせフォーム | `src/site.config.mjs` |
@@ -44,3 +46,7 @@ npm run check-data   # データの点検（確認日・出典・言いすぎの
 npm run build        # 組み立て
 npm run preview      # http://localhost:4321 で見る
 ```
+
+## 選び方ガイドを更新するとき
+
+`guides-*.json` の記事は `/guides/` とトップへ自動で掲載されます。各記事に確認日・公式出典を記録し、関連記事の slug と関連サービスの id を実在するものへそろえてください。通信以外の広告は `offers.json` の `guideSlugs` で掲載先を指定します。無料体験の対象プランと広告先を一致させ、計測用画像を含めてA8の発行リンクを保持してください。

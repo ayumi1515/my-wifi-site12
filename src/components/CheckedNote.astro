@@ -2,8 +2,8 @@
 import { jpDate } from '../lib/data';
 const { provider } = Astro.props as { provider: { checkedAt: string; sources: { label: string; url: string }[] } };
 ---
-<details class="text-xs text-gray-500 mt-3">
-  <summary class="cursor-pointer select-none">料金は税込・{jpDate(provider.checkedAt)}に公式サイトで確認（出典を見る）</summary>
+<details class="text-xs text-gray-600 mt-3 rounded-lg border border-gray-200 bg-white/70 p-3">
+  <summary class="cursor-pointer select-none leading-relaxed">公式情報の確認日：{jpDate(provider.checkedAt)}<span class="block mt-1 text-[11px] text-gray-500">料金は税込。確認した公式ページを開く</span></summary>
   <ul class="mt-2 space-y-1 pl-4 list-disc">
     {provider.sources.map((s) => (
       <li><a href={s.url} target="_blank" rel="noopener" class="underline underline-offset-2">{s.label}</a></li>

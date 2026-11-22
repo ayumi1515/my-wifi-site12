@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs><pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0v32" fill="none" stroke="#dce3d5" stroke-width="1"/></pattern></defs>
+  <rect width="1200" height="630" fill="#f7f6f1"/>
+  <rect x="776" width="424" height="630" fill="#edf0e4"/>
+  <rect x="776" width="424" height="630" fill="url(#grid)"/>
+  <path d="M74 145h1052" stroke="#d4ddcd"/>
+  <g transform="translate(76 57)"><rect width="63" height="63" rx="14" fill="#124a43"/><path d="M22 12h24a4 4 0 0 1 4 4v37H22a9 9 0 0 1-9-9V21a9 9 0 0 1 9-9Z" fill="#fffbed"/><path d="M22 12v41M14 44a8 8 0 0 1 8-4h28" fill="none" stroke="#c5d4c1" stroke-width="2"/><path d="M38 12h8v18l-4-3-4 3Z" fill="#e4a15e"/><path d="m27 31 6 6 10-12" fill="none" stroke="#124a43" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/></g>
+  <text x="160" y="97" font-family="Hiragino Mincho ProN,Yu Mincho,serif" font-size="36" font-weight="700" fill="#173e30">しらべまとめ帳</text>
+  <text x="1127" y="93" text-anchor="end" font-family="Arial,sans-serif" font-size="13" letter-spacing="3" fill="#6c7e66">SHIRABE MATOME</text>
+  <text x="78" y="224" font-family="Arial,sans-serif" font-size="13" letter-spacing="4" font-weight="700" fill="#a2643d">A NOTE FOR BETTER CHOICES</text>
+  <text x="73" y="310" font-family="Hiragino Mincho ProN,Yu Mincho,serif" font-size="58" font-weight="700" fill="#173e30">比べて、選ぶ。</text>
+  <text x="73" y="390" font-family="Hiragino Mincho ProN,Yu Mincho,serif" font-size="58" font-weight="700" fill="#173e30">納得できる毎日へ。</text>
+  <text x="78" y="453" font-family="Hiragino Sans,Meiryo,sans-serif" font-size="21" fill="#5c6b55">料金も、条件も、向き不向きも。</text>
+  <g transform="translate(78 502)"><rect width="326" height="42" rx="21" fill="#e5ecde"/><text x="163" y="27" text-anchor="middle" font-family="Hiragino Sans,Meiryo,sans-serif" font-size="14" fill="#42603c">公式情報をもとに比較・解説</text></g>
+  <g transform="translate(853 210) rotate(8 132 172)">
+    <rect x="11" y="13" width="247" height="326" rx="12" fill="#bac7b2" opacity=".45"/>
+    <rect width="247" height="326" rx="12" fill="#124a43"/>
+    <path d="M28 0v326" stroke="#256054" stroke-width="2"/>
+    <rect x="54" y="45" width="148" height="100" rx="5" fill="#f5f3e5"/>
+    <path d="M80 81h95M80 107h67" stroke="#a1b39a" stroke-width="3" stroke-linecap="round"/>
+    <path d="M172 0h33v82l-16-12-17 12Z" fill="#e5a360"/>
+    <circle cx="128" cy="229" r="48" fill="#e6edda"/>
+    <path d="m102 229 18 18 34-41" stroke="#165844" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M14 298h219" stroke="#427461" stroke-width="1"/>
+  </g>
+  <text x="1127" y="581" text-anchor="end" font-family="Arial,sans-serif" font-size="13" letter-spacing="1.6" fill="#74816b">WWW.SHIRABEMATOME.COM</text>
+</svg>

@@ -1,0 +1,182 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProviderCard from '../../components/ProviderCard.astro';
+import InternetFinder from '../../components/InternetFinder.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { SITE } from '../../site.config.mjs';
+import { ranked, providers, carrierGuide, byId, areas, faqs, faqLd, jpDate, lastChecked, breadcrumbLd } from '../../lib/data';
+
+const houseFiber = ranked('house', 'fiber');
+const mansionAll = ranked('mansion', 'fiber');
+const fiberAll = providers.filter((p) => p.kind === 'fiber' && (p.house || p.mansion));
+// 料金表のセット割の欄は、最後の（説明）を外した名前を、重ならないように出す
+const setNames = (list: string[]) => [...new Set(list.map((s) => s.replace(/（[^（）]*）$/, '')))].join('・');
+const routers = ranked('house', 'router');
+const title = '【2026年】鹿児島県の光回線おすすめ｜戸建て・マンション・地域別に比較';
+const description = '鹿児島県で使える光回線を、公式サイトの料金・提供エリアをもとに比較。スマホ会社別の選び方、戸建て・マンションの月額、10ギガが使える市町、離島の注意点をまとめました。';
+---
+<Base title={title} description={description} jsonLd={[faqLd(faqs), breadcrumbLd(SITE.url, [{ name: '総合トップ', href: '/' }, { name: '通信・ネット', href: '/hikari/' }])]}>
+  <section class="internet-hero">
+    <div class="site-container internet-hero-inner">
+      <Breadcrumbs items={[{ name: '総合トップ', href: '/' }, { name: '通信・ネット' }]} />
+      <div class="internet-hero-grid">
+        <div>
+          <p class="section-kicker">INTERNET / KAGOSHIMA</p>
+          <h1>毎月の通信費に、<br />納得できる選び方を。</h1>
+          <p class="internet-hero-lead">鹿児島で使える光回線・ホームルーターを、料金と条件から比較。住まいとスマホに合わせて、候補をしぼりましょう。</p>
+          <div class="internet-hero-actions"><a class="button-primary" href="#finder">3つの質問で候補を探す<span aria-hidden="true">↓</span></a><a class="internet-text-link" href="#compare">月額料金をくらべる<span aria-hidden="true">↗</span></a></div>
+        </div>
+        <aside class="internet-summary" aria-label="比較前に確認すること">
+          <span class="summary-note-label">CHECK BEFORE YOU CHOOSE</span>
+          <p class="internet-summary-heading">見るのは、月額だけではありません。</p>
+          <ul><li><span>01</span>住所で使える回線か</li><li><span>02</span>スマホのセット割がつくか</li><li><span>03</span>工事費・端末代の残りはいくらか</li></ul>
+          <p class="internet-source-note">掲載 {providers.length} サービス・料金は税込<br />最終確認日：{jpDate(lastChecked)}</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <div class="site-container finder-position"><InternetFinder /></div>
+
+  <div class="mx-auto max-w-5xl px-4">
+    <!-- 結論の箱 -->
+    <section class="mt-10" aria-labelledby="quick">
+      <h2 id="quick" class="text-xl sm:text-2xl font-bold text-gray-900 mb-4">スマホ会社別の早見表</h2>
+      <p class="text-sm text-gray-600 mb-4">スマホとセットで割引になる回線を選ぶと、家族全体の通信費が下がりやすくなります。</p>
+      <div class="grid gap-3 sm:grid-cols-2">
+        {carrierGuide.map((c) => (
+          <div class="rounded-xl border border-gray-200 bg-white p-4">
+            <p class="text-sm font-bold text-gray-500">{c.label}を使っている</p>
+            <ul class="mt-2 space-y-1">
+              {c.ids.map((id) => { const p = byId(id); return p && (
+                <li><a href={`/hikari/${p.id}/`} class="font-bold text-brand-700 hover:underline">{p.name}</a>
+                  <span class="text-xs text-gray-500 ml-1">{p.kind === 'router' ? '（工事なし）' : ''}</span></li>
+              ); })}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <p class="mt-3 text-xs text-gray-500">※BBIQはau・UQ mobileのセット割に対応しています。格安SIMの人は、セット割より月額や工事費で比べるのがおすすめです。</p>
+    </section>
+
+    <!-- 選び方 -->
+    <section class="mt-14 prose-ja" aria-labelledby="howto">
+      <h2 id="howto">鹿児島で光回線を選ぶ3つのポイント</h2>
+      <h3>1. まず住所で使えるかを確かめる</h3>
+      <p>鹿児島県では、NTT西日本の回線を使うサービス（ドコモ光・SoftBank 光・ビッグローブ光・フレッツ光など）と、九州電力グループの独自回線BBIQが主な選択肢です。同じ市でも住所によって使える回線が違うので、申込み前に各社の公式サイトで郵便番号や住所を入れて確認しましょう。</p>
+      <h3>2. スマホ会社とのセット割で選ぶ</h3>
+      <p>ドコモならドコモ光、au・UQ mobileならBBIQやビッグローブ光、ソフトバンク・ワイモバイルならSoftBank 光がセット割の対象です。割引は家族の回線ごとにつくことが多く、月額の差より大きくなることもあります。</p>
+      <h3>3. 工事・契約期間・10ギガの有無を見る</h3>
+      <p>工事費は多くの回線で「実質無料」の特典がありますが、途中で解約すると残りを払う形がほとんどです。10ギガは、NTT西日本の「フレッツ 光クロス」の提供地域（鹿児島市・霧島市など12市町）で選べます。BBIQの10ギガは鹿児島県では提供されていません。</p>
+    </section>
+
+    <!-- 戸建てのおすすめ順 -->
+    <section class="mt-14" aria-labelledby="ranking">
+      <h2 id="ranking" class="text-xl sm:text-2xl font-bold text-gray-900 mb-2">戸建て向け光回線のおすすめ順</h2>
+      <p class="text-sm text-gray-600 mb-6 leading-relaxed">
+        鹿児島県内で使える範囲、スマホのセット割の有無、月額と初期費用の分かりやすさをもとに、編集部が並べた順番です。
+        人気や満足度の順位ではありません。<a href="#criteria" class="underline">並べ方の基準</a>
+      </p>
+      <div class="space-y-8">
+        {houseFiber.map((p, i) => <ProviderCard provider={p} building="house" rank={i + 1} />)}
+      </div>
+    </section>
+
+    <!-- 料金くらべ表 -->
+    <section class="mt-14" aria-labelledby="compare">
+      <h2 id="compare" class="text-xl sm:text-2xl font-bold text-gray-900 mb-4">月額のくらべ表（1ギガ・税込）</h2>
+      <div class="overflow-x-auto rounded-lg border border-gray-200">
+        <table class="w-full min-w-[560px] text-sm">
+          <thead class="bg-gray-50 text-left">
+            <tr><th class="p-3">サービス</th><th class="p-3">戸建て</th><th class="p-3">マンション</th><th class="p-3">セット割</th></tr>
+          </thead>
+          <tbody>
+            {fiberAll.map((p) => (
+              <tr class="border-t border-gray-100">
+                <td class="p-3 font-bold"><a href={`/hikari/${p.id}/`} class="text-brand-700 hover:underline">{p.name}</a></td>
+                <td class="p-3">{p.house?.label ?? '—'}{p.id === 'bbiq' && <span class="block text-[11px] text-gray-500">※13ヵ月目以降・割引込み</span>}</td>
+                <td class="p-3">{p.mansion?.label ?? '—'}{p.id === 'bbiq' && <span class="block text-[11px] text-gray-500">※13ヵ月目以降</span>}</td>
+                <td class="p-3 text-xs">{p.mobileSet.length ? setNames(p.mobileSet) : 'なし'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-2 text-xs text-gray-500 leading-relaxed">※割引や契約期間の条件で金額が変わります。BBIQの戸建ては、36ヵ月の自動更新（つづけて割）と九州電力の電気とのセット割をふくむ金額です。多くの回線で、別にブロードバンドユニバーサルサービス料などがかかります。くわしい条件は各サービスのページと公式サイトで確認してください。ホームルーターは<a href="/hikari/home-router/" class="underline">工事なしのページ</a>でくらべています。</p>
+    </section>
+
+    <!-- マンション・工事なし -->
+    <section class="mt-14 grid gap-4 sm:grid-cols-2">
+      <a href="/hikari/mansion/" class="block rounded-xl border border-gray-200 p-5 hover:border-brand-600 transition">
+        <p class="text-lg font-bold text-gray-900">マンション・アパートの人</p>
+        <p class="mt-2 text-sm text-gray-600 leading-relaxed">建物に入っている設備で選べる回線が変わります。{mansionAll.length}サービスの月額と確認のしかたをまとめました。</p>
+        <p class="mt-3 text-sm font-bold text-brand-600">マンション向けを見る →</p>
+      </a>
+      <a href="/hikari/home-router/" class="block rounded-xl border border-gray-200 p-5 hover:border-brand-600 transition">
+        <p class="text-lg font-bold text-gray-900">工事ができない・すぐ使いたい人</p>
+        <p class="mt-2 text-sm text-gray-600 leading-relaxed">コンセントにさすだけのホームルーター{routers.length}つを、光回線とのちがいと一緒にくらべました。</p>
+        <p class="mt-3 text-sm font-bold text-brand-600">工事なしのネットを見る →</p>
+      </a>
+    </section>
+
+    <!-- 地域別 -->
+    <section class="mt-14" aria-labelledby="areas">
+      <h2 id="areas" class="text-xl sm:text-2xl font-bold text-gray-900 mb-4">地域別の光回線情報</h2>
+      <ul class="grid gap-3 sm:grid-cols-3">
+        {areas.map((a) => (
+          <li>
+            <a href={`/hikari/area/${a.slug}/`} class="block rounded-lg border border-gray-200 px-4 py-3 hover:border-brand-600 transition">
+              <span class="font-bold text-gray-900">{a.name}</span>
+              <span class="block text-xs text-gray-500 mt-0.5">{a.tenGiga ? '10ギガの提供地域あり' : '島ごとに確認が必要'}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- FAQ -->
+    <section class="mt-14" aria-labelledby="faq">
+      <h2 id="faq" class="text-xl sm:text-2xl font-bold text-gray-900 mb-4">よくある質問</h2>
+      <div class="space-y-3">
+        {faqs.map((f) => (
+          <details class="rounded-lg border border-gray-200 bg-white p-4 group">
+            <summary class="cursor-pointer font-bold text-gray-900 list-none flex gap-2"><span class="text-brand-600">Q.</span>{f.q}</summary>
+            <p class="mt-3 text-sm leading-7 text-gray-700">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- 基準 -->
+    <section class="mt-14 prose-ja" aria-labelledby="criteria">
+      <h2 id="criteria">このページの並べ方の基準</h2>
+      <ul>
+        <li>鹿児島県の本土で使える範囲が広いか</li>
+        <li>大手のスマホ会社とのセット割があるか</li>
+        <li>1年目の負担の軽さ（工事費の特典・割引期間など）</li>
+        <li>月額・工事費・契約期間の条件が公式サイトで確かめられるか</li>
+      </ul>
+      <p>BBIQは九州全県が対象で、au・UQ mobileのセット割と1年目の割引があるため最初にのせています。ただし離島で使えるかは公式で確かめられなかったので、離島の人は<a href="/hikari/area/ritou/">離島のページ</a>も見てください。広告の報酬の多さでは並べていません。料金やキャンペーンは変わることがあるため、申込み前に必ず公式サイトで最新の情報を確認してください。auひかりなど、鹿児島県での提供や料金を公式で確かめられなかったサービスは、確かめられるまでのせていません。</p>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .internet-hero { padding-block: 25px 45px; border-bottom: 1px solid #dce3d5; background: #f0f3e9; }
+  .internet-hero-grid { display: grid; grid-template-columns: 1.2fr .8fr; align-items: center; gap: 72px; padding-top: 23px; }
+  .internet-hero h1 { margin: 15px 0 0; color: #173d2e; font-size: clamp(2rem, 4.4vw, 3.2rem); font-weight: 700; line-height: 1.65; letter-spacing: .025em; }
+  .internet-hero-lead { max-width: 620px; margin-top: 22px; color: #5b6857; font-size: 14px; line-height: 2; }
+  .internet-hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 25px; margin-top: 27px; }
+  .internet-text-link { color: #21543c; font-size: 12px; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+  .internet-text-link > span { margin-left: 12px; }
+  .internet-summary { padding: 28px 30px; border: 1px solid #d7dfcd; border-radius: 8px; background: #fbfcf6; box-shadow: 7px 7px 0 #e2e9da; }
+  .summary-note-label { color: #8a633f; font-size: 9px; font-weight: 700; letter-spacing: .15em; }
+  .internet-summary-heading { margin-top: 13px; color: #274d31; font-size: 14px; font-weight: 700; line-height: 1.8; }
+  .internet-summary ul { margin: 16px 0 0; padding: 0; list-style: none; }
+  .internet-summary li { display: flex; align-items: baseline; gap: 11px; padding-block: 11px; border-bottom: 1px solid #e4e9de; color: #4d614d; font-size: 12px; line-height: 1.8; }
+  .internet-summary li > span { color: #9b784f; font-family: Georgia,serif; font-size: 13px; }
+  .internet-source-note { margin-top: 18px; color: #7a846e; font-size: 10px; line-height: 1.9; }
+  .finder-position { margin-top: 35px; }
+  @media (max-width: 800px) { .internet-hero-grid { gap: 30px; } .internet-summary { padding: 22px; } }
+  @media (max-width: 650px) { .internet-hero { padding-block: 21px 32px; } .internet-hero-grid { grid-template-columns: 1fr; gap: 28px; padding-top: 10px; } .internet-hero h1 { font-size: 2rem; line-height: 1.7; } .internet-hero-lead { margin-top: 18px; font-size: 13px; } .internet-hero-actions { gap: 18px; } .internet-hero-actions .button-primary { width: 100%; } .internet-summary { padding: 22px 24px; box-shadow: 5px 5px 0 #e2e9da; } .internet-summary li { padding-block: 8px; } .finder-position { margin-top: 27px; } }
+</style>

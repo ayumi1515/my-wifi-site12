@@ -1,16 +1,27 @@
 ---
 import Base from '../layouts/Base.astro';
 import { SITE } from '../site.config.mjs';
+const description = SITE.contactFormUrl
+  ? `${SITE.name}の掲載情報の訂正、ご意見などのお問い合わせ先。サービスの申込み、契約、解約、請求に関するご相談は各事業者の窓口をご利用ください。`
+  : `${SITE.name}のお問い合わせ窓口は現在準備中です。掲載情報の確認方法と、サービスの申込み・契約・解約などについて相談する公式窓口の考え方をご案内します。`;
 ---
-<Base title="お問い合わせ" description={`${SITE.name}へのお問い合わせ。`} pr={false}>
+<Base title="お問い合わせ" description={description} pr={false}>
   <div class="mx-auto max-w-3xl px-4 pt-8 prose-ja">
     <h1 class="text-2xl font-bold text-gray-900 mb-6">お問い合わせ</h1>
-    <p>掲載内容のまちがい、ご意見などは、下のフォームからお送りください。内容によってはお返事できない場合があります。</p>
-    <p>なお、このサイトはサービスの申込み窓口ではありません。契約や料金についてのご相談は、各社の公式窓口にお問い合わせください。</p>
     {SITE.contactFormUrl ? (
-      <p><a href={SITE.contactFormUrl} target="_blank" rel="noopener" class="inline-block rounded-lg bg-brand-600 !text-white !no-underline font-bold px-5 py-3">お問い合わせフォームを開く</a></p>
+      <>
+        <p>掲載内容の訂正、ご意見などは、以下のお問い合わせフォームからお送りください。内容によってはお返事できない場合があります。</p>
+        <p><a href={SITE.contactFormUrl} target="_blank" rel="noopener" class="inline-block rounded-lg bg-brand-600 !text-white !no-underline font-bold px-5 py-3">お問い合わせフォームを開く</a></p>
+      </>
     ) : (
-      <p class="rounded-lg bg-gray-50 border border-gray-200 p-4 text-sm">お問い合わせフォームは準備中です。</p>
+      <>
+        <p>現在、お問い合わせ窓口の設置を準備しています。このページからのフォーム送信やご意見の受付は、まだ行っていません。</p>
+        <p class="rounded-lg bg-gray-50 border border-gray-200 p-4 text-sm"><strong>受付準備中</strong><br />受付を開始するときは、このページに方法をご案内します。</p>
+      </>
     )}
+    <h2>サービスの契約や利用に関するお問い合わせ</h2>
+    <p>このサイトでは、商品・サービスの申込みや契約手続きを行っていません。契約内容、解約、請求、接続の不具合などは、ご利用中の事業者または申込み窓口へお問い合わせください。</p>
+    <h2>掲載情報を確認するときは</h2>
+    <p>記事内にある確認日と出典をご覧ください。料金・キャンペーン・提供条件の最新情報は、各サービスの公式サイトで確認できます。</p>
   </div>
 </Base>

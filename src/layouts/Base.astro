@@ -25,13 +25,14 @@ const websiteLd = {
 const ld = [websiteLd, ...jsonLd];
 
 const nav = [
-  { href: '/', label: '鹿児島の光回線' },
-  { href: '/hikari/kodate/', label: '戸建て' },
-  { href: '/hikari/mansion/', label: 'マンション' },
-  { href: '/hikari/home-router/', label: '工事なし' },
-  { href: '/hikari/area/', label: '地域別' },
+  { href: '/', label: '総合トップ' },
+  { href: '/hikari/', label: '通信・ネット' },
+  { href: '/guides/', label: '選び方ガイド' },
+  { href: '/about/', label: 'このサイトについて' },
 ];
 const path = Astro.url.pathname;
+const isCurrent = (href: string) => href === '/' ? path === '/' : path.startsWith(href);
+const socialImage = new URL('/social-cover.png', SITE.url).href;
 ---
 <!doctype html>
 <html lang="ja">
@@ -43,6 +44,10 @@ const path = Astro.url.pathname;
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex" />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#124a43" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     {SITE.googleSiteVerifications.map((code) => (
       <meta name="google-site-verification" content={code} />
@@ -53,67 +58,85 @@ const path = Astro.url.pathname;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="ja_JP" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="しらべまとめ帳。公式情報から、納得できる選び方を。" />
+    <meta name="twitter:card" content="summary_large_image" />
     {ld.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
   </head>
-  <body class="min-h-screen bg-white text-gray-800 font-sans">
-    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-white px-3 py-2 rounded shadow">本文へ移動</a>
-    {pr && <PrNotice />}
-    <header class="bg-white border-b border-gray-200">
-      <div class="mx-auto max-w-5xl px-4 h-14 flex items-center justify-between gap-4">
-        <a href="/" class="flex items-center gap-2 font-bold text-gray-900 shrink-0">
-          <img src="/favicon.svg" width="28" height="28" alt="" />
-          <span>{SITE.name}</span>
+  <body class="site-body">
+    <a href="#main" class="skip-link">本文へ移動</a>
+    <header class="site-header">
+      <div class="site-container masthead">
+        <a href="/" class="site-brand" aria-label={`${SITE.name} 総合トップ`}>
+          <img src="/favicon.svg" width="43" height="43" alt="" class="brand-mark" />
+          <span class="brand-copy">
+            <span class="brand-name">{SITE.name}</span>
+            <span class="brand-tagline">公式情報から、納得できる選び方を。</span>
+          </span>
         </a>
-        <details class="md:hidden relative">
-          <summary class="list-none cursor-pointer rounded-md border border-gray-300 px-3 py-1.5 text-sm font-bold text-gray-700">メニュー</summary>
-          <nav class="absolute right-0 mt-2 w-52 rounded-lg border border-gray-200 bg-white shadow-lg z-50 py-2">
+        <span class="masthead-note" aria-hidden="true"><span></span> 調べる。比べる。納得して選ぶ。</span>
+        <details class="mobile-menu">
+          <summary><span class="menu-lines" aria-hidden="true"></span><span>メニュー</span></summary>
+          <nav aria-label="モバイルメニュー">
             {nav.map((n) => (
-              <a href={n.href} class="block px-4 py-2.5 text-sm hover:bg-gray-50" aria-current={path === n.href ? 'page' : undefined}>{n.label}</a>
+              <a href={n.href} aria-current={isCurrent(n.href) ? 'page' : undefined}>{n.label}<span aria-hidden="true">↗</span></a>
             ))}
           </nav>
         </details>
-        <nav class="hidden md:flex items-center gap-5 text-sm font-bold text-gray-600">
+      </div>
+      <div class="navigation-bar">
+        <nav class="site-container desktop-nav" aria-label="メインメニュー">
           {nav.map((n) => (
-            <a href={n.href} class:list={['hover:text-brand-600 transition', path === n.href && 'text-brand-600']} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a>
+            <a href={n.href} aria-current={isCurrent(n.href) ? 'page' : undefined}>{n.label}</a>
           ))}
+          <a href="/hikari/#compare" class="nav-compare">通信費をくらべる<span aria-hidden="true">↗</span></a>
         </nav>
       </div>
     </header>
 
-    <main id="main">
+    {pr && <PrNotice />}
+
+    <main id="main" class="site-main" tabindex="-1">
       <slot />
     </main>
 
-    <footer class="mt-16 bg-gray-50 border-t border-gray-200 text-sm text-gray-600">
-      <div class="mx-auto max-w-5xl px-4 py-10 grid gap-8 sm:grid-cols-3">
-        <div>
-          <p class="font-bold text-gray-800 mb-2">{SITE.name}</p>
-          <p class="text-xs leading-relaxed">
-            気になるサービスや商品を、公式の情報をもとに調べてまとめるサイトです。料金などの数字には、公式サイトで確かめた日と出典を書いています。
+    <footer class="site-footer">
+      <div class="site-container footer-grid">
+        <div class="footer-about">
+          <a href="/" class="footer-brand"><img src="/favicon.svg" width="34" height="34" alt="" /><span>{SITE.name}</span></a>
+          <p>
+            選ぶ前の「わからない」を、ひとつずつ。<br />
+            料金・条件・向き不向きを、公式情報から調べてまとめます。
           </p>
+          <a href="/about/" class="footer-editorial-link">編集方針と調べ方<span aria-hidden="true">↗</span></a>
         </div>
         <div>
-          <p class="font-bold text-gray-800 mb-2">鹿児島の光回線</p>
-          <ul class="space-y-1.5 text-xs">
-            <li><a href="/" class="hover:underline">おすすめの選び方</a></li>
-            <li><a href="/hikari/kodate/" class="hover:underline">戸建て向け</a></li>
-            <li><a href="/hikari/mansion/" class="hover:underline">マンション向け</a></li>
-            <li><a href="/hikari/home-router/" class="hover:underline">工事なしのホームルーター</a></li>
-            <li><a href="/hikari/area/" class="hover:underline">地域別の情報</a></li>
+          <p class="footer-heading">通信・ネットをくらべる</p>
+          <ul>
+            <li><a href="/hikari/">鹿児島の光回線</a></li>
+            <li><a href="/hikari/kodate/">戸建ての光回線</a></li>
+            <li><a href="/hikari/mansion/">マンションの光回線</a></li>
+            <li><a href="/hikari/home-router/">工事なしのホームルーター</a></li>
+            <li><a href="/hikari/area/">地域ごとの提供エリア</a></li>
           </ul>
         </div>
         <div>
-          <p class="font-bold text-gray-800 mb-2">このサイトについて</p>
-          <ul class="space-y-1.5 text-xs">
-            <li><a href="/about/" class="hover:underline">運営者情報</a></li>
-            <li><a href="/ad-policy/" class="hover:underline">広告について</a></li>
-            <li><a href="/privacy/" class="hover:underline">プライバシーポリシー</a></li>
-            <li><a href="/contact/" class="hover:underline">お問い合わせ</a></li>
+          <p class="footer-heading">しらべまとめ帳について</p>
+          <ul>
+            <li><a href="/guides/">選び方ガイド</a></li>
+            <li><a href="/about/">運営者情報・編集方針</a></li>
+            <li><a href="/ad-policy/">広告について</a></li>
+            <li><a href="/privacy/">プライバシーポリシー</a></li>
+            <li><a href="/contact/">お問い合わせ</a></li>
           </ul>
         </div>
       </div>
-      <p class="text-center text-xs text-gray-400 pb-6">&copy; {new Date().getFullYear()} {SITE.name}</p>
+      <div class="site-container footer-bottom">
+        <p>掲載情報は確認日時点のものです。申込み前に、公式サイトで最新の料金・条件をご確認ください。</p>
+        <p>&copy; {new Date().getFullYear()} {SITE.name}</p>
+      </div>
     </footer>
   </body>
 </html>

@@ -1,0 +1,165 @@
+---
+import { providers } from '../lib/data';
+
+const finderProviders = providers.map((p) => ({
+  id: p.id,
+  name: p.name,
+  kind: p.kind,
+  carriers: p.carriers,
+  order: p.order,
+  house: p.house,
+  mansion: p.mansion,
+  checkedAt: p.checkedAt,
+  goodFor: p.goodFor,
+}));
+---
+<section id="finder" class="internet-finder" aria-labelledby="finder-title" data-internet-finder data-providers={JSON.stringify(finderProviders)}>
+  <div class="finder-heading">
+    <div>
+      <span class="section-kicker">FIND YOUR INTERNET</span>
+      <h2 id="finder-title">3つの条件から、比較候補をしぼる。</h2>
+    </div>
+    <span class="finder-private-note">住所・個人情報の入力は不要です</span>
+  </div>
+  <form class="finder-form" action="/hikari/#compare" method="get">
+    <div class="finder-field">
+      <label for="finder-building"><span>01</span> お住まいの建物</label>
+      <select id="finder-building" name="building">
+        <option value="house">戸建て</option>
+        <option value="mansion">マンション・アパート</option>
+      </select>
+    </div>
+    <div class="finder-field">
+      <label for="finder-carrier"><span>02</span> お使いのスマホ</label>
+      <select id="finder-carrier" name="carrier">
+        <option value="other">格安SIM・そのほか</option>
+        <option value="docomo">ドコモ</option>
+        <option value="au">au・UQ mobile</option>
+        <option value="softbank">ソフトバンク・ワイモバイル</option>
+      </select>
+    </div>
+    <div class="finder-field">
+      <label for="finder-construction"><span>03</span> 回線の工事はできる？</label>
+      <select id="finder-construction" name="construction">
+        <option value="yes">できる・光回線を検討したい</option>
+        <option value="no">できない・工事なしで使いたい</option>
+      </select>
+    </div>
+    <button class="finder-submit" type="submit">比較候補を見る<span aria-hidden="true">→</span></button>
+  </form>
+  <p class="finder-limit">公開中のサービスを、工事の有無・スマホのセット割・掲載順でしぼります。住所ごとの提供可否や割引の適用は、各社の公式サイトで確認してください。</p>
+  <p class="finder-status" role="status" aria-live="polite"></p>
+  <div class="finder-results" hidden></div>
+  <noscript>
+    <p class="finder-noscript">候補は<a href="/hikari/kodate/">戸建て</a>・<a href="/hikari/mansion/">マンション</a>・<a href="/hikari/home-router/">工事なし</a>の比較ページからも確認できます。</p>
+  </noscript>
+</section>
+
+<script>
+  interface FinderPrice { label: string; note: string }
+  interface FinderProvider {
+    id: string;
+    name: string;
+    kind: 'fiber' | 'router';
+    carriers: string[];
+    order: { house: number; mansion: number };
+    house: FinderPrice | null;
+    mansion: FinderPrice | null;
+    checkedAt: string;
+    goodFor: string[];
+  }
+  const carrierKeys: Record<string, string[]> = {
+    docomo: ['docomo'], au: ['au', 'uq'], softbank: ['softbank', 'ymobile'], other: [],
+  };
+  document.querySelectorAll<HTMLElement>('[data-internet-finder]').forEach((finder) => {
+    const form = finder.querySelector<HTMLFormElement>('form');
+    const result = finder.querySelector<HTMLDivElement>('.finder-results');
+    const status = finder.querySelector<HTMLParagraphElement>('.finder-status');
+    if (!form || !result || !status) return;
+    const list: FinderProvider[] = JSON.parse(finder.dataset.providers || '[]');
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const values = new FormData(form);
+      const building = values.get('building') === 'mansion' ? 'mansion' : 'house';
+      const carrier = String(values.get('carrier') || 'other');
+      const kind = values.get('construction') === 'no' ? 'router' : 'fiber';
+      const match = (p: FinderProvider) => (carrierKeys[carrier] || []).some((key) => p.carriers.includes(key));
+      const candidates = list.filter((p) => p.kind === kind && p[building]).sort((a, b) => {
+        const setPriority = Number(match(b)) - Number(match(a));
+        return setPriority || a.order[building] - b.order[building];
+      }).slice(0, 2);
+
+      const heading = document.createElement('h3');
+      heading.textContent = kind === 'fiber' ? 'まず比べたい光回線の候補' : 'まず比べたい工事なしの候補';
+      heading.tabIndex = -1;
+      const intro = document.createElement('p');
+      intro.className = 'finder-result-intro';
+      intro.textContent = kind === 'fiber'
+        ? '建物に導入済みの回線や提供エリアによって、選べるサービスは変わります。次のページで条件を確かめてください。'
+        : 'ホームルーターは、設置場所や時間帯の電波状況で速度が変わります。端末代の残りもあわせて比べてください。';
+      const cards = document.createElement('ul');
+      cards.className = 'finder-result-grid';
+      candidates.forEach((p) => {
+        const price = p[building];
+        if (!price) return;
+        const li = document.createElement('li');
+        const reason = document.createElement('p');
+        reason.className = 'finder-match';
+        reason.textContent = match(p) ? 'スマホのセット割を確認したい候補' : '料金・条件を比較したい候補';
+        const title = document.createElement('h4');
+        title.textContent = p.name;
+        const cost = document.createElement('p');
+        cost.className = 'finder-result-price';
+        cost.textContent = '月額 ' + price.label + '（税込）';
+        const conditions = document.createElement('p');
+        conditions.className = 'finder-result-conditions';
+        conditions.textContent = price.note;
+        const sourceDate = document.createElement('p');
+        sourceDate.className = 'finder-result-date';
+        sourceDate.textContent = '料金確認日：' + p.checkedAt.replaceAll('-', '/');
+        const link = document.createElement('a');
+        link.href = '/hikari/' + encodeURIComponent(p.id) + '/';
+        link.textContent = p.name + 'の条件と申込み窓口を見る →';
+        li.append(reason, title, cost, conditions, sourceDate, link);
+        cards.append(li);
+      });
+      result.replaceChildren(heading, intro, cards);
+      result.hidden = false;
+      status.textContent = '入力した条件から、' + candidates.length + '件の比較候補を表示しました。';
+      heading.focus({ preventScroll: true });
+      result.scrollIntoView({ block: 'nearest', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    });
+  });
+</script>
+
+<style>
+  .internet-finder { padding: 31px 34px 24px; border: 1px solid #d1ddca; border-radius: 12px; background: #fffefa; }
+  .finder-heading { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .finder-heading h2 { margin-top: 10px; color: #21442e; font-family: var(--serif); font-size: 21px; font-weight: 700; line-height: 1.7; }
+  .finder-private-note { padding: 7px 11px; border-radius: 4px; background: #f0f4eb; color: #67755d; font-size: 10px; white-space: nowrap; }
+  .finder-form { display: grid; grid-template-columns: 1fr 1.1fr 1.2fr auto; align-items: end; gap: 15px; margin-top: 25px; }
+  .finder-field { min-width: 0; }
+  .finder-field label { display: block; margin-bottom: 10px; color: #425b3f; font-size: 11px; font-weight: 700; }
+  .finder-field label span { margin-right: 5px; color: #ad754c; font-family: Georgia, serif; font-size: 13px; font-weight: 400; }
+  .finder-field select { width: 100%; min-height: 47px; border: 1px solid #cbd7c4; border-radius: 5px; background: #fff; padding: 11px 25px 11px 12px; color: #40543b; font-size: 11px; line-height: 1.6; }
+  .finder-submit { display: inline-flex; min-height: 47px; align-items: center; justify-content: center; gap: 22px; border: 0; border-radius: 5px; background: #175541; padding: 12px 18px; color: #fff; font-size: 11px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+  .finder-submit:hover { background: #103d2e; }
+  .finder-limit { margin-top: 15px; color: #7b8571; font-size: 10px; line-height: 1.9; }
+  .finder-status:empty { display: none; }
+  .finder-status { margin-top: 23px; color: #547044; font-size: 11px; line-height: 1.8; }
+  .finder-results { margin-top: 12px; border-top: 1px solid #dee5d7; padding-top: 22px; }
+  .finder-results :global(h3) { color: #2e4b2c; font-family: var(--serif); font-size: 19px; font-weight: 700; line-height: 1.7; }
+  .finder-results :global(.finder-result-intro) { margin-top: 9px; color: #68745d; font-size: 11px; line-height: 1.9; }
+  .finder-results :global(.finder-result-grid) { display: grid; grid-template-columns: 1fr 1fr; gap: 17px; margin: 17px 0 0; padding: 0; list-style: none; }
+  .finder-results :global(.finder-result-grid li) { min-width: 0; border: 1px solid #d9e3d1; border-radius: 7px; background: #f6f8f1; padding: 19px; }
+  .finder-results :global(.finder-match) { color: #6b795f; font-size: 10px; line-height: 1.8; }
+  .finder-results :global(h4) { margin-top: 8px; color: #27492e; font-size: 17px; font-weight: 700; line-height: 1.7; }
+  .finder-results :global(.finder-result-price) { margin-top: 10px; color: #3b5834; font-size: 14px; font-weight: 700; line-height: 1.7; }
+  .finder-results :global(.finder-result-conditions) { margin-top: 9px; color: #68745d; font-size: 11px; line-height: 1.9; }
+  .finder-results :global(.finder-result-date) { margin-top: 12px; color: #7a8570; font-size: 10px; }
+  .finder-results :global(.finder-result-grid a) { display: inline-block; margin-top: 16px; color: #175541; font-size: 11px; font-weight: 700; line-height: 1.9; text-decoration: underline; text-underline-offset: 4px; }
+  .finder-noscript { margin-top: 17px; color: #5f7053; font-size: 12px; line-height: 1.9; }
+  .finder-noscript a { text-decoration: underline; text-underline-offset: 3px; }
+  @media (max-width: 1000px) { .finder-form { grid-template-columns: 1fr 1fr; gap: 18px; } .finder-submit { align-self: end; } }
+  @media (max-width: 650px) { .internet-finder { padding: 23px 20px 20px; } .finder-heading { display: block; } .finder-heading h2 { font-size: 19px; } .finder-private-note { display: inline-block; margin-top: 12px; font-size: 9px; } .finder-form { grid-template-columns: 1fr; gap: 17px; margin-top: 21px; } .finder-field label { margin-bottom: 8px; font-size: 12px; } .finder-field select { font-size: 13px; } .finder-submit { margin-top: 4px; font-size: 13px; } .finder-limit { font-size: 10px; } .finder-results :global(.finder-result-grid) { grid-template-columns: 1fr; } }
+</style>

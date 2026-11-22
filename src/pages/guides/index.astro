@@ -1,0 +1,68 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { guides, categoryLabel, readingMinutes } from '../../lib/guides';
+import { jpDate } from '../../lib/data';
+const categories = [...new Set(guides.map((guide) => guide.category))];
+---
+<Base title="選び方ガイド｜料金・条件・向き不向きから比較" description="通信サービスや学習サービスを選ぶ前に、料金だけでは分かりにくい条件と向き不向きを整理。目的別の比較、契約前のチェック項目、公式情報の出典から、自分に合う選び方を見つけられます。">
+  <div class="page-shell guide-directory">
+    <Breadcrumbs items={[{ name: '総合トップ', href: '/' }, { name: '選び方ガイド' }]} />
+    <header class="directory-header">
+      <p class="section-kicker">CHOICE GUIDE</p>
+      <h1 class="section-title">迷ったところから、<br />選び方を見つける。</h1>
+      <p>月額の安さだけで決める前に。<br class="desktop-break" />使い方、契約期間、追加費用を、同じ目線でくらべます。</p>
+    </header>
+    <form class="guide-search surface-card" role="search" id="guide-search">
+      <label for="guide-query">気になることを探す</label>
+      <div><input id="guide-query" type="search" placeholder="例：引越し、BBIQ、英会話" autocomplete="off" /><button type="reset">クリア</button></div>
+    </form>
+    <div class="category-filters" aria-label="ジャンルで絞り込む">
+      <button type="button" data-category="all" aria-pressed="true">すべて <span>{guides.length}</span></button>
+      {categories.map((category) => <button type="button" data-category={category} aria-pressed="false">{categoryLabel[category]} <span>{guides.filter(g => g.category === category).length}</span></button>)}
+    </div>
+    <p class="result-count" id="guide-result-count" aria-live="polite">{guides.length}件のガイド</p>
+    <div class="guide-grid" id="guide-grid">
+      {guides.map((guide, index) => (
+        <article class="guide-tile surface-card" data-guide-card data-category={guide.category} data-search={`${guide.title} ${guide.description} ${guide.summary.join(' ')}`}>
+          <div class:list={['tile-graphic', `graphic-${guide.category}`]} aria-hidden="true"><span>{String(index + 1).padStart(2, '0')}</span><svg viewBox="0 0 160 100" fill="none"><rect x="34" y="18" width="77" height="65" rx="5"/><path d="M47 35h45M47 46h28M47 57h35M91 69l10 10 20-25"/><circle cx="116" cy="27" r="15"/></svg></div>
+          <div class="tile-copy"><p class="tile-category">{categoryLabel[guide.category]}</p><h2><a href={`/guides/${guide.slug}/`}>{guide.title}</a></h2><p class="tile-description">{guide.description}</p><div class="tile-meta"><time datetime={guide.updatedAt}>{jpDate(guide.updatedAt)}</time><span>約{readingMinutes(guide)}分</span></div></div>
+        </article>
+      ))}
+    </div>
+    <p class="empty-results surface-card" id="guide-empty" hidden>該当するガイドがありません。別の言葉やジャンルで探してみてください。</p>
+    <aside class="directory-note"><p>情報の確認方法について</p><span>サービスの料金や条件は、各社の公式情報をもとに確認しています。記事に記載した確認日と出典もあわせてご覧ください。</span><a href="/about/">編集方針を見る →</a></aside>
+  </div>
+</Base>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('#guide-search');
+  const input = document.querySelector<HTMLInputElement>('#guide-query');
+  const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-category][aria-pressed]'));
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-guide-card]'));
+  let category = new URLSearchParams(window.location.search).get('category') ?? 'all';
+  if (!buttons.some(button => button.dataset.category === category)) category = 'all';
+  const filter = () => {
+    const term = (input?.value ?? '').normalize('NFKC').trim().toLocaleLowerCase('ja');
+    let count = 0;
+    cards.forEach(card => {
+      const match = (category === 'all' || card.dataset.category === category) && (card.dataset.search ?? '').normalize('NFKC').toLocaleLowerCase('ja').includes(term);
+      card.hidden = !match;
+      if (match) count++;
+    });
+    buttons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.category === category)));
+    const result = document.querySelector('#guide-result-count');
+    if (result) result.textContent = `${count}件のガイド`;
+    const empty = document.querySelector<HTMLElement>('#guide-empty');
+    if (empty) empty.hidden = count > 0;
+  };
+  buttons.forEach(button => button.addEventListener('click', () => { category = button.dataset.category ?? 'all'; filter(); }));
+  input?.addEventListener('input', filter);
+  form?.addEventListener('submit', event => event.preventDefault());
+  form?.addEventListener('reset', () => { if (input) input.value = ''; category = 'all'; filter(); });
+  filter();
+</script>
+
+<style>
+  .directory-header{padding:30px 0 38px}.directory-header h1{margin-bottom:20px}.directory-header>p:last-child{font-size:14px;color:var(--ink-light);line-height:2}.guide-search{padding:22px 26px;max-width:680px}.guide-search label{display:block;margin-bottom:11px;font-size:12px;font-weight:700}.guide-search>div{display:flex;gap:10px}.guide-search input{width:100%;min-width:0;border:1px solid var(--line);border-radius:6px;padding:12px;background:var(--paper);font-size:14px}.guide-search button{font-size:12px;white-space:nowrap;padding:0 12px;text-decoration:underline;color:var(--ink-light)}.category-filters{display:flex;gap:9px;flex-wrap:wrap;margin-top:32px}.category-filters button{border:1px solid var(--line);background:#fff;border-radius:30px;padding:10px 17px;font-size:12px;font-weight:700;cursor:pointer}.category-filters button[aria-pressed=true]{background:var(--color-brand-700);border-color:var(--color-brand-700);color:white}.category-filters span{opacity:.65;margin-left:6px;font-size:10px}.result-count{margin:22px 0 15px;color:var(--ink-light);font-size:12px}.guide-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}.guide-tile{overflow:hidden;position:relative}.guide-tile[hidden]{display:none}.tile-graphic{height:145px;background:#e8eee2;position:relative;overflow:hidden}.graphic-learning{background:#f0e7d7}.tile-graphic>span{position:absolute;left:22px;top:19px;color:#7c9275;font-family:var(--serif);font-size:14px}.tile-graphic svg{height:125px;width:200px;position:absolute;right:15px;bottom:2px;stroke:#728d71;stroke-width:1.3}.graphic-learning svg{stroke:#a48a61}.tile-copy{padding:25px}.tile-category{color:#8a4b2d;font-size:10px;font-weight:700;letter-spacing:.04em}.tile-copy h2{font-size:17px;font-weight:700;line-height:1.8;margin:10px 0 12px}.tile-copy h2 a::after{position:absolute;inset:0;content:''}.tile-copy h2 a:hover{color:var(--color-brand-600)}.tile-description{font-size:12px;line-height:1.9;color:var(--ink-light)}.tile-meta{display:flex;gap:15px;margin-top:24px;color:#7c8877;font-size:10px}.empty-results{margin-top:20px;padding:30px;font-size:14px}.empty-results[hidden]{display:none}.directory-note{margin-top:55px;border-top:1px solid var(--line);padding-top:24px;max-width:750px;font-size:12px;line-height:1.9;color:var(--ink-light)}.directory-note p{color:var(--ink);font-weight:700;margin-bottom:10px}.directory-note a{display:inline-block;margin-top:12px;color:var(--color-brand-700);font-weight:700}@media(max-width:900px){.guide-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){.directory-header{padding:15px 0 27px}.guide-search{padding:18px}.guide-grid{grid-template-columns:1fr;gap:20px}.tile-graphic{height:120px}.tile-copy{padding:22px}.tile-copy h2{font-size:18px}.desktop-break{display:none}}
+</style>
