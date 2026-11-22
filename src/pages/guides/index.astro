@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import GuideArtwork from '../../components/GuideArtwork.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { guides, categoryLabel, readingMinutes } from '../../lib/guides';
 import { jpDate } from '../../lib/data';
@@ -23,9 +24,9 @@ const categories = [...new Set(guides.map((guide) => guide.category))];
     </div>
     <p class="result-count" id="guide-result-count" aria-live="polite">{guides.length}件のガイド</p>
     <div class="guide-grid" id="guide-grid">
-      {guides.map((guide, index) => (
+      {guides.map((guide) => (
         <article class="guide-tile surface-card" data-guide-card data-category={guide.category} data-search={`${guide.title} ${guide.description} ${guide.summary.join(' ')}`}>
-          <div class:list={['tile-graphic', `graphic-${guide.category}`]} aria-hidden="true"><span>{String(index + 1).padStart(2, '0')}</span><svg viewBox="0 0 160 100" fill="none"><rect x="34" y="18" width="77" height="65" rx="5"/><path d="M47 35h45M47 46h28M47 57h35M91 69l10 10 20-25"/><circle cx="116" cy="27" r="15"/></svg></div>
+          <a href={'/guides/'+guide.slug+'/'} tabindex="-1" aria-hidden="true"><GuideArtwork slug={guide.slug} /></a>
           <div class="tile-copy"><p class="tile-category">{categoryLabel[guide.category]}</p><h2><a href={`/guides/${guide.slug}/`}>{guide.title}</a></h2><p class="tile-description">{guide.description}</p><div class="tile-meta"><time datetime={guide.updatedAt}>{jpDate(guide.updatedAt)}</time><span>約{readingMinutes(guide)}分</span></div></div>
         </article>
       ))}

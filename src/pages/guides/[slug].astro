@@ -1,6 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
 import GuideDecision from '../../components/GuideDecision.astro';
+import GuideArtwork from '../../components/GuideArtwork.astro';
+import CostStory from '../../components/CostStory.astro';
 import ShortTermCost from '../../components/ShortTermCost.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import AffiliateButton from '../../components/AffiliateButton.astro';
@@ -29,7 +31,8 @@ const articleLd = { '@context':'https://schema.org','@type':'Article',headline:g
     <div class="guide-body">
       <article class="guide-main">
         <GuideDecision slug={g.slug} />
-        {shortStay && <ShortTermCost />}
+        {shortStay && <><ShortTermCost /><CostStory /></>}
+        {!shortStay && <GuideArtwork slug={g.slug} compact={false} />}
         <nav class="inline-toc" aria-label="この記事の目次"><p>この記事で分かること</p><ol>{g.sections.map(section => <li><a href={`#${section.id}`}>{section.title}<span aria-hidden="true">↓</span></a></li>)}{g.faqs.length>0 && <li><a href="#faq">よくある質問<span aria-hidden="true">↓</span></a></li>}</ol></nav>
         <div id="article-details" class="article-copy prose-ja">
           {g.sections.map(section => <section aria-labelledby={section.id}>

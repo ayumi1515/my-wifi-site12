@@ -1,0 +1,115 @@
+---
+interface Props { slug: string; compact?: boolean }
+const { slug, compact = true } = Astro.props;
+const artwork: Record<string, { title: string; left: string; right: string; kind: string; description: string }> = {
+  'bbiq-vs-docomo-hikari': { title: 'スマホと電気の組合せで選ぶ', left: 'BBIQ', right: 'ドコモ光', kind: 'compare', description: 'BBIQとドコモ光を、家の回線とスマホの組合せから比較する図。' },
+  'bbiq-vs-biglobe-hikari': { title: '電気の割引？ 今の回線を活かす？', left: '電気とまとめる', right: '光コラボから切替', kind: 'electricity', description: '電気との組合せを使うBBIQと、光コラボからの切替を考えるビッグローブ光の選び方の図。' },
+  'hikari-one-year': { title: '1年後の支払いまで、まとめて比較', left: '利用中の費用', right: 'やめるときの費用', kind: 'year', description: '12カ月のカレンダーと財布を並べ、利用中と解約時の費用を合わせて考える図。' },
+  'moving-internet-kagoshima': { title: '引越し先の設備から、順番に', left: '今の回線を移す', right: '新しく契約する', kind: 'moving', description: '今の住まいと引越し先の住まい、荷物とルーターを並べたインターネット移転の図。' },
+  'study-sapuri-toeic-vs-eikaiwa': { title: '試験の対策？ 会話の基礎？', left: 'TOEIC対策', right: '新日常英会話', kind: 'study', description: '試験対策のチェックリストと日常会話の吹き出しを並べ、学習目的を選ぶ図。' },
+  'online-english-trial-checklist': { title: '体験前に、課金日と条件をメモ', left: '体験できる内容', right: '課金日・停止期限', kind: 'trial', description: 'カレンダー、カード、時計を使って、無料体験の内容と課金前の確認事項を示した図。' },
+};
+const art = artwork[slug] ?? artwork['hikari-one-year'];
+---
+<figure class:list={['guide-artwork', { 'is-compact': compact }, `art-${art.kind}`]} aria-label={art.description}>
+  <figcaption>{art.title}</figcaption>
+  <div class="art-stage">
+    <svg viewBox="0 0 340 130" fill="none" aria-hidden="true" focusable="false">
+      <circle cx="59" cy="67" r="54" fill="#e2efe8" />
+      <circle cx="280" cy="68" r="53" fill="#f8e5ca" />
+      {art.kind === 'compare' && <>
+        <path d="M29 67 77 27l48 40" stroke="#175d50" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M40 60v57h74V60" fill="#fff" stroke="#175d50" stroke-width="4" stroke-linejoin="round" />
+        <rect x="53" y="83" width="48" height="26" rx="5" fill="#d5e9de" stroke="#175d50" stroke-width="3" />
+        <path d="M61 83V73m32 10V73m-25-9q9-8 18 0m-23-7q14-14 28 0" stroke="#175d50" stroke-width="3" stroke-linecap="round" />
+        <circle cx="88" cy="98" r="2" fill="#175d50" />
+        <rect x="231" y="15" width="64" height="106" rx="11" fill="#fff" stroke="#c76130" stroke-width="4" />
+        <path d="M251 25h24m-19 84h14" stroke="#c76130" stroke-width="3" stroke-linecap="round" />
+        <rect x="243" y="43" width="40" height="46" rx="5" fill="#fff0da" />
+        <path d="m252 65 8 8 16-20" stroke="#c76130" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M144 60h50m-8-8 9 8-9 8M195 81h-50m8-8-9 8 9 8" stroke="#899c91" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+      </>}
+      {art.kind === 'electricity' && <>
+        <path d="M23 65 70 28l47 37" stroke="#175d50" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M34 59v60h72V59" fill="#fff" stroke="#175d50" stroke-width="4" />
+        <path d="m74 69-15 22h13l-5 20 20-28H74l4-14Z" fill="#d16a3c" />
+        <path d="M110 47h22m-11-11v22" stroke="#d16a3c" stroke-width="3" stroke-linecap="round" />
+        <rect x="236" y="23" width="63" height="51" rx="6" fill="#fff" stroke="#175d50" stroke-width="4" />
+        <path d="M249 39h37m-37 10h25m-25 10h31" stroke="#a4c3b3" stroke-width="3" stroke-linecap="round" />
+        <rect x="230" y="91" width="77" height="26" rx="6" fill="#fff" stroke="#c76130" stroke-width="4" />
+        <path d="M241 90V80m54 10V80m-36 11V74m-12 30h22" stroke="#c76130" stroke-width="3" stroke-linecap="round" />
+        <circle cx="290" cy="104" r="3" fill="#175d50" />
+        <path d="M147 67h47m-9-9 9 9-9 9" stroke="#899c91" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+      </>}
+      {art.kind === 'year' && <>
+        <rect x="30" y="27" width="92" height="88" rx="8" fill="#fff" stroke="#175d50" stroke-width="4" />
+        <path d="M31 48h90M50 17v22m52-22v22" stroke="#175d50" stroke-width="4" stroke-linecap="round" />
+        {[0, 1, 2].map(row => [0, 1, 2, 3].map(col => <rect x={44 + col * 18} y={61 + row * 16} width="10" height="9" rx="2" fill={row === 2 ? '#d16a3c' : '#c6dfd2'} />))}
+        <path d="M145 69h42m-9-9 10 9-10 9" stroke="#899c91" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M222 51v63h88V45l-63-13-25 19Z" fill="#fff" stroke="#c76130" stroke-width="4" stroke-linejoin="round" />
+        <path d="M224 52h86" stroke="#c76130" stroke-width="3" />
+        <path d="M284 71h33v27h-33a13.5 13.5 0 0 1 0-27Z" fill="#f9dfbd" stroke="#c76130" stroke-width="4" />
+        <circle cx="291" cy="84" r="3" fill="#c76130" />
+        <circle cx="252" cy="34" r="17" fill="#f8dba9" stroke="#c76130" stroke-width="3" />
+        <path d="M249 27v14m-5-10h12m-12 5h12" stroke="#c76130" stroke-width="2" stroke-linecap="round" />
+      </>}
+      {art.kind === 'moving' && <>
+        <path d="M19 63 61 29l42 34" stroke="#175d50" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M29 57v53h65V57" fill="#fff" stroke="#175d50" stroke-width="4" />
+        <path d="M55 82h16v28H55Z" fill="#d8eade" stroke="#175d50" stroke-width="3" />
+        <rect x="81" y="87" width="36" height="31" rx="3" fill="#f5ddba" stroke="#ae7542" stroke-width="3" />
+        <path d="M99 87v12m-6 0h12" stroke="#ae7542" stroke-width="3" />
+        <path d="M143 65h48m-10-10 11 10-11 10" stroke="#d16a3c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+        <rect x="231" y="24" width="65" height="91" rx="4" fill="#fff" stroke="#175d50" stroke-width="4" />
+        {[0, 1, 2].map(row => [0, 1].map(col => <rect x={243 + col * 27} y={39 + row * 22} width="15" height="13" rx="2" fill="#c8e0d3" />))}
+        <rect x="274" y="92" width="44" height="26" rx="5" fill="#fff4df" stroke="#c76130" stroke-width="3" />
+        <path d="M281 92V82m30 10V82m-22-8q7-7 14 0" stroke="#c76130" stroke-width="3" stroke-linecap="round" />
+      </>}
+      {art.kind === 'study' && <>
+        <rect x="33" y="24" width="83" height="95" rx="6" fill="#fff" stroke="#175d50" stroke-width="4" />
+        <rect x="56" y="17" width="36" height="14" rx="4" fill="#d9eadd" stroke="#175d50" stroke-width="3" />
+        {[0, 1, 2].map(row => <><path d={`m46 ${49 + row * 23} 5 5 8-10`} stroke="#175d50" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" /><path d={`M70 ${50 + row * 23}h30`} stroke="#a2c4b1" stroke-width="3" stroke-linecap="round" /></>)}
+        <path d="M145 62h47m-8-8 9 8-9 8m9 13h-47m8-8-9 8 9 8" stroke="#899c91" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M231 23h61a15 15 0 0 1 15 15v35a15 15 0 0 1-15 15h-21l-23 18 4-18h-21a15 15 0 0 1-15-15V38a15 15 0 0 1 15-15Z" fill="#fff" stroke="#c76130" stroke-width="4" stroke-linejoin="round" />
+        {[240, 261, 282].map(cx => <circle cx={cx} cy="56" r="4" fill="#d16a3c" />)}
+        <path d="M272 100h31l13 13-2-13a12 12 0 0 0 9-12V69" stroke="#175d50" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+      </>}
+      {art.kind === 'trial' && <>
+        <rect x="29" y="27" width="83" height="84" rx="8" fill="#fff" stroke="#175d50" stroke-width="4" />
+        <path d="M30 48h81M48 17v20m44-20v20" stroke="#175d50" stroke-width="4" stroke-linecap="round" />
+        <rect x="44" y="63" width="17" height="15" rx="3" fill="#d6e9dc" /><path d="m68 90 8 8 19-25" stroke="#175d50" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+        <rect x="129" y="72" width="65" height="43" rx="6" fill="#fff5df" stroke="#c76130" stroke-width="3" />
+        <path d="M130 84h63m-53 18h16" stroke="#c76130" stroke-width="4" />
+        <circle cx="274" cy="64" r="41" fill="#fff" stroke="#c76130" stroke-width="4" />
+        <path d="M274 36v28l18 13" stroke="#175d50" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M274 24v5m0 70v5m-40-40h5m70 0h5" stroke="#c76130" stroke-width="3" stroke-linecap="round" />
+        <path d="m209 31 4 8 9 2-7 6 1 9-7-4-8 4 1-9-7-6 9-2 5-8Z" fill="#d4e7db" />
+      </>}
+    </svg>
+    <div class="art-labels"><span>{art.left}</span><span>{art.right}</span></div>
+  </div>
+</figure>
+<style>
+  .guide-artwork { position: relative; width: 100%; min-width: 0; margin: 0; overflow: hidden; border: 1px solid #dce7df; border-radius: 10px; background: linear-gradient(115deg,#f1f8f3 0%,#fffaf0 100%); padding: 22px 20px 18px; color: #194638; }
+  .guide-artwork figcaption { position: relative; z-index: 1; font-size: 20px; font-weight: 800; line-height: 1.5; text-align: center; }
+  .art-stage { max-width: 520px; margin: 10px auto 0; }
+  .art-stage svg { display: block; width: 100%; height: 160px; }
+  .art-labels { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; margin-top: 8px; }
+  .art-labels span { min-width: 0; padding: 5px 7px; border-radius: 4px; background: #fff; color: #175d50; font-size: 15px; font-weight: 700; line-height: 1.5; text-align: center; }
+  .art-labels span:last-child { color: #995029; }
+  .is-compact { padding: 13px 14px 12px; border: 0; border-radius: 7px 7px 0 0; }
+  .is-compact figcaption { font-size: 16px; line-height: 1.5; }
+  .is-compact .art-stage { margin-top: 5px; }
+  .is-compact .art-stage svg { height: 110px; }
+  .is-compact .art-labels { gap: 30px; margin-top: 4px; }
+  .is-compact .art-labels span { padding: 3px 5px; font-size: 13px; }
+  @media(max-width:420px) {
+    .guide-artwork:not(.is-compact) { padding: 18px 13px 14px; }
+    .guide-artwork:not(.is-compact) figcaption { font-size: 18px; }
+    .guide-artwork:not(.is-compact) .art-stage svg { height: 140px; }
+    .art-labels { gap: 22px; }
+    .is-compact { padding-inline: 10px; }
+    .is-compact figcaption { font-size: 15px; }
+    .is-compact .art-labels { gap: 20px; }
+  }
+</style>

@@ -55,7 +55,13 @@
     "affiliate": {
       "href": "https://px.a8.net/svt/ejp?a8mat=4AX6CE+CULUL6+348K+2Z6GBM",
       "label": "BBIQの申込み窓口を見る",
-      "banner": null,
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4AX6CE+CULUL6+348K+2Z7B6P",
+        "src": "https://www22.a8.net/svt/bgt?aid=260208734777&wid=002&eno=01&mid=s00000014546018006000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www14.a8.net/0.gif?a8mat=4AX6CE+CULUL6+348K+2Z7B6P"
+      },
       "pixel": null
     },
     "officialUrl": "https://www.bbiq.jp/hikari/internet/",
@@ -140,11 +146,11 @@
       "href": "https://px.a8.net/svt/ejp?a8mat=4AX6CD+G8NPLM+3SPO+NTJWY",
       "label": "ドコモ光の申込み窓口を見る",
       "banner": {
-        "href": "https://px.a8.net/svt/ejp?a8mat=4AX6CD+G8NPLM+3SPO+NY9O1",
-        "src": "https://www24.a8.net/svt/bgt?aid=260208733982&wid=002&eno=01&mid=s00000017718004023000&mc=1",
+        "href": "https://px.a8.net/svt/ejp?a8mat=4AX6CD+G8NPLM+3SPO+NUMHT",
+        "src": "https://www29.a8.net/svt/bgt?aid=260208733982&wid=002&eno=01&mid=s00000017718004006000&mc=1",
         "width": 300,
         "height": 250,
-        "pixel": "https://www16.a8.net/0.gif?a8mat=4AX6CD+G8NPLM+3SPO+NY9O1"
+        "pixel": "https://www17.a8.net/0.gif?a8mat=4AX6CD+G8NPLM+3SPO+NUMHT"
       },
       "pixel": null
     },
@@ -220,7 +226,13 @@
     "affiliate": {
       "href": "https://px.a8.net/svt/ejp?a8mat=4AX6CE+9NP6U2+3IB8+61JSI",
       "label": "SoftBank 光の申込み窓口を見る",
-      "banner": null,
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4AX6CE+9NP6U2+3IB8+601S1",
+        "src": "https://www23.a8.net/svt/bgt?aid=260208734584&wid=002&eno=01&mid=s00000016370001008000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www11.a8.net/0.gif?a8mat=4AX6CE+9NP6U2+3IB8+601S1"
+      },
       "pixel": null
     },
     "officialUrl": "https://www.softbank.jp/internet/sbhikari/",
@@ -298,7 +310,13 @@
     "affiliate": {
       "href": "https://px.a8.net/svt/ejp?a8mat=4AX5KH+11ICNU+3SPO+7LW1F7",
       "label": "ビッグローブ光の申込み窓口を見る",
-      "banner": null,
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4AX5KH+11ICNU+3SPO+7LXBPT",
+        "src": "https://www23.a8.net/svt/bgt?aid=260207729063&wid=002&eno=01&mid=s00000017718046009000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www10.a8.net/0.gif?a8mat=4AX5KH+11ICNU+3SPO+7LXBPT"
+      },
       "pixel": null
     },
     "officialUrl": "https://join.biglobe.ne.jp/ftth/hikari/",
@@ -504,7 +522,13 @@
       "href": "https://px.a8.net/svt/ejp?a8mat=4AX6CF+7O968Q+3IB8+BWVTE",
       "label": "工事不要！カンタン置くだけインターネット【SoftBank Air】",
       "pixel": "https://www11.a8.net/0.gif?a8mat=4AX6CF+7O968Q+3IB8+BWVTE",
-      "banner": null
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4AX6CF+7O968Q+3IB8+BXYE9",
+        "src": "https://www29.a8.net/svt/bgt?aid=260208735464&wid=002&eno=01&mid=s00000016370002006000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www18.a8.net/0.gif?a8mat=4AX6CF+7O968Q+3IB8+BXYE9"
+      }
     },
     "officialUrl": "https://www.softbank.jp/internet/air/",
     "sources": [

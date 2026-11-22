@@ -1,7 +1,7 @@
 import raw from '../data/offers.json';
 export interface Offer {
   id: string; name: string; officialUrl: string;
-  affiliate: { href: string; label: string; pixel: string | null; banner: null };
+  affiliate: { href: string; label: string; pixel: string | null; banner: {href:string;src:string;width:number;height:number;pixel?:string|null} | null };
   note: string;
   guideSlugs: string[];
 }

@@ -7,7 +7,13 @@
       "href": "https://px.a8.net/svt/ejp?a8mat=2ZPIW9+EFRGNU+3AQG+C6QR6",
       "label": "TOEICテスト対策",
       "pixel": "https://www14.a8.net/0.gif?a8mat=2ZPIW9+EFRGNU+3AQG+C6QR6",
-      "banner": null
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=2ZPIW9+EFRGNU+3AQG+C7TC1",
+        "src": "https://www28.a8.net/svt/bgt?aid=180909801873&wid=002&eno=01&mid=s00000015388002052000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www18.a8.net/0.gif?a8mat=2ZPIW9+EFRGNU+3AQG+C7TC1"
+      }
     },
     "note": "TOEIC L&R TEST対策の自習用コースです。無料対象・課金開始日・申込プランはリンク先で確認してください。",
     "guideSlugs": [
@@ -22,7 +28,13 @@
       "href": "https://px.a8.net/svt/ejp?a8mat=35SIQO+OETCQ+3AQG+ZQ80I",
       "label": "スタディサプリENGLISH（新日常英会話コース）",
       "pixel": "https://www17.a8.net/0.gif?a8mat=35SIQO+OETCQ+3AQG+ZQ80I",
-      "banner": null
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=35SIQO+OETCQ+3AQG+ZRALD",
+        "src": "https://www25.a8.net/svt/bgt?aid=191127264041&wid=002&eno=01&mid=s00000015388006006000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www16.a8.net/0.gif?a8mat=35SIQO+OETCQ+3AQG+ZRALD"
+      }
     },
     "note": "紹介するベーシックは自習アプリです。講師との会話は別の英会話セットプランで、料金・体験条件も異なります。",
     "guideSlugs": [
