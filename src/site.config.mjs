@@ -8,6 +8,9 @@ export const SITE = {
   operator: 'しらべまとめ帳 編集部',
   // お問い合わせフォーム（Googleフォームなど）のURL。空のあいだは「準備中」と出ます。
   contactFormUrl: '',
-  // Search Console の確認コード（前のサイトから引き継ぎ）
-  googleSiteVerification: 'kdvPCZAmn4Wxz2Qz0aq9_IMvvtZhh_HmEIwIC3VLBNU',
+  // Search Console の確認コード（既存のコードも残します）
+  googleSiteVerifications: [
+    'kdvPCZAmn4Wxz2Qz0aq9_IMvvtZhh_HmEIwIC3VLBNU',
+    '9NfaYyy-ki71BXEBC8drRW87FSaw0KegoMjQc67b2Gs',
+  ],
 };
