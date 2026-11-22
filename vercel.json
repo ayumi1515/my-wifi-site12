@@ -2,5 +2,13 @@
   "framework": "astro",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "trailingSlash": true
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "my-wifi-site12-kxri.vercel.app" }],
+      "destination": "https://www.shirabematome.com/:path*",
+      "permanent": true
+    }
+  ]
 }
