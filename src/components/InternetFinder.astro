@@ -1,165 +1,56 @@
 ---
 import { providers } from '../lib/data';
-
-const finderProviders = providers.map((p) => ({
-  id: p.id,
-  name: p.name,
-  kind: p.kind,
-  carriers: p.carriers,
-  order: p.order,
-  house: p.house,
-  mansion: p.mansion,
-  checkedAt: p.checkedAt,
-  goodFor: p.goodFor,
-}));
+import AffiliateButton from './AffiliateButton.astro';
+const finderProviders=providers.map(p=>({id:p.id,name:p.name,kind:p.kind,carriers:p.carriers,house:p.house,mansion:p.mansion}));
 ---
 <section id="finder" class="internet-finder" aria-labelledby="finder-title" data-internet-finder data-providers={JSON.stringify(finderProviders)}>
-  <div class="finder-heading">
-    <div>
-      <span class="section-kicker">FIND YOUR INTERNET</span>
-      <h2 id="finder-title">3つの条件から、比較候補をしぼる。</h2>
-    </div>
-    <span class="finder-private-note">住所・個人情報の入力は不要です</span>
-  </div>
+  <div class="finder-heading"><div><p class="finder-kicker">自分の条件で選ぶ</p><h2 id="finder-title">3つ選ぶと、比較したい2候補が分かる</h2></div><span>住所・個人情報は入力不要</span></div>
   <form class="finder-form" action="/hikari/#compare" method="get">
-    <div class="finder-field">
-      <label for="finder-building"><span>01</span> お住まいの建物</label>
-      <select id="finder-building" name="building">
-        <option value="house">戸建て</option>
-        <option value="mansion">マンション・アパート</option>
-      </select>
-    </div>
-    <div class="finder-field">
-      <label for="finder-carrier"><span>02</span> お使いのスマホ</label>
-      <select id="finder-carrier" name="carrier">
-        <option value="other">格安SIM・そのほか</option>
-        <option value="docomo">ドコモ</option>
-        <option value="au">au・UQ mobile</option>
-        <option value="softbank">ソフトバンク・ワイモバイル</option>
-      </select>
-    </div>
-    <div class="finder-field">
-      <label for="finder-construction"><span>03</span> 回線の工事はできる？</label>
-      <select id="finder-construction" name="construction">
-        <option value="yes">できる・光回線を検討したい</option>
-        <option value="no">できない・工事なしで使いたい</option>
-      </select>
-    </div>
-    <button class="finder-submit" type="submit">比較候補を見る<span aria-hidden="true">→</span></button>
+    <div class="finder-field"><label for="finder-building">01 お住まいの建物</label><select id="finder-building" name="building"><option value="house">戸建て</option><option value="mansion">マンション・アパート</option></select></div>
+    <div class="finder-field"><label for="finder-carrier">02 お使いのスマホ</label><select id="finder-carrier" name="carrier"><option value="other">格安SIM・そのほか</option><option value="docomo">ドコモ</option><option value="au">au・UQ mobile</option><option value="softbank">ソフトバンク・ワイモバイル</option></select></div>
+    <div class="finder-field"><label for="finder-construction">03 回線の工事はできる？</label><select id="finder-construction" name="construction"><option value="yes">できる・光回線を使いたい</option><option value="no">できない・工事なしで使いたい</option></select></div>
+    <button class="finder-submit" type="submit">2候補を表示する →</button>
   </form>
-  <p class="finder-limit">公開中のサービスを、工事の有無・スマホのセット割・掲載順でしぼります。住所ごとの提供可否や割引の適用は、各社の公式サイトで確認してください。</p>
-  <p class="finder-status" role="status" aria-live="polite"></p>
-  <div class="finder-results" hidden></div>
-  <noscript>
-    <p class="finder-noscript">候補は<a href="/hikari/kodate/">戸建て</a>・<a href="/hikari/mansion/">マンション</a>・<a href="/hikari/home-router/">工事なし</a>の比較ページからも確認できます。</p>
-  </noscript>
+  <p class="finder-limit">工事の有無で分け、対象スマホのセット割がある候補を優先。同じ条件では、掲載中の表示月額が低い順に2件を選びます。割引の前提と追加費用は結果でも確認できます。</p>
+  <p class="finder-status" role="status" aria-live="polite"></p><div class="finder-results" hidden></div>
+  {providers.map(p=>(['house','mansion'] as const).map(building=>p[building]&&<template data-finder-template={`${p.id}:${building}`}><article class="finder-card"><p class="finder-match"></p><h4>{p.name}</h4><p class="finder-card-price"><span>月額</span><strong>{p[building]?.label}</strong><span>（税込）</span></p><p class="finder-card-condition">{p[building]?.note}</p><p class="finder-card-caution"><strong>申込み前に</strong>{p.cautions[0]}</p>{building==='house' && p.campaign && <aside class="finder-campaign"><strong>{p.campaign.label}</strong><p>{p.campaign.detail}</p><a href={p.campaign.url} target="_blank" rel="noopener">還元条件の出典 ↗</a></aside>}<AffiliateButton provider={p} building={building} /><a class="finder-detail-link" href={`/hikari/${p.id}/`}>料金・追加費用を詳しく見る →</a><p class="finder-date">公式料金の確認日：{p.checkedAt.replaceAll('-','/')}</p></article></template>))}
+  <noscript><p class="finder-noscript">候補は<a href="/hikari/kodate/">戸建て</a>・<a href="/hikari/mansion/">マンション</a>・<a href="/hikari/home-router/">工事なし</a>の比較ページからも選べます。</p></noscript>
 </section>
-
 <script>
-  interface FinderPrice { label: string; note: string }
-  interface FinderProvider {
-    id: string;
-    name: string;
-    kind: 'fiber' | 'router';
-    carriers: string[];
-    order: { house: number; mansion: number };
-    house: FinderPrice | null;
-    mansion: FinderPrice | null;
-    checkedAt: string;
-    goodFor: string[];
-  }
-  const carrierKeys: Record<string, string[]> = {
-    docomo: ['docomo'], au: ['au', 'uq'], softbank: ['softbank', 'ymobile'], other: [],
-  };
-  document.querySelectorAll<HTMLElement>('[data-internet-finder]').forEach((finder) => {
-    const form = finder.querySelector<HTMLFormElement>('form');
-    const result = finder.querySelector<HTMLDivElement>('.finder-results');
-    const status = finder.querySelector<HTMLParagraphElement>('.finder-status');
-    if (!form || !result || !status) return;
-    const list: FinderProvider[] = JSON.parse(finder.dataset.providers || '[]');
-    form.addEventListener('submit', (event) => {
+  interface FinderPrice{monthly:number;label:string;note:string}
+  interface FinderProvider{id:string;name:string;kind:'fiber'|'router';carriers:string[];house:FinderPrice|null;mansion:FinderPrice|null}
+  const carrierKeys:Record<string,string[]>={docomo:['docomo'],au:['au','uq'],softbank:['softbank','ymobile'],other:[]};
+  document.querySelectorAll<HTMLElement>('[data-internet-finder]').forEach(finder=>{
+    const form=finder.querySelector<HTMLFormElement>('form');
+    const result=finder.querySelector<HTMLDivElement>('.finder-results');
+    const status=finder.querySelector<HTMLParagraphElement>('.finder-status');
+    if(!form||!result||!status)return;
+    const list:FinderProvider[]=JSON.parse(finder.dataset.providers||'[]');
+    const templates=new Map<string,HTMLTemplateElement>();
+    finder.querySelectorAll<HTMLTemplateElement>('[data-finder-template]').forEach(template=>templates.set(template.dataset.finderTemplate||'',template));
+    form.addEventListener('submit',event=>{
       event.preventDefault();
-      const values = new FormData(form);
-      const building = values.get('building') === 'mansion' ? 'mansion' : 'house';
-      const carrier = String(values.get('carrier') || 'other');
-      const kind = values.get('construction') === 'no' ? 'router' : 'fiber';
-      const match = (p: FinderProvider) => (carrierKeys[carrier] || []).some((key) => p.carriers.includes(key));
-      const candidates = list.filter((p) => p.kind === kind && p[building]).sort((a, b) => {
-        const setPriority = Number(match(b)) - Number(match(a));
-        return setPriority || a.order[building] - b.order[building];
-      }).slice(0, 2);
-
-      const heading = document.createElement('h3');
-      heading.textContent = kind === 'fiber' ? 'まず比べたい光回線の候補' : 'まず比べたい工事なしの候補';
-      heading.tabIndex = -1;
-      const intro = document.createElement('p');
-      intro.className = 'finder-result-intro';
-      intro.textContent = kind === 'fiber'
-        ? '建物に導入済みの回線や提供エリアによって、選べるサービスは変わります。次のページで条件を確かめてください。'
-        : 'ホームルーターは、設置場所や時間帯の電波状況で速度が変わります。端末代の残りもあわせて比べてください。';
-      const cards = document.createElement('ul');
-      cards.className = 'finder-result-grid';
-      candidates.forEach((p) => {
-        const price = p[building];
-        if (!price) return;
-        const li = document.createElement('li');
-        const reason = document.createElement('p');
-        reason.className = 'finder-match';
-        reason.textContent = match(p) ? 'スマホのセット割を確認したい候補' : '料金・条件を比較したい候補';
-        const title = document.createElement('h4');
-        title.textContent = p.name;
-        const cost = document.createElement('p');
-        cost.className = 'finder-result-price';
-        cost.textContent = '月額 ' + price.label + '（税込）';
-        const conditions = document.createElement('p');
-        conditions.className = 'finder-result-conditions';
-        conditions.textContent = price.note;
-        const sourceDate = document.createElement('p');
-        sourceDate.className = 'finder-result-date';
-        sourceDate.textContent = '料金確認日：' + p.checkedAt.replaceAll('-', '/');
-        const link = document.createElement('a');
-        link.href = '/hikari/' + encodeURIComponent(p.id) + '/';
-        link.textContent = p.name + 'の条件と申込み窓口を見る →';
-        li.append(reason, title, cost, conditions, sourceDate, link);
-        cards.append(li);
+      const values=new FormData(form);
+      const building=values.get('building')==='mansion'?'mansion':'house';
+      const carrier=String(values.get('carrier')||'other');
+      const kind=values.get('construction')==='no'?'router':'fiber';
+      const match=(p:FinderProvider)=>(carrierKeys[carrier]||[]).some(key=>p.carriers.includes(key));
+      const candidates=list.filter(p=>p.kind===kind&&p[building]).sort((a,b)=>Number(match(b))-Number(match(a))||(a[building]?.monthly||0)-(b[building]?.monthly||0)).slice(0,2);
+      const heading=document.createElement('h3');heading.textContent=kind==='fiber'?'あなたの条件で比べたい光回線':'工事なしで比べたいホームルーター';heading.tabIndex=-1;
+      const intro=document.createElement('p');intro.className='finder-result-intro';intro.textContent=kind==='fiber'?'建物・住所で利用できることを確認したうえで、割引条件と工事費を比べてください。申込み窓口と料金の詳細を、この結果から開けます。':'ホームルーターは設置場所の電波で使い勝手が変わります。月額に加え、途中解約で残る端末代も確認してください。';
+      const cards=document.createElement('div');cards.className='finder-card-grid';
+      candidates.forEach(p=>{
+        const template=templates.get(p.id+':'+building);if(!template)return;
+        const card=template.content.cloneNode(true) as DocumentFragment;
+        const reason=card.querySelector('.finder-match');if(reason)reason.textContent=match(p)?'対象スマホのセット割を使える候補':'表示月額を比べる候補';
+        cards.append(card);
       });
-      result.replaceChildren(heading, intro, cards);
-      result.hidden = false;
-      status.textContent = '入力した条件から、' + candidates.length + '件の比較候補を表示しました。';
-      heading.focus({ preventScroll: true });
-      result.scrollIntoView({ block: 'nearest', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      const back=document.createElement('a');back.href='/hikari/#compare';back.className='finder-back-link';back.textContent='ほかの光回線も一覧表で比べる →';
+      result.replaceChildren(heading,intro,cards,back);result.hidden=false;status.textContent=candidates.length+'件の候補を表示しました。掲載サービス内で、入力条件と表示月額をもとに選んでいます。';heading.focus({preventScroll:true});
+      result.scrollIntoView({block:'nearest',behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
     });
   });
 </script>
-
 <style>
-  .internet-finder { padding: 31px 34px 24px; border: 1px solid #d1ddca; border-radius: 12px; background: #fffefa; }
-  .finder-heading { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-  .finder-heading h2 { margin-top: 10px; color: #21442e; font-family: var(--serif); font-size: 21px; font-weight: 700; line-height: 1.7; }
-  .finder-private-note { padding: 7px 11px; border-radius: 4px; background: #f0f4eb; color: #67755d; font-size: 10px; white-space: nowrap; }
-  .finder-form { display: grid; grid-template-columns: 1fr 1.1fr 1.2fr auto; align-items: end; gap: 15px; margin-top: 25px; }
-  .finder-field { min-width: 0; }
-  .finder-field label { display: block; margin-bottom: 10px; color: #425b3f; font-size: 11px; font-weight: 700; }
-  .finder-field label span { margin-right: 5px; color: #ad754c; font-family: Georgia, serif; font-size: 13px; font-weight: 400; }
-  .finder-field select { width: 100%; min-height: 47px; border: 1px solid #cbd7c4; border-radius: 5px; background: #fff; padding: 11px 25px 11px 12px; color: #40543b; font-size: 11px; line-height: 1.6; }
-  .finder-submit { display: inline-flex; min-height: 47px; align-items: center; justify-content: center; gap: 22px; border: 0; border-radius: 5px; background: #175541; padding: 12px 18px; color: #fff; font-size: 11px; font-weight: 700; cursor: pointer; white-space: nowrap; }
-  .finder-submit:hover { background: #103d2e; }
-  .finder-limit { margin-top: 15px; color: #7b8571; font-size: 10px; line-height: 1.9; }
-  .finder-status:empty { display: none; }
-  .finder-status { margin-top: 23px; color: #547044; font-size: 11px; line-height: 1.8; }
-  .finder-results { margin-top: 12px; border-top: 1px solid #dee5d7; padding-top: 22px; }
-  .finder-results :global(h3) { color: #2e4b2c; font-family: var(--serif); font-size: 19px; font-weight: 700; line-height: 1.7; }
-  .finder-results :global(.finder-result-intro) { margin-top: 9px; color: #68745d; font-size: 11px; line-height: 1.9; }
-  .finder-results :global(.finder-result-grid) { display: grid; grid-template-columns: 1fr 1fr; gap: 17px; margin: 17px 0 0; padding: 0; list-style: none; }
-  .finder-results :global(.finder-result-grid li) { min-width: 0; border: 1px solid #d9e3d1; border-radius: 7px; background: #f6f8f1; padding: 19px; }
-  .finder-results :global(.finder-match) { color: #6b795f; font-size: 10px; line-height: 1.8; }
-  .finder-results :global(h4) { margin-top: 8px; color: #27492e; font-size: 17px; font-weight: 700; line-height: 1.7; }
-  .finder-results :global(.finder-result-price) { margin-top: 10px; color: #3b5834; font-size: 14px; font-weight: 700; line-height: 1.7; }
-  .finder-results :global(.finder-result-conditions) { margin-top: 9px; color: #68745d; font-size: 11px; line-height: 1.9; }
-  .finder-results :global(.finder-result-date) { margin-top: 12px; color: #7a8570; font-size: 10px; }
-  .finder-results :global(.finder-result-grid a) { display: inline-block; margin-top: 16px; color: #175541; font-size: 11px; font-weight: 700; line-height: 1.9; text-decoration: underline; text-underline-offset: 4px; }
-  .finder-noscript { margin-top: 17px; color: #5f7053; font-size: 12px; line-height: 1.9; }
-  .finder-noscript a { text-decoration: underline; text-underline-offset: 3px; }
-  @media (max-width: 1000px) { .finder-form { grid-template-columns: 1fr 1fr; gap: 18px; } .finder-submit { align-self: end; } }
-  @media (max-width: 650px) { .internet-finder { padding: 23px 20px 20px; } .finder-heading { display: block; } .finder-heading h2 { font-size: 19px; } .finder-private-note { display: inline-block; margin-top: 12px; font-size: 9px; } .finder-form { grid-template-columns: 1fr; gap: 17px; margin-top: 21px; } .finder-field label { margin-bottom: 8px; font-size: 12px; } .finder-field select { font-size: 13px; } .finder-submit { margin-top: 4px; font-size: 13px; } .finder-limit { font-size: 10px; } .finder-results :global(.finder-result-grid) { grid-template-columns: 1fr; } }
+  .internet-finder{padding:24px;border:1px solid #bacebf;border-top:4px solid #175d50;border-radius:8px;background:#f1f7f1;color:#253d2e}.finder-heading{display:flex;align-items:center;justify-content:space-between;gap:20px}.finder-kicker{font-size:14px;font-weight:700;color:#175d50}.finder-heading h2{font-family:var(--font-sans);font-size:25px;font-weight:800;line-height:1.5;margin-top:4px}.finder-heading>span{font-size:13px;color:#58705d;white-space:nowrap}.finder-form{display:grid;grid-template-columns:1fr 1.1fr 1.15fr auto;align-items:end;gap:14px;margin-top:22px}.finder-field{min-width:0}.finder-field label{display:block;font-size:14px;font-weight:700;line-height:1.6;margin-bottom:8px}.finder-field select{width:100%;min-height:48px;border:1px solid #b7cbbd;border-radius:5px;background:#fff;padding:10px 28px 10px 10px;font-size:14px;line-height:1.6;color:#294532}.finder-submit{display:flex;min-height:48px;align-items:center;justify-content:center;white-space:nowrap;border:0;border-radius:5px;background:#175d50;color:#fff;padding:12px 18px;font-size:15px;font-weight:700;cursor:pointer}.finder-submit:hover{background:#10473b}.finder-limit{font-size:13px;line-height:1.9;color:#5e7263;margin-top:12px}.finder-status:empty{display:none}.finder-status{font-size:14px;color:#315d3c;line-height:1.8;margin-top:22px}.finder-results{margin-top:13px;padding-top:19px;border-top:1px solid #ccdcd0}.finder-results :global(h3){font-family:var(--font-sans);font-size:22px;font-weight:800;line-height:1.6}.finder-results :global(.finder-result-intro){font-size:15px;line-height:1.9;margin-top:8px;color:#4d6855}.finder-results :global(.finder-card-grid){display:grid;grid-template-columns:1fr 1fr;gap:17px;margin-top:17px}.finder-card{display:flex;flex-direction:column;border:1px solid #c5d7ca;border-radius:6px;padding:21px;background:#fff}.finder-match{font-size:13px;font-weight:700;color:#175d50}.finder-card h4{font-size:23px;font-weight:800;margin-top:7px;line-height:1.6}.finder-card-price{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px;margin:10px 0 7px}.finder-card-price span{font-size:13px;color:#5e7163}.finder-card-price strong{font-size:26px;line-height:1.5;color:#175d50}.finder-card-condition{font-size:13px;line-height:1.9;color:#5e7163}.finder-card-caution{padding:11px 13px;border-radius:4px;background:#fff6ed;color:#80502e;font-size:13px;line-height:1.85;margin:13px 0 18px}.finder-card-caution strong{display:block;font-weight:700;margin-bottom:3px}.finder-campaign{padding:11px 12px;border:1px solid #ecd8be;border-radius:5px;background:#fff7e9;color:#8c4a25;margin-bottom:15px}.finder-campaign>strong{font-size:16px;line-height:1.7}.finder-campaign>p{font-size:13px;line-height:1.85;margin-top:5px}.finder-campaign>a{font-size:13px;text-decoration:underline;text-underline-offset:3px}.finder-card :global(.flex.flex-col){margin-top:auto}.finder-card :global(a[data-affiliate-link]){font-size:15px;line-height:1.7}.finder-card :global(.text-\[11px\]){font-size:13px;line-height:1.65}.finder-detail-link{display:block;font-size:14px;font-weight:700;text-align:center;text-decoration:underline;text-underline-offset:3px;color:#175d50;margin-top:11px}.finder-date{font-size:13px;color:#67796c;margin-top:13px}.finder-results :global(.finder-back-link){display:inline-block;font-size:14px;font-weight:700;text-decoration:underline;text-underline-offset:3px;color:#175d50;margin-top:18px}.finder-noscript{font-size:14px;line-height:1.85;margin-top:15px}.finder-noscript a{text-decoration:underline}@media(max-width:1050px){.finder-form{grid-template-columns:1fr 1fr}.finder-heading{display:block}.finder-heading>span{display:block;margin-top:8px}}@media(max-width:650px){.internet-finder{padding:20px 17px}.finder-heading h2{font-size:22px;line-height:1.6}.finder-form{grid-template-columns:1fr;gap:17px;margin-top:19px}.finder-field select{font-size:16px}.finder-submit{font-size:16px}.finder-results :global(.finder-card-grid){grid-template-columns:1fr}.finder-card{padding:18px}.finder-card h4{font-size:22px}.finder-card-price strong{font-size:26px}.finder-results :global(h3){font-size:21px}}
 </style>

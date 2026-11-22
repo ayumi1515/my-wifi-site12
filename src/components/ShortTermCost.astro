@@ -1,0 +1,34 @@
+<section id="one-year-cost" class="short-cost" aria-labelledby="short-cost-title" data-short-cost>
+  <h2 id="short-cost-title">12カ月でやめる場合、支払いはいくら違う？</h2>
+  <p>新しく回線を工事するケースの比較例です。基本料12回分・税込・スマホ割と現金還元なしでそろえます。</p>
+  <fieldset><legend>建物の料金タイプ</legend><label><input type="radio" name="cost-building" value="house" checked /> 戸建て</label><label><input type="radio" name="cost-building" value="mansion" /> マンション設備あり</label></fieldset>
+  <div class="cost-scroll" role="region" aria-label="12カ月の費用比較" tabindex="0"><table><thead><tr><th scope="col">支払いの内訳</th><th scope="col">enひかり 1ギガ<br /><small>新規工事費0円適用</small></th><th scope="col">ドコモ光 1ギガ<br /><small>タイプA・2年定期・新設工事</small></th></tr></thead><tbody>
+  <tr><th scope="row">基本料12回分</th><td data-en-monthly>4,818円 × 12</td><td data-docomo-monthly>5,720円 × 12</td></tr>
+  <tr><th scope="row">事務手数料</th><td>3,300円</td><td>4,950円</td></tr>
+  <tr><th scope="row">基本工事費</th><td>0円</td><td>28,600円</td></tr>
+  <tr><th scope="row">12カ月目の契約解除料</th><td>0円</td><td data-cancel>5,500円</td></tr>
+  <tr class="cost-total"><th scope="row">現金支払いの合計</th><td data-en-total>61,116円</td><td data-docomo-total>107,690円</td></tr>
+  </tbody></table></div>
+  <p class="cost-announcement" role="status" aria-live="polite" data-cost-status>戸建ての試算：enひかり61,116円、ドコモ光107,690円。</p>
+  <p class="cost-source">ドコモ光の工事費特典はdポイントでの還元です。この現金総額からは差し引いていません。受取時期・適用条件があり、12カ月目までの進呈例は5,971ポイントです。スマホのセット割も含めた実際の負担差とは異なります。</p>
+  <details><summary>計算の前提・含まない費用を見る</summary><ul>
+    <li>enひかりは基本料金にIPv6オプション198円/月を加えた額。基本工事費0円キャンペーンの適用が前提で、終了・条件変更時はこの試算を使えません。</li>
+    <li>ドコモ光は新設工事費を全額払う現金総額。工事費特典のdポイントは現金から引いていません。転用・事業者変更で工事が不要なら、この新設工事の例とは分けて比較します。</li>
+    <li>ルーター・電話・特殊工事・土休日加算・ユニバーサルサービス料等は別。初月の日割りや開通・解約の時期により実際の請求は変わります。</li>
+    <li>enひかりの月末解約は希望月20日までに申し出ます。小規模集合住宅などは戸建て料金になる場合があります。</li>
+  </ul></details>
+  <p class="cost-source">2026年11月22日確認：<a href="https://www.enhikari.jp/" target="_blank" rel="noopener">enひかり公式</a>・<a href="https://www.docomo.ne.jp/hikari/charge/" target="_blank" rel="noopener">ドコモ光公式料金</a>・<a href="https://www.docomo.ne.jp/campaign_event/hikari_shinkikojiryo_free/" target="_blank" rel="noopener">工事費特典</a>。ドコモの対象スマホ割引を使う家庭は、スマホ代も足して比較してください。</p>
+</section>
+<script>
+document.querySelectorAll<HTMLElement>('[data-short-cost]').forEach(panel=>{
+ panel.querySelectorAll<HTMLInputElement>('input[name="cost-building"]').forEach(input=>input.addEventListener('change',()=>{
+ const mansion=input.value==='mansion';const en=mansion?3718:4818;const docomo=mansion?4400:5720;const cancel=mansion?4180:5500;
+ const yen=(n:number)=>n.toLocaleString('ja-JP')+'円';
+ const set=(selector:string,text:string)=>{const element=panel.querySelector(selector);if(element)element.textContent=text;};
+ set('[data-en-monthly]',yen(en)+' × 12');set('[data-docomo-monthly]',yen(docomo)+' × 12');set('[data-cancel]',yen(cancel));set('[data-en-total]',yen(en*12+3300));set('[data-docomo-total]',yen(docomo*12+4950+28600+cancel));set('[data-cost-status]',(mansion?'マンション設備あり':'戸建て')+'の試算：enひかり'+yen(en*12+3300)+'、ドコモ光'+yen(docomo*12+4950+28600+cancel)+'。');
+ }));
+});
+</script>
+<style>
+.short-cost{padding:24px;border:1px solid #cbded6;background:#fff;border-radius:8px;margin-bottom:28px}.short-cost h2{font-size:23px;font-weight:800;line-height:1.5;margin-bottom:12px}.short-cost>p{font-size:15px;line-height:1.8}.short-cost fieldset{display:flex;flex-wrap:wrap;gap:12px 20px;background:#eef6f2;border:0;padding:14px 18px;margin:20px 0}.short-cost legend{font-size:13px;font-weight:700;padding:0 5px}.short-cost label{font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px;cursor:pointer}.short-cost input{accent-color:#175d50;width:18px;height:18px}.cost-scroll{overflow-x:auto}.short-cost table{width:100%;min-width:520px;border-collapse:collapse;font-size:14px}.short-cost th,.short-cost td{padding:14px 12px;border:1px solid #dce4df;line-height:1.6}.short-cost thead th{background:#175d50;color:#fff}.short-cost thead small{font-size:12px;font-weight:400}.short-cost tbody th{text-align:left;background:#f5f8f6;width:33%;font-weight:500}.cost-total td{font-size:23px;font-weight:800;background:#fff3e7;color:#a33b1d}.cost-total th{font-weight:800!important}.cost-announcement{font-size:14px!important;font-weight:700;margin:16px 0}.short-cost details{font-size:14px;line-height:1.8;border-top:1px solid #dce4df;padding-top:14px}.short-cost summary{cursor:pointer;font-weight:700}.short-cost ul{list-style:disc;padding-left:20px;margin:12px 0}.short-cost li{margin-bottom:8px}.cost-source{margin-top:16px;font-size:13px!important;color:#536157}.cost-source a{text-decoration:underline;color:#175d50}@media(max-width:600px){.short-cost{padding:18px 14px}.short-cost h2{font-size:21px}.short-cost th,.short-cost td{padding:12px 9px}}
+</style>

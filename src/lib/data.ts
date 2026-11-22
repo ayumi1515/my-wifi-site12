@@ -16,6 +16,7 @@ export interface Provider {
     banner: { href: string; src: string; width: number; height: number; pixel?: string | null } | null;
     pixel: string | null;
   } | null;
+  campaign?: { label: string; detail: string; url: string; summary?: string };
   officialUrl: string; sources: { label: string; url: string }[]; checkedAt: string;
 }
 export interface Area {

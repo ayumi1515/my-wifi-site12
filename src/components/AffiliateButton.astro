@@ -6,11 +6,12 @@ interface Affiliate {
   banner?: { href: string; src: string; width: number; height: number; pixel?: string | null } | null;
   pixel?: string | null;
 }
-const { provider, showBanner = false } = Astro.props as {
-  provider: { name: string; officialUrl: string; affiliate: Affiliate | null };
+const { provider, showBanner = false, building } = Astro.props as {
+  provider: { id?: string; name: string; officialUrl: string; affiliate: Affiliate | null };
   showBanner?: boolean;
+  building?: 'house' | 'mansion';
 };
-const a = provider.affiliate;
+const a = provider.id === 'bbiq' && building === 'mansion' ? null : provider.affiliate;
 ---
 <div class="flex flex-col gap-2">
   {a ? (
@@ -23,7 +24,7 @@ const a = provider.affiliate;
         <span aria-hidden="true">→</span>
       </a>
       {a.pixel && <img src={a.pixel} width="1" height="1" alt="" class="inline-block w-px h-px border-0" />}
-      <p class="text-[11px] leading-relaxed text-gray-500">
+      <p class="text-[13px] leading-relaxed text-gray-600">
         <span class="font-bold">PR</span>・申込み前に、料金・追加費用・適用条件をリンク先で確認してください。
       </p>
       {showBanner && a.banner && (
