@@ -4,6 +4,7 @@ import ConnectivityManga from '../../components/ConnectivityManga.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import AffiliateButton from '../../components/AffiliateButton.astro';
 import PointsComparison from '../../components/PointsComparison.astro';
+import CancellationGuide from '../../components/CancellationGuide.astro';
 import CheckedNote from '../../components/CheckedNote.astro';
 import { SITE } from '../../site.config.mjs';
 import { providers, breadcrumbLd, jpDate, type Provider } from '../../lib/data';
@@ -112,6 +113,7 @@ const description = `${p.name}を鹿児島県で使うときの月額（戸建�
       <p>住所と契約条件を確かめたうえで、料金・サービス内容に納得できる窓口を選んでください。</p>
     </div>
 
+    <CancellationGuide ids={[p.id]} kind="home" />
     <section class="mt-8 rounded-2xl border border-brand-100 bg-brand-50 p-5 sm:p-6" aria-labelledby="next-step">
       <h2 id="next-step" class="font-bold text-lg text-gray-900 mb-2">条件が合えば、窓口で最新情報を確認</h2>
       <p class="text-sm leading-relaxed text-gray-600 mb-4">このページの料金は確認日時点の情報です。最後にリンク先で、住所・見積り・特典の条件を確認しましょう。</p>

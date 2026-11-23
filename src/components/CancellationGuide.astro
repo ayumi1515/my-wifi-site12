@@ -1,0 +1,125 @@
+---
+import cancellationGuidesRaw from '../data/cancellation-guides.json';
+import { jpDate } from '../lib/data';
+
+interface CancellationEntry {
+  id: string;
+  kind: 'home' | 'mobile';
+  name: string;
+  normal: { label: string; href: string; note: string; alternatives?: { label: string; href: string }[] };
+  transfer: { label: string; href: string; note: string; heading?: string; alternatives?: { label: string; href: string }[] };
+  steps: { title: string; text: string }[];
+  checks: { balance: string; returns: string; options: string; schedule: string };
+  sources: { title: string; url: string }[];
+  checkedAt: string;
+}
+interface Props {
+  ids: string[];
+  kind: 'home' | 'mobile';
+  compact?: boolean;
+  id?: string;
+}
+const { ids, kind, compact = false, id = 'cancellation-guide' } = Astro.props;
+const data = cancellationGuidesRaw as { checkedAt: string; guides: CancellationEntry[] };
+const guides = [...new Set(ids)].map(guideId => data.guides.find(guide => guide.id === guideId && guide.kind === kind)).filter((guide): guide is CancellationEntry => Boolean(guide));
+const singleBrand = guides.length === 1;
+const Heading = compact ? 'h3' : 'h2';
+const Subheading = compact ? 'h4' : 'h3';
+const commonChecks = [
+  { label: '残りの支払い', text: kind === 'home' ? '工事費・端末代の残額、最終請求を確認。' : '端末の分割払い・最終請求を確認。' },
+  { label: '返す機器・SIM', text: kind === 'home' ? 'レンタル機器の返却先・期限・付属品を確認。' : 'SIMの返却要否、端末返却プログラムを確認。' },
+  { label: '有料オプション', text: '回線とは別に解約が必要な契約を確認。' },
+  { label: '切替の日程', text: kind === 'home' ? '開通・番号移行・旧回線終了の日程を調整。' : 'MNPの開通日・手続きの受付時間を確認。' },
+];
+---
+<section id={id} class:list={['cancellation-guide', { 'cancellation-compact': compact }]} aria-labelledby={`${id}-title`}>
+  <header class="cancellation-heading">
+    <p class="cancellation-kicker">申込み前に、今の契約の終え方も確認</p>
+    <Heading id={`${id}-title`} class="cancellation-title">解約・乗換えの進め方</Heading>
+    <div class="cancellation-purpose">
+      <p class="cancellation-purpose-title">{kind === 'mobile' ? '電話番号を残すなら、通常解約を先にしないでください。' : '新回線の開通・切替前に、旧回線を自己判断で止めないでください。'}</p>
+      <p>{kind === 'mobile' ? '番号を引き継ぐ乗換えはMNPの手続きです。先に通常解約すると、同じ番号を引き継げなくなるおそれがあります。' : 'ネットを使えない期間を避けるため、先に新しい回線の開通・切替予定を確認します。光の事業者変更や固定電話の番号移行は、通常解約と手順が異なります。'}</p>
+    </div>
+  </header>
+
+  <section class="cancellation-common" aria-label="共通して確認すること">
+    <Subheading class="cancellation-common-title">どの会社でも確認したい4項目</Subheading>
+    <ul class="cancellation-checklist">{commonChecks.map(check => <li><strong>{check.label}</strong><span>{check.text}</span></li>)}</ul>
+    <p class="cancellation-common-note">ここまでは共通の確認事項です。実際の窓口・手続き・返却条件は、下の会社ごとの案内で確認してください。</p>
+  </section>
+
+  <div class="cancellation-brand-list">
+    {guides.map(guide => <details class="cancellation-brand" open={singleBrand} data-cancellation-id={guide.id}>
+      <summary><span class="cancellation-brand-name">{guide.name}</span><span class="cancellation-brand-hint">解約・乗換えの4STEP</span></summary>
+      <div class="cancellation-brand-content">
+        <div class="cancellation-routes">
+          <section class="cancellation-route"><h4>{kind === 'mobile' ? '番号を残さない通常解約' : '回線を終了する通常解約'}</h4><p>{guide.normal.note}</p><a href={guide.normal.href} target="_blank" rel="noopener noreferrer">{guide.normal.label}<span aria-hidden="true"> ↗</span></a>{guide.normal.alternatives?.map(link => <a href={link.href} target="_blank" rel="noopener noreferrer">{link.label}<span aria-hidden="true"> ↗</span></a>)}</section>
+          <section class="cancellation-route cancellation-transfer"><h4>{guide.transfer.heading ?? (kind === 'mobile' ? '番号を残すMNP' : '番号引継ぎ・回線の乗換え')}</h4><p>{guide.transfer.note}</p><a href={guide.transfer.href} target="_blank" rel="noopener noreferrer">{guide.transfer.label}<span aria-hidden="true"> ↗</span></a>{guide.transfer.alternatives?.map(link => <a href={link.href} target="_blank" rel="noopener noreferrer">{link.label}<span aria-hidden="true"> ↗</span></a>)}</section>
+        </div>
+
+        <ol class="cancellation-steps">{guide.steps.map((step, index) => <li><span class="cancellation-step-number" aria-hidden="true">{index + 1}</span><div><h4>{step.title}</h4><p>{step.text}</p></div></li>)}</ol>
+
+        <dl class="cancellation-final-checks">
+          <div><dt>残りの支払い</dt><dd>{guide.checks.balance}</dd></div>
+          <div><dt>機器・SIMの返却</dt><dd>{guide.checks.returns}</dd></div>
+          <div><dt>有料オプション</dt><dd>{guide.checks.options}</dd></div>
+          <div><dt>手続きの日程</dt><dd>{guide.checks.schedule}</dd></div>
+        </dl>
+
+        <footer class="cancellation-sources"><p>公式の案内・最新条件</p><ul>{guide.sources.map(source => <li><a href={source.url} target="_blank" rel="noopener noreferrer">{source.title}<span aria-hidden="true"> ↗</span></a></li>)}</ul><p class="cancellation-checked">公式情報の確認：<time datetime={guide.checkedAt}>{jpDate(guide.checkedAt)}</time>。料金・連絡先・受付時間は公式窓口で確認してください。</p></footer>
+      </div>
+    </details>)}
+  </div>
+  {guides.length === 0 && <p class="cancellation-no-brand">このページに掲載した候補のほか、現在契約している会社の公式サポートでも、ご自身の契約の解約条件を確認してください。</p>}
+</section>
+<style>
+  .cancellation-guide{min-width:0;margin:32px 0;color:#293e33;overflow-wrap:anywhere;scroll-margin-top:24px}
+  .cancellation-heading{margin-bottom:21px}
+  .cancellation-kicker{font-size:13px;line-height:1.8;font-weight:800;color:#98502f}
+  .cancellation-title{font-size:clamp(24px,3vw,30px);line-height:1.6;font-weight:800;margin:6px 0 16px}
+  .cancellation-purpose{padding:17px 19px;border:1px solid #e5d3b7;border-left:4px solid #ad5834;border-radius:6px;background:#fff7e8}
+  .cancellation-purpose-title{font-size:16px;font-weight:800;line-height:1.85;color:#804c2e}
+  .cancellation-purpose>p:last-child{font-size:14px;line-height:1.95;color:#6c604b;margin-top:6px}
+  .cancellation-common-title{font-size:18px;line-height:1.8;font-weight:800;margin-bottom:12px}
+  .cancellation-checklist{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;list-style:none;padding:0;margin:0}
+  .cancellation-checklist>li{min-width:0;padding:13px;border:1px solid #d2e0d2;border-radius:5px;background:#f1f6ef}
+  .cancellation-checklist strong{display:block;font-size:14px;line-height:1.8;font-weight:800;color:#175d50}
+  .cancellation-checklist span{display:block;font-size:12px;line-height:1.9;color:#5a705f;margin-top:4px}
+  .cancellation-common-note{font-size:12px;line-height:1.9;color:#617362;margin:11px 0 19px}
+  .cancellation-brand-list{display:grid;gap:12px}
+  .cancellation-brand{min-width:0;border:1px solid #cadbce;border-radius:7px;background:#fff;overflow:hidden}
+  .cancellation-brand>summary{cursor:pointer;padding:16px 18px;color:#175d50;font-size:16px;line-height:1.9;background:#f4f8f2}
+  .cancellation-brand[open]>summary{border-bottom:1px solid #d5e2d5}
+  .cancellation-brand-name{font-weight:800}
+  .cancellation-brand-hint{display:inline-block;font-size:12px;font-weight:500;color:#617361;margin-left:14px}
+  .cancellation-brand-content{padding:21px}
+  .cancellation-routes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:14px}
+  .cancellation-route{min-width:0;padding:16px;border:1px solid #d5ded3;border-radius:6px;background:#fafbf7}
+  .cancellation-transfer{border-color:#bcd3c4;background:#edf6ed}
+  .cancellation-route h4{font-size:15px;font-weight:800;line-height:1.85;color:#2d5943}
+  .cancellation-route p{font-size:13px;line-height:1.95;color:#586c5b;margin-top:7px}
+  .cancellation-route a{display:inline-block;min-height:44px;padding:12px 0 4px;font-size:13px;font-weight:800;line-height:1.9;color:#175d50;text-decoration:underline;text-underline-offset:4px}
+  .cancellation-steps{display:grid;gap:17px;list-style:none;padding:0;margin:23px 0}
+  .cancellation-steps>li{display:flex;align-items:flex-start;gap:13px;min-width:0}
+  .cancellation-step-number{display:flex;align-items:center;justify-content:center;width:31px;height:31px;flex-shrink:0;border-radius:50%;background:#175d50;color:#fff;font-size:14px;font-weight:800;line-height:1}
+  .cancellation-steps>li>div{min-width:0}
+  .cancellation-steps h4{font-size:16px;font-weight:800;line-height:1.9;color:#2f5140}
+  .cancellation-steps p{font-size:14px;line-height:1.95;color:#536a59;margin-top:5px}
+  .cancellation-final-checks{border-block:1px solid #d9e3d6}
+  .cancellation-final-checks>div{display:grid;grid-template-columns:115px minmax(0,1fr);gap:15px;padding:12px 0}
+  .cancellation-final-checks>div+div{border-top:1px solid #e4eae0}
+  .cancellation-final-checks dt{font-size:12px;font-weight:800;line-height:1.95;color:#345c44}
+  .cancellation-final-checks dd{font-size:13px;line-height:1.95;color:#566e5b;margin:0}
+  .cancellation-sources{padding-top:17px}
+  .cancellation-sources>p:first-child{font-size:12px;font-weight:800;line-height:1.9;color:#4d6b56}
+  .cancellation-sources ul{list-style:disc;padding-left:19px;margin-top:7px;font-size:12px;line-height:1.95}
+  .cancellation-sources li+li{margin-top:5px}
+  .cancellation-sources a{color:#175d50;text-decoration:underline;text-underline-offset:3px}
+  .cancellation-checked{font-size:11px;line-height:1.95;color:#657867;margin-top:12px}
+  .cancellation-no-brand{font-size:14px;line-height:1.95;color:#5e705f;padding:16px;border:1px solid #d2dfd1;border-radius:6px}
+  .cancellation-guide :focus-visible{outline:3px solid #b35c37;outline-offset:3px}
+  .cancellation-compact{margin:25px 0}
+  .cancellation-compact .cancellation-title{font-size:23px}
+  .cancellation-compact .cancellation-brand-content{padding:18px}
+  @media(max-width:760px){.cancellation-checklist{grid-template-columns:repeat(2,minmax(0,1fr))}.cancellation-routes{grid-template-columns:1fr;gap:11px}.cancellation-brand-content{padding:17px}.cancellation-purpose{padding:15px}.cancellation-purpose-title{font-size:15px}.cancellation-title{font-size:24px}.cancellation-brand>summary{padding:14px;font-size:16px}.cancellation-brand-hint{display:block;margin:3px 0 0 18px;font-size:12px}.cancellation-final-checks>div{grid-template-columns:1fr;gap:4px}.cancellation-steps>li{gap:11px}.cancellation-steps h4{font-size:15px}.cancellation-steps p{font-size:14px}.cancellation-compact .cancellation-brand-content{padding:15px}}
+</style>

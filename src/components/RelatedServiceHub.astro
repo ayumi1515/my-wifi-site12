@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Breadcrumbs from './Breadcrumbs.astro';
 import AffiliateButton from './AffiliateButton.astro';
 import PointsComparison from './PointsComparison.astro';
+import CancellationGuide from './CancellationGuide.astro';
 import CheckedNote from './CheckedNote.astro';
 import ConnectivityManga from './ConnectivityManga.astro';
 import categoryAffiliatesRaw from '../data/category-affiliates.json';
@@ -84,6 +85,7 @@ const adNotice = category === 'used' ? '在庫・状態・付属品・保証の�
     </section>
     {category === 'mobile' && <details class="hub-points"><summary>ポイントを重視したい方へ：還元条件も比べる</summary><PointsComparison scope="mobile" compact /></details>}
     <section id="how-to-choose" class="hub-howto" aria-labelledby="hub-howto-title"><h2 id="hub-howto-title">{explainTitle}</h2><div>{explain.map((item) => <article><h3>{item.title}</h3><p>{item.body}</p><ul>{item.checks.map((c) => <li>{c}</li>)}</ul></article>)}</div></section>
+    {category === 'mobile' && <CancellationGuide ids={services.map(service=>service.id)} kind="mobile" compact />}
     <section class="hub-related" aria-labelledby="hub-related-title"><h2 id="hub-related-title">ネットと端末を、まとめて見直す</h2><div>{related.map((r) => <a href={r.href}><h3>{r.title}</h3><p>{r.body}</p><span>確認ポイントを見る</span></a>)}</div></section>
     <aside class="hub-sources-note"><h2>掲載情報の確認について</h2><p>各カードの「公式情報の確認日」から出典を開けます。{checkedDates.length > 0 && `掲載データの確認日は${checkedDates.join('・')}です。`}地域・契約・端末ごとの条件は、リンク先で確認してください。</p><a href="/about/">編集方針と調べ方</a></aside>
   </div>

@@ -39,7 +39,7 @@ const homeGuideCards: HomeGuideCard[] = [
     }] : [];
   }),
 ];
-const guideCount = guides.length + mobileServices.length;
+const guideCount = guides.length + mobileServices.length + 1;
 const collectionLd={'@context':'https://schema.org','@type':'CollectionPage',name:title,url:SITE.url+'/',description,inLanguage:'ja',mainEntity:{'@type':'ItemList',itemListElement:homeGuideCards.map((card,i)=>({'@type':'ListItem',position:i+1,name:card.title,url:SITE.url+card.href}))}};
 ---
 <Base title={title} description={description} jsonLd={[collectionLd]}>

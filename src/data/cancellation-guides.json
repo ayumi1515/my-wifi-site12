@@ -1,0 +1,1043 @@
+{
+  "checkedAt": "2026-11-23",
+  "guides": [
+    {
+      "id": "bbiq",
+      "kind": "home",
+      "name": "BBIQ",
+      "normal": {
+        "label": "通常解約の公式案内",
+        "href": "https://support.bbiq.jp/internet/procedure/010300001173/",
+        "note": "QTnetお客さまセンターへ電話で申し込みます。Webでの解約受付はありません。撤去工事の日程まで確認してください。"
+      },
+      "transfer": {
+        "label": "乗換え・番号引継ぎを公式で確認",
+        "href": "https://support.bbiq.jp/internet/procedure/010300001173/",
+        "note": "光電話の番号を残す場合は、BBIQを解約する前に引継ぎ先へ可否と手順を相談します。携帯のMNPとは別です。"
+      },
+      "steps": [
+        {
+          "title": "新回線と電話番号の扱いを決める",
+          "text": "新しいネットの開通予定を先に確認。光電話番号を残すなら、BBIQ解約前に移行先へ相談します。"
+        },
+        {
+          "title": "解約月・撤去日と費用を確認",
+          "text": "QTnet窓口で契約中の解約条件と工事費の残額を確認し、解約月・設備撤去日を調整します。"
+        },
+        {
+          "title": "電話で解約を申し込む",
+          "text": "公式案内の窓口へ電話します。Web申込みや機器の返送だけで完了とはなりません。"
+        },
+        {
+          "title": "撤去・機器回収と請求を確認",
+          "text": "撤去日に回線終端装置等の回収を受け、手続き完了を確認します。終了するメール・付帯サービスと最終請求も確認します。"
+        }
+      ],
+      "checks": {
+        "balance": "期間内・途中解約料、撤去手続き費、標準工事費の分割残債を契約別に確認。",
+        "returns": "設備撤去日に、回線終端装置等の接続機器を担当者が回収する案内。撤去工事完了で全ての解約手続きが完了。",
+        "options": "光電話・光テレビ等の同時終了、BBIQメール・付帯セキュリティの利用終了を確認。必要なデータや代替サービスも準備します。",
+        "schedule": "希望する解約月を電話で相談。設備撤去の調整・工事まで時間がかかる場合があるため、転居予定なら余裕をもって連絡。解約月は日割りなし。"
+      },
+      "sources": [
+        {
+          "title": "BBIQ公式・解約のお手続き",
+          "url": "https://support.bbiq.jp/internet/procedure/010300001173/"
+        }
+      ],
+      "checkedAt": "2026-11-23"
+    },
+    {
+      "id": "docomo-hikari",
+      "kind": "home",
+      "name": "ドコモ光",
+      "normal": {
+        "label": "通常解約の公式案内",
+        "href": "https://www.docomo.ne.jp/internet/hikari/procedure/cancellation/",
+        "note": "対象のdアカウントでのWeb、ドコモショップ／d garden、電話が窓口です。契約・撤去条件によってWebで手続きできない場合があります。"
+      },
+      "transfer": {
+        "label": "乗換え・番号引継ぎを公式で確認",
+        "href": "https://www.docomo.ne.jp/internet/hikari/procedure/cancellation/",
+        "note": "他社光への乗換えは、事業者変更・光回線再利用などの専用手順を先に確認。電話番号を残す通常解約は、番号移行の完了後に申し込む案内です。"
+      },
+      "steps": [
+        {
+          "title": "通常解約か、光回線の乗換えかを選ぶ",
+          "text": "他社光へ切り替える場合は事業者変更等を先に確認。電話番号を残したい場合は移行先へ相談します。"
+        },
+        {
+          "title": "終了日・残額・特典終了を確認",
+          "text": "解約金・工事費残額、セット割や未進呈の工事ポイントの終了を確認し、新回線の開通と日程を合わせます。"
+        },
+        {
+          "title": "対象回線の公式窓口で手続き",
+          "text": "通常解約は対象dアカウントのWeb等へ。事業者変更をする場合は、通常解約を先に重ねず専用の案内に従います。"
+        },
+        {
+          "title": "貸与元ごとに機器を返す",
+          "text": "NTT機器とプロバイダ貸与ルーターは返却先を分けて確認。残るサービスと最終請求まで確認します。"
+        }
+      ],
+      "checks": {
+        "balance": "定期契約の解約金、工事費残額、セット割終了、未進呈の工事ポイント終了などを確認。",
+        "returns": "NTTロゴ入り機器はNTTの回収キットへ。プロバイダ貸与のWi-Fiルーター等は、そのプロバイダ指定先へ分けて返却する。",
+        "options": "プロバイダ・ひかりTV等の継続と終了を個別に確認。回線の解約だけで、すべての別契約が終わると考えないでください。",
+        "schedule": "通常解約は申込日の翌月末まで希望日を指定できる案内。停止まで数日かかる場合あり。解約月は日割りなし。"
+      },
+      "sources": [
+        {
+          "title": "ドコモ公式・解約と他社光へのきりかえ",
+          "url": "https://www.docomo.ne.jp/internet/hikari/procedure/cancellation/"
+        },
+        {
+          "title": "ドコモ公式・新規工事料ポイント特典の終了条件",
+          "url": "https://www.docomo.ne.jp/campaign_event/hikari_shinkikojiryo_free/"
+        }
+      ],
+      "checkedAt": "2026-11-23"
+    },
+    {
+      "id": "softbank-hikari",
+      "kind": "home",
+      "name": "SoftBank 光",
+      "normal": {
+        "label": "通常解約の公式案内",
+        "href": "https://www.softbank.jp/internet/support/return/sbhikari/01/",
+        "note": "開通後の通常解約は電話です。公式の折返し予約だけで完了せず、折返し時に解約の手続きを行います。"
+      },
+      "transfer": {
+        "label": "乗換え・番号引継ぎを公式で確認",
+        "href": "https://www.softbank.jp/internet/support/return/sbhikari/01/",
+        "note": "事業者変更では、乗換え先の開通により旧回線が自動解約となります。電話番号の移行は事前相談が必要です。通常解約を先にしないでください。"
+      },
+      "steps": [
+        {
+          "title": "事業者変更・電話番号の移行を確認",
+          "text": "光コラボへの乗換えや電話番号の引継ぎは、通常解約前に専用案内と移行先で確認します。"
+        },
+        {
+          "title": "My SoftBankで費用を確認",
+          "text": "解除料・工事費残金・特典終了を確認。通常解約は新回線の開通予定と希望終了日を合わせます。"
+        },
+        {
+          "title": "通常解約は電話で申し込む",
+          "text": "公式ページから折返し予約等へ進み、担当者との電話で手続きを確認します。事業者変更は専用の流れに従います。"
+        },
+        {
+          "title": "貸与機器を返して最終確認",
+          "text": "ソフトバンク貸与品とNTT貸与品の返却先を区別し、期限内に返却。解約完了と最終請求も確認します。"
+        }
+      ],
+      "checks": {
+        "balance": "契約解除料、工事費残金の一括清算、セット割・特典終了をMy SoftBankや窓口で確認。",
+        "returns": "レンタル機器は指定先・期限で返却。ソフトバンク貸与品とNTT貸与品を、公式返却案内で区別する。機器だけ返しても解約にならない。",
+        "options": "おうち割の終了と、Yahoo! BBメール・別契約の映像／サポートサービス等の終了条件を確認。",
+        "schedule": "通常解約の希望日は連絡日の6営業日後から90日の間で指定する案内。事業者変更では乗換え先の開通をもって旧回線が自動解約となる。"
+      },
+      "sources": [
+        {
+          "title": "SoftBank公式・光の解約と事業者変更",
+          "url": "https://www.softbank.jp/internet/support/return/sbhikari/01/"
+        },
+        {
+          "title": "SoftBank公式・開通前キャンセルと開通後解約",
+          "url": "https://www.softbank.jp/support/faq/view/14917"
+        }
+      ],
+      "checkedAt": "2026-11-23"
+    },
+    {
+      "id": "biglobe-hikari",
+      "kind": "home",
+      "name": "ビッグローブ光",
+      "normal": {
+        "label": "通常解約の公式案内",
+        "href": "https://support.biglobe.ne.jp/bighikari/kaiyaku/cancel.html",
+        "note": "BIGLOBE IDでWebの解約受付予約を行い、予約日時の担当者からの電話で手続きします。予約だけで完了とはなりません。"
+      },
+      "transfer": {
+        "label": "乗換え・番号引継ぎを公式で確認",
+        "href": "https://support.biglobe.ne.jp/bighikari/kaiyaku/cancel.html",
+        "note": "事業者変更・光回線再利用・固定電話番号引継ぎは、通常解約の前に専用手順を確認。回線の解約日と会員の退会日は同じとは限りません。"
+      },
+      "steps": [
+        {
+          "title": "転出か、回線廃止・退会かを選ぶ",
+          "text": "番号引継ぎや他社光への事業者変更が必要なら、通常解約を先にしないでください。"
+        },
+        {
+          "title": "費用・会員契約・締切を確認",
+          "text": "工事費・購入ルーターの残額、会員退会の要否、有料オプションと希望終了月を確認します。"
+        },
+        {
+          "title": "Web予約後、電話で手続き",
+          "text": "通常解約はBIGLOBE IDで受付予約し、担当者からの電話で手続きを進めます。転出は専用案内へ進みます。"
+        },
+        {
+          "title": "機器返却と、残る請求を確認",
+          "text": "NTT機器とBIGLOBEレンタル機器を分けて返却。転出後の会員・オプションの終了時期と最終請求も確認します。"
+        }
+      ],
+      "checks": {
+        "balance": "違約金、工事費や購入ルーターの割賦残金、解約後も続く有料オプションを確認。残金が回線解約で消えるとみなさない。",
+        "returns": "NTT貸与機器とBIGLOBEのレンタル接続機器を区別して返却。返却対象・期限・返送方法はそれぞれの案内を確認する。",
+        "options": "回線解約とBIGLOBE会員退会は別です。メールや他サービスを残すか、有料オプションが継続するかを確認。",
+        "schedule": "通常の解約・退会は25日までの予約で当月末、26日以降は翌月末の案内。事業者変更・光回線再利用では解約日と会員退会日が異なるため専用案内で確認する。"
+      },
+      "sources": [
+        {
+          "title": "BIGLOBE公式・解約と退会",
+          "url": "https://support.biglobe.ne.jp/bighikari/kaiyaku/cancel.html"
+        },
+        {
+          "title": "BIGLOBE公式・通常解約と他社への転出の違い",
+          "url": "https://faq.support.biglobe.ne.jp/faq_detail.html?faq_id=12601"
+        },
+        {
+          "title": "BIGLOBE公式・事業者変更の注意点",
+          "url": "https://support.biglobe.ne.jp/jimu/keiyaku/kaiyaku/bighikari-kaiyakuchuui.html"
+        }
+      ],
+      "checkedAt": "2026-11-23"
+    },
+    {
+      "id": "flets-hikari",
+      "kind": "home",
+      "name": "フレッツ光（NTT東日本・NTT西日本）",
+      "normal": {
+        "label": "NTT西日本の解約案内",
+        "href": "https://flets-w.com/user/confirm/kaiyaku/",
+        "note": "契約先のNTT東日本／西日本を確認して公式案内へ進みます。光コラボを利用中の場合はNTTではなく契約事業者へ連絡してください。",
+        "alternatives": [
+          {
+            "label": "NTT東日本の解約案内",
+            "href": "https://flets.com/support/flets-hikari/cancel/"
+          }
+        ]
+      },
+      "transfer": {
+        "label": "NTT西日本の窓口・関連手続きを確認",
+        "href": "https://flets-w.com/user/confirm/kaiyaku/",
+        "note": "フレッツ光から光コラボへ移る場合は、通常解約より先に「転用」を確認。電話番号を残す場合は移行先にも相談します。",
+        "alternatives": [
+          {
+            "label": "NTT東日本の窓口・関連手続きを確認",
+            "href": "https://flets.com/support/flets-hikari/cancel/"
+          }
+        ]
+      },
+      "steps": [
+        {
+          "title": "契約先と転用の要否を確認",
+          "text": "NTT東日本／西日本とのフレッツ契約かを確認。光コラボへ移る場合は転用の手順を先に確認します。"
+        },
+        {
+          "title": "番号・プロバイダ・費用を確認",
+          "text": "ひかり電話の番号移行、別契約のプロバイダ、割引解約条件と工事費残額を確認します。"
+        },
+        {
+          "title": "地域のNTT窓口から手続き",
+          "text": "通常解約は契約地域のWeb案内へ進み、利用終了・撤去の日程を調整。申込直後に終了するとは限りません。"
+        },
+        {
+          "title": "機器回収と別契約の終了を確認",
+          "text": "撤去時の回収または回収キットで貸与機器を返却。転居ならキットの受取先、プロバイダの終了と最終請求も確認します。"
+        }
+      ],
+      "checks": {
+        "balance": "割引契約の解約金、初期工事費の分割残額、任意の撤去工事費などを確認。プロバイダ側の請求も別途確認する。",
+        "returns": "貸与機器は撤去時の回収または送られる回収キットで返却。転居時はキットを確実に受け取れる住所を確認する。",
+        "options": "プロバイダは別契約です。回線を止めただけでは請求が終わらない場合があるため、プロバイダ側の手続きも確認。",
+        "schedule": "最終利用希望日・撤去希望日を伝え、確認連絡や必要な撤去工事を調整。Webで申し込んだ時点で即時解約完了とは限らない。"
+      },
+      "sources": [
+        {
+          "title": "NTT東日本公式・フレッツ光解約",
+          "url": "https://flets.com/support/flets-hikari/cancel/"
+        },
+        {
+          "title": "NTT西日本公式・フレッツ光解約",
+          "url": "https://flets-w.com/user/confirm/kaiyaku/"
+        },
+        {
+          "title": "NTT西日本公式・マイページでの解約",
+          "url": "https://qa.flets-w.com/faq/show/10175?site_domain=default"
+        }
+      ],
+      "checkedAt": "2026-11-23"
+    },
+    {
+      "id": "home5g",
+      "kind": "home",
+      "name": "home 5G",
+      "normal": {
+        "label": "通常解約の公式案内",
+        "href": "https://www.docomo.ne.jp/home_5g/cancellation/",
+        "note": "スマホ用とは別のhome 5G専用dアカウントでMy docomoへ。ログインできない場合等はドコモショップ／d gardenや電話へ相談します。"
+      },
+      "transfer": {
+        "label": "住所変更・乗換え時の扱いを公式で確認",
+        "href": "https://www.docomo.ne.jp/home_5g/cancellation/",
+        "note": "引越しなら、提供エリアと設置場所住所の変更で継続できる場合があります。他回線へ乗り換える場合も、home 5G専用の解約手続きを確認します。",
+        "heading": "引越し・他回線への乗換え"
+      },
+      "steps": [
+        {
+          "title": "解約か、設置場所変更かを確認",
+          "text": "引越しなら住所変更で使い続けられる場合があります。他回線へ移るなら、新回線の利用開始を先に確認します。"
+        },
+        {
+          "title": "端末残額と割引終了を確認",
+          "text": "購入端末の未払い分、月々サポート・セット割の終了、契約に応じた短期解約の条件を確認します。"
+        },
+        {
+          "title": "home 5G専用回線で手続き",
+          "text": "専用dアカウントのMy docomo等で対象回線を選び、公式案内に沿って解約。受付完了と終了時期を確認します。"
+        },
+        {
+          "title": "購入品・貸与品と最終請求を確認",
+          "text": "端末の契約と返却要否を確認。購入端末を返せば残債が消えるとは考えず、最終請求まで確認します。"
+        }
+      ],
+      "checks": {
+        "balance": "購入端末の未払い分、月々サポート終了、短期解約時の契約解除料の有無、home 5Gセット割の終了を確認。",
+        "returns": "購入端末と貸与品を区別し、返却要否は契約・窓口で確認する。購入端末を返せば残債がなくなるとは案内しない。",
+        "options": "home 5Gセット割・端末割引の終了、有料オプションや別契約の継続を確認。",
+        "schedule": "解約希望時期と手続きの完了を確認。解約月の月額料金は日割りにならない。"
+      },
+      "sources": [
+        {
+          "title": "ドコモ公式・home 5G解約",
+          "url": "https://www.docomo.ne.jp/home_5g/cancellation/"
+        },
+        {
+          "title": "ドコモ公式・home 5Gの端末購入と月々サポート",
+          "url": "https://www.docomo.ne.jp/home_5g/"
+        }
+      ],
+      "checkedAt": "2026-11-23"
+    },
+    {
+      "id": "softbank-air",
+      "kind": "home",
+      "name": "SoftBank Air",
+      "normal": {
+        "label": "通常解約の公式案内",
+        "href": "https://www.softbank.jp/internet/support/sbair/cancel/",
+        "note": "開通後の解約は電話です。公式ページから折返し予約ができますが、予約や費用確認だけで解約完了とはなりません。"
+      },
+      "transfer": {
+        "label": "住所変更・乗換え時の扱いを公式で確認",
+        "href": "https://www.softbank.jp/internet/support/sbair/cancel/",
+        "note": "引越しならMy SoftBankで住所変更して継続できるかを確認。他回線へ乗り換える場合は、新回線の開通予定を確認してからAirの解約日を決めます。",
+        "heading": "引越し・他回線への乗換え"
+      },
+      "steps": [
+        {
+          "title": "引越し継続か、乗換えかを確認",
+          "text": "住所変更で継続できる場合があります。乗換えなら、新回線を使い始める日を先に確認します。"
+        },
+        {
+          "title": "My SoftBankで契約・残額を確認",
+          "text": "購入かレンタルか、端末残債、解除料や割引終了を確認。解約受付月と新回線の利用開始月を合わせます。"
+        },
+        {
+          "title": "電話で解約を申し込む",
+          "text": "公式窓口の電話・折返し案内から手続きし、受付完了を確認。開通前のキャンセルとは手順が異なります。"
+        },
+        {
+          "title": "レンタル機器と最終請求を確認",
+          "text": "返却対象の機器・付属品を期限内に返却。購入端末は別の扱いです。家族の割引終了と最終請求も確認します。"
+        }
+      ],
+      "checks": {
+        "balance": "契約による解除料、Airターミナルの購入残債、端末割引・セット割の終了を確認。",
+        "returns": "レンタル契約の機器は指定先・期限で返却。購入したAirターミナルはレンタル機器と扱いが異なるため、契約を確認する。",
+        "options": "おうち割の対象家族への影響、端末割引や別契約の有料サービスの終了条件を確認。",
+        "schedule": "受付した月の月末に解約。同月内なら手続き日によらず月末まで利用でき、日割りなし。月末の混雑を避けて早めに連絡する。"
+      },
+      "sources": [
+        {
+          "title": "SoftBank公式・Air解約の流れ",
+          "url": "https://www.softbank.jp/internet/support/sbair/cancel/"
+        },
+        {
+          "title": "SoftBank公式・Air解約方法FAQ",
+          "url": "https://www.softbank.jp/support/faq/view/18972"
+        }
+      ],
+      "checkedAt": "2026-11-23"
+    },
+    {
+      "id": "en-hikari",
+      "kind": "home",
+      "name": "enひかり",
+      "normal": {
+        "label": "通常解約の公式案内",
+        "href": "https://www.enhikari.jp/",
+        "note": "公式サイトの契約後窓口から、指定解約フォームまたはカスタマーサポートセンターを確認します。フォームのURLは推測せず公式案内から進んでください。"
+      },
+      "transfer": {
+        "label": "乗換え・番号引継ぎを公式で確認",
+        "href": "https://www.enhikari.jp/",
+        "note": "他社の光コラボへ移る場合は通常解約を先にせず、事業者変更と固定電話番号の引継ぎを確認します。"
+      },
+      "steps": [
+        {
+          "title": "事業者変更と番号引継ぎを確認",
+          "text": "他社光コラボへ移る場合は専用手順を先に確認。通常解約を先行させないでください。"
+        },
+        {
+          "title": "希望月と残る契約を確認",
+          "text": "希望月の申出締切、最終月料金、残る支払・転出手続き、電気など別契約の終了条件を確認します。"
+        },
+        {
+          "title": "公式の指定窓口で申し込む",
+          "text": "公式サイトの契約後窓口から指定フォーム等を確認し、解約日と受付完了を確認します。"
+        },
+        {
+          "title": "機器返却と最終請求を確認",
+          "text": "貸与機器は届いた返却キットの指示で返送。購入ルーターと区別し、回線・付帯契約の終了と最終請求を確認します。"
+        }
+      ],
+      "checks": {
+        "balance": "標準プランの最低利用期間・解約手数料なしという条件と、最終月料金、残る支払、転出手続き等に伴う費用を分けて確認する。",
+        "returns": "貸与機器は送付される返却キットで返送。重要事項説明書ではキット到着から1カ月以内の返却案内。購入したWi-Fiルーターとは区別する。",
+        "options": "回線とプロバイダは一体で、片方だけの解約はできません。オプションやenひかり電気等の終了条件を別に確認。",
+        "schedule": "月末の解約を希望する場合は当月20日までに申し出る。21日以降は翌月解約と重要事項説明書に記載。解約月料金は日割りなし。"
+      },
+      "sources": [
+        {
+          "title": "enひかり公式・契約後窓口と解約締切",
+          "url": "https://www.enhikari.jp/"
+        },
+        {
+          "title": "enひかり公式・重要事項説明書",
+          "url": "https://www.enhikari.jp/document/jyuuyoujikou.pdf"
+        },
+        {
+          "title": "enひかり公式・契約約款の解約方法",
+          "url": "https://enhikari.jp/document/yakkan.pdf"
+        }
+      ],
+      "checkedAt": "2026-11-23"
+    },
+    {
+      "id": "x-mobile",
+      "kind": "mobile",
+      "name": "X-mobile",
+      "normal": {
+        "label": "通常解約の公式案内",
+        "href": "https://support.xmobile.ne.jp/hc/ja/articles/30277505085209-ご解約のお手続き",
+        "note": "マイページの「ご契約内容変更」から通常解約へ進みます。利用中の契約が対象かを公式案内で確認してください。"
+      },
+      "transfer": {
+        "label": "MNP・番号引継ぎの公式案内",
+        "href": "https://support.xmobile.ne.jp/hc/ja/articles/30277723170841-MNP予約番号の発行申請",
+        "note": "番号を残す場合はマイページのMNP予約番号発行へ進み、メールでの受取・期限を確認します。ワンストップの可否は転入先と公式窓口で確認してください。"
+      },
+      "steps": [
+        {
+          "title": "番号と対象サービスを確認",
+          "text": "グリーンプラン等、マイページで手続きできる契約かを公式案内で確認し、番号を残すか決める。"
+        },
+        {
+          "title": "マイページの変更案内を開く",
+          "text": "MY PAGEからログインし、『ご契約内容変更』→『解約・MNPのご案内はこちら』へ進む。"
+        },
+        {
+          "title": "通常解約とMNPを選び分ける",
+          "text": "番号不要なら『解約の手続き』、番号を残すなら『MNP予約番号の発行手続き』を選び、注意事項を本人が確認する。"
+        },
+        {
+          "title": "終了日と最後の請求を確認",
+          "text": "MNPは転入先の開通まで元回線を通常解約しない。通常解約は締切・終了月、MNPは発行メールと期限を確認し、終了後の請求や返却物も確認する。"
+        }
+      ],
+      "checks": {
+        "balance": "端末の購入元・分割契約がある場合は、回線とは別に残額と支払方法を確認してください。",
+        "returns": "SIMの返却要否は利用中の契約の案内で確認してください。返却やアプリ削除だけでは解約になりません。",
+        "options": "別契約の保証・コンテンツ・外部サブスク等が残らないか確認。回線と同時にすべて終了するとは限りません。",
+        "schedule": "通常解約は25日までの受付完了で申出月末終了の案内。MNP番号は即時発行を前提にせず、メール・有効期限を確認。月途中の精算条件も公式へ。"
+      },
+      "sources": [
+        {
+          "title": "通常解約の公式手順",
+          "url": "https://support.xmobile.ne.jp/hc/ja/articles/30277505085209-ご解約のお手続き"
+        },
+        {
+          "title": "MNP予約番号の公式手順",
+          "url": "https://support.xmobile.ne.jp/hc/ja/articles/30277723170841-MNP予約番号の発行申請"
+        }
+      ],
+      "checkedAt": "2026-11-23"
+    },
+    {
+      "id": "uq-mobile",
+      "kind": "mobile",
+      "name": "UQ mobile",
+      "normal": {
+        "label": "通常解約の公式案内",
+        "href": "https://www.uqwimax.jp/mobile/flow/mnp_cancel/",
+        "note": "通常解約はMy UQ mobile（Web）または店舗です。電話での通常解約受付は終了しています。"
+      },
+      "transfer": {
+        "label": "MNP・番号引継ぎの公式案内",
+        "href": "https://www.uqwimax.jp/mobile/flow/mnp_cancel/",
+        "note": "他社へのMNPとau／povoへの番号移行を選び分けます。ワンストップは転入先・申込条件の対応を確認し、必要な場合は公式の予約番号発行へ進みます。"
+      },
+      "steps": [
+        {
+          "title": "番号を残すか、au/povoへ変えるかを決める",
+          "text": "通常解約、他社へのMNP、au/povoへの番号移行で案内が分かれるため、該当する項目を開く。"
+        },
+        {
+          "title": "契約と費用を確認",
+          "text": "My UQ mobileで対象回線、分割払い、メール・Pontaパス等のオプション、割引終了や最終請求を確認する。"
+        },
+        {
+          "title": "公式窓口から手続き",
+          "text": "通常解約はMy UQ mobile（Web）または店舗。MNPは転入先の対応方式を確認し、必要ならWeb・店舗・電話の公式案内から予約する。"
+        },
+        {
+          "title": "回線切替と最終請求を確認",
+          "text": "MNPは新回線への切替完了まで通常解約しない。解約日・基本料の精算・引き続き払う端末代や別契約を確認する。"
+        }
+      ],
+      "checks": {
+        "balance": "分割払い継続の案内あり。",
+        "returns": "SIMの返却要否は利用中の契約の案内で確認してください。返却やアプリ削除だけでは解約になりません。",
+        "options": "メール持ち運び・Pontaパス等を個別確認。",
+        "schedule": "他社MNP・通常解約と、au／povoへの番号移行で精算条件が異なります。新回線への切替日と最終請求を確認。"
+      },
+      "sources": [
+        {
+          "title": "解約・MNPの窓口と注意点",
+          "url": "https://www.uqwimax.jp/mobile/flow/mnp_cancel/"
+        },
+        {
+          "title": "MNPワンストップ等の解約重要事項（公式英語版）",
+          "url": "https://www.uqwimax.jp/mobile/description/files/uqm_important_cancel_en.pdf"
+        }
+      ],
+      "checkedAt": "2026-11-23"
+    },
+    {
+      "id": "rakuten-mobile",
+      "kind": "mobile",
+      "name": "楽天モバイル",
+      "normal": {
+        "label": "通常解約の公式案内",
+        "href": "https://network.mobile.rakuten.co.jp/guide/cancellation/flow/",
+        "note": "my 楽天モバイルのWeb・アプリで対象回線を選び、通常解約へ進みます。ショップでの手続きも公式案内を確認できます。"
+      },
+      "transfer": {
+        "label": "MNP・番号引継ぎの公式案内",
+        "href": "https://network.mobile.rakuten.co.jp/faq/detail/00001407/",
+        "note": "転入先が対応する場合はMNPワンストップ、予約番号が必要な場合はmy 楽天モバイルの「他社へのお乗り換え（MNP）」へ。旧ドコモ／au回線の契約は別案内を確認してください。"
+      },
+      "steps": [
+        {
+          "title": "番号と別契約を確認",
+          "text": "電話番号を残すか決め、製品保証・買い替えプログラム・家族割の代表者・楽メール等を確認する。"
+        },
+        {
+          "title": "my 楽天モバイルで回線を選ぶ",
+          "text": "『契約プラン』で対象の電話番号を確認し、各種手続きの『その他のお手続き』へ進む。"
+        },
+        {
+          "title": "通常解約/MNPを選び分ける",
+          "text": "番号不要なら『解約』、番号を残すなら『他社へのお乗り換え（MNP）』。対応する転入先ならワンストップ、必要なら予約番号を取得する。"
+        },
+        {
+          "title": "開通・オプション・最終請求を確認",
+          "text": "MNPは新回線切替完了後に旧回線が解約。解約後も続く製品保証等は本人が別手続きをし、最終請求とSIMの処分案内を確認する。"
+        }
+      ],
+      "checks": {
+        "balance": "端末代・買い替えプログラムを別途確認。",
+        "returns": "現行楽天回線は使用不能SIMを分別処分する案内。",
+        "options": "製品保証等は個別手続きが必要なものがある。",
+        "schedule": "MNPは転入先の回線切替完了後に終了。最強プランの解約月は利用データ量で精算し、日割りではありません。通常解約の受付完了も確認。"
+      },
+      "sources": [
+        {
+          "title": "通常解約の公式操作手順",
+          "url": "https://network.mobile.rakuten.co.jp/guide/cancellation/flow/"
+        },
+        {
+          "title": "MNP転出とワンストップのFAQ",
+          "url": "https://network.mobile.rakuten.co.jp/faq/detail/00001407/"
+        },
+        {
+          "title": "解約月の料金・保証・SIM処分",
+          "url": "https://network.mobile.rakuten.co.jp/guide/cancellation/"
+        }
+      ],
+      "checkedAt": "2026-11-23"
+    },
+    {
+      "id": "ahamo",
+      "kind": "mobile",
+      "name": "ahamo",
+      "normal": {
+        "label": "通常解約の公式案内",
+        "href": "https://ahamo.com/support/leave/index.html",
+        "note": "公式のお手続きページからWebで進みます。SIMやSMS等の事情で手続きできない場合は、公式の郵送手続き案内を確認してください。"
+      },
+      "transfer": {
+        "label": "MNP・番号引継ぎの公式案内",
+        "href": "https://ahamo.com/support/leave/index.html",
+        "note": "対応する転入先ではMNPワンストップを利用できる場合があります。予約番号が必要な場合は公式のお手続きページから発行し、新回線の開通まで通常解約しません。"
+      },
+      "steps": [
+        {
+          "title": "番号とログイン手段を確認",
+          "text": "MNPで番号を残すかを決め、対象のSIM/eSIM・SMS受信・dアカウント認証を確認する。"
+        },
+        {
+          "title": "解約後に残る支払いを確認",
+          "text": "端末分割代、契約時期による解約条件、通話等の後日請求、ドコモメール等の継続サービスを確認する。"
+        },
+        {
+          "title": "Webの通常解約かMNPへ進む",
+          "text": "公式ページの該当欄から本人が手続き。MNPワンストップ対応の転入先なら予約番号不要の場合があり、必要なら同ページから発行する。"
+        },
+        {
+          "title": "切替と支払い・データを確認",
+          "text": "MNPは転入先の開通まで通常解約しない。旧回線終了後も最終請求と分割払い、必要なデータやアカウントを確認する。"
+        }
+      ],
+      "checks": {
+        "balance": "分割支払継続または一括精算の案内あり。",
+        "returns": "SIMの返却要否は利用中の契約の案内で確認してください。返却やアプリ削除だけでは解約になりません。",
+        "options": "メール等の別サービスを確認。",
+        "schedule": "MNPは転入先の開通まで通常解約しません。月額定額料は日割りにならず、通話等の後日請求や分割支払も確認。"
+      },
+      "sources": [
+        {
+          "title": "解約・MNPの公式手順と注意事項",
+          "url": "https://ahamo.com/support/leave/index.html"
+        }
+      ],
+      "checkedAt": "2026-11-23"
+    },
+    {
+      "id": "linemo",
+      "kind": "mobile",
+      "name": "LINEMO",
+      "normal": {
+        "label": "通常解約の公式案内",
+        "href": "https://www.linemo.jp/support/cancellation/",
+        "note": "公式案内はWeb・My Menuから通常解約へ進む流れです。利用中の契約での受付可否・最新の注意事項を、公式の現在の画面で確認してください。"
+      },
+      "transfer": {
+        "label": "MNP・番号引継ぎの公式案内",
+        "href": "https://www.linemo.jp/support/faq/view/27243",
+        "note": "他社へのMNPとSoftBank／ワイモバイルへの番号移行を区別します。ワンストップの対応や予約番号の要否は、転入先と公式の現在の案内で確認してください。"
+      },
+      "steps": [
+        {
+          "title": "通常解約/MNP/番号移行を選ぶ",
+          "text": "番号を残す場合はMNP、SoftBank/ワイモバイルへ変える場合は番号移行の案内を確認する。"
+        },
+        {
+          "title": "My Menuと必要データを確認",
+          "text": "対象回線、契約時期・解約月の料金、LINE連携やおサイフケータイ等の移行を確認する。"
+        },
+        {
+          "title": "該当する公式Web手続きへ進む",
+          "text": "通常解約は解約受付サイトへ。MNPは転入先の対応を確認し、必要ならMy Menuから予約番号を発行する。"
+        },
+        {
+          "title": "切替・受付・最終請求を確認",
+          "text": "MNP開通前に通常解約しない。Web通常解約は完了後の取消ができないため、対象番号を確認した上で本人が進める。終了後もMy Menuの請求確認案内を確認する。"
+        }
+      ],
+      "checks": {
+        "balance": "端末の購入元・分割契約がある場合は、回線とは別に残額と支払方法を確認してください。",
+        "returns": "SIMの返却要否は利用中の契約の案内で確認してください。返却やアプリ削除だけでは解約になりません。",
+        "options": "LINE・おサイフケータイ等を個別確認。",
+        "schedule": "通常解約・MNP・番号移行それぞれの受付条件を公式画面で確認。解約月の日割りや短期解約の扱いは、契約時期の注意事項を確認。"
+      },
+      "sources": [
+        {
+          "title": "通常解約・MNP・番号移行の案内",
+          "url": "https://www.linemo.jp/support/cancellation/"
+        },
+        {
+          "title": "MNP転出FAQ・ワンストップ条件",
+          "url": "https://www.linemo.jp/support/faq/view/27243"
+        }
+      ],
+      "checkedAt": "2026-11-23"
+    },
+    {
+      "id": "povo",
+      "kind": "mobile",
+      "name": "povo2.0",
+      "normal": {
+        "label": "通常解約の公式案内",
+        "href": "https://povo.jp/support/cancellation/",
+        "note": "公式ページの「解約」を選びます。処理が完了すると利用できなくなるため、先に請求書や必要なデータを保存してください。"
+      },
+      "transfer": {
+        "label": "MNP・番号引継ぎの公式案内",
+        "href": "https://povo.jp/support/cancellation/",
+        "note": "通話＋データの番号を残す場合はMNPまたはau／UQへの変更を選びます。データ専用プランはMNPできません。予約番号の要否は転入先等の案内で確認してください。"
+      },
+      "steps": [
+        {
+          "title": "通話＋データかデータ専用か確認",
+          "text": "番号を残す場合は通常解約ではなくMNPまたはau/UQへの変更を選ぶ。データ専用プランはMNPできない。"
+        },
+        {
+          "title": "SMSと請求書・トッピングを準備",
+          "text": "ワンタイムパスワードを受け取れることを確認。終了後の請求書閲覧方法と継続購入トッピングを確認し、必要な請求書を保存する。"
+        },
+        {
+          "title": "公式ページで該当手続きを選ぶ",
+          "text": "通常解約・他社MNP・au/UQへの変更を分けて、本人が公式リンクから進める。MNP予約番号の発行だけでは回線は解約されない。"
+        },
+        {
+          "title": "開通と終了後請求を確認",
+          "text": "MNPでは転入先の切替完了後に旧回線が解約。通常解約は処理完了から利用不可になるので、必要なバックアップを済ませてから進める。"
+        }
+      ],
+      "checks": {
+        "balance": "端末の購入元・分割契約がある場合は、回線とは別に残額と支払方法を確認してください。",
+        "returns": "SIMの返却要否は利用中の契約の案内で確認してください。返却やアプリ削除だけでは解約になりません。",
+        "options": "月額トッピングは基本プラン解約とともに自動終了する案内。",
+        "schedule": "契約開始当日は通常解約・予約番号発行ができない案内。通常解約は処理完了後に利用不可。継続購入トッピングは種類ごとの精算を確認。"
+      },
+      "sources": [
+        {
+          "title": "通常解約・MNP・au/UQ変更の公式入口",
+          "url": "https://povo.jp/support/cancellation/"
+        },
+        {
+          "title": "解約・MNPの注意とSMS認証",
+          "url": "https://faq.povo.jp/faq/show/925?site_domain=default"
+        }
+      ],
+      "checkedAt": "2026-11-23"
+    },
+    {
+      "id": "iijmio",
+      "kind": "mobile",
+      "name": "IIJmio",
+      "normal": {
+        "label": "通常解約の公式案内",
+        "href": "https://help.iijmio.jp/answer/604768764e572f00114e676f/",
+        "note": "会員専用ページの「サービスのご解約」へ進みます。電話での解約受付ではありません。ギガプラン／旧プランと対象SIMを確認してください。"
+      },
+      "transfer": {
+        "label": "MNP・番号引継ぎの公式案内",
+        "href": "https://help.iijmio.jp/answer/604768764e572f00114e676f/",
+        "note": "対応する転入先ならワンストップで開始し、必要な場合はプラン別のMNP予約番号発行へ。ギガプランと旧mioモバイルの手続き・条件を混同しないでください。"
+      },
+      "steps": [
+        {
+          "title": "番号とプラン・SIMを確認",
+          "text": "ギガプランか旧プランか、どのSIMを終えるかを確認。番号を残す場合は通常のサービス解約に進まない。"
+        },
+        {
+          "title": "最低利用期間と請求を確認",
+          "text": "課金開始月の末日までの最低利用期間や解約月の請求、通話の後日請求・端末や別サービスを確認する。"
+        },
+        {
+          "title": "Webで通常解約またはMNPへ",
+          "text": "通常解約は会員専用のサービスご解約。MNPは転入先がワンストップ対応なら転入先から、必要ならギガプラン/旧プラン別の予約番号発行へ進む。"
+        },
+        {
+          "title": "終了確認後にSIMを返却",
+          "text": "MNP開通または通常解約の終了日を確認してから、不要SIMを公式返却先へ送る。返送だけでは解約にならない。"
+        }
+      ],
+      "checks": {
+        "balance": "端末の購入元・分割契約がある場合は、回線とは別に残額と支払方法を確認してください。",
+        "returns": "解約後の不要SIMは返却案内あり。返却だけでは解約不可。",
+        "options": "別のIIJmioサービス等を個別確認。",
+        "schedule": "最低利用期間、通常解約の終了日、プラン別の精算条件を確認。基本料は満額・通話料は後日請求の案内です。"
+      },
+      "sources": [
+        {
+          "title": "プラン別の解約・MNP手順",
+          "url": "https://help.iijmio.jp/answer/604768764e572f00114e676f/"
+        },
+        {
+          "title": "SIM返却の公式案内",
+          "url": "https://help.iijmio.jp/answer/60111da48c62c4001217a820/"
+        }
+      ],
+      "checkedAt": "2026-11-23"
+    },
+    {
+      "id": "mineo",
+      "kind": "mobile",
+      "name": "mineo",
+      "normal": {
+        "label": "通常解約の公式案内",
+        "href": "https://support.mineo.jp/usqa/use/change/quit/4206925_8885.html",
+        "note": "マイページから通常解約へ進みます。対象回線・受付時間・利用停止のタイミング、パケットシェアの事前脱退を確認してください。"
+      },
+      "transfer": {
+        "label": "MNP・番号引継ぎの公式案内",
+        "href": "https://support.mineo.jp/usqa/use/change/quit/4206870_8885.html",
+        "note": "対応する転入先ならワンストップから開始し、必要な場合はマイページでMNP予約番号を発行。1回線ずつ、対象番号を確認して進めます。"
+      },
+      "steps": [
+        {
+          "title": "対象番号とシェア状態を確認",
+          "text": "一度に複数回線は終えられないため1回線ずつ確認。通常解約でパケットシェア中なら事前脱退の案内を読む。"
+        },
+        {
+          "title": "解約・MNPの公式案内を開く",
+          "text": "解約理由を選び、番号不要の『解約』と『他社へ乗り換え（MNP予約番号発行）』を選び分け、マイページへログインする。"
+        },
+        {
+          "title": "通常解約またはMNP手続きをする",
+          "text": "MNPワンストップなら転入先から開始し、必要ならmineoで番号発行。通常解約は受付時間と利用停止タイミングを確認して本人が操作する。"
+        },
+        {
+          "title": "開通・精算・SIMを確認",
+          "text": "MNP切替完了後に元回線が解約。基本料とオプションの精算、不要コンテンツの別解約、回線タイプ別のSIM返却条件を確認する。"
+        }
+      ],
+      "checks": {
+        "balance": "端末の購入元・分割契約がある場合は、回線とは別に残額と支払方法を確認してください。",
+        "returns": "Dプラン等、タイプ別条件を公式で確認。",
+        "options": "不要コンテンツの個別解約が必要な案内。",
+        "schedule": "通常解約は短時間で利用できなくなる案内。基本料は原則日割りでも開始直後等には例外があり、オプションは満額の場合もあります。"
+      },
+      "sources": [
+        {
+          "title": "通常解約の手順",
+          "url": "https://support.mineo.jp/usqa/use/change/quit/4206925_8885.html"
+        },
+        {
+          "title": "MNP転出とワンストップの手順",
+          "url": "https://support.mineo.jp/usqa/use/change/quit/4206870_8885.html"
+        },
+        {
+          "title": "日割り・例外の公式FAQ",
+          "url": "https://support.mineo.jp/usqa/use/change/quit/4206912_8885.html"
+        },
+        {
+          "title": "SIM返却等の公式提供条件",
+          "url": "https://support.mineo.jp/contract/pdf/service_condition.pdf"
+        }
+      ],
+      "checkedAt": "2026-11-23"
+    },
+    {
+      "id": "nuro-mobile",
+      "kind": "mobile",
+      "name": "NUROモバイル",
+      "normal": {
+        "label": "通常解約の公式案内",
+        "href": "https://support.sonynetwork.co.jp/faqsupport/nuromobile/web/knowledge2750.html",
+        "note": "NUROモバイルのマイページから「月末解約」へ進みます。NURO光の解約とは別の窓口です。完了メールが送られないため画面の受付状態を確認してください。"
+      },
+      "transfer": {
+        "label": "MNP・番号引継ぎの公式案内",
+        "href": "https://support.sonynetwork.co.jp/faqsupport/nuromobile/web/knowledge2750.html",
+        "note": "対応先ならワンストップ、予約番号方式なら「MNP転出による解約」へ進みます。手続き後に未受取キャッシュバックの受取手続きができなくなる点も確認してください。"
+      },
+      "steps": [
+        {
+          "title": "番号・名義・特典を確認",
+          "text": "電話番号を残すかを選び、契約者名義・データ専用/SMSの区分・未受取キャッシュバックと別手続き中の状態を確認する。"
+        },
+        {
+          "title": "マイページの契約情報を開く",
+          "text": "NUROモバイル用IDで入り、『ご契約情報』下部の『NUROモバイルを解約する』へ進む。NURO光のIDや解約とは別。"
+        },
+        {
+          "title": "通常解約かMNPを選ぶ",
+          "text": "番号不要なら『月末解約』、必要なら『MNP転出による解約』。ワンストップは転入先から始め、案内される専用マイページで手続きする。"
+        },
+        {
+          "title": "終了後にSIM返却と請求を確認",
+          "text": "通常は月末、MNPは他社切替完了日が終了。SIMを公式指示で返却し、最終請求と別サービスを確認する。"
+        }
+      ],
+      "checks": {
+        "balance": "端末の購入元・分割契約がある場合は、回線とは別に残額と支払方法を確認してください。",
+        "returns": "貸与SIMの返却が必要。送料・宛先・梱包は公式返却FAQへ。 レンタルWi-Fiは別ページの条件を確認。",
+        "options": "NUROモバイルでんわは音声プラン解約と終了。その他を個別確認。",
+        "schedule": "通常解約は月末、MNPは他社への切替完了日に終了。いずれも基本料の日割りはありません。通常解約後の取消不可・受付状態も確認。"
+      },
+      "sources": [
+        {
+          "title": "解約・MNP・ワンストップ・精算の公式FAQ",
+          "url": "https://support.sonynetwork.co.jp/faqsupport/nuromobile/web/knowledge2750.html"
+        },
+        {
+          "title": "解約後SIM返却の公式FAQ",
+          "url": "https://support.sonynetwork.co.jp/faqsupport/nuromobile/web/knowledge2752.html"
+        }
+      ],
+      "checkedAt": "2026-11-23"
+    },
+    {
+      "id": "his-mobile",
+      "kind": "mobile",
+      "name": "HISモバイル",
+      "normal": {
+        "label": "通常解約の公式案内",
+        "href": "https://his-mobile.com/domestic/cancellation",
+        "note": "国内SIM用のMy HISモバイルから進みます。自由自在3.0などのプランと決済日を確認してください。端末ショップ・レンタルWi-Fi・HIS光は別窓口です。"
+      },
+      "transfer": {
+        "label": "MNP・番号引継ぎの公式案内",
+        "href": "https://his-mobile.com/domestic/cancellation",
+        "note": "対応する転入先ならワンストップで開始し、必要な場合はMy HISモバイルで予約番号を発行。新回線が開通する前に通常解約をしないでください。"
+      },
+      "steps": [
+        {
+          "title": "現在のプランと料金月を確認",
+          "text": "自由自在3.0等のプラン名・次の決済日、番号引継ぎの有無、端末分割や別のレンタル契約を確認する。"
+        },
+        {
+          "title": "My HISモバイルを開く",
+          "text": "国内SIMのMy HISモバイルへログインする。端末/レンタルWi-Fi用のオンラインショップやHIS光とは窓口が別。"
+        },
+        {
+          "title": "番号不要なら解約、残すならMNP",
+          "text": "通常解約かMNPを選ぶ。ワンストップ対応先なら転入先から、予約番号方式ならMy HISモバイルで発行して申し込む。"
+        },
+        {
+          "title": "終了日と継続支払いを確認",
+          "text": "MNP開通前に通常解約しない。通常解約は現行プランの決済日基準を確認し、分割払い・SIMセット割・別契約の終了を確認する。"
+        }
+      ],
+      "checks": {
+        "balance": "分割払い継続・SIMセット割終了の案内。",
+        "returns": "国内SIMは返却不要の公式案内。 レンタルWi-Fi等は別の公式手続きを確認。",
+        "options": "プランやレンタル商品ごとに確認。",
+        "schedule": "自由自在3.0は解約申込み後も次の決済日前日まで利用できる案内。旧プランの暦月末終了と混同せず、利用中プランの次回決済日を確認。"
+      },
+      "sources": [
+        {
+          "title": "解約・MNPの公式入口",
+          "url": "https://his-mobile.com/domestic/cancellation"
+        },
+        {
+          "title": "現行自由自在3.0の解約日",
+          "url": "https://his-mobile.com/domestic/service/jiyujizai290"
+        },
+        {
+          "title": "ワンストップ/予約番号方式による転出の公式条件",
+          "url": "https://his.mvno.ne.jp/docs/HMProductTermOfUsePanel_FXV_D.pdf"
+        }
+      ],
+      "checkedAt": "2026-11-23"
+    },
+    {
+      "id": "aeon-mobile",
+      "kind": "mobile",
+      "name": "イオンモバイル",
+      "normal": {
+        "label": "通常解約の公式案内",
+        "href": "https://faq.aeonmobile.jp/faq/show/64?category_id=1&site_domain=default",
+        "note": "通常解約はマイページ・店舗・お客さまセンター電話に公式案内があります。番号を残したい場合は通常の「解約」を選ばないでください。"
+      },
+      "transfer": {
+        "label": "MNP・番号引継ぎの公式案内",
+        "href": "https://faq.aeonmobile.jp/faq/show/54?site_domain=default",
+        "note": "マイページでは「解約」ではなく「MNP予約番号発行」を選びます。店舗・電話の案内もあります。ワンストップの可否・予約番号の要否は転入先等の最新案内で確認してください。"
+      },
+      "steps": [
+        {
+          "title": "番号を残すか決める",
+          "text": "シェア等の契約や対象回線を確認し、電話番号を残す場合は通常解約を選ばない。"
+        },
+        {
+          "title": "契約・請求・返却を確認",
+          "text": "マイページや契約書面で、解約月の精算、端末分割・保証等の別契約、SIMや貸与品の扱いを確認する。"
+        },
+        {
+          "title": "希望する公式窓口から申込む",
+          "text": "通常解約はマイページ・店舗・電話の案内へ。MNP予約番号方式はマイページの『解約』ではなく『MNP予約番号発行』を選ぶ。"
+        },
+        {
+          "title": "開通または終了を確認",
+          "text": "MNPは転入先での切替完了まで通常解約しない。通常解約の締切・終了日、MNP番号の期限と最終請求を公式画面で確認する。"
+        }
+      ],
+      "checks": {
+        "balance": "端末の購入元・分割契約がある場合は、回線とは別に残額と支払方法を確認してください。",
+        "returns": "SIMの返却要否は利用中の契約の案内で確認してください。返却やアプリ削除だけでは解約になりません。",
+        "options": "別契約の保証・コンテンツ・外部サブスク等が残らないか確認。回線と同時にすべて終了するとは限りません。",
+        "schedule": "通常解約の締切・終了日・解約月の精算は、利用中の契約の注意事項で確認。MNPは転入先の開通日と予約番号の期限を確認。"
+      },
+      "sources": [
+        {
+          "title": "通常解約の窓口FAQ",
+          "url": "https://faq.aeonmobile.jp/faq/show/64?category_id=1&site_domain=default"
+        },
+        {
+          "title": "番号を残すMNP転出のFAQ",
+          "url": "https://faq.aeonmobile.jp/faq/show/54?site_domain=default"
+        }
+      ],
+      "checkedAt": "2026-11-23"
+    },
+    {
+      "id": "nihon-tsushin",
+      "kind": "mobile",
+      "name": "日本通信SIM",
+      "normal": {
+        "label": "通常解約の公式案内",
+        "href": "https://www.nihontsushin.com/support/support_cancellation.html",
+        "note": "マイページの「解約」から本人が手続きします。ヘルプデスクの電話では通常解約を受け付けていません。終了日が即日とは限らない点も確認してください。"
+      },
+      "transfer": {
+        "label": "MNP・番号引継ぎの公式案内",
+        "href": "https://www.nihontsushin.com/support/support_mnp_portout.html",
+        "note": "対応する転入先ならワンストップ、必要な場合はマイページの「MNP予約番号取得」へ。発行・転出に日数がかかる場合があり、新回線の開通前に通常解約しません。"
+      },
+      "steps": [
+        {
+          "title": "番号と料金月の起算日を確認",
+          "text": "番号を残すなら通常の『解約』ではなくMNP。マイページで対象プランと翌起算日、必要な請求明細を確認する。"
+        },
+        {
+          "title": "マイページにログインする",
+          "text": "日本通信アプリからのアクセス、移行済みならQR認証など、公式サポートの現在のログイン案内で進む。アプリ削除を解約の代わりにしない。"
+        },
+        {
+          "title": "通常解約かMNPを選ぶ",
+          "text": "通常はマイページの『解約』で注意事項を確認。MNPワンストップは転入先から、番号が必要なら『MNP予約番号取得』から発行を申込む。"
+        },
+        {
+          "title": "終了日・開通と請求を確認",
+          "text": "通常解約は翌起算日前日の終了、MNPは転入先切替完了時に解約。番号発行には日数がかかる場合があるため期限と最終請求を確認する。"
+        }
+      ],
+      "checks": {
+        "balance": "端末の購入元・分割契約がある場合は、回線とは別に残額と支払方法を確認してください。",
+        "returns": "SIMの返却要否は利用中の契約の案内で確認してください。返却やアプリ削除だけでは解約になりません。",
+        "options": "後日請求や別契約を確認。",
+        "schedule": "通常解約は翌起算日前日、MNPは転入先切替完了時に終了。MNP完了月の基本料等は日割りなし。発行所要日数・有効期限も確認。"
+      },
+      "sources": [
+        {
+          "title": "通常解約の公式手順",
+          "url": "https://www.nihontsushin.com/support/support_cancellation.html"
+        },
+        {
+          "title": "MNP転出・ワンストップの公式手順",
+          "url": "https://www.nihontsushin.com/support/support_mnp_portout.html"
+        },
+        {
+          "title": "マイページの現在の認証・アプリ案内",
+          "url": "https://www.nihontsushin.com/support/"
+        }
+      ],
+      "checkedAt": "2026-11-23"
+    }
+  ]
+}

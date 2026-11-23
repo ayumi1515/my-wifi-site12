@@ -8,6 +8,7 @@ import ShortTermCost from '../../components/ShortTermCost.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import AffiliateButton from '../../components/AffiliateButton.astro';
 import PointsComparison from '../../components/PointsComparison.astro';
+import CancellationGuide from '../../components/CancellationGuide.astro';
 import RelatedConnectivityLinks from '../../components/RelatedConnectivityLinks.astro';
 import { guides, categoryLabel, readingMinutes, type Guide } from '../../lib/guides';
 import { offers } from '../../lib/offers';
@@ -52,7 +53,7 @@ const articleLd = { '@context':'https://schema.org','@type':'Article',headline:g
           </section>)}
         </div>
         {!shortStay && (services.length > 0 || matchedOffers.length > 0) && <section id="next-step" class="next-step-section"><p class="section-kicker">次にすること</p><h2 class="guide-section-title">{shortStay ? '解約予定月の総額を、各窓口で確認。' : '条件が合う候補を、もう一度確認。'}</h2><p class="next-step-lead">申込みの前に、対象プラン・追加費用・特典の受取条件をリンク先で確かめてください。</p><div class="service-options">{services.map(p => <article class="surface-card service-option"><h3>{p.name}</h3><p>{shortStay ? '短期向けと断定するものではありません。工事費・端末代の残額と、解約予定月までの総額を確認してください。' : p.goodFor[0]}</p><a href={`/hikari/${p.id}/`} class="detail-link">料金と注意点を読む →</a><AffiliateButton provider={p} /></article>)}{matchedOffers.map(offer => <article class="surface-card service-option"><h3>{offer.name}</h3><p>{offer.note}</p><AffiliateButton provider={offer} /></article>)}</div></section>}
-        {g.category === 'internet' && <RelatedConnectivityLinks />}
+        {g.category === 'internet' && <><CancellationGuide ids={[...(shortStay?['en-hikari']:[]),...g.relatedProviderIds]} kind="home" compact /><RelatedConnectivityLinks /></>}
         {g.faqs.length > 0 && <section id="faq" class="guide-faq"><h2 class="guide-section-title">よくある質問</h2>{g.faqs.map(faq => <details><summary><span aria-hidden="true">Q</span>{faq.q}</summary><p>{faq.a}</p></details>)}</section>}
         <section id="sources" class="sources-section"><h2>出典と確認範囲</h2><p>この記事は、以下の公式情報をもとに編集しています。{g.category === 'learning' ? '教材の受講評価や学習効果の独自検証は行っていません。' : '実機の速度測定や、利用者全体を代表する満足度調査は行っていません。'}料金や受付条件は変わるため、申込み前に公式サイトで最新情報をご確認ください。</p><ul>{g.sources.map(source => <li><a href={source.url} target="_blank" rel="noopener">{source.label}<span aria-hidden="true"> ↗</span></a></li>)}</ul><p>情報確認日：{jpDate(g.updatedAt)} ／ <a href="/about/">編集方針</a> ／ <a href="/contact/">掲載内容について</a></p></section>
       </article>

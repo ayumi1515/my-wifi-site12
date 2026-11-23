@@ -1,0 +1,28 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CancellationGuide from '../../components/CancellationGuide.astro';
+import { breadcrumbLd } from '../../lib/data';
+import { SITE } from '../../site.config.mjs';
+import mobileServices from '../../data/mobile-services.json';
+const homeIds=['bbiq','docomo-hikari','softbank-hikari','biglobe-hikari','flets-hikari','home5g','softbank-air','en-hikari'];
+const path='/guides/cancellation-flow/';
+const title='Wi-Fi・スマホの解約方法｜MNP・事業者変更・機器返却の流れ';
+const description='Wi-Fi・光回線・ホームルーターとスマホ12ブランドの解約方法を公式案内から整理。通常解約と番号を引き継ぐ乗換え、残債、機器・SIMの返却、オプションの確認手順を紹介します。';
+const crumbs=[{name:'総合トップ',href:'/'},{name:'選び方ガイド',href:'/guides/'},{name:'解約・乗換えの手順',href:path}];
+const article={'@context':'https://schema.org','@type':'Article',headline:title,description,datePublished:'2026-11-23',dateModified:'2026-11-23',mainEntityOfPage:SITE.url+path,inLanguage:'ja',author:{'@type':'Organization',name:SITE.operator,url:SITE.url+'/about/'},publisher:{'@type':'Organization',name:SITE.name,url:SITE.url}};
+---
+<Base title={title} description={description} pr={false} jsonLd={[article,breadcrumbLd(SITE.url,crumbs)]}>
+  <article class="cancellation-page site-container">
+    <Breadcrumbs items={[crumbs[0],crumbs[1],{name:'解約・乗換えの手順'}]} />
+    <header><p class="eyebrow">乗換えの前にも、あとにも</p><h1>解約は、<br />「番号を残すか」から。</h1><p>電話番号を引き継ぐ乗換えと、通常の解約は手順が違います。契約している会社の公式窓口から、終了日・残りの支払い・返却するものを確認しましょう。</p><p class="byline">{SITE.operator} ／ 2026年11月23日確認</p></header>
+    <nav class="jump-links" aria-label="解約する契約を選ぶ"><a href="#home-cancellation">Wi-Fi・光回線の手順</a><a href="#mobile-cancellation">スマホ・SIMの手順</a></nav>
+    <aside class="route-note"><h2>乗換えなら、新しい回線の準備を先に</h2><p>携帯番号を残す場合は、転入先のMNP案内を確認します。光回線は、事業者変更・転用・固定電話の番号移行に当たるかを先に確認してください。通常解約とは別の手続きになる場合があります。</p><a href="/shindan/#diagnosis-form">乗換え先を家族の条件で比べる →</a></aside>
+    <CancellationGuide id="home-cancellation" ids={homeIds} kind="home" />
+    <CancellationGuide id="mobile-cancellation" ids={mobileServices.map(service=>service.id)} kind="mobile" />
+    <footer class="guide-end"><p>解約日は契約・受付日・手続きの種類で変わります。各社の公式案内と、ご自身の契約画面に出る内容を確認して進めてください。</p><a href="/guides/">選び方ガイドへ戻る →</a></footer>
+  </article>
+</Base>
+<style>
+.cancellation-page{max-width:1060px;padding-top:24px;padding-bottom:40px;color:#263d31}.cancellation-page>header{max-width:860px;margin:25px 0}.eyebrow{font-size:14px;color:#175d50;font-weight:800}.cancellation-page h1{font-size:clamp(28px,4vw,40px);font-weight:800;line-height:1.5;margin:10px 0 15px}.cancellation-page>header>p:not(.eyebrow){font-size:16px;line-height:1.9;color:#53685a}.cancellation-page>header .byline{font-size:12px!important;margin-top:14px}.jump-links{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0}.jump-links a{display:flex;min-height:50px;align-items:center;justify-content:center;border:1px solid #b7cebe;border-radius:6px;background:#edf5ee;color:#175d50;padding:12px 19px;font-size:16px;font-weight:800}.route-note{padding:22px;border:1px solid #ded6bc;border-radius:8px;background:#fff8e9}.route-note h2{font-size:21px;font-weight:800;line-height:1.7}.route-note p,.guide-end p{font-size:15px;line-height:1.95;color:#526658;margin-top:11px}.route-note a,.guide-end a{display:inline-block;min-height:44px;padding:11px 0;color:#175d50;font-size:14px;font-weight:800;text-decoration:underline;text-underline-offset:4px}.guide-end{margin-top:25px;padding-top:20px;border-top:1px solid #d3ded3}@media(max-width:650px){.cancellation-page{padding-top:18px}.jump-links{display:grid;grid-template-columns:1fr;gap:9px}.route-note{padding:18px}.route-note h2{font-size:19px}}
+</style>

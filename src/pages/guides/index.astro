@@ -21,6 +21,7 @@ interface DirectoryCard {
   manga: { sheet: ConnectivityMangaSheet; frame: number } | null;
 }
 const cards: DirectoryCard[] = [
+  {href:'/guides/cancellation-flow/',category:'internet',title:'Wi-Fi・スマホの解約方法と、番号を残す乗換えの流れ',description:'通常解約・MNP・事業者変更を分け、残債・機器やSIMの返却・有料オプションまで公式窓口で確認します。',updatedAt:'2026-11-23',search:'解約 退会 MNP 番号引継ぎ 事業者変更 残債 機器 SIM 返却 締切 スマホ Wi-Fi 光回線',minutes:5,artworkSlug:'hikari-one-year',manga:null},
   ...guides.map((guide, index) => ({
     href: `/guides/${guide.slug}/`, category: guide.category,
     title: guide.title, description: guide.description, updatedAt: guide.updatedAt,
@@ -42,7 +43,7 @@ const cards: DirectoryCard[] = [
 ];
 const categories = [...new Set(cards.map(card => card.category))];
 ---
-<Base title="漫画と選び方ガイド｜Wi-Fi・スマホ・学習の条件を比較" description="Wi-Fi・光回線の漫画4記事とスマホ・SIMの12ブランド、英語学習2記事を検索。料金だけで分かりにくい条件と向き不向きを、漫画・比較表・公式出典から確認できます。">
+<Base title="漫画と選び方ガイド｜Wi-Fi・スマホ・学習の条件を比較" description="Wi-Fi・光回線の漫画4記事とスマホ・SIMの12ブランド、英語学習2記事、解約・乗換え手順を検索。料金だけで分かりにくい条件を、漫画・比較表・公式出典から確認できます。">
   <div class="page-shell guide-directory">
     <Breadcrumbs items={[{ name: '総合トップ', href: '/' }, { name: '選び方ガイド' }]} />
     <header class="directory-header">
