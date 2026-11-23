@@ -9,7 +9,7 @@
     "check": "astro check",
     "preview": "astro preview",
     "check-data": "node scripts/check-data.mjs",
-    "check-diagnosis": "node scripts/check-diagnosis.mjs"
+    "check-diagnosis": "node scripts/check-household.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.6",

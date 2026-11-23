@@ -1,0 +1,1018 @@
+{
+  "checkedAt": "2026-11-23",
+  "plans": [
+    {
+      "id": "docomo-mini",
+      "brandId": "docomo",
+      "name": "ドコモ mini",
+      "familyGroup": "docomo",
+      "shop": true,
+      "tiers": [
+        {
+          "maxGb": 4,
+          "monthly": 2750
+        },
+        {
+          "maxGb": 10,
+          "monthly": 3850
+        }
+      ],
+      "familyDiscount": [
+        0,
+        0,
+        0
+      ],
+      "familyMode": "all",
+      "bundleIds": [
+        "docomo-hikari",
+        "home5g"
+      ],
+      "bundleDiscount": 1210,
+      "excludeFamilyWithBundle": false,
+      "note": "新規申込先としては2026年11月30日まで。既存加入者は12月以降も継続でき、mini2へ自動移行しません。 4GB/10GBの選択制。6GB/12GBへの期間限定増量は11月30日終了予定なので通常容量で記録。超過後最大128kbps。 同一ファミリー割引グループ等の条件。固定回線そのものの費用は別。光電話はセット割の必須条件ではない。",
+      "url": "https://www.docomo.ne.jp/charge/docomo_mini/",
+      "sources": [
+        {
+          "label": "ドコモ：公式の料金・割引条件",
+          "url": "https://www.docomo.ne.jp/charge/docomo_mini/"
+        },
+        {
+          "label": "ドコモ：公式の料金・割引条件",
+          "url": "https://www.docomo.ne.jp/charge/minna_docomo/"
+        },
+        {
+          "label": "ドコモ：公式の料金・割引条件",
+          "url": "https://www.docomo.ne.jp/faq/detail?categoryId=12399&faqId=490904"
+        }
+      ],
+      "validThrough": "2026-11-30"
+    },
+    {
+      "id": "docomo-max",
+      "brandId": "docomo",
+      "name": "ドコモ MAX",
+      "familyGroup": "docomo",
+      "shop": true,
+      "tiers": [
+        {
+          "maxGb": 1,
+          "monthly": 5698
+        },
+        {
+          "maxGb": 3,
+          "monthly": 6798
+        },
+        {
+          "maxGb": null,
+          "monthly": 8448
+        }
+      ],
+      "familyDiscount": [
+        0,
+        550,
+        1210
+      ],
+      "familyMode": "all",
+      "bundleIds": [
+        "docomo-hikari",
+        "home5g"
+      ],
+      "bundleDiscount": 1210,
+      "excludeFamilyWithBundle": false,
+      "note": "段階制。大容量通信等の制限あり。テザリングは追加料金なし・別申込不要。 同一ファミリー割引グループ内の対象国内通話。 ドコモでの継続利用年数。新たにドコモへ乗換える人へ元キャリアの年数を流用しない。 同一ファミリー割引グループ等の条件。固定回線費用は別。",
+      "url": "https://www.docomo.ne.jp/charge/docomo_max/",
+      "sources": [
+        {
+          "label": "ドコモ：公式の料金・割引条件",
+          "url": "https://www.docomo.ne.jp/charge/docomo_max/"
+        },
+        {
+          "label": "ドコモ：公式の料金・割引条件",
+          "url": "https://www.docomo.ne.jp/charge/minna_docomo/"
+        },
+        {
+          "label": "ドコモ：公式の料金・割引条件",
+          "url": "https://www.docomo.ne.jp/service/tethering/"
+        }
+      ],
+      "tenureDiscount": [
+        {
+          "years": 10,
+          "monthly": 110
+        },
+        {
+          "years": 20,
+          "monthly": 220
+        }
+      ]
+    },
+    {
+      "id": "au-smartphone-mini-plus",
+      "brandId": "au",
+      "name": "スマホミニプラン＋ 5G／4G",
+      "familyGroup": "au",
+      "shop": true,
+      "tiers": [
+        {
+          "maxGb": 1,
+          "monthly": 4928
+        },
+        {
+          "maxGb": 3,
+          "monthly": 6578
+        },
+        {
+          "maxGb": 5,
+          "monthly": 8228
+        }
+      ],
+      "familyDiscount": [
+        0,
+        660,
+        1210
+      ],
+      "familyMode": "all",
+      "bundleIds": [
+        "biglobe-hikari",
+        "bbiq"
+      ],
+      "bundleDiscount": 1100,
+      "excludeFamilyWithBundle": false,
+      "note": "データ量で3段階。最大5GB。 通話の家族割と家族割プラスは別制度。通話割引は標準料金モデルに入れず、加入条件を別途確認。 対象固定回線はネット＋電話が必要。電話追加料金は回線別で確認。auひかりプラスの公式加入例は電話770円/月。BBIQ/ビッグローブへ770円を流用しない。対象ホームルーターにも別条件あり。",
+      "url": "https://www.au.com/mobile/charge/smartphone/plan/sp-mini-plus/",
+      "sources": [
+        {
+          "label": "au：公式の料金・割引条件",
+          "url": "https://www.au.com/mobile/charge/smartphone/plan/sp-mini-plus/"
+        },
+        {
+          "label": "au：公式の料金・割引条件",
+          "url": "https://www.au.com/mobile/charge/charge-discount/smartvalue/"
+        },
+        {
+          "label": "au：公式の料金・割引条件",
+          "url": "https://www.au.com/support/faq/details/00/0000/000002/pg00000207/"
+        }
+      ]
+    },
+    {
+      "id": "au-value-link",
+      "brandId": "au",
+      "name": "auバリューリンクプラン",
+      "familyGroup": "au",
+      "shop": true,
+      "tiers": [
+        {
+          "maxGb": 1,
+          "monthly": 6358
+        },
+        {
+          "maxGb": null,
+          "monthly": 8008
+        }
+      ],
+      "familyDiscount": [
+        0,
+        660,
+        1210
+      ],
+      "familyMode": "all",
+      "bundleIds": [
+        "biglobe-hikari",
+        "bbiq"
+      ],
+      "bundleDiscount": 1100,
+      "excludeFamilyWithBundle": false,
+      "note": "月200GB超は通常利用に影響しない範囲で最大5Mbps。テザリング等は合計60GB。 家族割の別条件を確認。標準計算では無料通話扱いにしない。 ネット＋電話等の条件。オプション費用は選んだ固定回線の公式料金で別加算。",
+      "url": "https://www.au.com/mobile/charge/smartphone/plan/auvaluelink/",
+      "sources": [
+        {
+          "label": "au：公式の料金・割引条件",
+          "url": "https://www.au.com/mobile/charge/smartphone/plan/auvaluelink/"
+        },
+        {
+          "label": "au：公式の料金・割引条件",
+          "url": "https://www.au.com/content/dam/au-com/catalog/pdf/au_catalog_auvaluelink_plan_1cef26acadb3f370.pdf"
+        },
+        {
+          "label": "au：公式の料金・割引条件",
+          "url": "https://www.au.com/mobile/charge/charge-discount/smartvalue/"
+        }
+      ]
+    },
+    {
+      "id": "softbank-minifit2",
+      "brandId": "softbank",
+      "name": "ミニフィット2",
+      "familyGroup": "softbank",
+      "shop": true,
+      "tiers": [
+        {
+          "maxGb": 2,
+          "monthly": 5258
+        },
+        {
+          "maxGb": 5,
+          "monthly": 6358
+        }
+      ],
+      "familyDiscount": [
+        0,
+        220,
+        550
+      ],
+      "familyMode": "all",
+      "bundleIds": [
+        "softbank-hikari",
+        "softbank-air"
+      ],
+      "bundleDiscount": 1100,
+      "excludeFamilyWithBundle": false,
+      "note": "家族割引適用・同一家族割引グループ内の対象国内通話。 光の指定オプション550円/月〜を別加算。Airは対象契約・機種等を確認。",
+      "url": "https://www.softbank.jp/mobile/price_plan/data/minifit2/",
+      "sources": [
+        {
+          "label": "ソフトバンク：公式の料金・割引条件",
+          "url": "https://www.softbank.jp/mobile/price_plan/data/minifit2/"
+        },
+        {
+          "label": "ソフトバンク：公式の料金・割引条件",
+          "url": "https://www.softbank.jp/mobile/price_plan/options/new-minna-kazokuwari/"
+        },
+        {
+          "label": "ソフトバンク：公式の料金・割引条件",
+          "url": "https://www.softbank.jp/support/faq/view/14699"
+        }
+      ]
+    },
+    {
+      "id": "softbank-teigaku-unlimited",
+      "brandId": "softbank",
+      "name": "テイガク無制限",
+      "familyGroup": "softbank",
+      "shop": true,
+      "tiers": [
+        {
+          "maxGb": null,
+          "monthly": 8008
+        }
+      ],
+      "familyDiscount": [
+        0,
+        660,
+        1210
+      ],
+      "familyMode": "all",
+      "bundleIds": [
+        "softbank-hikari",
+        "softbank-air"
+      ],
+      "bundleDiscount": 1100,
+      "excludeFamilyWithBundle": false,
+      "note": "直近30日300GB超等で最大4.5Mbps制限。テザリングは無料だが申込みが必要。旧メリハリ無制限＋の50GB制限をこのプランに流用しない。 基本プラン（音声）の家族割引グループ内対象通話。 光の指定オプション550円/月〜を別加算。期間限定おうちスマホ割は家族割と併用不可のため標準計算から除外。",
+      "url": "https://www.softbank.jp/mobile/price_plan/data/teigaku-museigen/",
+      "sources": [
+        {
+          "label": "ソフトバンク：公式の料金・割引条件",
+          "url": "https://www.softbank.jp/mobile/price_plan/data/teigaku-museigen/"
+        },
+        {
+          "label": "ソフトバンク：公式の料金・割引条件",
+          "url": "https://www.softbank.jp/mobile/price_plan/options/new-minna-kazokuwari/"
+        },
+        {
+          "label": "ソフトバンク：公式の料金・割引条件",
+          "url": "https://www.softbank.jp/mobile/price_plan/options/tethering/"
+        },
+        {
+          "label": "ソフトバンク：公式の料金・割引条件",
+          "url": "https://www.softbank.jp/support/faq/view/14699"
+        }
+      ]
+    },
+    {
+      "id": "docomo-mini2",
+      "brandId": "docomo",
+      "name": "ドコモ mini2",
+      "familyGroup": "docomo",
+      "shop": true,
+      "tiers": [
+        {
+          "maxGb": 6,
+          "monthly": 3278
+        },
+        {
+          "maxGb": 12,
+          "monthly": 4598
+        }
+      ],
+      "familyDiscount": [
+        0,
+        550,
+        550
+      ],
+      "familyMode": "all",
+      "bundleIds": [
+        "docomo-hikari",
+        "home5g"
+      ],
+      "bundleDiscount": 1210,
+      "excludeFamilyWithBundle": false,
+      "note": "段階制。6GBの上限設定オプションあり。miniから自動移行されない。dカード/電気等の割引は別条件として標準試算に入れない。",
+      "url": "https://www.docomo.ne.jp/info/news_release/2026/09/25_00.html",
+      "sources": [
+        {
+          "label": "ドコモ：公式の料金・割引条件",
+          "url": "https://www.docomo.ne.jp/info/news_release/2026/09/25_00.html"
+        },
+        {
+          "label": "ドコモ：公式の料金・割引条件",
+          "url": "https://www.docomo.ne.jp/faq/detail?categoryId=12906&faqId=494593"
+        }
+      ],
+      "validFrom": "2026-12-01"
+    },
+    {
+      "id": "uq-tokutoku2",
+      "brandId": "uq-mobile",
+      "name": "トクトクプラン2",
+      "familyGroup": "uq",
+      "shop": true,
+      "tiers": [
+        {
+          "maxGb": 5,
+          "monthly": 2948
+        },
+        {
+          "maxGb": 30,
+          "monthly": 4048
+        }
+      ],
+      "familyDiscount": [
+        0,
+        550,
+        550
+      ],
+      "familyMode": "all",
+      "bundleIds": [
+        "biglobe-hikari",
+        "bbiq"
+      ],
+      "bundleDiscount": 1100,
+      "excludeFamilyWithBundle": true,
+      "note": "月間5GB以下なら1,100円減額、5GB超は通常基本料。通話料等は別。家族セット割は2回線以上の登録条件付き。自宅セット割と家族セット割は合算しません。対象固定回線のネット＋電話等は世帯側で別加算。 年齢別・カード・期間限定割引を含みません。",
+      "url": "https://www.uqwimax.jp/mobile/plan/tokutoku2/",
+      "sources": [
+        {
+          "label": "UQ mobile：公式の料金・割引条件",
+          "url": "https://www.uqwimax.jp/mobile/plan/tokutoku2/"
+        },
+        {
+          "label": "UQ mobile：公式の料金・割引条件",
+          "url": "https://www.uqwimax.jp/mobile/plan/komikomi-pv/"
+        },
+        {
+          "label": "UQ mobile：公式の料金・割引条件",
+          "url": "https://www.uqwimax.jp/mobile/newplan/kazoku/"
+        },
+        {
+          "label": "UQ mobile：公式の料金・割引条件",
+          "url": "https://www.uqwimax.jp/mobile/beginner/point/"
+        },
+        {
+          "label": "UQ mobile：公式の料金・割引条件",
+          "url": "https://www.uqwimax.jp/mobile/newplan/setwari/"
+        }
+      ]
+    },
+    {
+      "id": "uq-komikomi-value",
+      "brandId": "uq-mobile",
+      "name": "コミコミプランバリュー",
+      "familyGroup": "uq",
+      "shop": true,
+      "tiers": [
+        {
+          "maxGb": 35,
+          "monthly": 3828
+        }
+      ],
+      "familyDiscount": [
+        0,
+        0,
+        0
+      ],
+      "familyMode": "all",
+      "bundleIds": [],
+      "bundleDiscount": 0,
+      "excludeFamilyWithBundle": false,
+      "note": "35GB、1回10分以内の対象国内通話込み。家族セット割の人数カウント対象ですが、このプラン自身の家族割・自宅セット割は0円です。 年齢別・カード・期間限定割引を含みません。",
+      "url": "https://www.uqwimax.jp/mobile/plan/komikomi-pv/",
+      "sources": [
+        {
+          "label": "UQ mobile：公式の料金・割引条件",
+          "url": "https://www.uqwimax.jp/mobile/plan/tokutoku2/"
+        },
+        {
+          "label": "UQ mobile：公式の料金・割引条件",
+          "url": "https://www.uqwimax.jp/mobile/plan/komikomi-pv/"
+        },
+        {
+          "label": "UQ mobile：公式の料金・割引条件",
+          "url": "https://www.uqwimax.jp/mobile/newplan/kazoku/"
+        },
+        {
+          "label": "UQ mobile：公式の料金・割引条件",
+          "url": "https://www.uqwimax.jp/mobile/beginner/point/"
+        },
+        {
+          "label": "UQ mobile：公式の料金・割引条件",
+          "url": "https://www.uqwimax.jp/mobile/newplan/setwari/"
+        }
+      ]
+    },
+    {
+      "id": "ymobile-simple3-s",
+      "brandId": "ymobile",
+      "name": "シンプル3 S",
+      "familyGroup": "ymobile",
+      "shop": true,
+      "tiers": [
+        {
+          "maxGb": 5,
+          "monthly": 3278
+        }
+      ],
+      "familyDiscount": [
+        0,
+        1100,
+        1100
+      ],
+      "familyMode": "after-first",
+      "bundleIds": [
+        "softbank-hikari",
+        "softbank-air"
+      ],
+      "bundleDiscount": 1650,
+      "excludeFamilyWithBundle": true,
+      "note": "2026年6月2日以降の通常基本料。家族割は2回線目以降1,100円、おうち割は対象回線各1,650円で併用しません。SoftBank 光1ギガは指定オプション550円／月～を世帯側に別加算。旧加入者の220円特別割引・カード・親子割・ポイントを含みません。 国内通話等は別料金。",
+      "url": "https://www.ymobile.jp/plan/",
+      "sources": [
+        {
+          "label": "ワイモバイル：公式の料金・割引条件",
+          "url": "https://www.ymobile.jp/jusetsu/jusetsu04/"
+        },
+        {
+          "label": "ワイモバイル：公式の料金・割引条件",
+          "url": "https://www.ymobile.jp/sp/price_info_2026/pdf/price_table_simple3_0602.pdf"
+        },
+        {
+          "label": "ワイモバイル：公式の料金・割引条件",
+          "url": "https://www.ymobile.jp/plan/discount/kazokuwari/"
+        },
+        {
+          "label": "ワイモバイル：公式の料金・割引条件",
+          "url": "https://www.ymobile.jp/plan/discount/hikarisetwari/"
+        },
+        {
+          "label": "ワイモバイル：公式の料金・割引条件",
+          "url": "https://www.ymobile.jp/support/faq/view/23669?spnv=001"
+        },
+        {
+          "label": "ワイモバイル：公式の料金・割引条件",
+          "url": "https://www.ymobile.jp/store/sp/sim/"
+        }
+      ]
+    },
+    {
+      "id": "ymobile-simple3-m",
+      "brandId": "ymobile",
+      "name": "シンプル3 M",
+      "familyGroup": "ymobile",
+      "shop": true,
+      "tiers": [
+        {
+          "maxGb": 30,
+          "monthly": 4378
+        }
+      ],
+      "familyDiscount": [
+        0,
+        1100,
+        1100
+      ],
+      "familyMode": "after-first",
+      "bundleIds": [
+        "softbank-hikari",
+        "softbank-air"
+      ],
+      "bundleDiscount": 1650,
+      "excludeFamilyWithBundle": true,
+      "note": "2026年6月2日以降の通常基本料。家族割は2回線目以降1,100円、おうち割は対象回線各1,650円で併用しません。SoftBank 光1ギガは指定オプション550円／月～を世帯側に別加算。旧加入者の220円特別割引・カード・親子割・ポイントを含みません。 国内通話等は別料金。",
+      "url": "https://www.ymobile.jp/plan/",
+      "sources": [
+        {
+          "label": "ワイモバイル：公式の料金・割引条件",
+          "url": "https://www.ymobile.jp/jusetsu/jusetsu04/"
+        },
+        {
+          "label": "ワイモバイル：公式の料金・割引条件",
+          "url": "https://www.ymobile.jp/sp/price_info_2026/pdf/price_table_simple3_0602.pdf"
+        },
+        {
+          "label": "ワイモバイル：公式の料金・割引条件",
+          "url": "https://www.ymobile.jp/plan/discount/kazokuwari/"
+        },
+        {
+          "label": "ワイモバイル：公式の料金・割引条件",
+          "url": "https://www.ymobile.jp/plan/discount/hikarisetwari/"
+        },
+        {
+          "label": "ワイモバイル：公式の料金・割引条件",
+          "url": "https://www.ymobile.jp/support/faq/view/23669?spnv=001"
+        },
+        {
+          "label": "ワイモバイル：公式の料金・割引条件",
+          "url": "https://www.ymobile.jp/store/sp/sim/"
+        }
+      ]
+    },
+    {
+      "id": "ymobile-simple3-l",
+      "brandId": "ymobile",
+      "name": "シンプル3 L",
+      "familyGroup": "ymobile",
+      "shop": true,
+      "tiers": [
+        {
+          "maxGb": 35,
+          "monthly": 5478
+        }
+      ],
+      "familyDiscount": [
+        0,
+        1100,
+        1100
+      ],
+      "familyMode": "after-first",
+      "bundleIds": [
+        "softbank-hikari",
+        "softbank-air"
+      ],
+      "bundleDiscount": 1650,
+      "excludeFamilyWithBundle": true,
+      "note": "2026年6月2日以降の通常基本料。家族割は2回線目以降1,100円、おうち割は対象回線各1,650円で併用しません。SoftBank 光1ギガは指定オプション550円／月～を世帯側に別加算。旧加入者の220円特別割引・カード・親子割・ポイントを含みません。 Lは1回10分以内の対象国内通話込み。",
+      "url": "https://www.ymobile.jp/plan/",
+      "sources": [
+        {
+          "label": "ワイモバイル：公式の料金・割引条件",
+          "url": "https://www.ymobile.jp/jusetsu/jusetsu04/"
+        },
+        {
+          "label": "ワイモバイル：公式の料金・割引条件",
+          "url": "https://www.ymobile.jp/sp/price_info_2026/pdf/price_table_simple3_0602.pdf"
+        },
+        {
+          "label": "ワイモバイル：公式の料金・割引条件",
+          "url": "https://www.ymobile.jp/plan/discount/kazokuwari/"
+        },
+        {
+          "label": "ワイモバイル：公式の料金・割引条件",
+          "url": "https://www.ymobile.jp/plan/discount/hikarisetwari/"
+        },
+        {
+          "label": "ワイモバイル：公式の料金・割引条件",
+          "url": "https://www.ymobile.jp/support/faq/view/23669?spnv=001"
+        },
+        {
+          "label": "ワイモバイル：公式の料金・割引条件",
+          "url": "https://www.ymobile.jp/store/sp/sim/"
+        }
+      ]
+    },
+    {
+      "id": "rakuten-saikyo",
+      "brandId": "rakuten-mobile",
+      "name": "Rakuten最強プラン",
+      "familyGroup": "rakuten",
+      "shop": true,
+      "tiers": [
+        {
+          "maxGb": 3,
+          "monthly": 1078
+        },
+        {
+          "maxGb": 20,
+          "monthly": 2178
+        },
+        {
+          "maxGb": null,
+          "monthly": 3278
+        }
+      ],
+      "familyDiscount": [
+        0,
+        110,
+        110
+      ],
+      "familyMode": "all",
+      "bundleIds": [],
+      "bundleDiscount": 0,
+      "excludeFamilyWithBundle": false,
+      "note": "実使用量による段階制。対象の国内通話無料はRakuten Link利用などの条件付き。比較では同じ家族の2回線以上が最強家族割グループへ加入する前提で各110円引き、単独1回線には適用しません。年齢別特典・楽天ひかり等のポイント還元は計算外です。累計5回線目以降の契約事務手数料等は別途確認します。",
+      "url": "https://network.mobile.rakuten.co.jp/fee/un-limit/?source=ecomm",
+      "sources": [
+        {
+          "label": "楽天モバイル：公式の料金・割引条件",
+          "url": "https://network.mobile.rakuten.co.jp/fee/un-limit/?source=ecomm"
+        },
+        {
+          "label": "楽天モバイル：公式の料金・割引条件",
+          "url": "https://network.mobile.rakuten.co.jp/fee/family/"
+        },
+        {
+          "label": "楽天モバイル：公式の料金・割引条件",
+          "url": "https://network.mobile.rakuten.co.jp/guide/family/"
+        },
+        {
+          "label": "楽天モバイル：公式の料金・割引条件",
+          "url": "https://network.mobile.rakuten.co.jp/terms/pdf/rakuten_mobile_voice_sim_pricelist.pdf"
+        },
+        {
+          "label": "楽天モバイル：公式の料金・割引条件",
+          "url": "https://network.mobile.rakuten.co.jp/terms/pdf/rakuten_mobile_important_explanation_saikyo-u-next_20260515.pdf"
+        }
+      ]
+    },
+    {
+      "id": "ahamo-current",
+      "brandId": "ahamo",
+      "name": "ahamo（2026年11月まで）",
+      "familyGroup": "docomo",
+      "shop": false,
+      "tiers": [
+        {
+          "maxGb": 30,
+          "monthly": 2970
+        },
+        {
+          "maxGb": 110,
+          "monthly": 4950
+        }
+      ],
+      "familyDiscount": [
+        0,
+        0,
+        0
+      ],
+      "familyMode": "all",
+      "bundleIds": [],
+      "bundleDiscount": 0,
+      "excludeFamilyWithBundle": false,
+      "note": "30GB通常プラン、または大盛り追加の110GBを必要容量に合わせて選ぶ例。1回5分以内の対象国内通話込み。家族割のグループ数に含めますが、ahamo自身への家族割・光セット割はありません。12月1日から既存契約も改定後の段階制になります。",
+      "url": "https://ahamo.com/plan/",
+      "sources": [
+        {
+          "label": "ahamo：公式の料金・割引条件",
+          "url": "https://ahamo.com/plan/"
+        },
+        {
+          "label": "ahamo：公式の料金・割引条件",
+          "url": "https://www.docomo.ne.jp/charge/plan_renewal2026/?show=anc-ahamo"
+        },
+        {
+          "label": "ahamo：公式の料金・割引条件",
+          "url": "https://www.docomo.ne.jp/flcache_data/charge/plan_renewal2026/images/img_compare_ahamo_chart01_smt.png?ver=1790312416"
+        }
+      ],
+      "validThrough": "2026-11-30"
+    },
+    {
+      "id": "ahamo-december",
+      "brandId": "ahamo",
+      "name": "ahamo（2026年12月から）",
+      "familyGroup": "docomo",
+      "shop": false,
+      "tiers": [
+        {
+          "maxGb": 40,
+          "monthly": 3135
+        },
+        {
+          "maxGb": 60,
+          "monthly": 4125
+        },
+        {
+          "maxGb": 120,
+          "monthly": 5115
+        }
+      ],
+      "familyDiscount": [
+        0,
+        0,
+        0
+      ],
+      "familyMode": "all",
+      "bundleIds": [],
+      "bundleDiscount": 0,
+      "excludeFamilyWithBundle": false,
+      "note": "2026年12月1日から実使用量で40GB・60GB・120GBの段階制。1回5分以内の対象国内通話込み。既存契約も改定対象。旧大盛りオプションは11月末終了。家族割の人数カウント対象ですが、ahamo自身への家族割・光セット割はありません。",
+      "url": "https://ahamo.com/plan/",
+      "sources": [
+        {
+          "label": "ahamo：公式の料金・割引条件",
+          "url": "https://ahamo.com/plan/"
+        },
+        {
+          "label": "ahamo：公式の料金・割引条件",
+          "url": "https://www.docomo.ne.jp/charge/plan_renewal2026/?show=anc-ahamo"
+        },
+        {
+          "label": "ahamo：公式の料金・割引条件",
+          "url": "https://www.docomo.ne.jp/flcache_data/charge/plan_renewal2026/images/img_compare_ahamo_chart01_smt.png?ver=1790312416"
+        }
+      ],
+      "validFrom": "2026-12-01"
+    },
+    {
+      "id": "x-mobile",
+      "brandId": "x-mobile",
+      "name": "X-mobile グリーンプラン",
+      "familyGroup": null,
+      "shop": true,
+      "tiers": [
+        {
+          "maxGb": 3,
+          "monthly": 968
+        }
+      ],
+      "familyDiscount": [
+        0,
+        0,
+        0
+      ],
+      "familyMode": "all",
+      "bundleIds": [],
+      "bundleDiscount": 0,
+      "excludeFamilyWithBundle": false,
+      "note": "グリーンプラン3GBの通常基本料。期間限定の月額363円とは区別しています。通話・SMS・各種手数料等は別です。 月3GBの例／1〜100GBから選択 掲載例の容量だけを比較し、未確認の大容量・家族・光セット料金へ拡張していません。",
+      "url": "https://xmobile.ne.jp/greenplan/",
+      "sources": [
+        {
+          "label": "グリーンプラン：通常料金・通信条件",
+          "url": "https://xmobile.ne.jp/greenplan/"
+        },
+        {
+          "label": "料金一覧",
+          "url": "https://xmobile.ne.jp/price-list/"
+        },
+        {
+          "label": "店舗一覧",
+          "url": "https://xmobile.ne.jp/shop/"
+        }
+      ]
+    },
+    {
+      "id": "linemo",
+      "brandId": "linemo",
+      "name": "LINEMO",
+      "familyGroup": null,
+      "shop": false,
+      "tiers": [
+        {
+          "maxGb": 3,
+          "monthly": 990
+        },
+        {
+          "maxGb": 10,
+          "monthly": 2090
+        }
+      ],
+      "familyDiscount": [
+        0,
+        0,
+        0
+      ],
+      "familyMode": "all",
+      "bundleIds": [],
+      "bundleDiscount": 0,
+      "excludeFamilyWithBundle": false,
+      "note": "LINEMOベストプランの通常基本料。3GB超〜10GBは2,090円。通話・SMS・契約事務手数料等は別で、特典還元は差し引いていません。 3GBまで／3GB超〜10GBの2段階 掲載例の容量だけを比較し、未確認の大容量・家族・光セット料金へ拡張していません。",
+      "url": "https://www.linemo.jp/plan/",
+      "sources": [
+        {
+          "label": "料金プラン・解約条件",
+          "url": "https://www.linemo.jp/plan/"
+        },
+        {
+          "label": "LINEMOベストプラン提供条件書",
+          "url": "https://www.linemo.jp/corporate/agreement/pdf/agreement_bestplan.pdf"
+        }
+      ]
+    },
+    {
+      "id": "iijmio",
+      "brandId": "iijmio",
+      "name": "IIJmio",
+      "familyGroup": null,
+      "shop": false,
+      "tiers": [
+        {
+          "maxGb": 2,
+          "monthly": 850
+        }
+      ],
+      "familyDiscount": [
+        0,
+        0,
+        0
+      ],
+      "familyMode": "all",
+      "bundleIds": [],
+      "bundleDiscount": 0,
+      "excludeFamilyWithBundle": false,
+      "note": "ギガプランの音声通話SIM・音声eSIMを1回線で使う通常価格。家族割引・期間限定割引は未適用です。初期費用・通話料等は別です。 月2GBの音声プラン例 掲載例の容量だけを比較し、未確認の大容量・家族・光セット料金へ拡張していません。",
+      "url": "https://www.iijmio.jp/gigaplan/",
+      "sources": [
+        {
+          "label": "ギガプラン：SIMタイプと料金",
+          "url": "https://www.iijmio.jp/gigaplan/"
+        },
+        {
+          "label": "ギガプラン月額料金の公式FAQ",
+          "url": "https://help.iijmio.jp/answer/602dc1d407f19b0012186e68/"
+        }
+      ]
+    },
+    {
+      "id": "mineo",
+      "brandId": "mineo",
+      "name": "mineo",
+      "familyGroup": null,
+      "shop": false,
+      "tiers": [
+        {
+          "maxGb": 3,
+          "monthly": 1298
+        }
+      ],
+      "familyDiscount": [
+        0,
+        0,
+        0
+      ],
+      "familyMode": "all",
+      "bundleIds": [],
+      "bundleDiscount": 0,
+      "excludeFamilyWithBundle": false,
+      "note": "マイピタ3GB・デュアルタイプの通常基本料。キャンペーンや有料データオプションの割引を含みません。通話・初期費用等は別です。 月3GBの音声プラン例 掲載例の容量だけを比較し、未確認の大容量・家族・光セット料金へ拡張していません。",
+      "url": "https://mineo.jp/price/",
+      "sources": [
+        {
+          "label": "mineo料金表",
+          "url": "https://mineo.jp/price/"
+        },
+        {
+          "label": "公式パンフレット：通常料金・プラン種別",
+          "url": "https://support.mineo.jp/agency/pdf/mineo_pamphlet.pdf"
+        }
+      ]
+    },
+    {
+      "id": "nuro-mobile",
+      "brandId": "nuro-mobile",
+      "name": "NUROモバイル",
+      "familyGroup": null,
+      "shop": false,
+      "tiers": [
+        {
+          "maxGb": 5,
+          "monthly": 990
+        }
+      ],
+      "familyDiscount": [
+        0,
+        0,
+        0
+      ],
+      "familyMode": "all",
+      "bundleIds": [],
+      "bundleDiscount": 0,
+      "excludeFamilyWithBundle": false,
+      "note": "バリュープラスVMプラン・音声通話付きSIMの通常基本料。初月無料や特典付与は計算に入れていません。登録・SIM準備費用、通話等は別です。 VMプラン 月5GBの音声SIM例 掲載例の容量だけを比較し、未確認の大容量・家族・光セット料金へ拡張していません。",
+      "url": "https://mobile.nuro.jp/plan/valueplus/",
+      "sources": [
+        {
+          "label": "バリュープラス：VMプランの通常価格",
+          "url": "https://mobile.nuro.jp/plan/valueplus/"
+        },
+        {
+          "label": "料金プラン・対応回線一覧",
+          "url": "https://mobile.nuro.jp/plan/"
+        }
+      ]
+    },
+    {
+      "id": "his-mobile",
+      "brandId": "his-mobile",
+      "name": "HISモバイル",
+      "familyGroup": null,
+      "shop": false,
+      "tiers": [
+        {
+          "maxGb": 7,
+          "monthly": 990
+        }
+      ],
+      "familyDiscount": [
+        0,
+        0,
+        0
+      ],
+      "familyMode": "all",
+      "bundleIds": [],
+      "bundleDiscount": 0,
+      "excludeFamilyWithBundle": false,
+      "note": "自由自在3.0プラン・音声通話付き7GBの通常基本料。100MB未満の月だけの280円とは区別しています。初期費用・通話・SMS等は別です。 月7GBの音声プラン例 掲載例の容量だけを比較し、未確認の大容量・家族・光セット料金へ拡張していません。",
+      "url": "https://his-mobile.com/domestic/service/jiyujizai290",
+      "sources": [
+        {
+          "label": "自由自在3.0プラン：料金と通信条件",
+          "url": "https://his-mobile.com/domestic/service/jiyujizai290"
+        },
+        {
+          "label": "公式トップ：通常料金一覧と現行申込先",
+          "url": "https://his-mobile.com/"
+        }
+      ]
+    },
+    {
+      "id": "aeon-mobile",
+      "brandId": "aeon-mobile",
+      "name": "イオンモバイル",
+      "familyGroup": null,
+      "shop": true,
+      "tiers": [
+        {
+          "maxGb": 3,
+          "monthly": 1078
+        }
+      ],
+      "familyDiscount": [
+        0,
+        0,
+        0
+      ],
+      "familyMode": "all",
+      "bundleIds": [],
+      "bundleDiscount": 0,
+      "excludeFamilyWithBundle": false,
+      "note": "年齢制限のない通常の音声3GBプラン。60歳以上向けプランや複数人で分けた1人あたり料金ではありません。SIM・通話等の費用は別です。 1人用・月3GBの音声プラン例 掲載例の容量だけを比較し、未確認の大容量・家族・光セット料金へ拡張していません。",
+      "url": "https://aeonmobile.jp/plan/",
+      "sources": [
+        {
+          "label": "料金プランと店舗サポートの案内",
+          "url": "https://aeonmobile.jp/plan/"
+        },
+        {
+          "label": "重要事項説明：通常音声プラン料金表",
+          "url": "https://aeonmobile.jp/agreement/pdf/ARS_aeonmobile_instructions.pdf"
+        }
+      ]
+    },
+    {
+      "id": "nihon-tsushin",
+      "brandId": "nihon-tsushin",
+      "name": "日本通信SIM",
+      "familyGroup": null,
+      "shop": false,
+      "tiers": [
+        {
+          "maxGb": 1,
+          "monthly": 290
+        }
+      ],
+      "familyDiscount": [
+        0,
+        0,
+        0
+      ],
+      "familyMode": "all",
+      "bundleIds": [],
+      "bundleDiscount": 0,
+      "excludeFamilyWithBundle": false,
+      "note": "合理的シンプル290プランの基本料。1GBを超えると使ったデータ量に応じて1GBあたり220円を加算。初期手数料・通話・SMS等は別です。 月1GB込み／超過分は1GB単位の従量制 掲載例の容量だけを比較し、未確認の大容量・家族・光セット料金へ拡張していません。",
+      "url": "https://www.nihontsushin.com/plan/plansimple.html",
+      "sources": [
+        {
+          "label": "合理的シンプル290プラン：料金・上限設定・対応回線",
+          "url": "https://www.nihontsushin.com/plan/plansimple.html"
+        },
+        {
+          "label": "重要事項説明：税込基本料・超過料金",
+          "url": "https://www.nihontsushin.com/entry/contract_notice_NT.html"
+        }
+      ]
+    }
+  ]
+}
