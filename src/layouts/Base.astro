@@ -29,6 +29,7 @@ const nav = [
   { href: '/hikari/', label: '通信・ネット' },
   { href: '/hikari/area/', label: '全国のエリア確認' },
   { href: '/mobile/', label: 'スマホ・関連サービス' },
+  { href: '/shindan/', label: '回線・スマホ診断' },
   { href: '/guides/', label: '選び方ガイド' },
   { href: '/about/', label: 'このサイトについて' },
 ];
@@ -93,7 +94,7 @@ const socialImage = new URL('/social-cover.png', SITE.url).href;
           {nav.map((n) => (
             <a href={n.href} aria-current={isCurrent(n.href) ? 'page' : undefined}>{n.label}</a>
           ))}
-          <a href="/hikari/#compare" class="nav-compare">通信費をくらべる<span aria-hidden="true">↗</span></a>
+          <a href="/shindan/" class="nav-compare">自分に合う回線を探す</a>
         </nav>
       </div>
     </header>
@@ -122,6 +123,7 @@ const socialImage = new URL('/social-cover.png', SITE.url).href;
             <li><a href="/hikari/mansion/">マンションの光回線</a></li>
             <li><a href="/hikari/home-router/">工事なしのホームルーター</a></li>
             <li><a href="/hikari/area/">全国の提供エリアを確認</a></li>
+            <li><a href="/shindan/">回線・スマホ診断</a></li>
             <li><a href="/mobile/">スマホ・SIMを比較</a></li>
             <li><a href="/security/">セキュリティソフトを比較</a></li>
             <li><a href="/used-smartphones/">中古スマホの保証を比較</a></li>

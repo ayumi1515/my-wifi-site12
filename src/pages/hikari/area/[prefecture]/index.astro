@@ -27,6 +27,7 @@ const sourceDate = nationalAreaSource.asOf ?? nationalAreaSource.checkedAt;
         <a href="#municipality-directory-title">市区町村から探す</a>
         <a href="#official-area-check">公式のエリア検索へ</a>
         <a href="#building-check">建物ごとの確認方法</a>
+        <a href={`/shindan/?prefecture=${p.code}`}>{p.name}で回線・スマホを診断する</a>
       </nav>
     </header>
     <section class="prefecture-summary" aria-labelledby="prefecture-summary-title">
