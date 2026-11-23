@@ -6,10 +6,11 @@ interface Affiliate {
   banner?: { href: string; src: string; width: number; height: number; pixel?: string | null } | null;
   pixel?: string | null;
 }
-const { provider, showBanner = true, building } = Astro.props as {
+const { provider, showBanner = true, building, notice = '特典はプラン・追加オプション・受取手続き等の条件があります。申込先で最新条件を確認してください。' } = Astro.props as {
   provider: { id?: string; name: string; officialUrl: string; affiliate: Affiliate | null };
   showBanner?: boolean;
   building?: 'house' | 'mansion';
+  notice?: string;
 };
 const a = provider.id === 'bbiq' && building === 'mansion' ? null : provider.affiliate;
 const banner = showBanner ? a?.banner : null;
@@ -27,7 +28,7 @@ const banner = showBanner ? a?.banner : null;
       </a>
       {a.pixel && <img src={a.pixel} width="1" height="1" alt="" class="inline-block w-px h-px border-0" />}
       <p class="text-[13px] leading-relaxed text-gray-600">
-        <span class="font-bold">PR</span>・特典はプラン・追加オプション・受取手続き等の条件があります。申込先で最新条件を確認してください。
+        <span class="font-bold">PR</span>・{notice}
       </p>
       {banner && provider.id && !provider.id.startsWith('study-') && <p class="banner-context">画像内の「当サイト限定」は、リンク先の申込み窓口の特典です。</p>}
     </>

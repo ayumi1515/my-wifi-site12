@@ -1,0 +1,117 @@
+[
+  {
+    "id": "eset",
+    "name": "ESET HOME セキュリティ エッセンシャル",
+    "officialUrl": "https://personal.canon.jp/product/app/eset/lineup/essential",
+    "summary": "フィッシング対策や端末の保護を中心に選べる基本モデル。VPNが必要かどうかで、上位プランとの違いを確認できます。",
+    "priceLabel": "通常6,050円／3台・1年",
+    "priceNote": "税込・ダウンロード版の希望小売価格。新規1年と通常の1年延長は各6,050円。2年目以降に1年自動延長を利用する場合は5,445円です。キャンペーン価格とは別で、1台・5台版や3年版とも金額が異なります。",
+    "dataLabel": "最大3台の掲載例。Windows・macOS・Android・iOSに対応し、使える機能はOSごとに異なります。",
+    "goodFor": [
+      "パソコンとスマホを合計3台まで保護したい",
+      "VPNを使わず、フィッシング対策などの基本機能から選びたい"
+    ],
+    "cautions": [
+      "エッセンシャルにはVPNが含まれません。外出先の通信の暗号化も求める場合は、プレミアム等との機能差を確認してください。",
+      "iOSではウイルス・マルウェア対策などに非対応です。フィッシング・詐欺対策用のiOSアプリと、PC向けの検査機能を区別してください。",
+      "自動延長には事前の登録が必要です。3年版からでも自動延長時は1年ごとの契約になるため、継続方法と解除手続きを確認してください。",
+      "対応OSのバージョンと必要な機能を購入前に確認し、各端末へのインストール・有効化を行ってください。"
+    ],
+    "checkedAt": "2026-11-23",
+    "sources": [
+      {
+        "label": "公式：エッセンシャルの価格（新規・通常延長・自動延長）",
+        "url": "https://personal.canon.jp/product/app/eset/lineup/essential/price"
+      },
+      {
+        "label": "公式：製品別の機能・VPNの違い",
+        "url": "https://personal.canon.jp/product/app/eset/lineup"
+      },
+      {
+        "label": "公式：動作環境とiOSの機能制限",
+        "url": "https://personal.canon.jp/product/app/eset/environment"
+      },
+      {
+        "label": "公式：自動延長サービス",
+        "url": "https://canon-its.jp/cgi-bin/index.cgi?ACTION_ID=UC1015_ACT_AUTO_RENEW_ABOUT"
+      }
+    ]
+  },
+  {
+    "id": "norton",
+    "name": "ノートン 360 デラックス",
+    "officialUrl": "https://jp.norton.com/products/norton-360-deluxe",
+    "summary": "最大3台の端末保護にVPNやパスワード管理を組み合わせたプラン。初年度の販売価格と、次年度からの更新料金を分けて比較します。",
+    "priceLabel": "初年度7,680円／3台・1年",
+    "priceNote": "税込・公式製品ページの1年版販売表示。2年目以降の更新価格表は3台・25GBのデラックスで年11,480円です。更新価格は変更される場合があるため、購入画面と更新前の案内を確認してください。3年版や販売窓口別の価格とは異なります。",
+    "dataLabel": "最大3台。Windows・Mac・Android・iOSに対応。VPNを含み、各機能の対応環境は異なります。",
+    "goodFor": [
+      "3台までの端末保護とVPNを一緒に選びたい",
+      "パスワード管理や、Windows向けのバックアップも比較したい"
+    ],
+    "cautions": [
+      "ライセンスは自動更新です。年額契約は更新日前に請求されるため、継続しない場合は請求前にアカウントから解除してください。アプリの削除だけで更新が止まると考えないでください。",
+      "25GBのクラウドバックアップはWindows向けで、Windows SモードとARMプロセッサ環境は対象外です。",
+      "iOS向けにはWeb・SMS・Wi-Fi対策等が案内されています。PC版と同じ検査・保護機能がすべて使えるわけではないため、利用OSの機能表を確認してください。",
+      "サイバー犯罪や個人情報の盗難を完全に防ぐ保証ではありません。対応OSやブラウザーの更新、保護機能の設定も必要です。"
+    ],
+    "checkedAt": "2026-11-23",
+    "sources": [
+      {
+        "label": "公式：デラックスの初年度価格・3台・機能・自動更新条件",
+        "url": "https://jp.norton.com/products/norton-360-deluxe"
+      },
+      {
+        "label": "公式：ライセンス更新価格表",
+        "url": "https://jp.norton.com/pricing"
+      },
+      {
+        "label": "公式：iOS向けモバイルセキュリティの機能",
+        "url": "https://jp.norton.com/products/mobile-security-for-ios"
+      }
+    ]
+  },
+  {
+    "id": "virusbuster",
+    "name": "ウイルスバスター トータルセキュリティ スタンダード",
+    "officialUrl": "https://www.trendmicro.com/ja_jp/forHome/products/vbts.html",
+    "summary": "最大6台の端末保護と、個人情報漏えい監視・パスワード管理等を組み合わせたプラン。端末保護の台数と、契約者1人分の機能を分けて確認できます。",
+    "priceLabel": "7,480円／6台・1年（自動更新加入）",
+    "priceNote": "税込・公式オンラインショップの通常価格。自動更新加入の新規1年は7,480円、次回以降も1年更新7,480円。自動更新なしの新規1年・通常1年更新は各8,470円です。将来の価格変更やキャンペーン、3年版は別途確認してください。",
+    "dataLabel": "最大6台（1台に1OS）。Windows・Mac・Android・iOS/iPadOS・Chromebookに対応し、機能はOSによって異なります。",
+    "goodFor": [
+      "家族のパソコンやスマホを6台までまとめて保護したい",
+      "端末保護に加えて、契約者の個人情報漏えい監視やパスワード管理も使いたい"
+    ],
+    "cautions": [
+      "掲載価格は自動更新加入の条件です。契約満了後は1年単位で更新されるため、継続しない場合は自動更新を停止する手続きを確認してください。",
+      "個人情報漏えい監視とパスワード管理は契約者1人分です。6人分の個人情報を監視できる条件ではありません。",
+      "Wi-Fi通信の盗み見防止（VPN）はAndroid・iOS/iPadOS対応の公式案内です。PCで必要な機能の対応範囲も確認してください。",
+      "iOS/iPadOSではアプリスキャンや決済保護モードに非対応です。危険なWebサイトやメッセージへの対策と、PC・Android向けの検査機能を区別してください。",
+      "各端末へのインストール・有効化と保護機能の設定が必要です。スタンダードと、機器の操作相談を含むプレミアムのサポート範囲も異なります。"
+    ],
+    "checkedAt": "2026-11-23",
+    "sources": [
+      {
+        "label": "公式：製品・6台・契約者限定機能・VPNの対応OS",
+        "url": "https://www.trendmicro.com/ja_jp/forHome/products/vbts.html"
+      },
+      {
+        "label": "公式ショップ：新規1年・自動更新価格",
+        "url": "https://shop.trendlife.com/ja-jp/products/virus-buster-total-security-standard.asp"
+      },
+      {
+        "label": "公式：新規通常価格・自動更新加入有無の違い",
+        "url": "https://www.trendmicro.com/ja_jp/about/announce/announces-20260126-03.html"
+      },
+      {
+        "label": "公式：契約更新価格一覧",
+        "url": "https://helpcenter.trendlife.com/ja-jp/article/TMKA-17989/"
+      },
+      {
+        "label": "公式：Android・iOS/iPadOSの機能一覧",
+        "url": "https://helpcenter.trendlife.com/ja-jp/article/TMKA-10660"
+      }
+    ]
+  }
+]

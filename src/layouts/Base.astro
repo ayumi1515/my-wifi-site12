@@ -27,11 +27,13 @@ const ld = [websiteLd, ...jsonLd];
 const nav = [
   { href: '/', label: '総合トップ' },
   { href: '/hikari/', label: '通信・ネット' },
+  { href: '/hikari/area/', label: '全国のエリア確認' },
+  { href: '/mobile/', label: 'スマホ・関連サービス' },
   { href: '/guides/', label: '選び方ガイド' },
   { href: '/about/', label: 'このサイトについて' },
 ];
 const path = Astro.url.pathname;
-const isCurrent = (href: string) => href === '/' ? path === '/' : path.startsWith(href);
+const isCurrent = (href: string) => href === '/' ? path === '/' : href === '/hikari/' ? path.startsWith(href) && !path.startsWith('/hikari/area/') : path.startsWith(href);
 const socialImage = new URL('/social-cover.png', SITE.url).href;
 ---
 <!doctype html>
@@ -119,7 +121,10 @@ const socialImage = new URL('/social-cover.png', SITE.url).href;
             <li><a href="/hikari/kodate/">戸建ての光回線</a></li>
             <li><a href="/hikari/mansion/">マンションの光回線</a></li>
             <li><a href="/hikari/home-router/">工事なしのホームルーター</a></li>
-            <li><a href="/hikari/area/">地域ごとの提供エリア</a></li>
+            <li><a href="/hikari/area/">全国の提供エリアを確認</a></li>
+            <li><a href="/mobile/">スマホ・SIMを比較</a></li>
+            <li><a href="/security/">セキュリティソフトを比較</a></li>
+            <li><a href="/used-smartphones/">中古スマホの保証を比較</a></li>
           </ul>
         </div>
         <div>

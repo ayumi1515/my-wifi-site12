@@ -1,0 +1,17 @@
+---
+const links = [
+  { href: '/mobile/', label: 'モバイル回線', title: 'スマホ・SIMを比較', description: '外出中に使うデータ量・通話・相談窓口の条件から、携帯回線を比べます。' },
+  { href: '/security/', label: 'セキュリティ', title: '端末の安全対策を確認', description: 'OS更新などの基本設定と、必要な保護機能・利用台数・更新料金を確認します。' },
+  { href: '/used-smartphones/', label: '中古スマホ', title: '中古スマホの保証を比較', description: '本体の状態・バッテリー・赤ロム保証など、商品ごとの購入条件を確かめます。' },
+];
+---
+<section class="connectivity-related" aria-labelledby="connectivity-related-title">
+  <h2 id="connectivity-related-title">スマホや端末も、必要に応じて見直す</h2>
+  <p class="connectivity-related-lead">自宅のネット回線、携帯SIM、セキュリティソフト、スマホ本体は、それぞれ契約や購入が別です。見直したいものから、料金や条件を個別に確認できます。</p>
+  <div class="connectivity-related-grid">
+    {links.map((link) => <a href={link.href}><span>{link.label}</span><h3>{link.title}</h3><p>{link.description}</p></a>)}
+  </div>
+</section>
+<style>
+  .connectivity-related{margin-top:34px;border:1px solid #d0dfd5;border-radius:8px;background:#f3f8f4;padding:22px}.connectivity-related h2{font-size:23px;font-weight:800;line-height:1.6;color:#172c23}.connectivity-related-lead{font-size:15px;line-height:1.95;color:#536b5c;margin-top:10px}.connectivity-related-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:14px;margin-top:19px}.connectivity-related-grid>a{display:block;min-width:0;border:1px solid #cdded2;border-radius:6px;background:#fff;padding:18px;text-decoration:none}.connectivity-related-grid>a:hover{border-color:#175d50;background:#fafffb}.connectivity-related-grid>a>span{font-size:13px;font-weight:700;color:#637867;line-height:1.7}.connectivity-related-grid h3{font-size:18px;font-weight:700;line-height:1.7;color:#175d50;margin-top:6px;text-decoration:underline;text-underline-offset:4px}.connectivity-related-grid p{font-size:14px;line-height:1.9;color:#536b5c;margin-top:9px}@media(max-width:700px){.connectivity-related{padding:18px;margin-top:28px}.connectivity-related h2{font-size:21px}.connectivity-related-grid{grid-template-columns:1fr;gap:11px;margin-top:16px}.connectivity-related-grid>a{padding:16px}.connectivity-related-grid h3{font-size:19px}}
+</style>

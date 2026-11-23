@@ -3,15 +3,44 @@ import Base from '../../../layouts/Base.astro';
 import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import { SITE } from '../../../site.config.mjs';
 import { areas, breadcrumbLd } from '../../../lib/data';
+import { prefectures, getPrefecturePath, nationalAreaSource } from '../../../lib/national-areas';
 const crumbs = [{ name: 'ホーム', href: '/' }, { name: '地域別の光回線情報', href: '/hikari/area/' }];
 const tenGigaTowns = ['鹿児島市', '鹿屋市', '枕崎市', '出水市', '薩摩川内市', '日置市', '霧島市', 'いちき串木野市', '奄美市', '姶良市', '志布志市', '龍郷町'];
+const regions = [
+  { name: '北海道・東北', from: 1, to: 7 }, { name: '関東', from: 8, to: 14 },
+  { name: '中部', from: 15, to: 23 }, { name: '近畿', from: 24, to: 30 },
+  { name: '中国', from: 31, to: 35 }, { name: '四国', from: 36, to: 39 },
+  { name: '九州・沖縄', from: 40, to: 47 },
+];
 ---
-<Base title="鹿児島県の地域別 光回線情報｜10ギガが使える市町・離島の注意点"
-  description="鹿児島市・霧島市・鹿屋市・薩摩川内市・姶良市・離島の光回線事情をまとめました。NTT西日本の10ギガ回線が使える12市町の一覧と、離島での確認のしかたも紹介します。"
+<Base title="全国のWi-Fi・光回線エリア確認｜47都道府県・市区町村から探す"
+  description="全国47都道府県と市区町村・行政区から、Wi-Fi・光回線の公式エリア確認先を探せます。NTT東西の確認窓口、集合住宅の設備、工事なしのホームルーターまで、住所で確かめる順番を案内します。"
   jsonLd={[breadcrumbLd(SITE.url, crumbs)]} pr={false}>
-  <div class="mx-auto max-w-3xl px-4 pt-8">
+  <div class="national-directory site-container">
     <Breadcrumbs items={[{ name: 'ホーム', href: '/' }, { name: '地域別の光回線情報' }]} />
-    <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 leading-snug">鹿児島県の地域別 光回線情報</h1>
+    <header class="directory-header">
+      <p class="directory-eyebrow">全国のネット回線・Wi-Fi</p>
+      <h1>都道府県・市区町村から、<br />使える回線の確認先を探す</h1>
+      <p>まず都道府県を選び、次に市区町村へ。光回線やホームルーターを使えるか、公式サイトで番地・建物名まで確認しましょう。</p>
+      <p class="directory-note">同じ市区町村でも、建物の設備やプランで利用できる回線は変わります。ここに地域名があることだけで、提供可否は確定しません。</p>
+    </header>
+    <section class="prefecture-directory" aria-labelledby="prefecture-directory-title">
+      <h2 id="prefecture-directory-title">47都道府県から選ぶ</h2>
+      <label for="prefecture-search">都道府県名で絞り込む</label>
+      <input id="prefecture-search" type="search" placeholder="例：東京都、北海道、福岡県" autocomplete="off" />
+      <p id="prefecture-results" role="status" aria-live="polite">47都道府県を表示しています</p>
+      <div class="region-groups">
+        {regions.map(region => <section class="region-group" data-region-group>
+          <h3>{region.name}</h3>
+          <ul>{prefectures.filter(p => Number(p.code) >= region.from && Number(p.code) <= region.to).map(p => <li data-prefecture-name={p.name}>
+            <a href={getPrefecturePath(p)}><strong>{p.name}</strong><span>市区町村・行政区 {p.municipalities.length}件</span></a>
+          </li>)}</ul>
+        </section>)}
+      </div>
+      <p class="directory-note">名称・コードの出典：<a href={nationalAreaSource.url} target="_blank" rel="noopener">e-Stat 市区町村コード</a>。市区町村・行政区の名前で探す場合は、都道府県のページへ進んでください。</p>
+    </section>
+    <section class="kagoshima-existing" aria-labelledby="kagoshima-existing-title">
+    <h2 id="kagoshima-existing-title">鹿児島県の詳しい地域情報</h2>
     <ul class="mt-6 grid gap-3 sm:grid-cols-2">
       {areas.map((a) => (
         <li><a href={`/hikari/area/${a.slug}/`} class="block rounded-lg border border-gray-200 p-4 hover:border-brand-600 transition">
@@ -27,5 +56,25 @@ const tenGigaTowns = ['鹿児島市', '鹿屋市', '枕崎市', '出水市', '�
       <p>提供地域の中でも、すべての住所で使えるとは限りません。申込み前に住所で確認してください。同じ回線を使うドコモ光・ビッグローブ光などの10ギガプランも、この地域が目安になります。</p>
       <p class="text-xs text-gray-500">出典：<a href="https://flets-w.com/service/cross/area/detail.html" target="_blank" rel="noopener">NTT西日本「フレッツ 光クロス 提供エリア」</a>（2026年11月21日に確認）</p>
     </div>
+    </section>
   </div>
 </Base>
+<script>
+  const search = document.querySelector<HTMLInputElement>('#prefecture-search');
+  const status = document.querySelector('#prefecture-results');
+  search?.addEventListener('input', () => {
+    const value = search.value.normalize('NFKC').trim();
+    let count = 0;
+    document.querySelectorAll<HTMLElement>('[data-prefecture-name]').forEach(item => {
+      item.hidden = !item.dataset.prefectureName?.includes(value);
+      if (!item.hidden) count++;
+    });
+    document.querySelectorAll<HTMLElement>('[data-region-group]').forEach(group => {
+      group.hidden = !Array.from(group.querySelectorAll<HTMLElement>('[data-prefecture-name]')).some(item => !item.hidden);
+    });
+    if (status) status.textContent = count ? `${count}都道府県を表示しています` : '見つかりませんでした。都道府県名を確認してください。';
+  });
+</script>
+<style>
+.national-directory{max-width:1040px;padding-top:26px;padding-bottom:28px}.directory-header{max-width:900px}.directory-eyebrow{font-size:14px;font-weight:700;color:#175d50;margin:20px 0 8px}.directory-header h1{font-size:clamp(27px,3.3vw,38px);font-weight:800;line-height:1.55}.directory-header>p{font-size:16px;line-height:1.9;margin-top:16px;color:#4c6255}.directory-header .directory-note{font-size:14px;background:#edf4ef;border:1px solid #cdded3;border-radius:6px;padding:15px}.prefecture-directory{margin-top:32px}.prefecture-directory h2,.kagoshima-existing>h2{font-size:25px;font-weight:800;line-height:1.6}.prefecture-directory label{display:block;font-size:14px;font-weight:700;margin:18px 0 8px}.prefecture-directory input{display:block;width:100%;max-width:560px;min-height:48px;border:1px solid #b9ccbf;border-radius:5px;background:#fff;padding:11px 13px;font-size:16px}.prefecture-directory [role=status]{font-size:14px;line-height:1.8;color:#566d5e;margin-top:10px}.region-groups{margin-top:24px}.region-group{margin-top:23px}.region-group h3{font-size:18px;font-weight:700;border-bottom:1px solid #d5e0d9;padding-bottom:9px;margin-bottom:12px}.region-group ul{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}.region-group a{display:block;border:1px solid #cdded3;border-radius:6px;background:#fff;padding:15px;min-height:82px;color:#175d50}.region-group a:hover{background:#edf4ef;border-color:#175d50}.region-group strong{font-size:17px;line-height:1.6}.region-group span{display:block;font-size:13px;color:#607466;margin-top:4px}.directory-note{font-size:14px;line-height:1.9;color:#5c6f62;margin-top:22px}.directory-note a{color:#175d50;text-decoration:underline;overflow-wrap:anywhere}.kagoshima-existing{margin-top:40px;border-top:1px solid #d5e0d9;padding-top:30px}.kagoshima-existing .prose-ja h2{font-size:22px}@media(max-width:700px){.national-directory{padding-top:20px}.directory-header h1{font-size:27px}.region-group ul{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.region-group a{padding:12px;min-height:78px}.region-group strong{font-size:16px}.region-group span{font-size:12px}.prefecture-directory h2,.kagoshima-existing>h2{font-size:22px}}
+</style>

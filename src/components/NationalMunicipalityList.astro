@@ -1,0 +1,47 @@
+---
+import { getExistingMunicipalityPath, getMunicipalityKindLabel, getMunicipalityPrimaryPath, getMunicipalitySearchText, type NationalPrefecture } from '../lib/national-areas';
+const { prefecture: p } = Astro.props as { prefecture: NationalPrefecture };
+---
+<section class="municipality-directory" aria-labelledby="municipality-directory-title">
+  <h2 id="municipality-directory-title">{p.name}の市区町村・行政区から選ぶ</h2>
+  <p class="directory-lead">住む予定の市区町村を選ぶと、住所で提供エリアを確認する公式窓口と、建物ごとの確認手順を見られます。</p>
+  <div class="directory-search" role="search" aria-label="市区町村の絞り込み">
+    <label for="municipality-query">市区町村名で絞り込む</label>
+    <input id="municipality-query" type="search" placeholder="市・区・町・村の名前" autocomplete="off" aria-controls="municipality-list" aria-describedby="municipality-search-help" />
+    <p id="municipality-search-help">市区町村名・読みがな・郡名で探せます。氏名や詳しい住所の入力は不要です。</p>
+  </div>
+  <p id="municipality-count" class="directory-count" role="status" aria-live="polite" aria-atomic="true">{p.municipalities.length}件を表示</p>
+  <ul id="municipality-list" class="municipality-grid">
+    {p.municipalities.map((m) => (
+      <li data-municipality-item data-search={getMunicipalitySearchText(p, m)}>
+        <a href={getMunicipalityPrimaryPath(p, m)}>
+          <span class="municipality-meta">{m.countyName || getMunicipalityKindLabel(m)}</span>
+          <strong>{m.name}</strong>
+          <span>{getExistingMunicipalityPath(p, m) ? '地域の回線情報・選び方を見る' : '住所でのエリア確認へ進む'}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+  <p id="municipality-empty" class="directory-empty" hidden>一致する市区町村がありません。読みがなや、名前の一部でも試してください。</p>
+  <p class="directory-note">政令指定都市は市全体と行政区を掲載しています。この一覧は自治体の区分であり、回線の提供エリア一覧ではありません。</p>
+</section>
+<script>
+  const municipalityInput = document.querySelector<HTMLInputElement>('#municipality-query');
+  const municipalityRows = [...document.querySelectorAll<HTMLElement>('[data-municipality-item]')];
+  const municipalityCount = document.querySelector('#municipality-count');
+  const municipalityEmpty = document.querySelector<HTMLElement>('#municipality-empty');
+  const normalise = (value: string) => value.normalize('NFKC').toLowerCase().replace(/[ァ-ヶ]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0x60));
+  municipalityInput?.addEventListener('input', () => {
+    const query = normalise(municipalityInput.value.trim());
+    let count = 0;
+    municipalityRows.forEach((row) => {
+      row.hidden = !normalise(row.dataset.search ?? '').includes(query);
+      if (!row.hidden) count++;
+    });
+    if (municipalityCount) municipalityCount.textContent = `${count}件を表示`;
+    if (municipalityEmpty) municipalityEmpty.hidden = count > 0;
+  });
+</script>
+<style>
+  .municipality-directory{margin-top:36px}.municipality-directory h2{font-size:25px;font-weight:800;line-height:1.6}.directory-lead{font-size:16px;line-height:1.9;color:#4c6055;margin:10px 0 18px}.directory-search{background:#edf5f0;border:1px solid #cbded3;border-radius:7px;padding:20px}.directory-search label{display:block;font-size:16px;font-weight:700;margin-bottom:9px}.directory-search input{display:block;width:100%;min-height:48px;border:1px solid #9eb7a8;border-radius:5px;padding:11px 13px;background:#fff;font-size:16px;color:#172c23}.directory-search p{font-size:14px;color:#536b5c;line-height:1.8;margin-top:10px}.directory-count{font-size:14px;color:#52685a;margin:16px 0 10px}.municipality-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:12px;list-style:none;margin:0;padding:0}.municipality-grid>li{min-width:0}.municipality-grid>li[hidden]{display:none}.municipality-grid a{display:block;border:1px solid #d2dfd6;border-radius:6px;background:#fff;padding:16px;text-decoration:none}.municipality-grid a:hover{border-color:#175d50;background:#f1f7f3}.municipality-grid strong{display:block;font-size:18px;font-weight:700;line-height:1.7;color:#172c23}.municipality-grid a>span:last-child{display:block;font-size:13px;line-height:1.7;color:#4a6858;margin-top:5px}.municipality-meta{display:block;font-size:12px;color:#6a786e;line-height:1.6}.directory-note{font-size:14px;line-height:1.85;color:#5b6c62;margin-top:16px}.directory-empty{font-size:16px;line-height:1.9;padding:20px;border:1px solid #d2dfd6;border-radius:6px;background:#fff}@media(max-width:800px){.municipality-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){.municipality-directory h2{font-size:22px}.directory-search{padding:17px}.municipality-grid{grid-template-columns:1fr 1fr;gap:9px}.municipality-grid a{padding:13px}.municipality-grid strong{font-size:16px}.municipality-grid a>span:last-child{font-size:12px}}
+</style>

@@ -1,0 +1,86 @@
+{
+  "x-mobile": {
+    "name": "X-mobile グリーンプラン",
+    "officialUrl": "https://xmobile.ne.jp/greenplan/",
+    "affiliate": {
+      "href": "https://px.a8.net/svt/ejp?a8mat=4BGS12+FUDB2Y+5XZ2+5ZU29",
+      "label": "X-mobile グリーンプランの条件を確認する",
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4BGS12+FUDB2Y+5XZ2+5ZU29",
+        "src": "https://www28.a8.net/svt/bgt?aid=261123302958&wid=002&eno=01&mid=s00000027731001007000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www16.a8.net/0.gif?a8mat=4BGS12+FUDB2Y+5XZ2+5ZU29"
+      }
+    }
+  },
+  "eset": {
+    "name": "ESET HOME セキュリティ エッセンシャル",
+    "officialUrl": "https://personal.canon.jp/product/app/eset/lineup/essential",
+    "affiliate": {
+      "href": "https://px.a8.net/svt/ejp?a8mat=4BGS12+G1IICA+1A8Q+15R4NL",
+      "label": "ESET HOME セキュリティ エッセンシャルの条件を確認する",
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4BGS12+G1IICA+1A8Q+15R4NL",
+        "src": "https://www20.a8.net/svt/bgt?aid=261123302970&wid=002&eno=01&mid=s00000005993007013000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www10.a8.net/0.gif?a8mat=4BGS12+G1IICA+1A8Q+15R4NL"
+      }
+    }
+  },
+  "norton": {
+    "name": "ノートン 360 デラックス",
+    "officialUrl": "https://jp.norton.com/products/norton-360-deluxe",
+    "affiliate": {
+      "href": "https://px.a8.net/svt/ejp?a8mat=4BGS12+FH9RRU+3IBI+631SX",
+      "label": "ノートン 360 デラックスの条件を確認する",
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4BGS12+FH9RRU+3IBI+631SX",
+        "src": "https://www20.a8.net/svt/bgt?aid=261123302936&wid=002&eno=01&mid=s00000016371001022000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www18.a8.net/0.gif?a8mat=4BGS12+FH9RRU+3IBI+631SX"
+      }
+    }
+  },
+  "mmoba": {
+    "name": "mmoba（エムモバ）",
+    "officialUrl": "https://ec.emcom.site/",
+    "affiliate": {
+      "href": "https://px.a8.net/svt/ejp?a8mat=4BGS12+FHV7DM+5I5M+BXB8X",
+      "label": "mmoba（エムモバ）の条件を確認する",
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4BGS12+FHV7DM+5I5M+BXB8X",
+        "src": "https://www23.a8.net/svt/bgt?aid=261123302937&wid=002&eno=01&mid=s00000025681002003000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www16.a8.net/0.gif?a8mat=4BGS12+FHV7DM+5I5M+BXB8X"
+      }
+    }
+  },
+  "virusbuster": {
+    "name": "ウイルスバスター トータルセキュリティ スタンダード",
+    "officialUrl": "https://www.trendmicro.com/ja_jp/forHome/products/vbts.html",
+    "affiliate": {
+      "href": "https://px.a8.net/svt/ejp?a8mat=4BGS13+MMIJE+3A66+614CY",
+      "label": "ウイルスバスター製品ラインナップ",
+      "pixel": "https://www19.a8.net/0.gif?a8mat=4BGS13+MMIJE+3A66+614CY"
+    }
+  },
+  "geo": {
+    "name": "ゲオ／ゲオモバイル",
+    "officialUrl": "https://geo-mobile.jp/",
+    "affiliate": {
+      "href": "https://px.a8.net/svt/ejp?a8mat=4BGS13+ZQ1UI+4J34+60OXD",
+      "label": "ゲオ／ゲオモバイルの条件を確認する",
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4BGS13+ZQ1UI+4J34+60OXD",
+        "src": "https://www25.a8.net/svt/bgt?aid=261123303060&wid=002&eno=01&mid=s00000021136001011000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www13.a8.net/0.gif?a8mat=4BGS13+ZQ1UI+4J34+60OXD"
+      }
+    }
+  }
+}

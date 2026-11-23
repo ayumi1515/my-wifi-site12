@@ -1,0 +1,114 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import AffiliateButton from './AffiliateButton.astro';
+import CheckedNote from './CheckedNote.astro';
+import categoryAffiliatesRaw from '../data/category-affiliates.json';
+import { breadcrumbLd } from '../lib/data';
+import { SITE } from '../site.config.mjs';
+
+interface HubService {
+  id: string; name: string; officialUrl: string; summary: string;
+  priceLabel: string; priceNote: string; dataLabel: string; network?: string;
+  goodFor: string[]; cautions: string[]; checkedAt: string;
+  sources: { label: string; url: string }[]; tags?: string[];
+}
+interface AffiliateEntry {
+  name: string; officialUrl: string;
+  affiliate: {
+    href: string; label: string; pixel?: string | null;
+    banner?: { href: string; src: string; width: number; height: number; pixel?: string | null } | null;
+  } | null;
+}
+interface HubProps {
+  category: 'mobile' | 'security' | 'used';
+  path: string; title: string; description: string; eyebrow: string; heading: string; lead: string;
+  services: HubService[];
+  intro: { title: string; body: string }[];
+  explainTitle: string;
+  explain: { title: string; body: string; checks: string[] }[];
+  filters?: { id: string; label: string }[];
+  related: { href: string; title: string; body: string }[];
+}
+const { category, path, title, description, eyebrow, heading, lead, services, intro, explainTitle, explain, filters = [], related } = Astro.props as HubProps;
+const affiliates = categoryAffiliatesRaw as Record<string, AffiliateEntry>;
+const activeFilters = filters.filter((f) => services.some((s) => s.tags?.includes(f.id)));
+const crumbs = [{ name: '総合トップ', href: '/' }, { name: eyebrow, href: path }];
+const checkedDates = [...new Set(services.map((s) => s.checkedAt))].sort();
+const detailLabel = category === 'mobile' ? 'データ量・プランの目安' : category === 'security' ? '対象・サービス内容' : '販売・保証の確認';
+const priceHeading = category === 'used' ? '販売価格' : '料金の目安・契約条件';
+const adNotice = category === 'used' ? '在庫・状態・付属品・保証の条件はリンク先の商品ページで確認してください。' : category === 'security' ? '対応OS・台数・契約期間・更新料金はリンク先で最新情報を確認してください。' : '料金・データ量・初期費用・割引条件はリンク先で最新情報を確認してください。';
+---
+<Base title={title} description={description} jsonLd={[breadcrumbLd(SITE.url, crumbs)]}>
+  <div class="service-hub site-container" data-service-hub>
+    <Breadcrumbs items={[crumbs[0], { name: eyebrow }]} />
+    <header class="hub-header">
+      <p class="hub-eyebrow">{eyebrow}</p>
+      <h1>{heading}</h1>
+      <p class="hub-lead">{lead}</p>
+      <nav class="hub-jump-links" aria-label="このページの案内"><a href="#service-list">掲載サービスを比較する</a><a href="#how-to-choose">選ぶ前の確認ポイント</a></nav>
+    </header>
+    <section class="hub-intro" aria-label="比較する前に整理すること">
+      {intro.map((item) => <article><h2>{item.title}</h2><p>{item.body}</p></article>)}
+    </section>
+    <section id="service-list" class="hub-catalog" aria-labelledby="service-list-title">
+      <div class="hub-section-heading"><h2 id="service-list-title">条件をそろえて比べる</h2><p>料金・サービス内容は確認日時点です。申込み前に公式窓口で最新条件を確認してください。</p></div>
+      <div class="catalog-tools">
+        <div class="catalog-search" role="search" aria-label="掲載サービスの絞り込み"><label for="service-query">名前・特徴から探す</label><input id="service-query" type="search" placeholder={category === 'mobile' ? 'ブランド名・回線・通信量など' : category === 'security' ? 'サービス名・台数・機能など' : '店名・保証・端末の状態など'} autocomplete="off" aria-controls="service-cards" /><p>掲載情報をこのページ内で絞り込みます。</p></div>
+        {activeFilters.length > 0 && <fieldset class="catalog-filters"><legend>気になる条件で絞り込む</legend><div><button type="button" data-service-filter="all" aria-pressed="true">すべて</button>{activeFilters.map((f) => <button type="button" data-service-filter={f.id} aria-pressed="false">{f.label}</button>)}</div></fieldset>}
+      </div>
+      <p class="catalog-count" id="service-count" role="status" aria-live="polite" aria-atomic="true">{services.length}件を表示</p>
+      <div id="service-cards" class="service-cards">
+        {services.map((s) => {
+          const a = affiliates[s.id];
+          const provider = { name: a?.name ?? s.name, officialUrl: s.officialUrl, affiliate: a?.affiliate ?? null };
+          return <article class="hub-service-card" data-service-card data-search={[s.name,s.summary,s.network,s.priceLabel,s.dataLabel,...s.goodFor,...s.cautions].filter(Boolean).join(' ')} data-tags={s.tags?.join(' ') ?? ''}>
+            <header><h3>{s.name}</h3><p>{s.summary}</p></header>
+            <div class="service-price"><span>{priceHeading}</span><strong>{s.priceLabel}</strong><p>{s.priceNote}</p></div>
+            <dl class="service-facts"><div><dt>{detailLabel}</dt><dd>{s.dataLabel}</dd></div>{s.network && <div><dt>利用する回線</dt><dd>{s.network}</dd></div>}</dl>
+            {s.goodFor.length > 0 && <div class="service-fit"><h4>こんな条件なら確認したい</h4><ul>{s.goodFor.map((g) => <li>{g}</li>)}</ul></div>}
+            {s.cautions.length > 0 && <div class="service-cautions"><h4>申込み・購入前に</h4><ul>{s.cautions.map((c) => <li>{c}</li>)}</ul></div>}
+            <div class="hub-service-action"><AffiliateButton provider={provider} notice={adNotice} /></div>
+            {a?.affiliate && <a class="service-official-source" href={s.officialUrl} target="_blank" rel="noopener">{s.name}の公式情報を確認</a>}
+            <CheckedNote provider={s} />
+          </article>;
+        })}
+      </div>
+      <p id="service-empty" class="catalog-empty" hidden>一致するサービスがありません。条件を「すべて」に戻すか、別の言葉で探してください。</p>
+      <p class="hub-catalog-note">{category === 'used' ? '同じ機種名でも容量・状態・付属品・保証により価格は変わります。在庫と商品ページの個別条件を確かめてください。' : category === 'security' ? '対応OS・利用台数・契約期間をそろえて比較してください。新規価格と更新価格は別条件の場合があります。' : '基本料だけでなく、通話オプション・初期費用・端末代・割引条件も合わせて比べてください。電波状況は利用場所で変わります。'}</p>
+    </section>
+    <section id="how-to-choose" class="hub-howto" aria-labelledby="hub-howto-title"><h2 id="hub-howto-title">{explainTitle}</h2><div>{explain.map((item) => <article><h3>{item.title}</h3><p>{item.body}</p><ul>{item.checks.map((c) => <li>{c}</li>)}</ul></article>)}</div></section>
+    <section class="hub-related" aria-labelledby="hub-related-title"><h2 id="hub-related-title">ネットと端末を、まとめて見直す</h2><div>{related.map((r) => <a href={r.href}><h3>{r.title}</h3><p>{r.body}</p><span>確認ポイントを見る</span></a>)}</div></section>
+    <aside class="hub-sources-note"><h2>掲載情報の確認について</h2><p>各カードの「公式情報の確認日」から出典を開けます。{checkedDates.length > 0 && `掲載データの確認日は${checkedDates.join('・')}です。`}地域・契約・端末ごとの条件は、リンク先で確認してください。</p><a href="/about/">編集方針と調べ方</a></aside>
+  </div>
+</Base>
+<script>
+  const serviceHub = document.querySelector('[data-service-hub]');
+  const serviceQuery = serviceHub?.querySelector<HTMLInputElement>('#service-query');
+  const serviceCards = [...(serviceHub?.querySelectorAll<HTMLElement>('[data-service-card]') ?? [])];
+  const serviceFilters = [...(serviceHub?.querySelectorAll<HTMLButtonElement>('[data-service-filter]') ?? [])];
+  const serviceCount = serviceHub?.querySelector('#service-count');
+  const serviceEmpty = serviceHub?.querySelector<HTMLElement>('#service-empty');
+  let activeServiceFilter = 'all';
+  const normaliseServiceText = (text: string) => text.normalize('NFKC').toLowerCase().replace(/[ァ-ヶ]/g,(c) => String.fromCharCode(c.charCodeAt(0)-0x60));
+  const applyServiceFilters = () => {
+    const query = normaliseServiceText(serviceQuery?.value.trim() ?? '');
+    let count = 0;
+    serviceCards.forEach((card) => {
+      const hasTag = activeServiceFilter === 'all' || (card.dataset.tags ?? '').split(' ').includes(activeServiceFilter);
+      card.hidden = !hasTag || !normaliseServiceText(card.dataset.search ?? '').includes(query);
+      if (!card.hidden) count++;
+    });
+    if (serviceCount) serviceCount.textContent = `${count}件を表示`;
+    if (serviceEmpty) serviceEmpty.hidden = count > 0;
+  };
+  serviceQuery?.addEventListener('input', applyServiceFilters);
+  serviceFilters.forEach((button) => button.addEventListener('click',() => {
+    activeServiceFilter = button.dataset.serviceFilter ?? 'all';
+    serviceFilters.forEach((item) => item.setAttribute('aria-pressed',String(item === button)));
+    applyServiceFilters();
+  }));
+</script>
+<style>
+  .service-hub{max-width:1152px;padding-top:25px;padding-bottom:28px}.hub-header{max-width:940px}.hub-eyebrow{font-size:14px;font-weight:700;color:#175d50;margin:19px 0 8px}.hub-header h1{font-size:clamp(27px,3.3vw,39px);font-weight:800;line-height:1.5}.hub-lead{font-size:16px;line-height:1.95;color:#4e6256;margin-top:15px}.hub-jump-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}.hub-jump-links a{display:flex;align-items:center;justify-content:center;min-height:46px;padding:10px 17px;border:1px solid #cbdcd1;border-radius:6px;background:#edf5ef;font-size:15px;font-weight:700;color:#175d50}.hub-jump-links a:first-child{background:#175d50;color:#fff;border-color:#175d50}.hub-intro{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:16px;margin-top:26px}.hub-intro article{min-width:0;background:#fff;border:1px solid #d1dfd5;border-top:3px solid #175d50;border-radius:7px;padding:20px}.hub-intro h2{font-size:18px;font-weight:700;line-height:1.7}.hub-intro p{font-size:15px;line-height:1.9;color:#52675a;margin-top:9px}.hub-catalog{margin-top:36px}.hub-section-heading h2,.hub-howto>h2,.hub-related>h2{font-size:26px;font-weight:800;line-height:1.6}.hub-section-heading p{font-size:15px;line-height:1.9;color:#566b5e;margin-top:8px}.catalog-tools{border:1px solid #cbded2;background:#edf5f0;border-radius:8px;padding:21px;margin-top:20px}.catalog-search label{display:block;font-size:16px;font-weight:700;line-height:1.7;margin-bottom:8px}.catalog-search input{display:block;min-height:48px;width:100%;background:#fff;border:1px solid #9ebaa8;border-radius:5px;color:#172c23;padding:10px 13px;font-size:16px}.catalog-search p{font-size:13px;line-height:1.8;color:#58705f;margin-top:8px}.catalog-filters{border:0;padding:0;margin:19px 0 0}.catalog-filters legend{font-size:14px;font-weight:700;margin-bottom:9px}.catalog-filters>div{display:flex;flex-wrap:wrap;gap:8px}.catalog-filters button{min-height:44px;border:1px solid #adc6b7;border-radius:5px;background:#fff;padding:9px 13px;font-size:14px;font-weight:700;line-height:1.6;color:#3e604b;cursor:pointer}.catalog-filters button[aria-pressed=true]{background:#175d50;border-color:#175d50;color:#fff}.catalog-count{font-size:14px;color:#526d5b;margin:17px 0 11px}.service-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:18px}.hub-service-card{min-width:0;background:#fff;border:1px solid #cdded2;border-radius:8px;padding:20px}.hub-service-card[hidden],.catalog-empty[hidden]{display:none}.hub-service-card h3{font-size:23px;font-weight:800;line-height:1.55;color:#173d2b}.hub-service-card header>p{font-size:15px;line-height:1.9;color:#52675b;margin-top:9px}.service-price{background:#f2f7f3;border-radius:5px;padding:14px;margin-top:17px}.service-price>span{font-size:13px;color:#56705e}.service-price strong{display:block;font-size:24px;line-height:1.65;font-weight:800;color:#175d50;margin-top:4px;overflow-wrap:anywhere}.service-price p{font-size:13px;line-height:1.9;color:#536d5c;margin-top:7px}.service-facts{margin-top:15px}.service-facts>div{padding:11px 0;border-bottom:1px solid #dde7df}.service-facts dt{font-size:13px;font-weight:700;color:#58705f}.service-facts dd{font-size:14px;line-height:1.9;margin-top:5px;color:#394f40}.service-fit,.service-cautions{margin-top:15px;padding:13px;background:#f4f8f4;border:1px solid #e1e9e1;border-radius:5px}.service-cautions{background:#fff8ee;border-color:#ebdec9}.service-fit h4,.service-cautions h4{font-size:14px;font-weight:700;line-height:1.75;color:#3c5946}.service-cautions h4{color:#88502f}.service-fit ul,.service-cautions ul{list-style:disc;padding-left:18px;margin:6px 0 0}.service-fit li,.service-cautions li{font-size:14px;line-height:1.85;color:#526759;margin-top:5px}.hub-service-action{margin-top:18px}.service-official-source{display:block;text-align:center;padding:9px 0;margin-top:8px;font-size:13px;line-height:1.8;color:#175d50;text-decoration:underline;text-underline-offset:3px}.hub-service-card :global(details){font-size:13px;line-height:1.8}.hub-service-card :global(details a){overflow-wrap:anywhere}.hub-catalog-note{font-size:14px;line-height:1.9;color:#5e7063;margin-top:18px}.catalog-empty{border:1px solid #d2dfd5;background:#fff;border-radius:6px;font-size:16px;line-height:1.9;padding:22px}.hub-howto,.hub-related{margin-top:39px}.hub-howto>div{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:17px;margin-top:18px}.hub-howto article{background:#fff;border:1px solid #d4e0d7;border-radius:7px;padding:21px;min-width:0}.hub-howto h3{font-size:19px;font-weight:700;line-height:1.7}.hub-howto article>p{font-size:15px;line-height:1.95;color:#536b5b;margin-top:10px}.hub-howto ul{list-style:disc;padding-left:19px;margin:12px 0 0}.hub-howto li{font-size:14px;line-height:1.9;color:#506858;margin-top:6px}.hub-related>div{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:16px;margin-top:18px}.hub-related a{display:block;border:1px solid #cfded3;border-radius:6px;background:#f0f6f1;padding:19px}.hub-related h3{font-size:19px;font-weight:700;line-height:1.7;color:#175d50}.hub-related p{font-size:14px;line-height:1.9;color:#526b5c;margin-top:8px}.hub-related span{display:block;font-size:14px;font-weight:700;color:#175d50;text-decoration:underline;text-underline-offset:4px;margin-top:13px}.hub-sources-note{border-top:1px solid #d5e1d8;margin-top:35px;padding-top:23px;color:#5a7061}.hub-sources-note h2{font-size:18px;font-weight:700;line-height:1.7}.hub-sources-note p{font-size:14px;line-height:1.95;margin-top:9px}.hub-sources-note a{display:inline-block;font-size:14px;line-height:1.8;color:#175d50;text-decoration:underline;padding:9px 0;margin-top:7px}@media(max-width:1050px){.service-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.hub-intro,.hub-howto>div{gap:13px}.hub-intro article,.hub-howto article{padding:17px}}@media(max-width:700px){.service-hub{padding-top:20px}.hub-header h1{font-size:28px}.hub-jump-links{display:grid;grid-template-columns:1fr;gap:8px}.hub-intro,.hub-howto>div,.hub-related>div{grid-template-columns:1fr;gap:13px}.service-cards{grid-template-columns:1fr;gap:15px}.hub-service-card{padding:18px}.catalog-tools{padding:17px}.hub-section-heading h2,.hub-howto>h2,.hub-related>h2{font-size:23px}.service-price strong{font-size:25px}.hub-service-card h3{font-size:24px}}
+</style>

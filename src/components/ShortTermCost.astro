@@ -2,7 +2,8 @@
   <h2 id="short-cost-title">12カ月でやめる場合、支払いはいくら違う？</h2>
   <p>新しく回線を工事するケースの比較例です。基本料12回分・税込・スマホ割と現金還元なしでそろえます。</p>
   <fieldset><legend>建物の料金タイプ</legend><label><input type="radio" name="cost-building" value="house" checked /> 戸建て</label><label><input type="radio" name="cost-building" value="mansion" /> マンション設備あり</label></fieldset>
-  <div class="cost-scroll" role="region" aria-label="12カ月の費用比較" tabindex="0"><table><thead><tr><th scope="col">支払いの内訳</th><th scope="col">enひかり 1ギガ<br /><small>新規工事費0円適用</small></th><th scope="col">ドコモ光 1ギガ<br /><small>タイプA・2年定期・新設工事</small></th></tr></thead><tbody>
+  <p class="cost-scroll-hint" id="short-cost-scroll-hint">表は横にスクロールできます</p>
+  <div class="cost-scroll" role="region" aria-label="12カ月の費用比較" aria-describedby="short-cost-scroll-hint" tabindex="0"><table><thead><tr><th scope="col">支払いの内訳</th><th scope="col">enひかり 1ギガ<br /><small>新規工事費0円適用</small></th><th scope="col">ドコモ光 1ギガ<br /><small>タイプA・2年定期・新設工事</small></th></tr></thead><tbody>
   <tr><th scope="row">基本料12回分</th><td data-en-monthly>4,818円 × 12</td><td data-docomo-monthly>5,720円 × 12</td></tr>
   <tr><th scope="row">事務手数料</th><td>3,300円</td><td>4,950円</td></tr>
   <tr><th scope="row">基本工事費</th><td>0円</td><td>28,600円</td></tr>
@@ -30,5 +31,8 @@ document.querySelectorAll<HTMLElement>('[data-short-cost]').forEach(panel=>{
 });
 </script>
 <style>
+.short-cost>.cost-scroll-hint{display:none}
+.cost-scroll:focus-visible{outline:3px solid #175d50;outline-offset:3px}
+@media(max-width:700px){.short-cost>.cost-scroll-hint{display:block;margin:0 0 8px;font-size:13px;line-height:1.7;color:#536157}}
 .short-cost{padding:24px;border:1px solid #cbded6;background:#fff;border-radius:8px;margin-bottom:28px}.short-cost h2{font-size:23px;font-weight:800;line-height:1.5;margin-bottom:12px}.short-cost>p{font-size:15px;line-height:1.8}.short-cost fieldset{display:flex;flex-wrap:wrap;gap:12px 20px;background:#eef6f2;border:0;padding:14px 18px;margin:20px 0}.short-cost legend{font-size:13px;font-weight:700;padding:0 5px}.short-cost label{font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px;cursor:pointer}.short-cost input{accent-color:#175d50;width:18px;height:18px}.cost-scroll{overflow-x:auto}.short-cost table{width:100%;min-width:520px;border-collapse:collapse;font-size:14px}.short-cost th,.short-cost td{padding:14px 12px;border:1px solid #dce4df;line-height:1.6}.short-cost thead th{background:#175d50;color:#fff}.short-cost thead small{font-size:12px;font-weight:400}.short-cost tbody th{text-align:left;background:#f5f8f6;width:33%;font-weight:500}.cost-total td{font-size:23px;font-weight:800;background:#fff3e7;color:#a33b1d}.cost-total th{font-weight:800!important}.cost-announcement{font-size:14px!important;font-weight:700;margin:16px 0}.short-cost details{font-size:14px;line-height:1.8;border-top:1px solid #dce4df;padding-top:14px}.short-cost summary{cursor:pointer;font-weight:700}.short-cost ul{list-style:disc;padding-left:20px;margin:12px 0}.short-cost li{margin-bottom:8px}.cost-source{margin-top:16px;font-size:13px!important;color:#536157}.cost-source a{text-decoration:underline;color:#175d50}@media(max-width:600px){.short-cost{padding:18px 14px}.short-cost h2{font-size:21px}.short-cost th,.short-cost td{padding:12px 9px}}
 </style>

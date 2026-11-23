@@ -1,0 +1,49 @@
+---
+import { nationalServiceChecks, nttAreaChecks } from '../lib/national-areas';
+import RelatedConnectivityLinks from './RelatedConnectivityLinks.astro';
+const { region } = Astro.props as { region: 'east' | 'west' };
+const primary = nttAreaChecks[region];
+const other = nttAreaChecks[region === 'east' ? 'west' : 'east'];
+---
+<section class="national-checks" aria-labelledby="official-area-check">
+  <h2 id="official-area-check">公式サイトで、住所ごとの提供エリアを確認</h2>
+  <p class="checks-lead">市区町村名だけで利用できるとは決まりません。リンク先で郵便番号・番地・建物名・部屋番号まで確認してください。</p>
+  <div class="ntt-check">
+    <div>
+      <span class="check-label">この都道府県の原則の確認先</span>
+      <h3>{primary.name}</h3>
+      <p>光回線の設備が使えるかを、利用先の住所で調べます。</p>
+    </div>
+    <a class="area-check-button" href={primary.url} target="_blank" rel="noopener">{primary.name}で住所を確認</a>
+  </div>
+  <p class="boundary-note">県境など一部の地域ではNTT東西の区分が異なることがあります。検索先が違うと案内された場合は、<a href={other.url} target="_blank" rel="noopener">{other.name}の公式検索</a>でも確認してください。</p>
+  <h3 class="checks-subtitle">契約したいサービスも、公式窓口で確認する</h3>
+  <p class="checks-lead">NTTの回線設備の確認と、各サービスの申込み可否は分けて確かめます。以下は公式のエリア案内です。</p>
+  <div class="official-service-grid">
+    {nationalServiceChecks.filter((s) => s.kind === 'fiber').map((s) => (
+      <article>
+        <span class="service-kind">光回線</span>
+        <h4>{s.name}</h4>
+        <p>{s.note}</p>
+        <a href={s.url} target="_blank" rel="noopener">{s.name}の公式エリア案内</a>
+      </article>
+    ))}
+  </div>
+  <h3 class="checks-subtitle">工事ができないときは、設置場所の電波を確認</h3>
+  <p class="checks-lead">ホームルーターも、住む場所や建物の中の電波状況で利用条件が変わります。</p>
+  <div class="official-service-grid router-checks">
+    {nationalServiceChecks.filter((s) => s.kind === 'router').map((s) => (
+      <article>
+        <span class="service-kind">ホームルーター</span>
+        <h4>{s.name}</h4>
+        <p>{s.note}</p>
+        <a href={s.url} target="_blank" rel="noopener">{s.name}の公式エリア案内</a>
+      </article>
+    ))}
+  </div>
+  <p class="checks-note">掲載しているサービスが、この地域の全住所で使えるという意味ではありません。10ギガ・5G・マンションの配線方式なども、希望するプランごとに確かめてください。</p>
+</section>
+<RelatedConnectivityLinks />
+<style>
+  .national-checks{margin-top:36px}.national-checks h2{font-size:25px;font-weight:800;line-height:1.6;color:#172c23}.checks-lead{font-size:16px;line-height:1.9;color:#4b6055;margin:10px 0 18px}.ntt-check{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:24px;border:1px solid #c4d9ce;border-left:4px solid #175d50;border-radius:8px;background:#edf5f0;padding:22px}.check-label{font-size:13px;font-weight:700;color:#4b6a58}.ntt-check h3{font-size:23px;font-weight:800;line-height:1.5;margin:4px 0}.ntt-check p{font-size:15px;line-height:1.8}.area-check-button{display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:6px;background:#175d50;color:#fff;padding:13px 18px;font-size:15px;font-weight:700;line-height:1.6;text-align:center}.area-check-button:hover{background:#103c36}.boundary-note{font-size:14px;line-height:1.9;color:#55695e;margin-top:12px}.boundary-note a,.checks-note a{color:#175d50;text-decoration:underline;text-underline-offset:3px}.checks-subtitle{font-size:20px;font-weight:700;line-height:1.65;margin-top:30px}.official-service-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:16px}.official-service-grid article{min-width:0;border:1px solid #d6e2da;border-radius:7px;background:#fff;padding:20px}.service-kind{font-size:13px;color:#526c5d}.official-service-grid h4{font-size:20px;font-weight:700;line-height:1.6;margin:5px 0 9px}.official-service-grid p{font-size:15px;line-height:1.85;color:#4c6055}.official-service-grid a{display:block;min-height:44px;font-size:14px;font-weight:700;line-height:1.7;color:#175d50;text-decoration:underline;text-underline-offset:4px;margin-top:13px;padding:7px 0}.router-checks{grid-template-columns:repeat(2,minmax(0,1fr))}.checks-note{font-size:14px;line-height:1.9;color:#5b6c62;margin-top:16px}@media(max-width:800px){.official-service-grid{grid-template-columns:1fr}.router-checks{grid-template-columns:1fr 1fr}.ntt-check{grid-template-columns:1fr;gap:16px}}@media(max-width:600px){.national-checks h2{font-size:22px}.router-checks{grid-template-columns:1fr}.ntt-check{padding:18px}.official-service-grid article{padding:18px}.checks-subtitle{font-size:19px}}
+</style>

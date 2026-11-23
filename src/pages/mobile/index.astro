@@ -1,0 +1,20 @@
+---
+import RelatedServiceHub from '../../components/RelatedServiceHub.astro';
+import mobileServices from '../../data/mobile-services.json';
+const intro = [
+  { title: '自宅のWi-Fiと、スマホの回線を分ける', body: '自宅の光回線・ホームルーターと、スマホのSIM契約は役割が違います。家で使う通信と、外出中に使う通信量をそれぞれ確認しましょう。' },
+  { title: '毎月使うデータ量から選ぶ', body: '直近の利用量を確認し、通話やテザリングも含めて比較します。povo2.0の都度購入は、容量と有効期限を選ぶ方式です。毎月定額のプランとは支払い方を分けて比べましょう。' },
+  { title: '今のスマホで使えるか確認する', body: 'SIMカードとeSIM、端末の対応回線を公式で確認します。店舗相談・オンライン手続きなど、困ったときの窓口も選ぶ基準になります。' },
+];
+const explain = [
+  { title: '基本料以外の支払いを確認', body: '表示された基本料に、必要な通話・端末代・初期費用を加えて比べます。割引がある場合は、その条件と終了後の料金も確認してください。', checks: ['通話は従量制か、オプション加入が必要か', '契約時の費用とSIM・eSIM発行の条件', '端末の分割代と、割引が終わる時期'] },
+  { title: '通信量と使い切った後の条件', body: '同じ「大容量」でも、月の上限や低速時の扱いはサービスによって異なります。テザリングを使う場合は、対象となる容量も確認します。', checks: ['月のデータ量と、余った分の繰り越し', '追加データの購入単位と有効期限', 'テザリング・海外利用・混雑時の条件'] },
+  { title: '回線・端末・サポートを確認', body: '使う場所の公式エリアと、端末の動作確認情報を見ます。エリア内でも、屋内の電波や時間帯によって通信状況は変わります。', checks: ['端末の対応状況とSIM/eSIMの種類', '店舗での相談が必要か、オンラインで進められるか', '番号を引き継ぐ手続きと、現在の契約の残債'] },
+];
+const related = [
+  { href: '/hikari/area/', title: '自宅のWi-Fi・光回線', body: '全国の都道府県・市区町村から、住所での提供エリアを確認。自宅と外出先の通信を分けて選びます。' },
+  { href: '/used-smartphones/', title: '中古スマホの選び方', body: '本体を買い替えるなら、回線への対応・バッテリー・保証を確認します。' },
+  { href: '/security/', title: '端末のセキュリティ', body: 'OSの更新と基本設定に加え、必要な保護機能と契約条件を比べます。' },
+];
+---
+<RelatedServiceHub category="mobile" path="/mobile/" title="モバイル回線・格安SIMを比較｜X-mobile・UQ mobileなどの料金と条件" description="X-mobile・UQ mobileなどのモバイル回線を公式情報で比較。データ量・通常料金・回線・相談窓口の違いを確認し、自宅のWi-Fiとの使い分けから選びます。" eyebrow="モバイル回線・格安SIM" heading="外出中の通信と毎月の支払いを、使い方から比べる。" lead="X-mobile・UQ mobileなどの候補を、通信量・基本料・通話やサポートの条件で比べます。まず自分が毎月使うデータ量と、今の端末で使えるかを確かめましょう。" services={mobileServices} intro={intro} explainTitle="モバイル回線を選ぶ前に、3つを確認" explain={explain} filters={[{id:'small-data',label:'少ない通信量'},{id:'large-data',label:'大容量を比較'},{id:'shop-support',label:'店舗で相談'},{id:'flexible-data',label:'都度データ購入'}]} related={related} />

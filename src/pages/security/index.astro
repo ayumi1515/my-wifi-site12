@@ -1,0 +1,20 @@
+---
+import RelatedServiceHub from '../../components/RelatedServiceHub.astro';
+import securityServices from '../../data/security-services.json';
+const intro = [
+  { title: '最初にOSと標準機能を確認', body: 'OS・アプリの更新、画面ロック、バックアップを確認します。有料ソフトを選ぶときは、追加で必要な機能を整理しましょう。' },
+  { title: '使う端末と台数をそろえる', body: 'Windows・Mac・Android・iPhoneなどで、使える機能が異なります。保護したい端末の種類と台数を決めてから比べます。' },
+  { title: '新規価格と更新価格を分ける', body: '初めて契約するときの価格だけでなく、更新時の料金・自動更新・解約方法を確認します。期間が違う商品をそのまま比べないようにしましょう。' },
+];
+const explain = [
+  { title: 'OSごとの機能差を見る', body: '同じ製品名でも、OSによって機能が異なります。必要な機能が、自分の端末で利用できるかを公式の対応表で確認してください。', checks: ['使用中のOSとバージョンへの対応', '必要なウイルス対策・詐欺サイト対策などの機能', 'iPhone/iPadとパソコンでの機能差'] },
+  { title: '保護したい場面を決める', body: '契約名だけで判断せず、どの場面で何を防ぎたいかを整理します。VPNやパスワード管理などの追加機能は、契約に含まれるか個別に確認します。', checks: ['利用台数と、端末を変更したときの扱い', 'VPN等の追加機能の有無と上限', '家族で使う場合のライセンス条件'] },
+  { title: '契約期間と更新を確認', body: '月額・年額・複数年契約は、同じ利用期間と台数で比較します。購入先や契約方法によって条件が異なる場合もあるため、更新まで確認しましょう。', checks: ['新規購入時と更新時の料金', '自動更新の時期と停止方法', '返金・サポートの対象と受付方法'] },
+];
+const related = [
+  { href: '/hikari/area/', title: '自宅のネット回線', body: 'まず住所で回線の提供エリアを確認。ネット環境と端末の保護を一緒に見直します。' },
+  { href: '/mobile/', title: 'モバイル回線・格安SIM', body: '利用する回線・データ量・料金の条件を、自分の使い方で選びます。' },
+  { href: '/used-smartphones/', title: '中古スマホを買う前に', body: 'OSの更新対象・バッテリー・保証を確認して、使い続けられる端末を選びます。' },
+];
+---
+<RelatedServiceHub category="security" path="/security/" title="セキュリティソフトを比較｜対応OS・台数・新規料金と更新条件" description="ESET・ノートン・ウイルスバスターの契約条件を公式情報で比較。対応OS・利用台数・必要な機能、新規と更新の価格を分けて確認する選び方をまとめました。" eyebrow="セキュリティソフト" heading="端末に必要な機能と、更新までの条件で選ぶ。" lead="セキュリティソフトは、端末のOS・台数・必要な機能をそろえて比べます。OSの更新や基本設定を確認したうえで、追加したい保護と契約条件を選びましょう。" services={securityServices} intro={intro} explainTitle="セキュリティソフトの確認ポイント" explain={explain} related={related} />

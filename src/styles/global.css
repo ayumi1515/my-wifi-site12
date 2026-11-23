@@ -185,3 +185,6 @@ img { height: auto; }
 .prose-ja p,.prose-ja li{font-size:16px}.prose-ja h2{font-size:24px;line-height:1.6}
 @media(min-width:1440px){.masthead{padding-block:17px}}
 @media(max-width:700px){.masthead{padding-block:12px}.prose-ja p,.prose-ja li{font-size:16px}.prose-ja h2{font-size:22px}}
+
+/* Expanded categories reflow at tablet widths. */
+.desktop-nav{flex-wrap:wrap;gap:0 24px}.desktop-nav>a{white-space:nowrap}
