@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {estimateHousehold,tenureFor} from '../src/lib/household-diagnosis.ts';
+import {estimateHousehold,tenureFor,currentPlanOptions,currentHouseholdBaseline} from '../src/lib/household-diagnosis.ts';
 import catalog from '../src/data/household-plans.json' with {type:'json'};
 const line=(x={})=>({carrier:'other',dataGb:3,tenure:'unknown',keepCarrier:false,...x});
 const base={goal:'both',prefecture:'13',municipality:'',building:'house',construction:'yes',years:2,homeTenure:'unknown',start:'december',support:'either',familyDiscount:true,currentHome:'none',currentMonthly:18000,switchingCost:0,useCampaigns:false,lines:[line()]};
@@ -80,5 +80,55 @@ test('six-line totals reconcile and period objectives are sorted',()=>{
 });
 test('empty phone inputs are rejected for both and mobile goals',()=>{
  assert(!estimate({lines:[]}).complete);assert(!estimate({goal:'mobile',lines:[]}).complete);assert(!estimate({lines:Array.from({length:7},()=>line())}).complete);
+});
+test('current plan selection retains existing plans and excludes future launches',()=>{
+ const docomo=currentPlanOptions('docomo');assert(docomo.some(p=>p.id==='docomo-mini'));assert(!docomo.some(p=>p.id==='docomo-mini2'));
+ assert.deepEqual(currentPlanOptions('ahamo').map(p=>p.id),['ahamo-current']);assert.deepEqual(currentPlanOptions('other'),[]);
+});
+test('a selected current plan provides a reference price without inventing an actual bill',()=>{
+ const input={...base,goal:'mobile',currentMonthly:null,lines:[line({carrier:'docomo',dataGb:999,currentPlanId:'docomo-mini',currentTierMaxGb:4})]};
+ const r=estimateHousehold(input);assert.equal(r.baseline.lines[0].planName,'ドコモ mini');assert.equal(r.baseline.lines[0].referenceMonthly,2750);assert.equal(r.baseline.lines[0].monthly,null);assert.equal(r.baseline.lines[0].source,'unknown');assert.equal(r.baseline.effectiveMonthly,null);
+ assert(r.proposals.every(p=>p.monthlySavings===null&&p.periodSavings===null));
+ for(const familyDiscount of [true,false]){const actual=currentHouseholdBaseline({...input,familyDiscount,lines:[{...input.lines[0],currentMonthly:1999}]});assert.equal(actual.lines[0].referenceMonthly,2750);assert.equal(actual.lines[0].monthly,1999);assert.equal(actual.lines[0].source,'actual');assert.equal(actual.effectiveMonthly,1999);}
+});
+test('current reference tiers are explicit and never inferred from the desired data amount',()=>{
+ const baseline=(x)=>currentHouseholdBaseline({...base,goal:'mobile',currentMonthly:null,lines:[line(x)]}).lines[0];
+ assert.equal(baseline({carrier:'docomo',dataGb:3,currentPlanId:'docomo-mini'}).referenceMonthly,null);
+ assert.equal(baseline({carrier:'docomo',dataGb:3,currentPlanId:'docomo-mini',currentTierMaxGb:10}).referenceMonthly,3850);
+ assert.equal(baseline({carrier:'docomo',currentPlanId:'docomo-max',currentTierMaxGb:null}).referenceMonthly,8448);
+ assert.equal(baseline({carrier:'docomo',currentPlanId:'docomo-mini',currentTierMaxGb:999}).referenceMonthly,null);
+ assert.equal(baseline({carrier:'nihon-tsushin',currentPlanId:'nihon-tsushin'}).referenceMonthly,290);
+ assert.equal(baseline({carrier:'docomo',currentPlanId:'docomo-mini2',currentTierMaxGb:6}).referenceMonthly,null);
+ assert.equal(baseline({carrier:'au',currentPlanId:'docomo-mini',currentTierMaxGb:4}).planId,null);
+});
+test('confirmed line items and home charges derive the household baseline used for savings',()=>{
+ const r=estimate({currentMonthly:null,currentHomeMonthly:5000,lines:[line({currentMonthly:6000}),line({currentMonthly:7000})]});
+ assert.equal(r.baseline.derivedMonthly,18000);assert.equal(r.baseline.effectiveMonthly,18000);assert.equal(r.baseline.source,'line-items');assert(r.baseline.lines.every(l=>l.source==='actual'&&l.referenceMonthly===null));
+ for(const p of r.proposals){assert.equal(p.monthlySavings,18000-p.monthly);assert.equal(p.periodSavings,18000*24-p.referenceTotal+p.campaignAmount);}
+ const override=estimate({currentMonthly:18000,lines:[line(),line()]});assert.deepEqual(r.proposals.map(p=>[p.homeId,p.lines.map(l=>l.planId),p.referenceTotal]),override.proposals.map(p=>[p.homeId,p.lines.map(l=>l.planId),p.referenceTotal]));
+});
+test('partial actual amounts remain unknown rather than filling missing bills from reference prices',()=>{
+ const input={...base,currentMonthly:null,currentHomeMonthly:5000,lines:[line({currentMonthly:6000}),line({carrier:'docomo',currentPlanId:'docomo-mini',currentTierMaxGb:4})]};
+ const r=estimateHousehold(input);assert.equal(r.baseline.lines[1].referenceMonthly,2750);assert.equal(r.baseline.derivedMonthly,null);assert.equal(r.baseline.source,'unknown');assert(r.proposals.every(p=>p.monthlySavings===null&&p.periodSavings===null));
+ const missingHome=currentHouseholdBaseline({...input,currentHomeMonthly:null,lines:[line({currentMonthly:6000})]});assert.equal(missingHome.derivedMonthly,null);
+});
+test('a confirmed total overrides both complete and incomplete line items without fabricating them',()=>{
+ for(const items of [[line({currentMonthly:1000})],[line()]]){
+  const r=estimate({currentMonthly:15000,currentHomeMonthly:5000,lines:items});assert.equal(r.baseline.effectiveMonthly,15000);assert.equal(r.baseline.source,'total-override');assert.equal(r.baseline.lines[0].monthly,items[0].currentMonthly??null);assert.equal(r.proposals[0].monthlySavings,15000-r.proposals[0].monthly);
+ }
+});
+test('baseline line items follow the chosen mobile or home scope and accept confirmed zero amounts',()=>{
+ const input={...base,currentMonthly:null,currentHomeMonthly:5000,lines:[line({currentMonthly:1000}),line({currentMonthly:0})]};
+ assert.equal(currentHouseholdBaseline({...input,goal:'mobile'}).effectiveMonthly,1000);
+ const home=currentHouseholdBaseline({...input,goal:'home'});assert.equal(home.effectiveMonthly,5000);assert.deepEqual(home.lines,[]);
+ const zero=currentHouseholdBaseline({...input,goal:'both',currentHomeMonthly:0,lines:[line({currentMonthly:0})]});assert.equal(zero.effectiveMonthly,0);assert.equal(zero.source,'line-items');
+ const override=currentHouseholdBaseline({...input,currentMonthly:0});assert.equal(override.effectiveMonthly,0);assert.equal(override.source,'total-override');
+});
+test('invalid actual prices and unknown switching costs cannot produce a savings claim',()=>{
+ for(const value of [-1,NaN,Infinity]){
+  const r=estimate({currentMonthly:null,currentHomeMonthly:5000,lines:[line({currentMonthly:value})]});assert.equal(r.baseline.lines[0].monthly,null);assert.equal(r.baseline.effectiveMonthly,null);assert(r.proposals.every(p=>p.periodSavings===null));
+ }
+ const r=estimate({currentMonthly:null,currentHomeMonthly:5000,switchingCost:null,lines:[line({currentMonthly:1000})]});assert.equal(r.baseline.effectiveMonthly,6000);assert(r.proposals.every(p=>p.periodSavings===null&&p.monthlySavings!==null));
+ const unknown=estimate({construction:'unknown',currentMonthly:null,currentHomeMonthly:5000,lines:[line({currentMonthly:1000})]});assert(!unknown.complete);assert.equal(unknown.baseline.effectiveMonthly,6000);
 });
 console.log('Family diagnosis checks passed: '+tests.length+' cases.');

@@ -3,8 +3,8 @@ import homeCatalog from '../data/household-homes.json' with { type: 'json' };
 
 export type Tenure = 'under1'|'1to2'|'2to10'|'10to20'|'20plus'|'unknown';
 export interface HouseholdInput {
-  goal:'both'|'mobile'|'home';prefecture:string;municipality:string;building:'house'|'mansion';construction:'yes'|'no'|'unknown';years:1|2|3|5;homeTenure:Tenure;start:'now'|'december';support:'either'|'shop'|'online';familyDiscount:boolean;currentHome:string;currentMonthly:number|null;switchingCost:number|null;useCampaigns:boolean;
-  lines:{carrier:string;dataGb:number;tenure:Tenure;keepCarrier:boolean}[];
+  goal:'both'|'mobile'|'home';prefecture:string;municipality:string;building:'house'|'mansion';construction:'yes'|'no'|'unknown';years:1|2|3|5;homeTenure:Tenure;start:'now'|'december';support:'either'|'shop'|'online';familyDiscount:boolean;currentHome:string;currentMonthly:number|null;currentHomeMonthly?:number|null;switchingCost:number|null;useCampaigns:boolean;
+  lines:{carrier:string;dataGb:number;tenure:Tenure;keepCarrier:boolean;currentPlanId?:string;currentTierMaxGb?:number|null;currentMonthly?:number|null}[];
 }
 interface Source {label:string;url:string}
 interface Plan {id:string;brandId:string;name:string;familyGroup:string|null;shop:boolean;validFrom?:string;validThrough?:string;tiers:{maxGb:number|null;monthly:number}[];familyDiscount:number[];familyMode?:string;bundleIds:string[];bundleDiscount:number;excludeFamilyWithBundle:boolean;tenureDiscount?:{years:number;monthly:number}[];note:string;url:string;sources:Source[]}
@@ -12,12 +12,35 @@ interface Home {id:string;name:string;kind:'fiber'|'router';prefectures:string[]
 interface Campaign {id:string;homeId:string;amount:number;receiveAfterMonths:number|null;minUseMonths:number;buildings:string[];conditions:string[];url:string;sourceCheckedAt:string}
 export interface HouseholdLine {brandId:string;planId:string;name:string;monthly:number;baseMonthly:number;familyDiscount:number;bundleDiscount:number;tenureDiscount:number;dataLabel:string;url:string;sources:Source[];note:string}
 export interface HouseholdProposal {homeId:string|null;monthly:number;homeMonthly:number;optionMonthly:number;mobileMonthly:number;referenceTotal:number;lines:HouseholdLine[];note:string;campaignAmount:number;campaignNote:string;periodSavings:number|null;monthlySavings:number|null}
-export interface HouseholdResult {proposals:HouseholdProposal[];warnings:string[];scope:string;complete:boolean}
+export interface CurrentPlanOption {id:string;name:string;tiers:{maxGb:number|null;monthly:number}[];note:string}
+export interface HouseholdBaselineLine {planId:string|null;planName:string;monthly:number|null;referenceMonthly:number|null;source:'actual'|'unknown'}
+export interface HouseholdBaseline {lines:HouseholdBaselineLine[];homeMonthly:number|null;derivedMonthly:number|null;effectiveMonthly:number|null;source:'total-override'|'line-items'|'unknown'}
+export interface HouseholdResult {proposals:HouseholdProposal[];warnings:string[];scope:string;complete:boolean;baseline:HouseholdBaseline}
 const plans=catalog.plans as Plan[];
 const homes=homeCatalog.homes as Home[];
 const campaigns=homeCatalog.campaigns as Campaign[];
 const yearsFor=(value:Tenure)=>({under1:0,'1to2':1,'2to10':2,'10to20':10,twenty:20, '20plus':20,unknown:0}[value]??0);
-const finiteCost=(n:number|null)=>n!==null&&Number.isFinite(n)&&n>=0;
+const finiteCost=(n:number|null|undefined):n is number=>typeof n==='number'&&Number.isFinite(n)&&n>=0;
+export function currentPlanOptions(carrier:string):CurrentPlanOption[] {
+  // A closed application window does not invalidate a customer's existing plan.
+  return plans.filter(p=>p.brandId===carrier&&(!p.validFrom||p.validFrom<=catalog.checkedAt)).map(p=>({id:p.id,name:p.name,tiers:p.tiers.map(t=>({...t})),note:p.note}));
+}
+export function currentHouseholdBaseline(input:HouseholdInput):HouseholdBaseline {
+  const lines:HouseholdBaselineLine[]=input.goal==='home'?[]:input.lines.map(line=>{
+    const plan=currentPlanOptions(line.carrier).find(p=>p.id===line.currentPlanId);
+    // Never infer the current tier from the data amount requested after switching.
+    const tier=plan&&(line.currentTierMaxGb===undefined?(plan.tiers.length===1?plan.tiers[0]:undefined):plan.tiers.find(t=>t.maxGb===line.currentTierMaxGb));
+    const monthly=finiteCost(line.currentMonthly)?line.currentMonthly:null;
+    return {planId:plan?.id??null,planName:plan?.name??'未選択・分からない',monthly,referenceMonthly:tier?.monthly??null,source:monthly===null?'unknown':'actual'};
+  });
+  const homeMonthly=finiteCost(input.currentHomeMonthly)?input.currentHomeMonthly:null;
+  const allLinesKnown=lines.length>0&&lines.every(line=>line.monthly!==null);
+  const mobileMonthly=allLinesKnown?lines.reduce((total,line)=>total+line.monthly!,0):null;
+  const derivedMonthly=input.goal==='home'?homeMonthly:input.goal==='mobile'?mobileMonthly:mobileMonthly!==null&&homeMonthly!==null?mobileMonthly+homeMonthly:null;
+  const hasOverride=finiteCost(input.currentMonthly);
+  const effectiveMonthly=hasOverride?input.currentMonthly:derivedMonthly;
+  return {lines,homeMonthly,derivedMonthly,effectiveMonthly,source:hasOverride?'total-override':derivedMonthly!==null?'line-items':'unknown'};
+}
 const groupCount=(selected:Plan[],group:string|null)=>group?selected.filter(p=>p.familyGroup===group).length:0;
 function tierFor(plan:Plan,gb:number){return plan.tiers.find(t=>t.maxGb===null||(gb!==999&&t.maxGb>=gb));}
 export function tenureFor(plan:Plan,line:HouseholdInput['lines'][number]){const continues=plan.brandId===line.carrier||(plan.brandId==='docomo'&&line.carrier==='ahamo');return continues?Math.max(0,...(plan.tenureDiscount??[]).filter(t=>yearsFor(line.tenure)>=t.years).map(t=>t.monthly)):0;}
@@ -51,8 +74,9 @@ function proposalFor(home:Home|null,selected:Plan[],input:HouseholdInput):Househ
     if(home?.id==='softbank-hikari'&&input.goal!=='mobile'&&home.decemberMonthly)referenceTotal+=((home.decemberMonthly[input.building]??homeMonthly)-homeMonthly)*Math.max(0,months-home.contractMonths);
   }
   const campaign=campaignFor(home,input);
-  const monthlySavings=finiteCost(input.currentMonthly)?input.currentMonthly!-monthly:null;
-  const periodSavings=finiteCost(input.currentMonthly)&&finiteCost(input.switchingCost)?input.currentMonthly!*months-referenceTotal-input.switchingCost!+campaign.amount:null;
+  const effectiveMonthly=currentHouseholdBaseline(input).effectiveMonthly;
+  const monthlySavings=effectiveMonthly!==null?effectiveMonthly-monthly:null;
+  const periodSavings=effectiveMonthly!==null&&finiteCost(input.switchingCost)?effectiveMonthly*months-referenceTotal-input.switchingCost+campaign.amount:null;
   return {homeId:home?.id??null,monthly,homeMonthly,optionMonthly,mobileMonthly,referenceTotal,lines,campaignAmount:campaign.amount,campaignNote:campaign.note,monthlySavings,periodSavings,note:`${home?.note??'自宅回線の基本料は含めず、スマホ回線のみを比較しています。'} 通常料金・対象条件の家族割とセット割で比較。期間参考額は開始月を1カ月とし、日割りをしない参考計算です。初期費用・工事費・端末代・解約費・通話料は別途。`};
 }
 const objective=(p:HouseholdProposal)=>p.referenceTotal-p.campaignAmount;
@@ -85,14 +109,16 @@ function optimizeForHome(home:Home|null,input:HouseholdInput,date:string):Househ
 }
 export function estimateHousehold(input:HouseholdInput):HouseholdResult {
   const warnings:string[]=[];const scope=input.goal==='both'?'自宅回線と家族のスマホの合計':input.goal==='mobile'?'家族のスマホの合計（自宅回線基本料は比較外）':'自宅回線のみ（携帯料金・セット割は比較外）';
+  const baseline=currentHouseholdBaseline(input);
   const invalid=!['both','home','mobile'].includes(input.goal)||!/^\d{2}$/.test(input.prefecture)||!['house','mansion'].includes(input.building)||![1,2,3,5].includes(input.years)||(input.goal!=='home'&&input.lines.length<1)||input.lines.length>6||input.lines.some(l=>!Number.isFinite(l.dataGb)||l.dataGb<0);
-  if(invalid)return {proposals:[],warnings:['地域・回線数・通信量を選び直してください。'],scope,complete:false};
+  if(invalid)return {proposals:[],warnings:['地域・回線数・通信量を選び直してください。'],scope,complete:false,baseline};
   if(input.goal==='home')warnings.push('携帯の現在の契約プランが未入力のため、スマホのセット割を自宅費用から差し引いていません。家族合計を比べる場合は「両方」を選んでください。');
-  if(input.construction==='unknown'&&input.goal!=='mobile')return {proposals:[],warnings:['工事の可否が不明なため、自宅とスマホの合計金額を確定して候補を並べません。地域ページで住所と建物の工事可否を確認してから診断してください。'],scope,complete:false};
+  if(input.construction==='unknown'&&input.goal!=='mobile')return {proposals:[],warnings:['工事の可否が不明なため、自宅とスマホの合計金額を確定して候補を並べません。地域ページで住所と建物の工事可否を確認してから診断してください。'],scope,complete:false,baseline};
   if(input.homeTenure==='under1'||input.lines.some(l=>l.tenure==='under1'))warnings.push('切替から1年未満の契約があります。短期解約料・端末分割・工事費残額を、各契約の明細で確認してください。年数だけで残額0円とは計算しません。');
   if(input.years===1)warnings.push('1年利用では、光回線の工事費やホームルーター端末代の残額が大きくなる場合があります。乗換え費用欄に全額の見積りを入れて比べてください。');
   if(!finiteCost(input.switchingCost))warnings.push('解約金・残債・新規初期費用の合計が未入力です。期間全体でいくら得かは、費用を入力してから表示します。0円の場合も0と入力してください。');
-  if(!finiteCost(input.currentMonthly))warnings.push('現在の比較対象の合計月額を入力すると、月額差と期間の節約目安を表示します。');
+  if(baseline.effectiveMonthly===null)warnings.push('現在の各回線と自宅の実支払額、または比較対象の合計月額を入力すると、月額差と期間の節約目安を表示します。');
+  if(baseline.lines.some(line=>line.referenceMonthly!==null))warnings.push('現在プランの割引前基本料は参考表示です。割引や請求額を推測せず、比較する現在月額には入力した実支払額を使います。');
   warnings.push('通話料・端末代・初期工事費・ユニバーサルサービス料等は月額比較に含みません。カード・電気・年齢・期間限定割引・ポイント・未確認の最大特典額も除外しています。');
   warnings.push('通信品質・屋内電波・建物設備は未判定です。povo等の都度購入と、定額比較できないプランは自動試算の対象外です。');
   if(input.start==='now')warnings.push('11月開始の参考額はahamoとSoftBankの公表済み12月改定を反映。miniはmini2へ自動移行しない前提です。その他の将来改定・日割り・申込別キャンペーンは窓口で確認してください。');
@@ -102,5 +128,5 @@ export function estimateHousehold(input:HouseholdInput):HouseholdResult {
   else {eligible=homes.filter(h=>h.id!==input.currentHome&&h.buildings.includes(input.building)&&(!h.prefectures||h.prefectures.includes(input.prefecture))&&h.kind===(input.construction==='no'?'router':'fiber'));if(homes.some(h=>h.id===input.currentHome))warnings.push('現在の自宅回線と同じ会社への継続契約は乗換え先候補から除いています。継続する費用は入力した現在月額を基準に比較してください。');}
   const proposals=eligible.map(h=>optimizeForHome(h,input,date)).filter((p):p is HouseholdProposal=>p!==null).sort((a,b)=>objective(a)-objective(b)||a.monthly-b.monthly).slice(0,3);
   if(!proposals.length)warnings.unshift('掲載プランには、選択したブランド・通信量・店舗希望をすべて満たす候補がありません。条件を見直すか、公式窓口で確認してください。');
-  return {proposals,warnings,scope,complete:proposals.length>0};
+  return {proposals,warnings,scope,complete:proposals.length>0,baseline};
 }

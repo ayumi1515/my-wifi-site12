@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import VisualHero from '../components/VisualHero.astro';
+import MangaEntry from '../components/MangaEntry.astro';
 import GuideArtwork from '../components/GuideArtwork.astro';
 import RelatedConnectivityLinks from '../components/RelatedConnectivityLinks.astro';
 import AffiliateButton from '../components/AffiliateButton.astro';
@@ -17,6 +18,7 @@ const collectionLd={'@context':'https://schema.org','@type':'CollectionPage',nam
   <div class="home-comparison">
     <header class="home-intro site-container"><VisualHero title={"家族の通信費を、\nまとめて診断。"} lead="家族の回線数・キャリア・使う年数から、自宅とスマホの組合せを比較。今の契約条件も確かめながら、自分たちに合う候補を探せます。" image="internet" eyebrow="回線・スマホをまとめて見直す"><div class="home-diagnosis-entry"><a class="home-diagnosis-button" href="/shindan/#diagnosis-form"><strong>家族の通信費を診断する</strong><span>詳しい住所・連絡先の入力は不要</span></a><a class="home-diagnosis-area" href="/hikari/area/">都道府県・市区町村からエリアを確認</a></div><nav aria-label="比較するテーマ"><a class="topic-shortcut" href="/hikari/"><strong>光回線の比較を見る</strong></a><a class="topic-shortcut" href="#learning"><strong>英語学習を選ぶ</strong></a></nav></VisualHero></header>
 
+    <div class="site-container"><MangaEntry /></div>
     <aside class="site-container national-entry" aria-labelledby="national-entry-title"><div><p>全国のWi-Fi・光回線</p><h2 id="national-entry-title">自分の住む地域で、使える回線を確認する</h2></div><a href="/hikari/area/">47都道府県・市区町村から探す</a></aside>
     <div class="site-container"><RelatedConnectivityLinks /></div>
     <section id="internet" class="site-container home-section" aria-labelledby="internet-title"><div class="section-heading"><div><h2 id="internet-title">鹿児島の光回線は、スマホから絞る</h2></div><a href="/hikari/?prefecture=46" class="all-link">{providers.filter(p=>p.kind==='fiber').length}社の料金・工事費を比べる →</a></div>

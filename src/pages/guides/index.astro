@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import MangaEntry from '../../components/MangaEntry.astro';
 import GuideArtwork from '../../components/GuideArtwork.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { guides, categoryLabel, readingMinutes } from '../../lib/guides';
@@ -14,7 +15,8 @@ const categories = [...new Set(guides.map((guide) => guide.category))];
       <h1 class="section-title">迷ったところから、<br />選び方を見つける。</h1>
       <p>月額の安さだけで決める前に。<br class="desktop-break" />使い方、契約期間、追加費用を、同じ目線でくらべます。</p>
     </header>
-    <form class="guide-search surface-card" role="search" id="guide-search">
+    <MangaEntry />
+    <form class="guide-search surface-card" role="search" id="guide-search" style="margin-top:24px">
       <label for="guide-query">気になることを探す</label>
       <div><input id="guide-query" type="search" placeholder="例：引越し、BBIQ、英会話" autocomplete="off" /><button type="reset">クリア</button></div>
     </form>

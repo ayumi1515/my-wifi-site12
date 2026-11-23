@@ -1,0 +1,63 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { breadcrumbLd } from '../../lib/data';
+import { SITE } from '../../site.config.mjs';
+
+const title = '家族のスマホ代・Wi-Fiを見直す順番｜6コマ漫画でわかる通信費診断';
+const description = '家族で使うスマホと自宅のWi-Fi。今の料金プラン、データ量、セット割、キャッシュバック、残っている支払いをどう比べる？6コマの漫画で、家族全員の乗換え前後を比べる流れがわかります。';
+const path = '/manga/family-telecom/';
+const panels = [
+  { title: 'まずは、家族の請求を集めよう。', alt: '食卓でスマホと請求書を見て、通信費に驚く夫婦。', lines: [{who:'夫',text:'スマホ代だけ見てたけど、家のWi-Fiも払ってるんだよね。'},{who:'妻',text:'別々に選ぶ前に、家族の通信費をまとめて見てみよう！'}], point:'スマホだけ、自宅だけ、両方。比べる範囲をそろえるのが最初の一歩。' },
+  { title: '同じ家族でも、使い方は違う。', alt: '親子3人でそれぞれのスマホと明細を持ち寄る。', lines: [{who:'妻',text:'今の料金プランも、使うデータ量も、みんな違うね。'},{who:'夫',text:'1人ずつ、プランと月額をメモしていこう。'}], point:'現在のプラン名・明細の月額・毎月のデータ量・契約を続けた年数を、回線ごとに確認。' },
+  { title: 'スマホとWi-Fi、組合せで考える。', alt: '夫婦がタブレット上のスマホ・データ・Wi-Fiの項目を見比べる。', lines: [{who:'夫',text:'キャリアはそのまま？ 格安SIMに変える？'},{who:'妻',text:'セット割もあるから、家族全員の合計で比べたいな。'}], point:'同じブランド内での見直しと、他社への乗換えを比較。必要な容量や相談方法もそろえます。' },
+  { title: '住んでいる地域と建物も確認。', alt: '夫が間取り図、妻が地図を確認し、家の回線について話し合う。', lines: [{who:'妻',text:'この回線、うちの地域と建物で使えるのかな？'},{who:'夫',text:'都道府県を選んで、住所での提供可否と工事も確認しよう。'}], point:'診断は全国の地域を選択できます。実際に使えるかは、公式の住所検索・建物設備の確認が必要です。' },
+  { title: '還元だけで、決めてしまわない。', alt: '夫婦が計算機・明細・カレンダーで特典と支払いの条件を確認する。', lines: [{who:'夫',text:'キャッシュバックがあれば、すごく得になりそう！'},{who:'妻',text:'受取条件と、今の契約に残っている支払いも見ようね。'}], point:'解約金・工事費や端末代の残額・新しい初期費用を確認。特典は金額だけでなく受取時期と条件も。' },
+  { title: '1人ずつ並べて、わが家の答えへ。', alt: '夫婦がノートパソコンで切替前後の2つの欄を見比べ、納得した様子で話す。', lines: [{who:'妻',text:'家族それぞれの乗換え前と後を、並べて見てみよう。'},{who:'夫',text:'月額と、これから使う年数の総額。両方で確かめよう！'}], point:'入力した条件と掲載プランの範囲で比較します。差額が増額になる場合も、確認してから選べます。' },
+];
+const crumbs = [{name:'総合トップ',href:'/'},{name:'選び方ガイド',href:'/guides/'},{name:'漫画でわかる通信費の見直し',href:path}];
+const article = {'@context':'https://schema.org','@type':'Article',headline:title,description,datePublished:'2026-11-23',dateModified:'2026-11-23',mainEntityOfPage:SITE.url+path,inLanguage:'ja',author:{'@type':'Organization',name:SITE.operator,url:SITE.url+'/about/'},publisher:{'@type':'Organization',name:SITE.name,url:SITE.url},image:SITE.url+'/images/family-telecom-manga.webp'};
+---
+<Base title={title} description={description} jsonLd={[article,breadcrumbLd(SITE.url,crumbs)]} pr={false}>
+  <article class="manga-page page-shell">
+    <Breadcrumbs items={crumbs.map(({name,href},i)=>({name,href:i===crumbs.length-1?undefined:href}))} />
+    <header class="manga-heading">
+      <p class="manga-kicker">漫画でわかる · 全6コマ</p>
+      <h1>家族の通信費、<br />どう見直せばいい？</h1>
+      <p class="manga-lead">スマホ代とWi-Fiを、家族まとめて。<br />わが家に合う組合せを探すお話です。</p>
+      <div class="article-meta"><time datetime="2026-11-23">2026年11月23日</time><span>約3分</span><span>{SITE.operator}</span></div>
+      <p class="fiction-note">説明用の架空のストーリーです。イラストはAIで制作。</p>
+      <a class="early-diagnosis" href="/shindan/#diagnosis-form">先に、家族の料金を比べてみる <span aria-hidden="true">→</span></a>
+    </header>
+
+    <div class="manga-story">
+      {panels.map((panel,index)=><section class="manga-panel" aria-labelledby={`panel-${index+1}`}>
+        <h2 id={`panel-${index+1}`}><span aria-label={`${index+1}コマ目`}>{String(index+1).padStart(2,'0')}</span>{panel.title}</h2>
+        <div class="manga-scene" role="img" aria-label={panel.alt}>
+          <img src="/images/family-telecom-manga.webp" width="1024" height="1536" alt="" loading={index<2?'eager':'lazy'} decoding="async" style={`left:${-(index%2)*100}%;top:${-Math.floor(index/2)*100}%`} />
+        </div>
+        <div class="manga-dialogue">{panel.lines.map(line=><p class:list={['speech',line.who==='妻'?'wife':'husband']}><span class="speaker">{line.who}</span><span>{line.text}</span></p>)}</div>
+        <p class="panel-point"><span>見直しのヒント</span>{panel.point}</p>
+      </section>)}
+    </div>
+
+    <section class="manga-next" aria-labelledby="manga-next-title">
+      <p class="manga-kicker">次は、あなたの家族の条件で。</p>
+      <h2 id="manga-next-title">乗換え前と後、<br class="mobile-break" />家族全員で比べてみよう。</h2>
+      <p>現在の料金プランと実際の月額、使うデータ量を入力。<br class="desktop-break" />自宅回線とスマホの組合せ、月額差と期間の費用を確認できます。</p>
+      <a class="manga-primary" href="/shindan/#diagnosis-form"><strong>わが家の通信費を診断する <span aria-hidden="true">→</span></strong><span>詳しい住所・氏名・連絡先の入力は不要</span></a>
+      <p class="diagnosis-note">回答はブラウザ内で計算します。掲載プラン・入力条件での参考比較です。特典や費用が未確認の項目を、0円とは見なしません。</p>
+    </section>
+
+    <section class="reading-checklist" aria-labelledby="reading-checklist-title">
+      <h2 id="reading-checklist-title">明細を開いたら、ここを確認。</h2>
+      <ul><li><strong>家族それぞれのスマホ</strong><span>プラン名・割引後の実際の月額・データ利用量・契約年数</span></li><li><strong>自宅のネット</strong><span>回線名・月額・電話などのセット割条件・建物の設備</span></li><li><strong>切替え時の支払いと特典</strong><span>解約金・残債・初期費用・受取条件と時期・今後使う年数</span></li></ul>
+      <p>端末の分割代や通話料など、プラン料以外の項目は明細で分けて確認してください。診断の試算範囲と計算条件は<a href="/shindan/">診断ページ</a>に記載しています。漫画は申込条件や節約効果を保証するものではありません。</p>
+    </section>
+    <nav class="manga-related" aria-label="漫画の次に読む"><a href="/hikari/area/">全国の提供エリアを確認 <span aria-hidden="true">→</span></a><a href="/mobile/">スマホ・SIMの選び方を見る <span aria-hidden="true">→</span></a><a href="/about/">編集方針・情報の確認方法 <span aria-hidden="true">→</span></a></nav>
+  </article>
+</Base>
+
+<style>
+  .manga-page{max-width:1000px;padding-top:20px;padding-bottom:42px;color:#263b32}.manga-heading{padding:24px 0 30px;max-width:850px}.manga-kicker{font-size:14px;font-weight:800;letter-spacing:.06em;color:#a04b29}.manga-heading h1{font-family:var(--font-sans);font-size:clamp(28px,4vw,42px);font-weight:800;line-height:1.5;margin:11px 0 15px;letter-spacing:.01em}.manga-lead{font-size:17px;line-height:1.9;color:#526257}.article-meta{display:flex;gap:16px;flex-wrap:wrap;margin-top:18px;font-size:12px;color:#5b6b60}.fiction-note{font-size:12px;line-height:1.85;color:#637166;margin-top:10px}.early-diagnosis{display:inline-flex;gap:14px;align-items:center;min-height:44px;margin-top:12px;font-size:14px;color:#175d50;font-weight:700;text-decoration:underline;text-underline-offset:4px}.manga-story{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:25px 22px}.manga-panel{border:1px solid #cdd8cd;border-radius:12px;overflow:hidden;background:#fffdf7;box-shadow:0 3px 0 #e7ece4}.manga-panel h2{display:flex;align-items:center;gap:12px;min-height:65px;padding:14px 17px;font-size:17px;font-weight:800;line-height:1.6;background:#f3f6ee}.manga-panel h2>span{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:32px;height:32px;border-radius:50%;background:#175d50;color:#fff;font-size:14px;font-family:var(--font-sans)}.manga-scene{position:relative;aspect-ratio:1;overflow:hidden;border-block:1px solid #d8dfd3;background:#f4ead9}.manga-scene img{position:absolute;width:200%;height:300%;max-width:none;object-fit:fill}.manga-dialogue{display:grid;gap:12px;padding:20px 18px 17px}.speech{display:flex;align-items:flex-start;gap:10px;line-height:1.9;font-size:16px;font-weight:600}.speech>span:last-child{position:relative;flex:1;padding:11px 13px;border:1px solid #d4e2d5;border-radius:3px 15px 15px 15px;background:#fff}.speech.wife>span:last-child{background:#fff3e6;border-color:#e7c9aa}.speaker{display:flex;flex-shrink:0;align-items:center;justify-content:center;width:29px;height:29px;margin-top:7px;border-radius:50%;background:#dcebe3;color:#175d50;font-size:12px;font-weight:800}.wife .speaker{background:#f8dfc1;color:#925026}.panel-point{border-top:1px dashed #d5dfd0;margin:0 18px;padding:14px 0 18px;color:#526256;font-size:13px;line-height:1.85}.panel-point>span{display:block;color:#175d50;font-size:11px;letter-spacing:.06em;font-weight:800;margin-bottom:4px}.manga-next{margin-top:40px;border:2px solid #175d50;background:#f1f7f0;border-radius:12px;padding:30px;text-align:center}.manga-next h2{font-size:clamp(24px,3vw,31px);line-height:1.6;font-weight:800;margin:10px 0 13px}.manga-next>p:not(.manga-kicker){font-size:15px;line-height:1.9;color:#4c6053}.manga-primary{display:flex;flex-direction:column;align-items:center;gap:5px;max-width:480px;margin:22px auto 14px;border:1px solid #954420;border-radius:7px;padding:16px 15px;background:#ad512e;color:white;box-shadow:0 3px 0 #843a20;text-decoration:none}.manga-primary:hover{background:#934222}.manga-primary:focus-visible{outline:3px solid #175d50;outline-offset:5px}.manga-primary strong{font-size:19px;line-height:1.7;font-weight:800}.manga-primary>span{font-size:12px;line-height:1.7;color:#fff3e9}.manga-next .diagnosis-note{font-size:12px!important;max-width:610px;margin-inline:auto}.reading-checklist{margin-top:32px;padding:25px;border:1px solid #d6dfd2;border-radius:9px}.reading-checklist h2{font-size:21px;font-weight:800;line-height:1.7}.reading-checklist ul{display:grid;gap:15px;margin-top:20px}.reading-checklist li{display:grid;grid-template-columns:200px minmax(0,1fr);gap:16px;font-size:14px;line-height:1.9}.reading-checklist strong{color:#175d50}.reading-checklist>p{font-size:12px;line-height:1.9;color:#617064;margin-top:20px}.reading-checklist a{text-decoration:underline;text-underline-offset:3px;color:#175d50}.manga-related{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:22px}.manga-related a{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px;border:1px solid #d4dfd3;border-radius:5px;font-size:13px;font-weight:700;color:#175d50;line-height:1.8}.mobile-break{display:none}@media(max-width:650px){.manga-page{padding-top:15px}.manga-heading{padding:19px 0 24px}.manga-heading h1{font-size:28px}.manga-lead{font-size:15px}.article-meta{gap:6px 12px}.manga-story{grid-template-columns:1fr;gap:24px}.manga-panel h2{min-height:58px;font-size:16px;padding:12px 14px;gap:10px}.manga-panel h2>span{width:29px;height:29px;font-size:13px}.manga-dialogue{padding:17px 14px 15px;gap:11px}.speech{font-size:16px;gap:8px}.speech>span:last-child{padding:9px 11px}.panel-point{margin:0 14px}.manga-next{padding:24px 17px;margin-top:30px}.manga-next h2{font-size:24px}.mobile-break{display:block}.desktop-break{display:none}.manga-primary{padding:14px 10px}.manga-primary strong{font-size:17px}.manga-primary>span{font-size:11px}.reading-checklist{padding:20px 17px;margin-top:24px}.reading-checklist h2{font-size:20px}.reading-checklist li{grid-template-columns:1fr;gap:1px}.manga-related{grid-template-columns:1fr}.manga-related a{min-height:48px}.manga-kicker{font-size:13px}}
+</style>
