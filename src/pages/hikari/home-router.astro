@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import ConnectivityManga from '../../components/ConnectivityManga.astro';
 import ProviderCard from '../../components/ProviderCard.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { SITE } from '../../site.config.mjs';
@@ -15,6 +16,9 @@ const crumbs = [{ name: 'ホーム', href: '/' }, { name: '工事なしのホー
     <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 leading-snug">工事なしで使えるネット（ホームルーター）</h1>
     <div class="prose-ja mt-4">
       <p>ホームルーターは、スマホと同じ電波を使う、置くだけのWi-Fiの機械です。工事がいらず、機械が届けばすぐに使い始められます。</p>
+    </div>
+    <ConnectivityManga story="router" context="工事なしでも、設置住所の電波と途中解約時の端末残額を確かめてから比較します。" comparisonHref="#router-provider-comparison" diagnosisHref="/shindan/?prefecture=46#diagnosis-form" />
+    <div class="prose-ja mt-4">
       <table>
         <thead><tr><th></th><th>光回線</th><th>ホームルーター</th></tr></thead>
         <tbody>
@@ -26,7 +30,7 @@ const crumbs = [{ name: 'ホーム', href: '/' }, { name: '工事なしのホー
       </table>
       <p class="text-xs text-gray-500">料金はすべて税込。最終確認日：{jpDate(lastChecked)}</p>
     </div>
-    <div class="mt-8 space-y-8">
+    <div id="router-provider-comparison" class="mt-8 space-y-8">
       {list.map((p, i) => <ProviderCard provider={p} building="house" rank={i + 1} headingLevel="h2" />)}
     </div>
     <section class="prose-ja mt-12">

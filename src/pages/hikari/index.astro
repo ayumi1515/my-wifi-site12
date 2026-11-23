@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import ConnectivityManga from '../../components/ConnectivityManga.astro';
 import VisualHero from '../../components/VisualHero.astro';
 import InternetVisualGuide from '../../components/InternetVisualGuide.astro';
 import RelatedConnectivityLinks from '../../components/RelatedConnectivityLinks.astro';
@@ -28,6 +29,8 @@ const setNames = (list: string[]) => [...new Set(list.map(s => s.replace(/（[^�
       <VisualHero title={"全国の光回線を、\n住む地域から選ぶ。"} lead="47都道府県・市区町村から提供エリアを確認。家族のスマホ・回線数・使う年数も合わせて、候補を比べられます。" image="internet" eyebrow="全国の通信回線・Wi-Fi"><a class="region-start" href="#regional-choice">使う地域を選ぶ</a></VisualHero>
       <p class="updated">提供可否は、住所・建物・希望プランごとに確認してください。／ <a href="/about/">編集方針</a></p>
     </header>
+
+    <div class="site-container"><ConnectivityManga story="national" context="都道府県を選び、住所ごとの提供確認と家族の通信費の診断へ進みます。地域名だけで使える回線を確定しません。" comparisonHref="#regional-choice" diagnosisHref="/shindan/#diagnosis-form" /></div>
 
     <section id="regional-choice" class="site-container national-choice" aria-labelledby="national-choice-title" data-national-chooser data-regions={JSON.stringify(regionChoices)} data-ntt={JSON.stringify(nttAreaChecks)}>
       <div class="region-choice-heading"><p>自分の地域から、比較を始める</p><h2 id="national-choice-title">まず、使う都道府県を選んでください</h2><p>地域名だけでは利用できる回線は決まりません。公式の住所確認と、家族の通信費の診断へ進みましょう。</p></div>

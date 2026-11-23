@@ -1,11 +1,13 @@
 ---
 import Base from '../../layouts/Base.astro';
+import ConnectivityManga from '../../components/ConnectivityManga.astro';
 import GuideDecision from '../../components/GuideDecision.astro';
 import GuideArtwork from '../../components/GuideArtwork.astro';
 import CostStory from '../../components/CostStory.astro';
 import ShortTermCost from '../../components/ShortTermCost.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import AffiliateButton from '../../components/AffiliateButton.astro';
+import PointsComparison from '../../components/PointsComparison.astro';
 import RelatedConnectivityLinks from '../../components/RelatedConnectivityLinks.astro';
 import { guides, categoryLabel, readingMinutes, type Guide } from '../../lib/guides';
 import { offers } from '../../lib/offers';
@@ -16,6 +18,8 @@ const { guide: g } = Astro.props as { guide: Guide };
 const related = g.relatedSlugs.map(slug => guides.find(guide => guide.slug === slug)).filter(Boolean) as Guide[];
 const services = g.relatedProviderIds.map(byId).filter(p => p !== undefined);
 const shortStay = g.slug === 'hikari-one-year';
+const internetMangaStories = { 'bbiq-vs-docomo-hikari':'compare-docomo', 'bbiq-vs-biglobe-hikari':'compare-biglobe', 'hikari-one-year':'short-stay', 'moving-internet-kagoshima':'moving' } as const;
+const internetMangaStory = internetMangaStories[g.slug as keyof typeof internetMangaStories];
 const nextStepLink = shortStay ? { href: '#one-year-cost', label: '12カ月の総額を比較' } : { href: '#next-step', label: '候補の条件を確認' };
 const matchedOffers = offers.filter(offer => offer.guideSlugs.includes(g.slug));
 const crumbs = [{ name: '総合トップ', href: '/' }, { name: '選び方ガイド', href: '/guides/' }, { name: g.title, href: `/guides/${g.slug}/` }];
@@ -32,7 +36,9 @@ const articleLd = { '@context':'https://schema.org','@type':'Article',headline:g
     </header>
     <div class="guide-body">
       <article class="guide-main">
+        {g.category === 'internet' && internetMangaStory && <ConnectivityManga story={internetMangaStory} context={g.title} comparisonHref="#answer" diagnosisHref={shortStay ? '/shindan/#diagnosis-form' : '/shindan/?prefecture=46#diagnosis-form'} />}
         <GuideDecision slug={g.slug} />
+        {g.category === 'internet' && g.relatedProviderIds.includes('docomo-hikari') && <details class="guide-points"><summary>dポイント還元の条件も確認する</summary><PointsComparison systems={['dpoint']} scope="home" compact /></details>}
         {shortStay && <><ShortTermCost /><CostStory /></>}
         {!shortStay && <GuideArtwork slug={g.slug} compact={false} />}
         <nav class="inline-toc" aria-label="この記事の目次"><p>この記事で分かること</p><ol>{g.sections.map(section => <li><a href={`#${section.id}`}>{section.title}<span aria-hidden="true">↓</span></a></li>)}{g.faqs.length>0 && <li><a href="#faq">よくある質問<span aria-hidden="true">↓</span></a></li>}</ol></nav>
@@ -58,6 +64,7 @@ const articleLd = { '@context':'https://schema.org','@type':'Article',headline:g
 </Base>
 
 <style>
+.guide-points{margin:22px 0;padding:16px 19px;border:1px solid #d8d6be;border-radius:7px;background:#fffdf4}.guide-points>summary{font-size:16px;font-weight:800;line-height:1.85;color:#175d50;cursor:pointer}
 .table-scroll-hint{display:none}
 .article-table:focus-visible{outline:3px solid #175d50;outline-offset:3px}
 @media(max-width:700px){.guide-page .article-copy .table-scroll-hint{display:block;margin:16px 0 8px;font-size:13px;line-height:1.7;color:#536459}.table-scroll-hint+.article-table{margin-top:0}}

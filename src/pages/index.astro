@@ -3,16 +3,44 @@ import Base from '../layouts/Base.astro';
 import VisualHero from '../components/VisualHero.astro';
 import MangaEntry from '../components/MangaEntry.astro';
 import GuideArtwork from '../components/GuideArtwork.astro';
+import MangaThumbnail from '../components/MangaThumbnail.astro';
 import RelatedConnectivityLinks from '../components/RelatedConnectivityLinks.astro';
 import AffiliateButton from '../components/AffiliateButton.astro';
 import { providers, byId, jpDate } from '../lib/data';
-import { guides, categoryLabel } from '../lib/guides';
+import { guides, categoryLabel, type GuideCategory } from '../lib/guides';
+import mobileServices from '../data/mobile-services.json';
+import { mobileMangaGuides } from '../lib/manga-mobile';
+import type { ConnectivityMangaSheet } from '../lib/connectivity-manga';
 import { offers } from '../lib/offers';
 import { SITE } from '../site.config.mjs';
 const picks=[{id:'bbiq',audience:'au・UQ mobileと九州電力',reason:'戸建ての電気・スマホをまとめる',label:'13カ月目以降・割引条件あり'},{id:'docomo-hikari',audience:'ドコモの対象プラン',reason:'家族のドコモ回線とセットに',label:'1ギガ・タイプA・2年定期'},{id:'softbank-hikari',audience:'ソフトバンク・ワイモバイル',reason:'指定オプションとおうち割を使う',label:'1ギガ・2年自動更新'}].map(p=>({...p,provider:byId(p.id)!}));
 const title='しらべまとめ帳｜通信・スマホ・学習サービスの条件を比較';
 const description='全国のWi-Fi・光回線、主要なスマホ・SIM、セキュリティソフト、中古スマホと英語学習を比較。公式情報をもとに、料金・契約・保証の条件から選べます。47都道府県・市区町村から提供エリアの確認先も探せます。';
-const collectionLd={'@context':'https://schema.org','@type':'CollectionPage',name:title,url:SITE.url+'/',description,inLanguage:'ja',mainEntity:{'@type':'ItemList',itemListElement:guides.map((g,i)=>({'@type':'ListItem',position:i+1,name:g.title,url:SITE.url+'/guides/'+g.slug+'/'}))}};
+interface HomeGuideCard {
+  href: string; category: GuideCategory; title: string; description: string; updatedAt: string;
+  artworkSlug: string; manga: { sheet: ConnectivityMangaSheet; frame: number } | null;
+}
+const homeGuideCards: HomeGuideCard[] = [
+  ...guides.map((guide, index) => ({
+    href: `/guides/${guide.slug}/`, category: guide.category, title: guide.title,
+    description: guide.description, updatedAt: guide.updatedAt, artworkSlug: guide.slug,
+    manga: guide.category === 'internet' ? {
+      sheet: (guide.slug === 'hikari-one-year' || guide.slug === 'moving-internet-kagoshima' ? 'moving' : 'compare') as ConnectivityMangaSheet,
+      frame: guide.slug === 'hikari-one-year' ? 2 : guide.slug === 'moving-internet-kagoshima' ? 0 : index % 2 === 0 ? 0 : 3,
+    } : null,
+  })),
+  ...['uq-mobile', 'x-mobile'].flatMap((id, index) => {
+    const service = mobileServices.find(item => item.id === id);
+    return service ? [{
+      href: `/mobile/${service.id}/`, category: 'internet' as GuideCategory,
+      title: `${service.name}を漫画で比較｜料金の条件と申込み前の確認`,
+      description: mobileMangaGuides[service.id].intro, updatedAt: service.checkedAt, artworkSlug: '',
+      manga: { sheet: 'mobile' as ConnectivityMangaSheet, frame: index === 0 ? 1 : 4 },
+    }] : [];
+  }),
+];
+const guideCount = guides.length + mobileServices.length;
+const collectionLd={'@context':'https://schema.org','@type':'CollectionPage',name:title,url:SITE.url+'/',description,inLanguage:'ja',mainEntity:{'@type':'ItemList',itemListElement:homeGuideCards.map((card,i)=>({'@type':'ListItem',position:i+1,name:card.title,url:SITE.url+card.href}))}};
 ---
 <Base title={title} description={description} jsonLd={[collectionLd]}>
   <div class="home-comparison">
@@ -32,11 +60,12 @@ const collectionLd={'@context':'https://schema.org','@type':'CollectionPage',nam
       <p class="source-note">税込・2026年11月22日確認。月額払いの通常料金です。複数月パックやアプリ内決済は条件が異なります。無料体験の対象と課金開始日は、申込画面で確認してください。<a href="https://eigosapuri.jp/plan/" target="_blank" rel="noopener">出典：リクルート公式料金</a></p><a class="learning-checklist" href="/guides/online-english-trial-checklist/">無料体験の前に：課金日・予約回数・やめ方のチェックリスト →</a>
     </div></section>
 
-    <section class="site-container home-section" aria-labelledby="guides-title"><div class="section-heading"><div><p class="eyebrow">比較・選び方ガイド</p><h2 id="guides-title">迷っている内容から読む</h2></div><a href="/guides/" class="all-link">全{guides.length}本を見る →</a></div><div class="guide-grid">{guides.map(guide=><article><a href={`/guides/${guide.slug}/`}><GuideArtwork slug={guide.slug} /><span class="guide-category">{categoryLabel[guide.category]}</span><h3>{guide.title}</h3><p>{guide.description}</p><span class="guide-bottom"><time datetime={guide.updatedAt}>{jpDate(guide.updatedAt)}</time><b>比較を見る →</b></span></a></article>)}</div></section>
+    <section class="site-container home-section" aria-labelledby="guides-title"><div class="section-heading"><div><p class="eyebrow">漫画と選び方ガイド</p><h2 id="guides-title">迷っている内容から読む</h2></div><a href="/guides/" class="all-link">全{guideCount}本を検索する →</a></div><div class="guide-grid">{homeGuideCards.map(card=><article><a href={card.href}>{card.manga ? <MangaThumbnail sheet={card.manga.sheet} frame={card.manga.frame} /> : <GuideArtwork slug={card.artworkSlug} />}<span class="guide-category">{categoryLabel[card.category]}{card.manga && <span class="manga-label">漫画で比較</span>}</span><h3>{card.title}</h3><p>{card.description}</p><span class="guide-bottom"><time datetime={card.updatedAt}>{jpDate(card.updatedAt)}</time><b>{card.manga ? '漫画で比較 →' : '比較を見る →'}</b></span></a></article>)}</div></section>
     <aside class="site-container editorial-note"><h2>料金だけでなく、使う条件まで比較します</h2><p>公式情報をもとに、対象プラン・契約期間・追加費用・向かないケースを整理しています。自分の条件に合った候補が見つかったら、申込先の最新情報を確認してお進みください。</p><a href="/about/">編集方針・情報の調べ方 →</a></aside>
   </div>
 </Base>
 <style>
+.manga-label{display:inline-block;margin-left:8px;padding:2px 7px;border-radius:4px;background:#f7ead7;color:#8c4a29;font-size:11px;line-height:1.7}.guide-grid article{min-width:0;overflow:hidden}.guide-grid h3,.guide-grid p{overflow-wrap:anywhere}.guide-bottom{flex-wrap:wrap}.guide-grid article>a:focus-visible{outline:3px solid #175d50;outline-offset:-3px}
 .home-diagnosis-entry{margin-top:18px;max-width:420px}.home-diagnosis-button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:66px;padding:13px 18px;border:1px solid #9b4627;border-radius:7px;background:#ae512e;box-shadow:0 3px 0 #843a20;color:#fff;text-align:center;text-decoration:none}.home-diagnosis-button:hover{background:#914023}.home-diagnosis-button:focus-visible{outline:3px solid #175d50;outline-offset:5px}.home-diagnosis-button strong{font-size:19px;line-height:1.6;font-weight:800}.home-diagnosis-button span{font-size:13px;line-height:1.6;color:#fff4e9}.home-diagnosis-area{display:inline-block;min-height:44px;padding:11px 0 5px;color:#175d50;font-size:13px;line-height:1.8;text-decoration:underline;text-underline-offset:4px}.home-intro .topic-shortcut{padding:7px 12px;background:transparent;border-color:#d5d9ce}.home-intro .topic-shortcut strong{font-size:13px;font-weight:700}@media(max-width:700px){.home-diagnosis-entry{margin-top:16px;max-width:none}.home-diagnosis-button{min-height:65px;padding:11px 10px}.home-diagnosis-button strong{font-size:18px}.home-diagnosis-button span{font-size:12px}.home-diagnosis-area{font-size:13px}.home-intro nav{margin-top:8px!important}.home-intro .topic-shortcut{padding:8px 5px}.home-intro .topic-shortcut strong{font-size:12px}}
 .national-entry{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:20px;border:1px solid #c9dcd0;border-radius:7px;background:#f0f6f2;padding:18px 20px}.national-entry p{font-size:13px;font-weight:700;color:#175d50}.national-entry h2{font-size:20px;font-weight:700;line-height:1.7;margin-top:4px}.national-entry>a{display:flex;align-items:center;justify-content:center;flex-shrink:0;min-height:46px;border:1px solid #175d50;border-radius:5px;background:#fff;padding:10px 14px;color:#175d50;font-size:14px;font-weight:700;text-align:center;line-height:1.7}.national-entry>a:hover{background:#e5efe8}@media(max-width:800px){.national-entry{align-items:stretch;flex-direction:column;gap:12px;padding:17px}.national-entry h2{font-size:18px}.national-entry>a{width:100%;font-size:14px}}
 

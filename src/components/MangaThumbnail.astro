@@ -1,0 +1,18 @@
+---
+import { connectivityMangaImages, type ConnectivityMangaSheet } from '../lib/connectivity-manga';
+
+interface Props {
+  sheet: ConnectivityMangaSheet;
+  frame?: number;
+}
+const { sheet, frame = 0 } = Astro.props;
+const selectedFrame = Number.isFinite(frame) ? Math.max(0, Math.min(5, Math.floor(frame))) : 0;
+---
+<div class="manga-thumbnail" aria-hidden="true">
+  <div class="manga-thumbnail-frame">
+    <img src={connectivityMangaImages[sheet]} width="1024" height="1536" alt="" loading="lazy" decoding="async" style={`left:${-(selectedFrame % 2) * 100}%;top:${-Math.floor(selectedFrame / 2) * 100}%`} />
+  </div>
+</div>
+<style>
+  .manga-thumbnail{position:relative;display:block;width:100%;min-width:0;aspect-ratio:16/10;overflow:hidden;background:#f4ead9;border-bottom:1px solid #d8dfd3;isolation:isolate}.manga-thumbnail-frame{position:absolute;left:0;top:50%;width:100%;aspect-ratio:1;overflow:hidden;transform:translateY(-50%)}.manga-thumbnail-frame img{position:absolute;display:block;width:200%;height:300%;max-width:none;object-fit:fill;pointer-events:none}
+</style>

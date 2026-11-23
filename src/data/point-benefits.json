@@ -1,0 +1,258 @@
+{
+  "checkedAt": "2026-11-23",
+  "calculationPolicy": "公式掲載の条件付き特典を現金の支払額と分けて紹介し、ポイントを月額・現金の節約額・料金順位から自動で差し引かない。",
+  "pointSystems": [
+    {
+      "id": "dpoint",
+      "label": "dポイント"
+    },
+    {
+      "id": "rakuten",
+      "label": "楽天ポイント"
+    },
+    {
+      "id": "ponta",
+      "label": "Pontaポイント"
+    },
+    {
+      "id": "paypay",
+      "label": "PayPayポイント"
+    }
+  ],
+  "benefits": [
+    {
+      "id": "docomo-hikari-construction-points",
+      "system": "dpoint",
+      "scope": "home",
+      "service": "ドコモ光",
+      "title": "工事料の支払い後にポイント還元",
+      "benefit": "最大28,600pt",
+      "benefitNote": "対象の通常工事料相当を期間・用途限定ポイントで還元。全員に同じ額がもらえる特典ではなく、工事料の支払い自体は必要です。",
+      "earn": "開通7か月後から24回に分けて進呈。1月開通なら8月から。",
+      "spend": "dポイント加盟店・d払い等で利用。料金への充当は利用登録・申込み等の条件あり。",
+      "expiry": "各進呈月を含む6か月。24回分が一度にもらえる特典ではありません。",
+      "conditions": [
+        "2026年6月1日以降の申込みについて、新規／光回線再利用で申し込み、申込月を含む7か月以内に利用開始すること等が条件です。住宅の工事が可能という回答だけでは適用は確定しません。",
+        "進呈対象は実際の通常工事料相当です。工事内容で金額は変わります。28,600円の対象工事なら、初回1,207pt、その後1,191ptを23回に分けて進呈します。",
+        "フレッツ光・提携CATVからのきりかえ、設置場所の移転は対象外です。事務手数料4,950円、土日祝日の追加工事料、オプション工事等はこの還元の対象外です。",
+        "光回線再利用手続費6,600円は別途です。2026年2月1日以降の申込みで180日以内に開通した場合は請求されない条件があります。",
+        "ペア回線がある場合はその携帯回線のdアカウント、ない場合は登録したドコモ光のdアカウントへ進呈します。進呈時にdポイントクラブ会員である必要があります。",
+        "途中解約すると解約翌月から進呈は終了します。工事料の分割残額は解約翌月に一括請求されるため、短期利用で全額を受け取れるとは限りません。",
+        "広告窓口の現金特典等との併用条件は別途確認が必要です。このポイントを工事料から自動控除したり、別窓口の特典と合算したりしません。",
+        "料金へのポイント充当には利用者登録・回線ごとの申込み等が必要です。翌月2日までに失効するポイントは充当できず失効するため、期限内に使える方法を確認してください。"
+      ],
+      "internalHref": "/hikari/docomo-hikari/#conclusion",
+      "internalLabel": "ドコモ光の料金と条件を比較",
+      "officialCampaignHref": "https://www.docomo.ne.jp/campaign_event/hikari_shinkikojiryo_free/",
+      "sources": [
+        {
+          "title": "ドコモ：新規工事料特典の適用・進呈条件",
+          "url": "https://www.docomo.ne.jp/campaign_event/hikari_shinkikojiryo_free/"
+        },
+        {
+          "title": "ドコモ：ドコモ光の工事料金",
+          "url": "https://www.docomo.ne.jp/internet/hikari/construction_costs/"
+        },
+        {
+          "title": "ドコモ：工事特典のポイント数",
+          "url": "https://www.docomo.ne.jp/faq/detail?categoryId=12921&faqId=286813"
+        },
+        {
+          "title": "dポイントクラブ：料金への充当・期限の条件",
+          "url": "https://dpoint.docomo.ne.jp/use/payment/index.html"
+        }
+      ],
+      "checkedAt": "2026-11-23"
+    },
+    {
+      "id": "ahamo-mnp-sim-20000",
+      "system": "dpoint",
+      "scope": "mobile",
+      "service": "ahamo・SIMのみの他社MNP",
+      "title": "対象の乗換えで期間限定ポイント",
+      "benefit": "合計20,000pt",
+      "benefitNote": "端末購入なしのSIMのみMNPなどの条件あり。4,000ptずつ5か月で受け取る期間・用途限定ポイントです。",
+      "earn": "条件を満たした月の翌々月末から、5か月間・毎月月末までに進呈。",
+      "spend": "dポイント加盟店・d払い等の対象支払いに利用。料金充当にも別途条件があります。",
+      "expiry": "各進呈日から94日間。受け取った月ごとに期限が異なります。",
+      "conditions": [
+        "ahamoサイトで、端末購入を伴わずSIMのみ（eSIMを含む）で他社からMNPして開通すること等が条件です。新しい番号の契約・ドコモ内のプラン変更・端末同時購入は対象外です。",
+        "契約と同じdアカウントで、開通日の前月または当月にエントリーします。エントリー翌々月以降の開通、開通翌月以降のエントリーは対象外です。",
+        "進呈時点でdポイントクラブ会員である必要があります。過去に同様のahamo特典を受け取った場合や、新規契約時のJALモバイルオプション同時申込み等は対象外です。",
+        "1回線につき1回・1アカウントにつき1回です。家族回線数だけで20,000ptを掛け算することはできません。",
+        "他の乗換え・紹介等のキャンペーンは重複できない場合があります。対象となるキャンペーンの最新エントリーが優先される等の条件を確認してください。",
+        "進呈額・条件は変わる場合があります。予定する申込日と窓口で、エントリーの有効性・受取時期を確認してください。",
+        "ドコモ料金への充当には利用者登録・回線ごとの申込み等が必要です。翌月2日までに失効するポイントは充当できません。"
+      ],
+      "internalHref": "/mobile/ahamo/#plan-comparison",
+      "internalLabel": "ahamoの料金と条件を比較",
+      "officialCampaignHref": "https://ahamo.com/special/lp/dpointcp/001.html",
+      "sources": [
+        {
+          "title": "ahamo：他社からのSIMのみ乗換え特典",
+          "url": "https://ahamo.com/special/lp/dpointcp/001.html"
+        },
+        {
+          "title": "ahamo：現在のポイント進呈時期",
+          "url": "https://faq.ahamo.com/faq/show/3104?category_id=40&site_domain=default"
+        },
+        {
+          "title": "ahamo：重複できないキャンペーン",
+          "url": "https://ahamo.com/campaigns/tyoujyou.html"
+        },
+        {
+          "title": "dポイントクラブ：料金充当の条件",
+          "url": "https://dpoint.docomo.ne.jp/use/payment/index.html"
+        }
+      ],
+      "checkedAt": "2026-11-23"
+    },
+    {
+      "id": "docomo-poikatsu-max-payment-points",
+      "system": "dpoint",
+      "scope": "mobile",
+      "service": "ドコモ ポイ活 MAX",
+      "title": "対象の買物・決済でポイント還元",
+      "benefit": "月最大5,000pt",
+      "benefitNote": "利用額・カード・支払方法等で変わる期間・用途限定ポイント。毎月5,000ptを受け取れる定額還元ではありません。",
+      "earn": "対象決済の翌月下旬（通常25日）。売上反映等により遅れる場合あり。",
+      "spend": "dポイント加盟店・d払い等で利用。料金への充当は登録・申込み等の条件あり。",
+      "expiry": "進呈日から93日。売上反映が遅れた分は有効期間が短くなる条件があります。",
+      "conditions": [
+        "対象決済日にポイ活MAXを契約し、カードへの該当電話番号登録等の条件を満たす必要があります。買物額・対象の決済方法・カードの種類等で還元額が変わります。",
+        "ポイ活特典の率は対象条件により3%・5%・10%です。通常還元とは別です。GOLD U／GOLD／PLATINUMで高い率を受けるには、利用回線料金の対象カード支払設定等も必要です。",
+        "d払いは対象の支払方法に限ります。ポイント・クーポン利用分、請求書払い、モバイルSuicaチャージ、対象外店舗等には適用されません。",
+        "dカードの携帯料金・年会費・手数料・電子マネー等へのチャージなども対象外です。買物総額すべてに還元率を掛けず、有料カードの年会費も別途確認してください。",
+        "月5,000ptは対象特典の上限です。対象の証券積立分には月1,000ptの内枠上限があります。支出を入力しない簡単診断では、獲得額・使い切れる額を自動計算しません。",
+        "全対象者への10%増額キャンペーンは2026年4月30日で終了しています。申込み時のカード・支払設定の条件を確認してください。",
+        "2026年12月以降の携帯利用料金に対するポイント算定は、割引後の料金から対象決済のポイ活特典ポイント分を減額した額へ変わります。通常の利用料ポイントとの重複計算をしません。",
+        "料金への充当には利用者登録・回線ごとの申込み等が必要です。翌月2日までに失効するポイントは使えないため、受取後の期限も確認してください。"
+      ],
+      "internalHref": "/shindan/?goal=mobile&points=dpoint#diagnosis-form",
+      "internalLabel": "他のスマホ料金も合わせて診断",
+      "officialCampaignHref": "https://www.docomo.ne.jp/charge/docomo_poikatsu_max/",
+      "sources": [
+        {
+          "title": "ドコモ：ポイ活MAXのポイント・対象条件",
+          "url": "https://www.docomo.ne.jp/charge/docomo_poikatsu_max/"
+        },
+        {
+          "title": "ドコモ：ポイ活MAXの提供条件書",
+          "url": "https://www.docomo.ne.jp/binary/pdf/support/utilization_notice/document/docomo_poikatsu_max.pdf?ver=1790777355"
+        },
+        {
+          "title": "ドコモ：2026年12月以降のポイント算定改定",
+          "url": "https://www.docomo.ne.jp/info/notice/page/260901_00.html"
+        },
+        {
+          "title": "dポイントクラブ：料金充当の条件",
+          "url": "https://dpoint.docomo.ne.jp/use/payment/index.html"
+        }
+      ],
+      "checkedAt": "2026-11-23"
+    },
+    {
+      "id": "rakuten-mobile-service-points",
+      "system": "rakuten",
+      "scope": "mobile",
+      "service": "楽天モバイル",
+      "title": "対象の利用料から通常ポイントが貯まる",
+      "benefit": "税別100円ごとに1pt",
+      "benefitNote": "対象サービス利用料の通常還元。楽天市場のSPUや、期間限定の申込特典とは別です。",
+      "earn": "利用開始月の翌々月から、毎月25日に進呈。",
+      "spend": "1pt＝1円として楽天モバイルの月々の支払い等に利用。",
+      "expiry": "通常ポイントは最後に獲得した月を含む1年間。通常ポイントの獲得で延長。",
+      "conditions": [
+        "対象はプラン・対象通話・対象オプションなどのサービス利用料です。税込の請求全額に一律1%を掛ける計算はしません。",
+        "付与先は契約者の楽天IDです。IDの未登録・削除、支払期限の超過等は対象外となります。",
+        "ポイント払いの対象利用料も付与対象です。通常還元の月間付与上限はありません。",
+        "期間限定ポイントの期限は個別に決まります。毎月11〜13日頃の請求時に失効したポイントは、その請求の支払いに使えません。",
+        "楽天市場のSPUはエントリー・対象購入・月間上限等がある別特典です。通常利用料の還元に合算しません。"
+      ],
+      "internalHref": "/mobile/rakuten-mobile/#plan-comparison",
+      "internalLabel": "楽天モバイルの料金と条件を比較",
+      "officialCampaignHref": "https://network.mobile.rakuten.co.jp/guide/point/",
+      "sources": [
+        {
+          "title": "楽天モバイル：ポイントの利用・付与条件",
+          "url": "https://network.mobile.rakuten.co.jp/guide/point/"
+        },
+        {
+          "title": "楽天カード：ポイントの有効期限",
+          "url": "https://support.rakuten-card.jp/faq/show/52967?site_domain=guest"
+        }
+      ],
+      "checkedAt": "2026-11-23"
+    },
+    {
+      "id": "uq-komikomi-ponta-pass",
+      "system": "ponta",
+      "scope": "mobile",
+      "service": "UQ mobile・コミコミプランバリュー",
+      "title": "Pontaパスの対象決済で還元UP",
+      "benefit": "利用額・決済条件で変わる",
+      "benefitNote": "Pontaパスの利用開始手続きが必要。月548円相当の付帯サービスを、同額のポイント獲得としては計算しません。",
+      "earn": "毎月のエントリー・対象決済後、翌月中旬以降に進呈。",
+      "spend": "Pontaポイントとして利用。au PAYマーケット限定ポイント等とは利用先が異なります。",
+      "expiry": "連携済みの通常Pontaは加算・利用で1年延長。キャンペーン分は個別の期限も確認。",
+      "conditions": [
+        "対象プランの回線と同じau IDでPontaパスを申し込み、Ponta会員IDを連携する必要があります。連携前の決済は対象外です。",
+        "毎月エントリーし、同じau IDのau PAYでローソン・対象加盟店のコード支払い／ネット支払いを利用します。請求書支払い・auかんたん決済は対象外です。",
+        "ローソンは1回200円（税別）以上、対象店は1回200円（税込）以上などの条件があります。還元率・上限は店舗区分、対象決済回数、エントリー時のau／UQ契約状態等で変わります。",
+        "通常の還元UPと期間限定の増額は別条件です。抽選で当たる特典を獲得済みとして扱いません。",
+        "Pontaパス料金が発生した上で相当額が割り引かれます。対象プランから変更すると割引は終了しますが、Pontaパスは別途退会しない限り継続します。"
+      ],
+      "internalHref": "/mobile/uq-mobile/#plan-comparison",
+      "internalLabel": "UQ mobileの料金と条件を比較",
+      "officialCampaignHref": "https://www.uqwimax.jp/mobile/plan/komikomi-pv/",
+      "sources": [
+        {
+          "title": "UQ mobile：コミコミプランバリュー",
+          "url": "https://www.uqwimax.jp/mobile/plan/komikomi-pv/"
+        },
+        {
+          "title": "au：Pontaパス ポイント還元UPの条件",
+          "url": "https://www.point-portal.auone.jp/ext/qa/faq.html"
+        },
+        {
+          "title": "au：通常・限定Pontaポイントの違い",
+          "url": "https://www.au.com/support/faq/details/00/0000/000004/pg00000416/"
+        }
+      ],
+      "checkedAt": "2026-11-23"
+    },
+    {
+      "id": "softbank-paytoku2-paypay",
+      "system": "paypay",
+      "scope": "mobile",
+      "service": "SoftBank・ペイトク2",
+      "title": "対象のPayPay決済にポイントを上乗せ",
+      "benefit": "＋5%・月上限3,000pt",
+      "benefitNote": "利用額・カード等で変わる還元。PayPayカード ゴールド等の条件を満たす場合は＋10%・月上限4,000ptです。",
+      "earn": "対象決済から原則30日後を目途に進呈。遅れる場合があります。",
+      "spend": "1pt＝1円相当で対象のPayPay支払いに利用。出金・譲渡は不可。",
+      "expiry": "通常のPayPayポイントには有効期限がありません。期間限定ポイントは別です。",
+      "conditions": [
+        "ペイトク2の契約と回線・PayPayアカウントの連携等が必要です。対象となるPayPayクレジット・残高・ポイント等の決済が対象です。",
+        "＋10%の条件には、PayPayカード ゴールドをPayPayアプリに登録し、PayPayクレジットを使える状態にすること等があります。月末の登録確認が翌月の条件となります。",
+        "PayPayカード ゴールドの年会費は11,000円（税込）です。ポイントだけで年会費や通信プラン料金の負担がなくなるとは限りません。",
+        "通信料、医療機関・調剤薬局、交通系IC等のチャージ、カード年会費、請求書払い、各種税金等に対象外があります。買物総額の全額に付与率を掛けません。",
+        "通常のPayPayステップ等とは別条件です。回線解約・プラン変更・連携解除等で特典は終了します。上限のために買物を増やす前提にはしません。"
+      ],
+      "internalHref": "/shindan/?goal=mobile&points=paypay#diagnosis-form",
+      "internalLabel": "他のスマホ料金も合わせて診断",
+      "officialCampaignHref": "https://www.softbank.jp/mobile/price_plan/data/paytoku2/",
+      "sources": [
+        {
+          "title": "SoftBank：ペイトク2の適用条件",
+          "url": "https://www.softbank.jp/mobile/price_plan/data/paytoku2/"
+        },
+        {
+          "title": "PayPay：ポイントの種類・利用制限",
+          "url": "https://paypay.ne.jp/point/"
+        }
+      ],
+      "checkedAt": "2026-11-23"
+    }
+  ]
+}

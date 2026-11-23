@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import ConnectivityManga from '../../components/ConnectivityManga.astro';
 import ProviderCard from '../../components/ProviderCard.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { SITE } from '../../site.config.mjs';
@@ -18,7 +19,8 @@ const crumbs = [{ name: 'ホーム', href: '/' }, { name: '戸建て向けの光
       <p>月額は、戸建てのほうがマンションより高めです。スマホとのセット割を組み合わせると、家族全体の通信費が下がりやすくなります。</p>
       <p class="text-xs text-gray-500">料金はすべて税込。最終確認日：{jpDate(lastChecked)}</p>
     </div>
-    <div class="mt-8 space-y-8">
+    <ConnectivityManga story="house" context="鹿児島県の戸建てで、工事費と家族のスマホを合わせて比べる前の確認です。" comparisonHref="#house-provider-comparison" diagnosisHref="/shindan/?prefecture=46#diagnosis-form" />
+    <div id="house-provider-comparison" class="mt-8 space-y-8">
       {list.map((p, i) => <ProviderCard provider={p} building="house" rank={i + 1} headingLevel="h2" />)}
     </div>
     <section class="prose-ja mt-12">

@@ -1,0 +1,109 @@
+---
+import pointBenefitsRaw from '../data/point-benefits.json';
+import { jpDate } from '../lib/data';
+
+type PointSystem = 'dpoint' | 'rakuten' | 'ponta' | 'paypay';
+type PointScope = 'home' | 'mobile';
+interface PointBenefit {
+  id: string;
+  system: PointSystem;
+  scope: PointScope;
+  service: string;
+  title: string;
+  benefit: string;
+  benefitNote: string;
+  earn: string;
+  spend: string;
+  expiry: string;
+  conditions: string[];
+  internalHref: string;
+  internalLabel: string;
+  officialCampaignHref: string;
+  sources: { title: string; url: string }[];
+  checkedAt: string;
+}
+interface Props {
+  systems?: PointSystem[];
+  compact?: boolean;
+  scope?: PointScope | 'all';
+}
+const { systems = ['dpoint', 'rakuten', 'ponta', 'paypay'], compact = false, scope = 'all' } = Astro.props;
+const data = pointBenefitsRaw as {
+  checkedAt: string;
+  calculationPolicy: string;
+  pointSystems: { id: PointSystem; label: string }[];
+  benefits: PointBenefit[];
+};
+const benefits = data.benefits.filter(benefit => systems.includes(benefit.system) && (scope === 'all' || benefit.scope === scope));
+const pointLabel = (system: PointSystem) => data.pointSystems.find(pointSystem => pointSystem.id === system)?.label ?? system;
+const Heading = compact ? 'h3' : 'h2';
+const CardHeading = compact ? 'h4' : 'h3';
+---
+{benefits.length > 0 && <section class:list={['points-comparison', { 'points-compact': compact }]} aria-label="ポイント特典の条件比較" data-points-comparison>
+  <header class="points-heading">
+    <p class="points-kicker">料金と分けて、ポイントも比較</p>
+    <Heading class="points-title">よく使うポイントの特典を確認</Heading>
+    <p class="points-intro">ポイント対象の別プラン・特典を確認できます。上の料金案に自動で付く特典ではありません。条件付きのポイントは、月額や現金の節約額から差し引いていません。</p>
+  </header>
+  <div class="points-card-grid">
+    {benefits.map(benefit => <article class="points-card" data-point-system={benefit.system} data-point-scope={benefit.scope} data-point-benefit={benefit.id}>
+      <div class="points-card-top"><span class="points-system">{pointLabel(benefit.system)}</span><span class="points-conditional">対象条件あり</span></div>
+      <p class="points-service">{benefit.service}</p>
+      <CardHeading class="points-card-title">{benefit.title}</CardHeading>
+      <p class="points-benefit">{benefit.benefit}</p>
+      <p class="points-benefit-note">{benefit.benefitNote}</p>
+      <dl class="points-facts">
+        <div><dt>貯まる</dt><dd>{benefit.earn}</dd></div>
+        <div><dt>使える</dt><dd>{benefit.spend}</dd></div>
+        <div><dt>失効</dt><dd>{benefit.expiry}</dd></div>
+      </dl>
+      <details class="points-conditions"><summary>対象条件・受け取り方を詳しく</summary><ul>{benefit.conditions.map(condition => <li>{condition}</li>)}</ul><div class="points-sources"><p>公式の確認先</p><ul>{benefit.sources.map(source => <li><a href={source.url} target="_blank" rel="noopener noreferrer">{source.title}<span aria-hidden="true"> ↗</span></a></li>)}</ul></div></details>
+      <a class="points-compare-link" href={benefit.internalHref}>{benefit.internalLabel}<span aria-hidden="true"> →</span></a>
+      <a class="points-official-link" href={benefit.officialCampaignHref} target="_blank" rel="noopener noreferrer">公式で特典の条件を確認<span aria-hidden="true"> ↗</span></a>
+      <p class="points-checked">公式情報の確認：<time datetime={benefit.checkedAt}>{jpDate(benefit.checkedAt)}</time></p>
+    </article>)}
+  </div>
+  <p class="points-calculation-note">買物額・カード・会員登録などで還元は変わります。現金値引き・キャッシュバックとは別の特典で、獲得や使い切れる額が確定した表示ではありません。</p>
+</section>}
+<style>
+  .points-comparison{min-width:0;margin:28px 0;color:#283d33;overflow-wrap:anywhere;scroll-margin-top:24px}
+  .points-heading{margin-bottom:18px}
+  .points-kicker{font-size:13px;font-weight:800;line-height:1.8;color:#965030}
+  .points-title{font-size:clamp(23px,3vw,29px);font-weight:800;line-height:1.6;margin:6px 0 9px}
+  .points-intro{font-size:15px;line-height:1.95;color:#526a5b}
+  .points-card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:19px}
+  .points-card{min-width:0;padding:21px;border:1px solid #cbdccf;border-top:4px solid #175d50;border-radius:8px;background:#fff}
+  .points-card[hidden]{display:none}
+  .points-card-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+  .points-system{display:inline-block;padding:4px 9px;background:#eaf3ec;border-radius:4px;color:#175d50;font-size:13px;font-weight:800;line-height:1.7}
+  .points-conditional{color:#71614b;font-size:12px;line-height:1.8}
+  .points-service{font-size:13px;font-weight:700;line-height:1.8;color:#586f60}
+  .points-card-title{font-size:18px;font-weight:800;line-height:1.7;margin:5px 0 11px}
+  .points-benefit{font-size:clamp(20px,2.7vw,26px);font-weight:800;line-height:1.6;color:#9b492a}
+  .points-benefit-note{font-size:13px;line-height:1.9;color:#5b6d5e;margin-top:8px}
+  .points-facts{margin-top:17px;border-block:1px solid #dce5db}
+  .points-facts>div{display:grid;grid-template-columns:48px minmax(0,1fr);gap:11px;padding:11px 0}
+  .points-facts>div+div{border-top:1px solid #e4ebe1}
+  .points-facts dt{font-size:12px;line-height:1.9;font-weight:800;color:#175d50}
+  .points-facts dd{font-size:13px;line-height:1.9;color:#4e6657;margin:0}
+  .points-conditions{margin-top:13px;padding:0 11px;border:1px solid #d7e2d7;border-radius:5px;background:#f5f8f2}
+  .points-conditions summary{cursor:pointer;min-height:44px;padding:11px 0;font-size:13px;font-weight:700;line-height:1.8;color:#365d49}
+  .points-conditions>ul{list-style:disc;padding:0 0 13px 18px;font-size:13px;line-height:1.95;color:#516756}
+  .points-conditions li+li{margin-top:8px}
+  .points-sources{padding:12px 0 13px;border-top:1px solid #dce5d8}
+  .points-sources>p{font-size:12px;font-weight:700;line-height:1.8;color:#516d58}
+  .points-sources ul{list-style:disc;padding-left:18px;margin-top:5px}
+  .points-sources a{font-size:12px;line-height:1.9;color:#175d50;text-decoration:underline;text-underline-offset:3px}
+  .points-compare-link{display:flex;align-items:center;justify-content:center;min-height:48px;padding:11px 12px;margin-top:17px;border:1px solid #b9d0bf;border-radius:5px;background:#edf5ed;color:#175d50;text-align:center;text-decoration:none;font-size:14px;font-weight:800;line-height:1.8}
+  .points-compare-link:hover{background:#deede0}
+  .points-official-link{display:block;min-height:44px;padding:12px 0 8px;color:#175d50;text-align:center;font-size:13px;font-weight:700;line-height:1.8;text-decoration:underline;text-underline-offset:3px}
+  .points-checked{font-size:11px;line-height:1.9;color:#687a6c;margin-top:3px}
+  .points-calculation-note{padding:13px 16px;border:1px solid #e7dac5;border-radius:5px;background:#fff7e9;font-size:13px;line-height:1.95;color:#79583b;margin-top:17px}
+  .points-comparison :focus-visible{outline:3px solid #b95d35;outline-offset:3px}
+  .points-compact{margin:23px 0}
+  .points-compact .points-title{font-size:22px}
+  .points-compact .points-card{padding:17px}
+  .points-compact .points-card-grid{gap:15px}
+  .points-compact .points-benefit{font-size:22px}
+  @media(max-width:700px){.points-card-grid{grid-template-columns:1fr;gap:17px}.points-card{padding:18px}.points-title{font-size:23px}.points-benefit{font-size:24px}.points-card-title{font-size:18px}.points-intro{font-size:14px}.points-facts>div{grid-template-columns:44px minmax(0,1fr);gap:10px}.points-compact .points-card{padding:16px}.points-calculation-note{padding:12px 14px}}
+</style>

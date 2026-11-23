@@ -1,0 +1,83 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ConnectivityManga from '../../components/ConnectivityManga.astro';
+import AffiliateButton from '../../components/AffiliateButton.astro';
+import PointsComparison from '../../components/PointsComparison.astro';
+import mobileServices from '../../data/mobile-services.json';
+import affiliatesRaw from '../../data/category-affiliates.json';
+import { mobileMangaGuides } from '../../lib/manga-mobile';
+import { breadcrumbLd, jpDate } from '../../lib/data';
+import { SITE } from '../../site.config.mjs';
+
+type MobileService = (typeof mobileServices)[number];
+interface AffiliateEntry {
+  name: string;
+  affiliate: { href: string; label: string; pixel?: string | null; banner?: { href: string; src: string; width: number; height: number; pixel?: string | null } | null } | null;
+}
+export function getStaticPaths() {
+  return mobileServices.map(service => ({ params: { id: service.id }, props: { service } }));
+}
+const { service: s } = Astro.props as { service: MobileService };
+const g = mobileMangaGuides[s.id];
+if (!g) throw new Error(`Missing individual mobile manga copy: ${s.id}`);
+const byId = new Map(mobileServices.map(service => [service.id, service]));
+const comparisonServices = [s, ...g.comparisonIds.map(id => byId.get(id)).filter((service): service is MobileService => Boolean(service))];
+const affiliates = affiliatesRaw as Record<string, AffiliateEntry>;
+const a = affiliates[s.id];
+const product = { name: a?.name ?? s.name, officialUrl: s.officialUrl, affiliate: a?.affiliate ?? null };
+const sources = [...new Map(comparisonServices.flatMap(service => service.sources).map(source => [source.url, source])).values()];
+const path = `/mobile/${s.id}/`;
+const title = `${s.name}を漫画で比較｜料金の条件と申込み前の確認`;
+const description = `${g.intro} ${s.priceLabel}の掲載例を、容量・通話・初期費用の条件から確認。比較後は家族の通信費診断と公式の申込条件へ進めます。`;
+const diagnosisHref = '/shindan/?goal=mobile#diagnosis-form';
+const crumbs = [{ name: '総合トップ', href: '/' }, { name: 'スマホ・SIM比較', href: '/mobile/' }, { name: s.name, href: path }];
+const articleLd = { '@context': 'https://schema.org', '@type': 'Article', headline: title, description, datePublished: s.checkedAt, dateModified: s.checkedAt, mainEntityOfPage: SITE.url + path, author: { '@type': 'Organization', name: SITE.operator, url: SITE.url + '/about/' }, publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url }, inLanguage: 'ja' };
+---
+<Base title={title} description={description} jsonLd={[articleLd, breadcrumbLd(SITE.url, crumbs)]}>
+  <article class="mobile-manga-article site-container">
+    <Breadcrumbs items={[crumbs[0], crumbs[1], { name: s.name }]} />
+    <header class="article-header">
+      <p class="article-eyebrow">スマホ・SIM / 漫画で選び方を確認</p>
+      <h1>{s.name}を、<br class="desktop-break" />使い方と条件から選ぶ。</h1>
+      <p class="article-lead">{g.intro}</p>
+      <p class="article-byline">{SITE.operator} / 情報確認：<time datetime={s.checkedAt}>{jpDate(s.checkedAt)}</time></p>
+      <nav class="article-jump" aria-label="この記事の案内"><a href="#article-manga">漫画で確認する</a><a href="#plan-comparison">料金と条件を比べる</a><a href="#next-step">診断・申込先を見る</a></nav>
+    </header>
+    <aside class="article-first-answer" aria-label="先に確認したいこと"><p>このプランで最初に考えること</p><h2>{g.question}</h2><p>{s.summary}</p></aside>
+    <div id="article-manga" class="manga-anchor"><ConnectivityManga story="mobile" context={s.name} panels={g.panels} diagnosisHref={diagnosisHref} comparisonHref="#plan-comparison" /></div>
+
+    <section id="plan-comparison" class="article-section" aria-labelledby="plan-comparison-title">
+      <p class="section-eyebrow">漫画のあとに、実際の条件を確認</p>
+      <h2 id="plan-comparison-title">{s.name}の掲載プランと、比較する視点</h2>
+      <div class="current-plan"><div><span>通常料金の掲載例</span><strong>{s.priceLabel}</strong><p>{s.priceNote}</p></div><dl><div><dt>データ量・プランの目安</dt><dd>{s.dataLabel}</dd></div><div><dt>利用する回線</dt><dd>{s.network}</dd></div></dl></div>
+      <p>{g.comparisonLead}</p>
+      <p class="table-hint" id="comparison-scroll-hint">表は横にスクロールできます。</p>
+      <div class="comparison-scroll" role="region" aria-label="スマホ・SIM掲載例の条件比較表" aria-describedby="comparison-scroll-hint" tabindex="0"><table><caption>掲載例の料金と条件（料金は税込）</caption><thead><tr><th scope="col">ブランド</th><th scope="col">基本料の掲載例</th><th scope="col">データ・プランの条件</th></tr></thead><tbody>{comparisonServices.map(service => <tr><th scope="row">{service.id === s.id ? service.name : <a href={`/mobile/${service.id}/`}>{service.name}の記事</a>}</th><td><strong>{service.priceLabel}</strong><p>{service.priceNote}</p></td><td>{service.dataLabel}</td></tr>)}</tbody></table></div>
+      <p class="comparison-note">容量・通話の付帯・購入期間が異なる掲載例です。金額だけの安い順や、おすすめ順位を示す表ではありません。申込み前に希望する容量と条件をそろえて確認してください。</p>
+    </section>
+
+    <details class="article-points"><summary>ポイント還元も比較する（dポイント・楽天・Ponta・PayPay）</summary><PointsComparison scope="mobile" compact /></details>
+    <section id="next-step" class="next-step article-section" aria-labelledby="next-step-title">
+      <h2 id="next-step-title">比較したら、自分の条件で確かめる</h2>
+      <div class="next-step-grid">
+        <section class="diagnosis-choice"><p class="next-step-eyebrow">家族や他の候補も合わせて考える</p><h3>家族のスマホ代を診断する</h3><p>キャリア・通信量・今後使う年数を入力し、掲載中の代表プランの組合せを比べます。このブランドへ固定する診断ではありません。</p>{s.id === 'povo' && <p class="povo-scope">povoの都度購入は月額型とは別枠です。診断の月額最適化ではpovoを固定候補にせず、掲載中の月額プランを比較します。</p>}<a class="diagnosis-cta" href={diagnosisHref}>スマホの条件を入力して比べる</a><a class="home-diagnosis-link" href="/shindan/#diagnosis-form">自宅のWi-Fiも含めて診断する</a></section>
+        <section class="product-choice"><p class="next-step-eyebrow">この候補の申込条件を確認する</p><h3>{s.name}</h3><p>最新の料金・端末対応・必要な初期費用を申込先で確認してください。家族分は名義・利用者・契約条件もそれぞれ確認します。</p>{s.cautions[0] && <p class="application-caution">{s.cautions[0]} <a href="#cautions-title">注意点をすべて確認</a></p>}<AffiliateButton provider={product} actionFirst={true} notice="料金・データ量・初期費用・端末対応・特典の対象条件をリンク先で確認してください。" />{a?.affiliate && <a class="official-text-link" href={s.officialUrl} target="_blank" rel="noopener">{s.name}の公式プラン情報</a>}</section>
+      </div>
+    </section>
+
+
+    <section class="article-section" aria-labelledby="checkpoints-title"><h2 id="checkpoints-title">{s.name}を選ぶ前に整理すること</h2><div class="checkpoint-list">{g.checkpoints.map(item => <section><h3>{item.title}</h3><p>{item.body}</p></section>)}</div></section>
+    <section class="article-section" aria-labelledby="fit-title"><h2 id="fit-title">向いている使い方と、別の条件も見たい場合</h2><div class="fit-grid"><div><h3>こんな条件なら確認したい</h3><ul>{s.goodFor.map(item => <li>{item}</li>)}</ul></div><div class="reconsider"><h3>ここは比べ直す</h3><p>{g.reconsider}</p></div></div></section>
+    <section class="article-section" aria-labelledby="cautions-title"><h2 id="cautions-title">申込み前の注意点</h2><ul class="cautions-list">{s.cautions.map(item => <li>{item}</li>)}</ul></section>
+
+    <section class="article-sources article-section" aria-labelledby="sources-title"><h2 id="sources-title">出典と確認範囲</h2><p>料金・容量・注意点は、次の公式情報をもとに整理しています。漫画の人物と会話は説明のための架空のストーリーで、利用者の体験談や速度測定結果ではありません。</p><ul>{sources.map(source => <li><a href={source.url} target="_blank" rel="noopener">{source.label}</a></li>)}</ul><p>情報確認日：{jpDate(s.checkedAt)}。申込み前に最新の受付条件をご確認ください。<a href="/about/">編集方針</a></p></section>
+    <nav class="article-footer-links" aria-label="比較を続ける"><a href="/mobile/#service-list">スマホ・SIMの掲載候補を一覧で見る</a><a href="/hikari/area/">自宅のWi-Fiを全国の地域から確認</a></nav>
+  </article>
+</Base>
+
+<style>
+.article-points{margin-top:24px;padding:16px 19px;border:1px solid #d8d6be;border-radius:7px;background:#fffdf4}.article-points>summary{font-size:16px;font-weight:800;line-height:1.85;color:#175d50;cursor:pointer}
+.application-caution{padding:12px 14px;border:1px solid #e8d6b8;border-radius:5px;background:#fff7e9}.application-caution a{color:#175d50;text-decoration:underline;text-underline-offset:3px;white-space:normal}
+.mobile-manga-article{max-width:1040px;padding-top:26px;padding-bottom:38px;color:#253d30}.article-header{max-width:920px;margin:17px 0 24px}.article-eyebrow,.section-eyebrow{font-size:14px;font-weight:700;line-height:1.8;color:#175d50}.article-header h1{font-size:clamp(27px,3.3vw,38px);font-weight:800;line-height:1.55;margin:9px 0 15px;overflow-wrap:anywhere}.article-lead{font-size:17px;line-height:1.95;color:#4c6454}.article-byline{font-size:13px;line-height:1.8;color:#65786b;margin-top:15px}.article-jump{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}.article-jump a{display:flex;align-items:center;justify-content:center;min-height:46px;padding:10px 15px;border:1px solid #c5d8cd;border-radius:6px;background:#f0f6f1;font-size:15px;font-weight:700;line-height:1.7;color:#175d50}.article-first-answer{padding:21px 24px;border:1px solid #c5d9cd;border-left:4px solid #175d50;border-radius:6px;background:#edf5ee}.article-first-answer>p:first-child{font-size:13px;font-weight:700;color:#557160}.article-first-answer h2{font-size:22px;font-weight:800;line-height:1.7;margin-top:7px}.article-first-answer>p:last-child{font-size:16px;line-height:1.95;color:#4e6656;margin-top:8px}.manga-anchor{scroll-margin-top:20px;margin-top:25px}.article-section{margin-top:37px;scroll-margin-top:20px}.article-section>h2{font-size:26px;font-weight:800;line-height:1.65;margin-bottom:17px}.article-section>p{font-size:16px;line-height:1.95;color:#506a59;margin:12px 0}.article-section>.section-eyebrow{font-size:14px;margin-bottom:6px}.current-plan{display:grid;grid-template-columns:1.1fr 1fr;align-items:start;gap:24px;padding:23px;border:1px solid #cfdfd4;border-radius:7px;background:#fff;margin-bottom:20px}.current-plan span{font-size:14px;color:#5d7565}.current-plan strong{display:block;font-size:27px;font-weight:800;line-height:1.6;color:#9c482a;margin-top:6px}.current-plan p{font-size:15px;line-height:1.95;color:#536b5c;margin-top:10px}.current-plan dl>div+div{margin-top:15px}.current-plan dt{font-size:14px;font-weight:700;line-height:1.8;color:#5b7463}.current-plan dd{font-size:16px;line-height:1.9;margin-top:5px}.table-hint{font-size:13px!important;color:#607566!important;margin:16px 0 7px!important}.comparison-scroll{overflow-x:auto;border:1px solid #c7dace;border-radius:7px;background:#fff}.comparison-scroll table{width:100%;min-width:670px;border-collapse:collapse;font-size:15px;line-height:1.85}.comparison-scroll caption{text-align:left;font-size:14px;font-weight:700;color:#48634f;padding:15px}.comparison-scroll th,.comparison-scroll td{border-top:1px solid #d9e5dc;padding:15px;vertical-align:top;text-align:left}.comparison-scroll thead th{background:#e9f2eb;font-size:14px}.comparison-scroll tbody th{width:22%;font-weight:700}.comparison-scroll td:nth-child(2){width:47%}.comparison-scroll td>p{font-size:13px;line-height:1.85;color:#597260;margin-top:8px}.comparison-scroll a{color:#175d50;text-decoration:underline;text-underline-offset:4px}.comparison-note{font-size:14px!important;line-height:1.9!important;padding:14px 17px;border:1px solid #e6dcc8;background:#fff8ec;border-radius:5px}.checkpoint-list{border:1px solid #cfdfd4;border-radius:7px;background:#fff;padding:2px 24px}.checkpoint-list>section{padding:22px 0}.checkpoint-list>section+section{border-top:1px solid #dce6de}.checkpoint-list h3{font-size:20px;font-weight:700;line-height:1.7}.checkpoint-list p{font-size:16px;line-height:1.95;color:#526b5a;margin-top:9px}.fit-grid{display:grid;grid-template-columns:1fr 1fr;align-items:start;gap:18px}.fit-grid>div{border:1px solid #ccded1;border-radius:6px;background:#edf5ee;padding:21px}.fit-grid>.reconsider{background:#fff8ed;border-color:#e8dcc8}.fit-grid h3{font-size:18px;font-weight:700;line-height:1.7}.fit-grid ul{list-style:disc;padding-left:20px;margin-top:10px;font-size:16px;line-height:1.9}.fit-grid li+li{margin-top:7px}.fit-grid p{font-size:16px;line-height:1.95;color:#526b5a;margin-top:10px}.cautions-list{padding:19px 23px 19px 43px;list-style:disc;border:1px solid #e7dac5;border-radius:7px;background:#fff7e9;font-size:16px;line-height:1.95;color:#675b45}.cautions-list li+li{margin-top:9px}.next-step{padding-top:25px;border-top:2px solid #c5dace}.next-step-grid{display:grid;grid-template-columns:1fr 1fr;align-items:start;gap:20px}.next-step-grid>section{min-width:0;padding:23px;border:1px solid #c9dcd0;border-radius:8px;background:#fff}.next-step-grid>.diagnosis-choice{background:#edf5ef}.next-step-eyebrow{font-size:13px;font-weight:700;color:#577562;line-height:1.8}.next-step-grid h3{font-size:24px;font-weight:800;line-height:1.65;margin-top:7px}.next-step-grid section>p:not(.next-step-eyebrow){font-size:15px;line-height:1.95;color:#526b5c;margin:13px 0 18px}.diagnosis-cta{display:flex;align-items:center;justify-content:center;min-height:52px;padding:13px 15px;background:#175d50;color:#fff;border-radius:6px;text-align:center;font-size:16px;line-height:1.75;font-weight:700}.home-diagnosis-link,.official-text-link{display:block;padding:11px 0;margin-top:7px;text-align:center;font-size:14px;line-height:1.8;font-weight:700;color:#175d50;text-decoration:underline;text-underline-offset:4px}.povo-scope{padding:12px 14px;border:1px solid #ddceb5;border-radius:5px;background:#fff7e9}.article-sources{border-top:1px solid #d0dfd4;padding-top:24px}.article-sources>h2{font-size:21px}.article-sources>p,.article-sources li{font-size:14px;line-height:1.95;color:#5a7161}.article-sources ul{list-style:disc;padding-left:21px;margin:15px 0}.article-sources a{color:#175d50;text-decoration:underline;text-underline-offset:4px;overflow-wrap:anywhere}.article-footer-links{display:flex;flex-wrap:wrap;gap:12px 24px;padding-top:23px;margin-top:25px;border-top:1px solid #d5e1d8}.article-footer-links a{display:flex;align-items:center;min-height:44px;font-size:15px;line-height:1.8;font-weight:700;color:#175d50;text-decoration:underline;text-underline-offset:4px}.mobile-manga-article :focus-visible{outline:3px solid #b45a36;outline-offset:4px}@media(max-width:700px){.mobile-manga-article{padding-top:20px}.article-header h1{font-size:28px}.desktop-break{display:none}.article-lead{font-size:16px}.article-jump{display:grid;grid-template-columns:1fr;gap:8px}.article-first-answer{padding:18px}.article-first-answer h2{font-size:21px}.article-section{margin-top:30px}.article-section>h2{font-size:23px}.current-plan,.fit-grid,.next-step-grid{grid-template-columns:1fr;gap:17px}.current-plan{padding:19px}.current-plan strong{font-size:26px}.checkpoint-list{padding:0 19px}.checkpoint-list h3{font-size:19px}.fit-grid>div,.next-step-grid>section{padding:19px}.article-footer-links{display:grid;gap:5px}}
+</style>

@@ -1,5 +1,6 @@
 ---
 import Base from '../../../../layouts/Base.astro';
+import ConnectivityManga from '../../../../components/ConnectivityManga.astro';
 import Breadcrumbs from '../../../../components/Breadcrumbs.astro';
 import NationalInternetChecks from '../../../../components/NationalInternetChecks.astro';
 import { breadcrumbLd, jpDate } from '../../../../lib/data';
@@ -30,6 +31,7 @@ const crumbs = [{ name: '総合トップ', href: '/' }, { name: '全国の提供
         <a class="official-jump diagnosis-jump" href={`/shindan/?prefecture=${p.code}&municipality=${m.code}`}>{m.name}で回線・スマホを診断する</a>
       </div>
     </header>
+    <ConnectivityManga story="area" context={`${p.name} ${m.name}`} comparisonHref="#official-area-check" diagnosisHref={`/shindan/?prefecture=${p.code}&municipality=${m.code}#diagnosis-form`} />
     <section class="municipality-facts" aria-labelledby="municipality-facts-title">
       <h2 id="municipality-facts-title">確認する地域</h2>
       <dl>

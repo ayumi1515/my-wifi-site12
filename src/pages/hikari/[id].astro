@@ -1,7 +1,9 @@
 ---
 import Base from '../../layouts/Base.astro';
+import ConnectivityManga from '../../components/ConnectivityManga.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import AffiliateButton from '../../components/AffiliateButton.astro';
+import PointsComparison from '../../components/PointsComparison.astro';
 import CheckedNote from '../../components/CheckedNote.astro';
 import { SITE } from '../../site.config.mjs';
 import { providers, breadcrumbLd, jpDate, type Provider } from '../../lib/data';
@@ -33,6 +35,8 @@ const description = `${p.name}を鹿児島県で使うときの月額（戸建�
     <p class="mt-2 text-sm text-gray-500">{p.company}・{p.network}</p>
     <p class="mt-3 text-xs text-gray-500">公式情報の確認日：<time datetime={p.checkedAt}>{jpDate(p.checkedAt)}</time> ／ 料金はすべて税込</p>
 
+    <ConnectivityManga story={isRouter ? "router" : "provider"} context={p.name} comparisonHref="#conclusion" diagnosisHref="/shindan/?prefecture=46#diagnosis-form" />
+
     <section class="mt-6 rounded-2xl border border-brand-100 bg-brand-50 p-5 sm:p-7" aria-labelledby="conclusion">
       <h2 id="conclusion" class="font-bold text-gray-900 mb-2 text-lg">先に結論</h2>
       <p class="text-[15px] leading-8">{p.summary}</p>
@@ -51,6 +55,7 @@ const description = `${p.name}を鹿児島県で使うときの月額（戸建�
         )}
       </div>
       <div class="mt-5"><AffiliateButton provider={p} /></div>
+      {p.id === 'docomo-hikari' && <details class="provider-points"><summary>dポイント還元と、支払い時期を確認する</summary><PointsComparison systems={['dpoint']} scope="home" compact /></details>}
       <p class="mt-3 text-xs leading-relaxed text-gray-600">住所によって使えるプランが変わります。対象エリアと料金の条件が合うかを確認してから選びましょう。</p>
     </section>
 
@@ -137,3 +142,6 @@ const description = `${p.name}を鹿児島県で使うときの月額（戸建�
     </section>
   </div>
 </Base>
+<style>
+.provider-points{margin-top:20px;padding:15px;border:1px solid #d8d6be;border-radius:7px;background:#fffdf4}.provider-points>summary{font-size:15px;font-weight:800;line-height:1.85;color:#175d50;cursor:pointer}
+</style>
