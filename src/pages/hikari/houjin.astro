@@ -1,0 +1,135 @@
+---
+// 鹿児島の会社・お店・事業所向けのネット回線の選び方（法人向け）
+// 提携している広告はないので、公式の法人窓口へのふつうのリンクだけにする（pr={false}）。
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { SITE } from '../../site.config.mjs';
+import { faqLd, breadcrumbLd } from '../../lib/data';
+
+const checkedAt = '2026-11-26';
+const crumbs = [
+  { name: '総合トップ', href: '/' },
+  { name: '通信・ネット', href: '/hikari/' },
+  { name: '鹿児島県の光回線', href: '/hikari/kagoshima/' },
+  { name: '会社・お店のネット回線', href: '/hikari/houjin/' },
+];
+const title = '鹿児島の会社・お店のネット回線｜法人向け光回線の選び方と固定IP・保守の比較';
+const description = '鹿児島の小さな会社・お店・事業所向けに、法人向け光回線の選び方をまとめました。BBIQのオフィスタイプ、フレッツ光のオフィスタイプ・光クロスBizの料金、固定IP、故障時の保守時間、離島・山間部の注意点を公式情報で比較。';
+const faqs = [
+  { q: '個人事業主や小さなお店でも、法人向けの回線が必要ですか？', a: '必ずではありません。固定IPや夜間・休日の修理が要らなければ、個人向けと同じ光回線（SOHO向けの案内もあります）で足りることが多いです。止まると売上や予約に響く業務があるかで決めましょう。' },
+  { q: '固定IPはどんなときに必要ですか？', a: '外から社内の機器（防犯カメラ、ファイルサーバー、業務システム）につなぐときや、取引先のシステムが接続元のIPアドレスを決めているときに使います。ふつうにWebやメールを使うだけなら、なくても困らないことが多いです。' },
+  { q: '離島の事業所でも、24時間の駆けつけ保証は使えますか？', a: 'NTT西日本の案内では、24時間以内の駆けつけ保証は、島しょ部・山間部の一部が対象外です。離島や山あいの事業所は、申し込む前に、保証の対象になるかを窓口で確かめてください。' },
+  { q: 'お店のレジや予約の回線が止まったときに備えるには？', a: '修理の受付時間が長いプランを選ぶほか、スマホのテザリングやホームルーターなど、別の回線を予備に用意しておく方法があります。どちらを優先するかは、止まったときの影響の大きさで決めます。' },
+];
+const articleLd = {
+  '@context': 'https://schema.org', '@type': 'Article', headline: '鹿児島の会社・お店のネット回線｜法人向け光回線の選び方', description,
+  dateModified: checkedAt, inLanguage: 'ja', mainEntityOfPage: `${SITE.url}/hikari/houjin/`,
+  author: { '@type': 'Organization', name: SITE.operator, url: `${SITE.url}/about/` },
+  publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url + '/' },
+};
+---
+<Base title={title} description={description} pr={false} jsonLd={[breadcrumbLd(SITE.url, crumbs), articleLd, faqLd(faqs)]}>
+  <div class="site-container houjin-page">
+    <Breadcrumbs items={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))} />
+    <h1>鹿児島の会社・お店のネット回線<span>法人向け光回線の選び方</span></h1>
+
+    <div class="answer-box">
+      <p class="answer-label">先に結論</p>
+      <ul>
+        <li><strong>個人事業主・小さなお店</strong>で、固定IPも夜間の修理も要らない → 個人向けと同じ光回線で足りることが多い（<a href="/hikari/kagoshima/">鹿児島の光回線5社の比較</a>）</li>
+        <li><strong>固定IPが要る・平日の日中に直ってほしい</strong> → BBIQやフレッツ光の<strong>法人向けタイプ</strong>を比べる</li>
+        <li><strong>止まると業務が止まる</strong>（決済・予約・遠隔の機器） → 24時間の保守、帯域の確保、<strong>予備の回線</strong>まで考える</li>
+      </ul>
+    </div>
+    <p class="byline">公式サイトで{checkedAt.replace(/-/g, '/')}に確認 ／ 書いた人：{SITE.operator}（<a href="/about/">編集方針</a>）／ このページに広告リンクはありません</p>
+
+    <section aria-labelledby="points">
+      <h2 id="points">法人で回線を選ぶときに見る5つのこと</h2>
+      <ol class="point-list">
+        <li><strong>名義と支払い</strong><span>会社名義で契約できるか、請求書払いができるか。経理のやり方に合うかを窓口で確かめます。</span></li>
+        <li><strong>固定IP</strong><span>外から社内の機器につなぐ、取引先のシステムがIPアドレスを決めている、といった使い方なら必要です。</span></li>
+        <li><strong>故障したときの修理の時間</strong><span>平日の日中だけか、夜や休日も来てくれるか。お店の営業時間に合わせて選びます。</span></li>
+        <li><strong>速さの保証</strong><span>ふつうの光回線は「ベストエフォート（最大の速さで、保証はない）」です。一定の速さを確保するプランもあります。</span></li>
+        <li><strong>電話番号</strong><span>今の電話番号を続けて使えるか、光回線の電話（ひかり電話など）にまとめるかも合わせて確認します。</span></li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="compare">
+      <h2 id="compare">鹿児島で候補になる法人向けの光回線</h2>
+      <p class="lead">公式サイトに書かれている内容をまとめました。料金の税の扱いが会社によってちがうので、表の注記も見てください。</p>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="法人向け光回線の比較表">
+        <table>
+          <thead><tr><th scope="col">サービス</th><th scope="col">向いている事業所</th><th scope="col">固定IP</th><th scope="col">故障時の保守</th><th scope="col">月額の目安</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">BBIQ オフィスタイプ<span>QTnet（九州電力グループ）</span></th><td>中小企業</td><td>1個無料</td><td>24時間365日</td><td>公式の法人ページで確認（税抜表示）</td></tr>
+            <tr><th scope="row">BBIQ プラスタイプ<span>QTnet</span></th><td>個人事業主・SOHO</td><td>オプションで追加</td><td>平日9〜18時（24時間はオプション）</td><td>公式の法人ページで確認（税抜表示）</td></tr>
+            <tr><th scope="row">フレッツ 光クロス オフィスタイプ（戸建て）<span>NTT西日本</span></th><td>修理の時間を選びたい事業所</td><td>プロバイダで契約</td><td>平日9〜17時／7〜22時／24時間から選ぶ</td><td>6,930円／9,020円／10,230円（1・2年目）＋プロバイダ料金</td></tr>
+            <tr><th scope="row">フレッツ 光ネクスト オフィスタイプ（戸建て）<span>NTT西日本</span></th><td>1ギガで足りる事業所</td><td>プロバイダで契約</td><td>7〜22時／24時間</td><td>8,030円／9,240円＋プロバイダ料金</td></tr>
+            <tr><th scope="row">フレッツ 光クロス Biz<span>NTT西日本</span></th><td>止まると困る業務がある会社</td><td>プロバイダで契約</td><td>24時間365日、故障復旧の保証あり</td><td>20,735円＋プロバイダ料金（10Mbpsの帯域確保）</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">BBIQの法人ページは「表記の金額は全て税抜」としています。BBIQの法人向けの料金は、タイプや割引で変わるため、ここでは金額をのせていません。NTT西日本のフレッツ光の料金は、公式サイトで「特に記載のない限り税込」と案内されています。どちらも工事費・初期費用は別です。BBIQの6ギガ・10ギガは鹿児島県では提供されていません。</p>
+      <p class="note">SoftBank 光は、公式で「SOHO・個人事業主向け」とされています（法人向けには別のサービスが案内されています）。ドコモ光の法人向けの条件は、公式のページで確かめられなかったため、のせていません。</p>
+    </section>
+
+    <section aria-labelledby="kagoshima">
+      <h2 id="kagoshima">鹿児島の事業所で気をつけること</h2>
+      <ul class="plain-list">
+        <li><strong>離島・山間部の駆けつけ</strong>：NTT西日本の24時間以内の駆けつけ保証は、島しょ部・山間部の一部が対象外です。保証の対象になるかを、申し込む前に窓口で確かめます。</li>
+        <li><strong>10ギガ</strong>：使えるのはNTT西日本の光クロスが届く12市町が目安です（<a href="/guides/kagoshima-10giga/">鹿児島で10ギガは使える？</a>）。</li>
+        <li><strong>光回線が引けるか</strong>：県の光回線カバー率は95.7%で全国では低めです。事業所の住所で使えるかを、最初に確かめましょう（<a href="/guides/kagoshima-hikari-coverage/">市町村別のカバー率</a>）。</li>
+        <li><strong>台風・停電</strong>：停電するとONUやルーターが止まります。レジや予約の端末を動かし続けたいなら、停電への備えと予備の回線を考えておきます。</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="backup">
+      <h2 id="backup">止まると困るお店は「予備の回線」も</h2>
+      <p>保守の手厚いプランでも、故障や工事で一時的に使えなくなることはあります。キャッシュレス決済や予約の受付が止まると困るお店は、スマホのテザリングや、工事のいらない<a href="/hikari/home-router/">ホームルーター</a>を予備にする方法があります。予備の回線は、ふだん使わない月の費用も含めて考えます。</p>
+    </section>
+
+    <section aria-labelledby="contact">
+      <h2 id="contact">法人向けの公式窓口</h2>
+      <ul class="plain-list">
+        <li><a href="https://www.bbiq.jp/biz/" target="_blank" rel="noopener">BBIQ（中小企業・SOHO向け）</a>：QTnet 中小企業・SOHO窓口 0120-842-030（平日9:00〜17:50、12月29日〜1月3日を除く）</li>
+        <li><a href="https://flets-w.com/cp/flets-office/" target="_blank" rel="noopener">NTT西日本 法人向けフレッツ光（光クロス Biz／オフィスタイプ）</a></li>
+        <li><a href="https://flets-w.com/opt/support24/" target="_blank" rel="noopener">NTT西日本 24時間出張修理オプション</a>（月額3,300円、フレッツ光の全プラン共通）</li>
+        <li><a href="https://www.softbank.jp/business/service/network/softbank-hikari/" target="_blank" rel="noopener">SoftBank 光（SOHO・個人事業主向け）</a></li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="faq">
+      <h2 id="faq">よくある質問</h2>
+      {faqs.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}
+    </section>
+    <p class="sources">出典：<a href="https://www.bbiq.jp/biz/" target="_blank" rel="noopener">BBIQ 中小企業・SOHO向け</a>／<a href="https://flets-w.com/cp/flets-office/" target="_blank" rel="noopener">NTT西日本 法人向けフレッツ光</a>／<a href="https://flets-w.com/opt/support24/" target="_blank" rel="noopener">NTT西日本 24時間出張修理オプション</a>／<a href="https://flets-w.com/about_tax/" target="_blank" rel="noopener">フレッツ光の税表示</a>／<a href="https://www.softbank.jp/business/service/network/softbank-hikari/" target="_blank" rel="noopener">SoftBank 光（法人サイト）</a>（いずれも{checkedAt.replace(/-/g, '/')}確認）</p>
+  </div>
+</Base>
+
+<style>
+  .houjin-page { padding-top: 14px; padding-bottom: 30px; color: #23352e; }
+  .houjin-page h1 { margin: 12px 0 16px; font-size: clamp(26px, 3.6vw, 36px); font-weight: 800; line-height: 1.45; color: #1f3a30; }
+  .houjin-page h1 span { display: block; font-size: .55em; color: #175d50; margin-top: 4px; }
+  .houjin-page h2 { margin-top: 38px; font-size: clamp(20px, 2.4vw, 25px); font-weight: 800; line-height: 1.55; }
+  .houjin-page p, .houjin-page li { font-size: 15px; line-height: 1.95; }
+  .houjin-page a { color: #175d50; text-decoration: underline; text-underline-offset: 3px; }
+  .answer-box { border: 2px solid #175d50; border-radius: 10px; background: #f0f6f1; padding: 18px 20px; }
+  .answer-label { display: inline-block; background: #175d50; color: #fff; font-size: 13px !important; font-weight: 800; border-radius: 4px; padding: 2px 10px; margin-bottom: 8px; }
+  .answer-box ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+  .byline { margin-top: 10px; font-size: 13px !important; color: #637268; }
+  .lead { margin-top: 8px; color: #4f6a5a; }
+  .point-list { margin-top: 14px; padding-left: 1.3em; display: grid; gap: 10px; }
+  .point-list strong { display: block; font-size: 16px; }
+  .point-list span { display: block; color: #4f6a5a; }
+  .table-scroll { overflow-x: auto; margin-top: 14px; border: 1px solid #ccd9d0; border-radius: 8px; }
+  .table-scroll table { width: 100%; min-width: 760px; border-collapse: collapse; font-size: 14px; }
+  .table-scroll th, .table-scroll td { padding: 12px; border-bottom: 1px solid #dce5de; text-align: left; vertical-align: top; line-height: 1.75; }
+  .table-scroll thead th { background: #175d50; color: #fff; white-space: nowrap; }
+  .table-scroll tbody th { background: #f1f6f1; color: #175d50; font-size: 15px; }
+  .table-scroll tbody th span { display: block; font-size: 12px; font-weight: 400; color: #56695c; }
+  .note { margin-top: 10px; font-size: 13px !important; color: #5d6f63; }
+  .plain-list { margin-top: 12px; padding-left: 1.2em; display: grid; gap: 8px; list-style: disc; }
+  .houjin-page details { margin-top: 10px; padding: 14px 18px; border: 1px solid #d5dfd7; border-radius: 6px; }
+  .houjin-page summary { cursor: pointer; font-weight: 700; }
+  .sources { margin-top: 26px; font-size: 12px !important; color: #69786e; }
+</style>
