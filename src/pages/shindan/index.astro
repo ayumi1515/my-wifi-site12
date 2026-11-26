@@ -2,15 +2,18 @@
 import Base from '../../layouts/Base.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import HouseholdDiagnosis from '../../components/HouseholdDiagnosis.astro';
+import SetWariDiagnosis from '../../components/SetWariDiagnosis.astro';
 import { breadcrumbLd } from '../../lib/data';
 import { SITE } from '../../site.config.mjs';
 const crumbs=[{name:'総合トップ',href:'/'},{name:'回線・スマホ診断',href:'/shindan/'}];
 ---
-<Base title="家族の通信費診断｜キャリア・格安SIMと光回線、特典込みの節約目安" description="家族の回線数・キャリア・通信量・契約年数から、自宅とスマホの組合せを比較。通常月額と家族割・セット割、条件を満たす特典、乗換費用を分け、利用期間ごとの節約目安を確認できます。" jsonLd={[breadcrumbLd(SITE.url,crumbs)]}>
+<Base title="ネット回線診断｜スマホのセット割で選ぶ光回線・ホームルーター（5問・30秒）" description="今のスマホの会社・台数・住まい・工事・都道府県の5問で、セット割が使える光回線とホームルーター、家族で毎月いくら安くなるかの目安がわかります。くわしい家族の料金比較もできます。" jsonLd={[breadcrumbLd(SITE.url,crumbs)]}>
   <div class="household-page site-container">
     <Breadcrumbs items={[crumbs[0],{name:crumbs[1].name}]} />
-    <header class="diagnosis-page-heading"><p>住まいとスマホ、かんたん比較</p><h1>家族の通信費を診断する</h1><p>住まいとスマホを選ぶだけ。詳しい料金はあとから。</p></header>
+    <header class="diagnosis-page-heading"><p>スマホとのセット割から、かんたん比較</p><h1>ネット回線・通信費の診断</h1><p>5つの質問にタップで答えるだけ。家族で毎月いくら安くなるかがわかります。</p></header>
     <p class="manga-reading-link"><a href="/manga/family-telecom/">見直し方を6コマ漫画で読む →</a></p>
+    <SetWariDiagnosis />
+    <section class="detail-diagnosis" aria-labelledby="detail-diagnosis-title"><h2 id="detail-diagnosis-title">くわしく計算する（家族の今の料金と比べる）</h2><p>スマホの料金プラン・ギガ数・今の支払い・乗換え費用まで入れると、乗換え前と後をくわしく比べられます。</p></section>
     <HouseholdDiagnosis />
     <section class="method"><h2>計算に入れる条件と確認すること</h2><p>掲載した代表プランの通常料金と、対象となる家族割・セット割を比較します。各自宅回線について、入力された通信量とブランド・店舗の希望を満たすスマホの組合せを探し、利用期間の参考費用から、受け取る想定を選んだ特典を差し引いた順に最大3案を表示します。</p><p>回線の提供・通信品質・通話条件は住所や利用状況で変わります。費用を確認できないプランやpovoの都度購入、建物ごとに料金が変わるプランは、定額の自動比較に含めません。全商品・すべての割引を網羅した順位ではありません。</p><p><a href="/hikari/area/">全国の提供エリア確認</a> ／ <a href="/mobile/">掲載中のスマホ・SIM</a> ／ <a href="/guides/hikari-one-year/">1年利用の総額比較</a> ／ <a href="/about/">編集方針</a></p></section>
   </div>
@@ -20,4 +23,5 @@ const crumbs=[{name:'総合トップ',href:'/'},{name:'回線・スマホ診断'
 .manga-reading-link{font-size:13px;line-height:1.9;margin:15px 0 18px}.manga-reading-link a{color:#175d50;text-decoration:underline;text-underline-offset:4px}
 .household-page{max-width:1120px;padding-top:24px;padding-bottom:45px}.household-page :global(.visual-hero){margin-top:18px}.family-start{display:inline-flex;align-items:center;justify-content:center;min-height:54px;border-radius:6px;background:#ae512e;color:#fff;font-size:17px;font-weight:800;line-height:1.7;padding:14px 24px;margin-top:18px}.family-start:hover{background:#8c3f24}.family-start:focus-visible{outline:3px solid #175d50;outline-offset:4px}.method{margin-top:35px;border-top:1px solid #d3dfd7;padding-top:24px}.method h2{font-size:23px;font-weight:800;line-height:1.7}.method p{font-size:15px;line-height:1.95;color:#52685a;margin-top:13px}.method a{color:#175d50;text-decoration:underline;text-underline-offset:4px}@media(max-width:700px){.family-start{display:flex;width:100%;font-size:16px;padding:13px 15px}.household-page{padding-top:18px}}
 .diagnosis-page-heading{margin-top:15px!important}.diagnosis-page-heading>p:last-child{margin-top:7px!important;font-size:15px!important;line-height:1.75!important}.manga-reading-link{margin:10px 0 11px!important;font-size:12px!important;line-height:1.75!important}
+.detail-diagnosis{margin-top:40px;padding-top:24px;border-top:1px solid #d5e1d8}.detail-diagnosis h2{font-size:clamp(20px,2.4vw,24px);font-weight:800;line-height:1.55}.detail-diagnosis p{font-size:14px;line-height:1.85;color:#566b5e;margin-top:6px}
 </style>

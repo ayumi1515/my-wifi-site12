@@ -19,7 +19,7 @@ const crumbs = [{ name: 'ホーム', href: '/' }, { name: '鹿児島県の光回
       <p>設備が入っていない、または工事の許可がおりない場合は、<a href="/hikari/home-router/">工事のいらないホームルーター</a>も選択肢になります。</p>
       <p class="text-xs text-gray-500">料金はすべて税込。最終確認日：{jpDate(lastChecked)}</p>
     </div>
-    <ConnectivityManga story="mansion" context="鹿児島県の集合住宅で、導入済み設備と工事の許可を確認してから料金を比べます。" comparisonHref="#mansion-provider-comparison" diagnosisHref="/shindan/?prefecture=46#diagnosis-form" />
+    <ConnectivityManga story="mansion" context="鹿児島県の集合住宅で、導入済み設備と工事の許可を確認してから料金を比べます。" comparisonHref="#mansion-provider-comparison" diagnosisHref="/shindan/?prefecture=46#setwari" />
     <div id="mansion-provider-comparison" class="mt-8 space-y-8">
       {list.map((p, i) => <ProviderCard provider={p} building="mansion" rank={i + 1} headingLevel="h2" />)}
     </div>

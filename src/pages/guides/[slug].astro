@@ -37,7 +37,7 @@ const articleLd = { '@context':'https://schema.org','@type':'Article',headline:g
     </header>
     <div class="guide-body">
       <article class="guide-main">
-        {g.category === 'internet' && internetMangaStory && <ConnectivityManga story={internetMangaStory} context={g.title} comparisonHref="#answer" diagnosisHref={shortStay ? '/shindan/#diagnosis-form' : '/shindan/?prefecture=46#diagnosis-form'} />}
+        {g.category === 'internet' && internetMangaStory && <ConnectivityManga story={internetMangaStory} context={g.title} comparisonHref="#answer" diagnosisHref={shortStay ? '/shindan/#setwari' : '/shindan/?prefecture=46#setwari'} />}
         <GuideDecision slug={g.slug} />
         {g.category === 'internet' && g.showPoints !== false && g.relatedProviderIds.includes('docomo-hikari') && <details class="guide-points"><summary>dポイント還元の条件も確認する</summary><PointsComparison systems={['dpoint']} scope="home" compact /></details>}
         {shortStay && <><ShortTermCost /><CostStory /></>}

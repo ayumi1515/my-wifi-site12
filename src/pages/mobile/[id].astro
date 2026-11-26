@@ -65,7 +65,7 @@ const articleLd = { '@context': 'https://schema.org', '@type': 'Article', headli
     <section id="next-step" class="next-step article-section" aria-labelledby="next-step-title">
       <h2 id="next-step-title">比較したら、自分の条件で確かめる</h2>
       <div class="next-step-grid">
-        <section class="diagnosis-choice"><p class="next-step-eyebrow">家族や他の候補も合わせて考える</p><h3>家族のスマホ代を診断する</h3><p>キャリア・通信量・今後使う年数を入力し、掲載中の代表プランの組合せを比べます。このブランドへ固定する診断ではありません。</p>{s.id === 'povo' && <p class="povo-scope">povoの都度購入は月額型とは別枠です。診断の月額最適化ではpovoを固定候補にせず、掲載中の月額プランを比較します。</p>}<a class="diagnosis-cta" href={diagnosisHref}>スマホの条件を入力して比べる</a><a class="home-diagnosis-link" href="/shindan/#diagnosis-form">自宅のWi-Fiも含めて診断する</a></section>
+        <section class="diagnosis-choice"><p class="next-step-eyebrow">家族や他の候補も合わせて考える</p><h3>家族のスマホ代を診断する</h3><p>キャリア・通信量・今後使う年数を入力し、掲載中の代表プランの組合せを比べます。このブランドへ固定する診断ではありません。</p>{s.id === 'povo' && <p class="povo-scope">povoの都度購入は月額型とは別枠です。診断の月額最適化ではpovoを固定候補にせず、掲載中の月額プランを比較します。</p>}<a class="diagnosis-cta" href={diagnosisHref}>スマホの条件を入力して比べる</a><a class="home-diagnosis-link" href="/shindan/#setwari">自宅のWi-Fiも含めて診断する</a></section>
         <section class="product-choice"><p class="next-step-eyebrow">この候補の申込条件を確認する</p><h3>{s.name}</h3><p>最新の料金・端末対応・必要な初期費用を申込先で確認してください。家族分は名義・利用者・契約条件もそれぞれ確認します。</p>{s.cautions[0] && <p class="application-caution">{s.cautions[0]} <a href="#cautions-title">注意点をすべて確認</a></p>}<AffiliateButton provider={product} actionFirst={true} notice="料金・データ量・初期費用・端末対応・特典の対象条件をリンク先で確認してください。" />{a?.affiliate && <a class="official-text-link" href={s.officialUrl} target="_blank" rel="noopener">{s.name}の公式プラン情報</a>}</section>
       </div>
     </section>

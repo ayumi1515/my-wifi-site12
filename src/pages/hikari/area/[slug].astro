@@ -15,7 +15,7 @@ const others = areas.filter((o) => o.slug !== a.slug);
 const isIsland = a.slug === 'ritou';
 const kagoshimaPrefecture = prefectures.find(p=>p.code==='46')!;
 const municipality = kagoshimaPrefecture.municipalities.find(m=>getExistingMunicipalityPath(kagoshimaPrefecture,m)===`/hikari/area/${a.slug}/`);
-const diagnosisHref = `/shindan/?prefecture=46${municipality ? '&municipality='+municipality.code : ''}#diagnosis-form`;
+const diagnosisHref = `/shindan/?prefecture=46${municipality ? '&municipality='+municipality.code : ''}#setwari`;
 const islandNote = (id: string) => (isIsland && id === 'bbiq' ? '（離島は要エリア確認）' : '');
 const title = `${a.name}の光回線おすすめ｜使える回線・10ギガ・選び方`;
 const description = `${a.name}で使える光回線とホームルーターを、公式の提供エリア情報をもとにまとめました。${a.tenGiga ? '10ギガが使える地域かどうか、' : ''}スマホ会社別の選び方と、申込み前に確認することを紹介します。`;

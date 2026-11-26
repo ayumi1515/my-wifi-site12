@@ -19,7 +19,7 @@ const regionChoices = prefectures.map(p=>({code:p.code,name:p.name,nttRegion:p.n
       <p class="updated">提供可否は、住所・建物・希望プランごとに確認してください。／ <a href="/about/">編集方針</a></p>
     </header>
 
-    <div class="site-container"><ConnectivityManga story="national" context="都道府県を選び、住所ごとの提供確認と家族の通信費の診断へ進みます。地域名だけで使える回線を確定しません。" comparisonHref="#regional-choice" diagnosisHref="/shindan/#diagnosis-form" /></div>
+    <div class="site-container"><ConnectivityManga story="national" context="都道府県を選び、住所ごとの提供確認と家族の通信費の診断へ進みます。地域名だけで使える回線を確定しません。" comparisonHref="#regional-choice" diagnosisHref="/shindan/#setwari" /></div>
 
     <section id="regional-choice" class="site-container national-choice" aria-labelledby="national-choice-title" data-national-chooser data-regions={JSON.stringify(regionChoices)} data-ntt={JSON.stringify(nttAreaChecks)}>
       <div class="region-choice-heading"><p>自分の地域から、比較を始める</p><h2 id="national-choice-title">まず、使う都道府県を選んでください</h2><p>地域名だけでは利用できる回線は決まりません。公式の住所確認と、家族の通信費の診断へ進みましょう。</p></div>
@@ -78,7 +78,7 @@ const regionChoices = prefectures.map(p=>({code:p.code,name:p.name,nttRegion:p.n
       if(!p){setLink(diagnose,null);setLink(area,null);diagnose.textContent='回線・家族の通信費を診断する';area.textContent='市区町村からエリアを確認する';status.textContent='都道府県を選ぶと、診断とエリア確認へ進めます。';return;}
       const city=selectedCity&&muniOf(p).some(m=>m.code===selectedCity!.code)?selectedCity:null;
       const place=city?`${p.name} ${city.name}`:p.name;
-      setLink(diagnose,`/shindan/?prefecture=${p.code}${city?'&municipality='+city.code:''}#diagnosis-form`);
+      setLink(diagnose,`/shindan/?prefecture=${p.code}${city?'&municipality='+city.code:''}#setwari`);
       setLink(area,city?.path||p.path);
       diagnose.textContent=`${place}で回線・家族の通信費を診断`;
       area.textContent=city?`${city.name}のエリア確認へ進む`:`${p.name}の市区町村からエリア確認`;

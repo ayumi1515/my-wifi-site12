@@ -1,0 +1,251 @@
+---
+// 「セット割で選ぶ」かんたん診断。1画面1問・タップで次へ（価格.comの診断ナビを参考に、しらべまとめ帳の決まりで作った）。
+// 金額は src/data/household-plans.json（スマホのセット割）と household-homes.json（自宅回線の月額）から計算する。
+// 割引額はプランで変わるので「最大」と書き、条件は申込先で確かめてもらう。報酬で順番を変えない（家族の実質が安い順）。
+import AffiliateButton from './AffiliateButton.astro';
+import { providers } from '../lib/data';
+import { prefectures } from '../lib/national-areas';
+import planData from '../data/household-plans.json';
+import homeData from '../data/household-homes.json';
+
+const today = new Date().toISOString().slice(0, 10);
+const brands = [
+  { id: 'docomo', name: 'ドコモ' }, { id: 'au', name: 'au' }, { id: 'softbank', name: 'ソフトバンク' },
+  { id: 'ymobile', name: 'ワイモバイル' }, { id: 'uq-mobile', name: 'UQ mobile' }, { id: 'rakuten-mobile', name: '楽天モバイル' },
+  { id: 'ahamo', name: 'ahamo' }, { id: 'linemo', name: 'LINEMO' }, { id: 'povo', name: 'povo' }, { id: 'other', name: 'そのほか・わからない' },
+];
+type Plan = { id: string; brandId: string; name: string; bundleIds: string[]; bundleDiscount: number; excludeFamilyWithBundle?: boolean; validThrough?: string; familyDiscount?: number[]; familyMode?: string };
+const plans = (planData.plans as Plan[]).filter((p) => !p.validThrough || p.validThrough >= today);
+const homes = homeData.homes as { id: string; name: string; kind: 'fiber' | 'router'; prefectures: string[] | null; buildings: string[]; monthly: Record<string, number | null>; decemberMonthly?: Record<string, number | null>; requiredBundleOptionMonthly?: number; contractMonths: number; url: string }[];
+const brandInfo = Object.fromEntries(brands.map((b) => {
+  const own = plans.filter((p) => p.brandId === b.id && p.bundleDiscount > 0);
+  // 家族割と一緒に使えないプラン（ワイモバイル・UQなど）は、その家族割の額も持っておき、差だけを「得」として見せる
+  const byHome: Record<string, { min: number; max: number; plans: string[]; exclusive: boolean; family: number; familyAfterFirst: boolean }> = {};
+  own.forEach((p) => p.bundleIds.forEach((h) => {
+    const x = byHome[h] ?? { min: p.bundleDiscount, max: p.bundleDiscount, plans: [], exclusive: false, family: 0, familyAfterFirst: false };
+    x.min = Math.min(x.min, p.bundleDiscount);
+    if (p.bundleDiscount >= x.max) { x.max = p.bundleDiscount; x.exclusive = !!p.excludeFamilyWithBundle; x.family = p.excludeFamilyWithBundle ? Math.max(0, ...(p.familyDiscount ?? [0])) : 0; x.familyAfterFirst = p.familyMode === 'after-first'; }
+    x.plans.push(p.name); byHome[h] = x;
+  }));
+  const zeroPlans = plans.filter((p) => p.brandId === b.id && p.bundleDiscount === 0).map((p) => p.name);
+  return [b.id, { name: b.name, homes: byHome, zeroPlans, familyExclusive: own.some((p) => p.excludeFamilyWithBundle) }];
+}));
+const homeList = homes.map((h) => ({ id: h.id, name: h.name, kind: h.kind, prefectures: h.prefectures, buildings: h.buildings, monthly: h.monthly, decemberMonthly: h.decemberMonthly ?? null, option: h.requiredBundleOptionMonthly ?? 0, contractMonths: h.contractMonths, url: h.url }));
+---
+<section id="setwari" class="setwari" data-setwari data-brands={JSON.stringify(brandInfo)} data-homes={JSON.stringify(homeList)} aria-labelledby="setwari-title">
+  <header class="sw-head">
+    <p class="sw-kicker">30秒・5問</p>
+    <h2 id="setwari-title">スマホとのセット割で、ネット回線を選ぶ</h2>
+    <p>今のスマホの会社に合う光回線・ホームルーターと、家族で毎月いくら安くなるかがわかります。回答は送信・保存しません。</p>
+  </header>
+  <div class="sw-progress" aria-hidden="true"><span data-sw-bar></span></div>
+  <p class="sw-step-label" data-sw-label role="status" aria-live="polite">1 / 5</p>
+
+  <div class="sw-q" data-sw-step="carrier">
+    <h3>Q1. 家族でいちばん多いスマホの会社は？</h3>
+    <div class="sw-options sw-grid">{brands.map((b) => <button type="button" data-sw-value={b.id}>{b.name}</button>)}</div>
+  </div>
+  <div class="sw-q" data-sw-step="lines" hidden>
+    <h3>Q2. その会社のスマホは家族で何台？</h3>
+    <div class="sw-options sw-grid">{[1, 2, 3, 4, 5].map((n) => <button type="button" data-sw-value={n}>{n === 5 ? '5台以上' : `${n}台`}</button>)}</div>
+  </div>
+  <div class="sw-q" data-sw-step="building" hidden>
+    <h3>Q3. 住まいは？</h3>
+    <div class="sw-options"><button type="button" data-sw-value="house">戸建て</button><button type="button" data-sw-value="mansion">マンション・アパート</button></div>
+  </div>
+  <div class="sw-q" data-sw-step="construction" hidden>
+    <h3>Q4. 光回線の工事はできますか？</h3>
+    <div class="sw-options"><button type="button" data-sw-value="yes">できる</button><button type="button" data-sw-value="no">できない・すぐ使いたい（工事なし）</button><button type="button" data-sw-value="unknown">わからない</button></div>
+  </div>
+  <div class="sw-q" data-sw-step="prefecture" hidden>
+    <h3>Q5. 住んでいる都道府県は？</h3>
+    <div class="sw-pref"><label for="sw-prefecture" class="visually-hidden">都道府県</label><select id="sw-prefecture" data-assist="combo"><option value="">都道府県を選ぶ</option>{prefectures.map((p) => <option value={p.code}>{p.name}</option>)}</select></div>
+    <button type="button" class="sw-go" data-sw-go disabled>結果を見る</button>
+  </div>
+  <div class="sw-nav"><button type="button" class="sw-back" data-sw-back hidden>← もどる</button></div>
+
+  <div class="sw-result" data-sw-result hidden tabindex="-1">
+    <ul class="sw-tags" data-sw-tags></ul>
+    <div class="sw-big" data-sw-big></div>
+    <div class="sw-cards" data-sw-cards></div>
+    <p class="sw-note" data-sw-note></p>
+    <div class="sw-more">
+      <a href="#diagnosis-form" class="sw-detail" data-sw-detail>家族の今の料金と比べて、くわしく計算する →</a>
+      <button type="button" class="sw-again" data-sw-again>はじめからやり直す</button>
+    </div>
+  </div>
+  {homes.map((h) => (['house', 'mansion'] as const).map((b) => { const p = providers.find((x) => x.id === h.id); return <template data-sw-template={`${h.id}:${b}`}><AffiliateButton provider={p ?? { id: h.id, name: h.name, officialUrl: h.url, affiliate: null }} building={b} actionFirst={true} showBanner={false} notice="セット割の対象プラン・必要なオプション・エリアを申込先で確認してください。" /></template>; }))}
+</section>
+
+<script>
+  import { enhanceSelects, PREFECTURE_KANA } from '../scripts/form-assist';
+  interface BrandInfo { name: string; homes: Record<string, { min: number; max: number; plans: string[]; exclusive: boolean; family: number; familyAfterFirst: boolean }>; zeroPlans: string[]; familyExclusive: boolean }
+  interface HomeInfo { id: string; name: string; kind: 'fiber' | 'router'; prefectures: string[] | null; buildings: string[]; monthly: Record<string, number | null>; decemberMonthly: Record<string, number | null> | null; option: number; contractMonths: number; url: string }
+  const root = document.querySelector<HTMLElement>('[data-setwari]');
+  if (root) {
+    const brands: Record<string, BrandInfo> = JSON.parse(root.dataset.brands || '{}');
+    const homes: HomeInfo[] = JSON.parse(root.dataset.homes || '[]');
+    const order = ['carrier', 'lines', 'building', 'construction', 'prefecture'];
+    const answers: Record<string, string> = {};
+    const param = new URLSearchParams(location.search).get('prefecture');
+    let prefFromUrl = false;
+    let current = 0;
+    const steps = order.map((k) => root.querySelector<HTMLElement>(`[data-sw-step="${k}"]`)!);
+    const bar = root.querySelector<HTMLElement>('[data-sw-bar]')!;
+    const label = root.querySelector<HTMLElement>('[data-sw-label]')!;
+    const back = root.querySelector<HTMLButtonElement>('[data-sw-back]')!;
+    const result = root.querySelector<HTMLElement>('[data-sw-result]')!;
+    const pref = root.querySelector<HTMLSelectElement>('#sw-prefecture')!;
+    const go = root.querySelector<HTMLButtonElement>('[data-sw-go]')!;
+    const yen = (n: number) => `${Math.round(n).toLocaleString('ja-JP')}円`;
+    const el = (tag: string, text = '', cls = '') => { const n = document.createElement(tag); if (text) n.textContent = text; if (cls) n.className = cls; return n; };
+    const num = (tag: string, text: string, cls = '') => { const n = el(tag, '', cls); text.split(/([\d,]+)/).forEach((part, i) => { if (part) n.append(i % 2 ? el('span', part, 'sw-num') : document.createTextNode(part)); }); return n; };
+
+    const show = (i: number) => {
+      current = i;
+      steps.forEach((s, k) => { s.hidden = k !== i; });
+      result.hidden = true;
+      back.hidden = i === 0;
+      bar.style.width = `${Math.round((i / order.length) * 100)}%`;
+      label.textContent = `${i + 1} / ${order.length}`;
+      steps[i].querySelectorAll<HTMLButtonElement>('[data-sw-value]').forEach((b) => b.setAttribute('aria-pressed', String(answers[order[i]] === b.dataset.swValue)));
+      steps[i].querySelector<HTMLElement>('h3')?.setAttribute('tabindex', '-1');
+    };
+    root.querySelectorAll<HTMLButtonElement>('[data-sw-value]').forEach((b) => b.addEventListener('click', () => {
+      const step = b.closest<HTMLElement>('[data-sw-step]')!.dataset.swStep!;
+      answers[step] = b.dataset.swValue!;
+      const i = order.indexOf(step);
+      // 地域のページから来て都道府県がわかっているときは、Q5をとばして結果へ
+      if (order[i + 1] === 'prefecture' && prefFromUrl && pref.value) { answers.prefecture = pref.value; draw(); return; }
+      if (i + 1 < order.length) { show(i + 1); steps[i + 1].querySelector<HTMLElement>('h3')?.focus({ preventScroll: true }); }
+    }));
+    back.addEventListener('click', () => show(Math.max(0, current - 1)));
+    pref.addEventListener('change', () => { go.disabled = !pref.value; });
+    go.addEventListener('click', () => { if (!pref.value) return; answers.prefecture = pref.value; draw(); });
+    root.querySelector('[data-sw-again]')!.addEventListener('click', () => { Object.keys(answers).forEach((k) => delete answers[k]); show(0); root.scrollIntoView({ block: 'start' }); });
+
+    const draw = () => {
+      steps.forEach((s) => (s.hidden = true));
+      back.hidden = true;
+      bar.style.width = '100%';
+      label.textContent = '診断結果';
+      result.hidden = false;
+      const brand = brands[answers.carrier] ?? brands.other;
+      const n = Number(answers.lines) || 1;
+      const b = answers.building as 'house' | 'mansion';
+      const prefName = pref.selectedOptions[0]?.textContent ?? '';
+      const tags = result.querySelector<HTMLElement>('[data-sw-tags]')!;
+      tags.replaceChildren(...[b === 'house' ? '戸建て' : 'マンション・アパート', prefName, `${brand.name}のスマホ ${n === 5 ? '5台以上' : n + '台'}`, answers.construction === 'no' ? '工事なし' : answers.construction === 'yes' ? '工事できる' : '工事はまだわからない'].map((t) => el('li', t)));
+      const usable = homes.filter((h) => (!h.prefectures || h.prefectures.includes(answers.prefecture)) && h.buildings.includes(b) && h.monthly[b] != null && (answers.construction === 'unknown' || (answers.construction === 'no' ? h.kind === 'router' : h.kind === 'fiber')));
+      const rows = usable.map((h) => {
+        const d = brand.homes[h.id];
+        const monthly = h.monthly[b]!;
+        // 家族割と一緒に使えない場合は、家族割をやめてセット割にしたときの差だけを数える
+        const familyLost = d && d.exclusive ? d.family * (d.familyAfterFirst ? n - 1 : n) : 0;
+        const save = d ? Math.max(0, d.max * n - familyLost) : 0;
+        const option = d ? h.option : 0;
+        return { h, d, monthly, option, save, familyLost, net: monthly + option - save };
+      }).sort((x, y) => (y.d && y.save > 0 ? 1 : 0) - (x.d && x.save > 0 ? 1 : 0) || x.net - y.net);
+      const withSet = rows.filter((r) => r.d && r.save > 0);
+      const short = (name: string) => name.replace(/\s*(1ギガ|10ギガ|・).*$/, '');
+      const big = result.querySelector<HTMLElement>('[data-sw-big]')!;
+      big.replaceChildren();
+      if (withSet.length) {
+        const best = withSet[0];
+        big.append(el('p', `${brand.name}のセット割が使えるのは、${withSet.map((r) => short(r.h.name)).join('・')}`, 'sw-big-lead'));
+        big.append(num('p', `家族で毎月 最大 ${best.save.toLocaleString('ja-JP')}円 安くなる`, 'sw-big-save'));
+        big.append(el('p', `1台あたり最大${yen(best.d!.max)}の割引 × ${n === 5 ? '5台' : n + '台'}${best.familyLost ? `。家族割とは一緒に使えないため、家族割（毎月${yen(best.familyLost)}）をやめてセット割にしたときの差で計算しています` : ''}。${best.d!.min === best.d!.max ? '割引は対象の料金プランだけです。' : `割引の額は料金プランで${yen(best.d!.min)}〜${yen(best.d!.max)}です。`}`, 'sw-big-sub'));
+      } else {
+        big.append(el('p', answers.carrier === 'other' ? 'スマホの会社がわからないときは、セット割なしで安い回線から比べましょう。' : `この比較で扱っている回線には、${brand.name}のセット割の対象がありません。`, 'sw-big-lead'));
+        big.append(el('p', 'セット割がなくても、月額の安い回線を選べば節約できます。スマホの会社ごと見直すなら、下の「くわしく計算する」で比べられます。', 'sw-big-sub'));
+      }
+      const cards = result.querySelector<HTMLElement>('[data-sw-cards]')!;
+      cards.replaceChildren();
+      rows.slice(0, 4).forEach((r) => {
+        const card = el('article', '', 'sw-card' + (r.d ? ' has-set' : ''));
+        const cheapest = r.net <= Math.min(...rows.map((x) => x.net));
+        card.append(el('p', (r.d && r.save > 0 ? 'セット割あり' : 'セット割なし') + (cheapest ? '・この中で実質がいちばん安い' : ''), 'sw-card-kicker'));
+        card.append(el('h4', r.h.name));
+        const dl = el('dl', '', 'sw-figs');
+        const fig = (k: string, v: string, cls = '') => { const d = el('div', '', cls); d.append(el('dt', k), num('dd', v)); dl.append(d); };
+        fig('ネットの月額', yen(r.monthly) + (r.h.decemberMonthly?.[b] && r.h.decemberMonthly[b] !== r.monthly ? `（12月の新規から${yen(r.h.decemberMonthly[b]!)}）` : ''));
+        if (r.option) fig('セット割に必要なオプション', `+${yen(r.option)}`);
+        if (r.d && r.save > 0) fig(r.familyLost ? 'セット割で増える割引（最大）' : 'スマホのセット割（最大）', `−${yen(r.save)}`, 'is-save');
+        fig(r.d && r.save > 0 ? 'セット割を引いた実質' : '実質', r.net > 0 ? `${yen(r.net)}／月` : '0円以下（割引のほうが大きい）', 'is-total');
+        card.append(dl);
+        const tpl = root.querySelector<HTMLTemplateElement>(`[data-sw-template="${r.h.id}:${b}"]`);
+        if (tpl) card.append(tpl.content.cloneNode(true));
+        cards.append(card);
+      });
+      if (!rows.length) cards.append(el('p', 'この条件で比べられる回線が見つかりませんでした。条件を変えるか、地域のエリア確認ページを見てください。', 'sw-empty'));
+      result.querySelector<HTMLElement>('[data-sw-note]')!.textContent = '「実質」は、ネットの月額＋セット割に必要なオプション−スマホのセット割（最大の額）で計算した目安です。工事費・事務手数料・端末代・特典は含めていません。住所によって使えない回線があるので、申込先で住所を入れて確かめてください。セット割は、対象の料金プランと申込みが必要です。';
+      result.focus({ preventScroll: true });
+      result.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    };
+
+    // くわしい計算へ：答えを下の診断に入れておく
+    root.querySelector<HTMLAnchorElement>('[data-sw-detail]')!.addEventListener('click', () => {
+      const form = document.querySelector<HTMLFormElement>('#diagnosis-form');
+      if (!form) return;
+      const set = (name: string, value: string) => { const f = form.querySelector<HTMLSelectElement | HTMLInputElement>(`[name="${name}"]`); if (f && 'value' in f) { f.value = value; f.dispatchEvent(new Event('change', { bubbles: true })); } };
+      const goal = form.querySelector<HTMLInputElement>('[name="goal"][value="both"]'); if (goal) { goal.checked = true; goal.dispatchEvent(new Event('change', { bubbles: true })); }
+      set('prefecture', answers.prefecture); set('building', answers.building); set('construction', answers.construction);
+      const n = Math.min(6, Number(answers.lines) || 1); set('lineCount', String(n));
+      const carrierSelect = form.querySelector<HTMLSelectElement>('[name="carrier-0"]');
+      if (carrierSelect && [...carrierSelect.options].some((o) => o.value === answers.carrier)) for (let i = 0; i < n; i++) set(`carrier-${i}`, answers.carrier);
+    });
+
+    enhanceSelects(root, { kana: (o) => [PREFECTURE_KANA[o.textContent ?? ''] ?? ''] });
+    if (param && [...pref.options].some((o) => o.value === param)) { pref.value = param; prefFromUrl = true; pref.dispatchEvent(new Event('change')); }
+    show(0);
+  }
+</script>
+
+<style is:global>
+  .setwari { margin-top: 18px; padding: 22px; border: 2px solid #175d50; border-radius: 12px; background: #fff; scroll-margin-top: 16px; }
+  .sw-kicker { display: inline-block; font-size: 13px; font-weight: 800; color: #fff; background: #b45b36; border-radius: 999px; padding: 2px 12px; }
+  .sw-head h2 { margin-top: 8px; font-size: clamp(22px, 3vw, 28px); font-weight: 800; line-height: 1.5; color: #173d2b; }
+  .sw-head > p:last-child { margin-top: 6px; font-size: 14px; line-height: 1.8; color: #566b5e; }
+  .sw-progress { height: 8px; margin-top: 16px; border-radius: 999px; background: #e3ece6; overflow: hidden; }
+  .sw-progress span { display: block; height: 100%; width: 0; background: #175d50; transition: width .25s; }
+  .sw-step-label { margin-top: 6px; font-size: 13px; color: #5d6f63; text-align: right; }
+  .sw-q h3 { margin-top: 8px; font-size: 20px; font-weight: 800; line-height: 1.6; color: #1f3a30; outline: none; }
+  .sw-options { display: grid; gap: 10px; margin-top: 14px; }
+  .sw-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+  .sw-options button { min-height: 58px; padding: 12px 16px; border: 1.5px solid #adc6b7; border-radius: 10px; background: #fff; font-size: 17px; font-weight: 700; color: #22402f; text-align: left; cursor: pointer; }
+  .sw-options button:hover { border-color: #175d50; background: #f1f7f3; }
+  .sw-options button[aria-pressed=true] { background: #175d50; border-color: #175d50; color: #fff; }
+  .sw-options button:focus-visible, .sw-go:focus-visible, .sw-back:focus-visible { outline: 3px solid #b45b36; outline-offset: 2px; }
+  .sw-pref { margin-top: 14px; max-width: 420px; }
+  .sw-go { margin-top: 14px; min-height: 56px; width: 100%; max-width: 420px; border-radius: 10px; background: #b45b36; color: #fff; font-size: 18px; font-weight: 800; cursor: pointer; }
+  .sw-go:disabled { opacity: .45; cursor: not-allowed; }
+  .sw-nav { margin-top: 12px; }
+  .sw-back { min-height: 44px; padding: 8px 12px; font-size: 15px; color: #175d50; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+  .sw-result { outline: none; }
+  .sw-tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 4px 0 0; }
+  .sw-tags li { font-size: 13px; font-weight: 700; color: #175d50; background: #e8f2ec; border-radius: 999px; padding: 4px 12px; }
+  .sw-big { margin-top: 14px; padding: 18px; border-radius: 10px; background: #175d50; color: #fff; }
+  .sw-big-lead { font-size: 15px; font-weight: 700; line-height: 1.7; }
+  .sw-big-save { margin-top: 4px; font-size: 18px; font-weight: 800; line-height: 1.4; }
+  .sw-big-save .sw-num { font-size: clamp(34px, 6vw, 46px); margin: 0 2px; }
+  .sw-big-sub { margin-top: 8px; font-size: 13px; line-height: 1.8; opacity: .92; }
+  .sw-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
+  .sw-card { min-width: 0; padding: 16px; border: 1px solid #ccdad2; border-radius: 10px; background: #fff; }
+  .sw-card.has-set { border: 2px solid #175d50; }
+  .sw-card-kicker { font-size: 12px; font-weight: 800; color: #b45b36; }
+  .sw-card h4 { margin-top: 4px; font-size: 19px; font-weight: 800; line-height: 1.5; color: #173d2b; }
+  .sw-figs { margin: 10px 0 12px; }
+  .sw-figs > div { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 7px 0; border-bottom: 1px dashed #d5e2d9; }
+  .sw-figs dt { font-size: 13px; color: #526b5c; }
+  .sw-figs dd { margin: 0; font-size: 14px; font-weight: 700; color: #2f4a3a; text-align: right; }
+  .sw-figs .sw-num { font-size: 18px; }
+  .sw-figs .is-save dd { color: #175d50; }
+  .sw-figs .is-total { border-bottom: 0; }
+  .sw-figs .is-total dd .sw-num { font-size: 26px; color: #9b482b; }
+  .sw-note { margin-top: 12px; font-size: 12px; line-height: 1.8; color: #5d6f63; }
+  .sw-empty { font-size: 15px; }
+  .sw-more { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin-top: 16px; }
+  .sw-detail { display: inline-flex; align-items: center; min-height: 50px; padding: 10px 18px; border-radius: 8px; background: #175d50; color: #fff; font-size: 16px; font-weight: 800; }
+  .sw-again { min-height: 44px; font-size: 14px; color: #175d50; text-decoration: underline; cursor: pointer; }
+  @media (max-width: 700px) { .setwari { padding: 16px; } .sw-cards { grid-template-columns: 1fr; } .sw-grid { grid-template-columns: 1fr 1fr; } .sw-options button { font-size: 16px; } }
+</style>
