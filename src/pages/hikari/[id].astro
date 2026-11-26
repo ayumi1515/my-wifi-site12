@@ -14,7 +14,8 @@ export function getStaticPaths() {
 }
 const { p } = Astro.props as { p: Provider };
 const isRouter = p.kind === 'router';
-const parent = isRouter ? { name: '工事なしのホームルーター', href: '/hikari/home-router/' } : { name: '鹿児島の光回線', href: '/hikari/' };
+const parent = isRouter ? { name: '工事なしのホームルーター', href: '/hikari/home-router/' } : { name: '鹿児島県の光回線', href: '/hikari/kagoshima/' };
+const articleLd = (() => ({ '@context': 'https://schema.org', '@type': 'Article', headline: `${p.name}は鹿児島で使える？料金・エリア・セット割`, datePublished: p.checkedAt, dateModified: p.checkedAt, mainEntityOfPage: `${SITE.url}/hikari/${p.id}/`, author: { '@type': 'Organization', name: SITE.operator, url: `${SITE.url}/about/` }, publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url }, inLanguage: 'ja' }));
 const crumbs = [{ name: 'ホーム', href: '/' }, parent, { name: p.name, href: `/hikari/${p.id}/` }];
 const others = providers.filter((o) => o.id !== p.id && o.kind === p.kind);
 const sections = [
@@ -28,7 +29,7 @@ const sections = [
 const title = `${p.name}は鹿児島で使える？料金・エリア・セット割を公式情報で解説`;
 const description = `${p.name}を鹿児島県で使うときの月額（戸建て・マンション）、工事費、スマホのセット割、提供エリア、気をつけることを、公式サイトの情報（${jpDate(p.checkedAt)}確認）をもとにまとめました。`;
 ---
-<Base title={title} description={description} jsonLd={[breadcrumbLd(SITE.url, crumbs)]} pr={!!p.affiliate}>
+<Base title={title} description={description} jsonLd={[articleLd(), breadcrumbLd(SITE.url, crumbs)]} pr={!!p.affiliate}>
   <div class="mx-auto max-w-3xl px-4 pt-8">
     <Breadcrumbs items={[...crumbs.slice(0, -1), { name: p.name }]} />
     <p class="section-kicker mt-6">通信・インターネットの選び方</p>

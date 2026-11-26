@@ -5,7 +5,7 @@ const finderProviders=providers.map(p=>({id:p.id,name:p.name,kind:p.kind,carrier
 ---
 <section id="finder" class="internet-finder" aria-labelledby="finder-title" data-internet-finder data-providers={JSON.stringify(finderProviders)}>
   <div class="finder-heading"><div><p class="finder-kicker">自分の条件で選ぶ</p><h2 id="finder-title">3つ選ぶと、比較したい2候補が分かる</h2></div><span>住所・個人情報は入力不要</span></div>
-  <form class="finder-form" action="/hikari/#compare" method="get">
+  <form class="finder-form" action="/hikari/kagoshima/#compare" method="get">
     <div class="finder-field"><label for="finder-building">01 お住まいの建物</label><select id="finder-building" name="building"><option value="house">戸建て</option><option value="mansion">マンション・アパート</option></select></div>
     <div class="finder-field"><label for="finder-carrier">02 お使いのスマホ</label><select id="finder-carrier" name="carrier"><option value="other">格安SIM・そのほか</option><option value="docomo">ドコモ</option><option value="au">au・UQ mobile</option><option value="softbank">ソフトバンク・ワイモバイル</option></select></div>
     <div class="finder-field"><label for="finder-construction">03 回線の工事はできる？</label><select id="finder-construction" name="construction"><option value="yes">できる・光回線を使いたい</option><option value="no">できない・工事なしで使いたい</option></select></div>
@@ -45,7 +45,7 @@ const finderProviders=providers.map(p=>({id:p.id,name:p.name,kind:p.kind,carrier
         const reason=card.querySelector('.finder-match');if(reason)reason.textContent=match(p)?'対象スマホのセット割を使える候補':'表示月額を比べる候補';
         cards.append(card);
       });
-      const back=document.createElement('a');back.href='/hikari/#compare';back.className='finder-back-link';back.textContent='ほかの光回線も一覧表で比べる →';
+      const back=document.createElement('a');back.href='/hikari/kagoshima/#compare';back.className='finder-back-link';back.textContent='ほかの光回線も一覧表で比べる →';
       result.replaceChildren(heading,intro,cards,back);result.hidden=false;status.textContent=candidates.length+'件の候補を表示しました。掲載サービス内で、入力条件と表示月額をもとに選んでいます。';heading.focus({preventScroll:true});
       result.scrollIntoView({block:'nearest',behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
     });

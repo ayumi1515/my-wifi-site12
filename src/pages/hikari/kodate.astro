@@ -6,13 +6,13 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { SITE } from '../../site.config.mjs';
 import { ranked, breadcrumbLd, jpDate, lastChecked } from '../../lib/data';
 const list = ranked('house', 'fiber');
-const crumbs = [{ name: 'ホーム', href: '/' }, { name: '戸建て向けの光回線', href: '/hikari/kodate/' }];
+const crumbs = [{ name: 'ホーム', href: '/' }, { name: '鹿児島県の光回線', href: '/hikari/kagoshima/' }, { name: '戸建て向けの光回線', href: '/hikari/kodate/' }];
 ---
 <Base title="鹿児島県の戸建て向け光回線をくらべる｜月額・工事費・セット割"
   description="鹿児島県の一戸建てで使える光回線を、公式サイトの料金をもとに比較。BBIQ・ドコモ光・SoftBank 光・ビッグローブ光・フレッツ光の月額、工事費、スマホのセット割、10ギガの有無をまとめました。"
   jsonLd={[breadcrumbLd(SITE.url, crumbs)]}>
   <div class="mx-auto max-w-5xl px-4 pt-8">
-    <Breadcrumbs items={[{ name: 'ホーム', href: '/' }, { name: '戸建て向けの光回線' }]} />
+    <Breadcrumbs items={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))} />
     <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 leading-snug">鹿児島県の戸建て向け光回線をくらべる</h1>
     <div class="prose-ja mt-4">
       <p>一戸建ての光回線は、電柱から家まで光ファイバーを引きこむ工事が必要です。工事費は多くの回線で「実質無料」の特典がありますが、分割の割引を途中でやめると残りを払う形がほとんどなので、長く使う前提で選びましょう。</p>

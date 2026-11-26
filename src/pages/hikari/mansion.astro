@@ -6,13 +6,13 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { SITE } from '../../site.config.mjs';
 import { ranked, breadcrumbLd, jpDate, lastChecked } from '../../lib/data';
 const list = ranked('mansion', 'fiber');
-const crumbs = [{ name: 'ホーム', href: '/' }, { name: 'マンション向けの光回線', href: '/hikari/mansion/' }];
+const crumbs = [{ name: 'ホーム', href: '/' }, { name: '鹿児島県の光回線', href: '/hikari/kagoshima/' }, { name: 'マンション向けの光回線', href: '/hikari/mansion/' }];
 ---
 <Base title="鹿児島県のマンション・アパート向け光回線をくらべる"
   description="鹿児島県のマンション・アパートで使える光回線を、公式サイトの料金をもとに比較。建物の設備の確かめ方、工事の許可、BBIQ・ドコモ光・SoftBank 光などの月額をまとめました。"
   jsonLd={[breadcrumbLd(SITE.url, crumbs)]}>
   <div class="mx-auto max-w-5xl px-4 pt-8">
-    <Breadcrumbs items={[{ name: 'ホーム', href: '/' }, { name: 'マンション向けの光回線' }]} />
+    <Breadcrumbs items={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))} />
     <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 leading-snug">鹿児島県のマンション・アパート向け光回線をくらべる</h1>
     <div class="prose-ja mt-4">
       <p>マンション・アパートでは、建物にすでに入っている光回線の設備によって、選べる回線や月額が変わります。まずは管理会社や大家さんに「どの回線の設備が入っているか」「工事をしてもよいか」を聞いてみましょう。</p>

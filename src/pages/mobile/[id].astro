@@ -30,7 +30,10 @@ const product = { name: a?.name ?? s.name, officialUrl: s.officialUrl, affiliate
 const sources = [...new Map(comparisonServices.flatMap(service => service.sources).map(source => [source.url, source])).values()];
 const path = `/mobile/${s.id}/`;
 const title = `${s.name}を漫画で比較｜料金の条件と申込み前の確認`;
-const description = `${g.intro} ${s.priceLabel}の掲載例を、容量・通話・初期費用の条件から確認。比較後は家族の通信費診断と公式の申込条件へ進めます。`;
+// 検索結果で切れないよう、説明文は120字以内にする（導入文は最初の1文だけ使う）
+const firstSentence = (text: string) => (text.match(/^.*?。/)?.[0] ?? text);
+const fullDescription = `${firstSentence(g.intro)}${s.priceLabel}の例を、容量・通話・初期費用の条件で確認できます。`;
+const description = fullDescription.length > 120 ? fullDescription.slice(0, 119) + '…' : fullDescription;
 const diagnosisHref = '/shindan/?goal=mobile#diagnosis-form';
 const crumbs = [{ name: '総合トップ', href: '/' }, { name: 'スマホ・SIM比較', href: '/mobile/' }, { name: s.name, href: path }];
 const articleLd = { '@context': 'https://schema.org', '@type': 'Article', headline: title, description, datePublished: s.checkedAt, dateModified: s.checkedAt, mainEntityOfPage: SITE.url + path, author: { '@type': 'Organization', name: SITE.operator, url: SITE.url + '/about/' }, publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url }, inLanguage: 'ja' };

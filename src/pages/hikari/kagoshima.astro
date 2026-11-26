@@ -1,0 +1,140 @@
+---
+// 鹿児島県の光回線の看板ページ。「光回線 おすすめ 鹿児島」などの検索で読まれることを狙う。
+// 比較の本体は KagoshimaComparison（/hikari/ から移した）。ここでは結論・公的データ・地域の注意を足す。
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import KagoshimaComparison from '../../components/KagoshimaComparison.astro';
+import { SITE } from '../../site.config.mjs';
+import { faqs, faqLd, breadcrumbLd, jpDate, lastChecked } from '../../lib/data';
+import coverage from '../../data/kagoshima-ftth-coverage.json';
+
+const tenGigaTowns = ['鹿児島市', '鹿屋市', '枕崎市', '出水市', '薩摩川内市', '日置市', '霧島市', 'いちき串木野市', '奄美市', '姶良市', '志布志市', '龍郷町'];
+const crumbs = [
+  { name: '総合トップ', href: '/' },
+  { name: '通信・ネット', href: '/hikari/' },
+  { name: '鹿児島県の光回線', href: '/hikari/kagoshima/' },
+];
+const [y, m] = lastChecked.split('-').map(Number);
+const title = `鹿児島県の光回線おすすめ比較【${y}年${m}月】BBIQ・ドコモ光など5社の料金と10ギガ地域`;
+const description = '鹿児島県で使える光回線5社を公式料金で比較。スマホ別の第一候補、戸建て・マンションの月額、工事費、10ギガが使える12市町、市町村別の光回線カバー率（総務省）、離島の注意点をまとめました。';
+const articleLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: `鹿児島県の光回線おすすめ比較【${y}年${m}月】`,
+  description,
+  dateModified: lastChecked,
+  inLanguage: 'ja',
+  mainEntityOfPage: new URL('/hikari/kagoshima/', SITE.url).href,
+  author: { '@type': 'Organization', name: SITE.operator, url: new URL('/about/', SITE.url).href },
+  publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url + '/' },
+};
+const munis = coverage.municipalities;
+const highTowns = munis.filter((mu) => mu.coverage >= 99).map((mu) => mu.name);
+const lowTowns = munis.filter((mu) => mu.coverage < 85).map((mu) => mu.name);
+const [cy, cm] = coverage.asOf.split('-').map(Number);
+---
+<Base title={title} description={description} jsonLd={[breadcrumbLd(SITE.url, crumbs), articleLd, faqLd(faqs)]}>
+  <header class="site-container kagoshima-hero">
+    <Breadcrumbs items={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))} />
+    <h1>鹿児島県の光回線おすすめ比較<span>【{y}年{m}月】</span></h1>
+    <div class="answer-box">
+      <p class="answer-label">先に結論</p>
+      <ul>
+        <li><strong>au・UQ mobile（九州電力の電気も）</strong>なら <a href="/hikari/bbiq/">BBIQ</a></li>
+        <li><strong>ドコモ</strong>なら <a href="/hikari/docomo-hikari/">ドコモ光</a></li>
+        <li><strong>ソフトバンク・ワイモバイル</strong>なら <a href="/hikari/softbank-hikari/">SoftBank 光</a></li>
+        <li><strong>工事ができない</strong>なら <a href="/hikari/home-router/">ホームルーター</a></li>
+      </ul>
+      <p class="answer-note">10ギガはNTT西日本の「フレッツ 光クロス」が使える12市町が目安です。BBIQの6ギガ・10ギガとNURO 光は、鹿児島県では提供されていません。</p>
+    </div>
+    <p class="byline">
+      料金は税込・各社の公式サイトで{jpDate(lastChecked)}に確認 ／ 書いた人：{SITE.operator}（<a href="/about/">編集方針と調べ方</a>）
+    </p>
+  </header>
+
+  <KagoshimaComparison>
+    <section slot="after-compare" id="kagoshima-facts" class="site-container facts-section" aria-labelledby="facts-title">
+      <h2 id="facts-title">鹿児島県の光回線事情（公的データと公式情報）</h2>
+      <div class="fact-cards">
+        <div class="fact-card">
+          <p class="fact-label">光回線を引ける世帯の割合</p>
+          <p class="fact-value">{coverage.prefecture.coverage}<small>%</small></p>
+          <p class="fact-note">全国{coverage.prefecture.of}都道府県のうち{coverage.prefecture.rank}位（{cy}年{cm}月末時点・総務省）</p>
+        </div>
+        <div class="fact-card">
+          <p class="fact-label">10ギガ（フレッツ 光クロス）</p>
+          <p class="fact-value">{tenGigaTowns.length}<small>市町</small></p>
+          <p class="fact-note">2026年9月28日時点・NTT西日本</p>
+        </div>
+        <div class="fact-card">
+          <p class="fact-label">鹿児島では使えないもの</p>
+          <p class="fact-text">BBIQの6ギガ・10ギガ／NURO 光</p>
+          <p class="fact-note">2026年11月の公式情報</p>
+        </div>
+      </div>
+      <h3>市町村によって、光回線の引きやすさがちがう</h3>
+      <p>総務省の調べでは、鹿児島県で光回線を引ける世帯の割合は{coverage.prefecture.coverage}%で、全国では低めです。県内でも、{highTowns.slice(0, 4).join('・')}などは99%を超える一方、{lowTowns.slice(0, 4).join('・')}などは85%を下回ります。割合が低い地域ほど、申込み前の住所確認と、使えなかったときの代わり（ホームルーターなど）を考えておくと安心です。</p>
+      <details class="coverage-table">
+        <summary>県内{munis.length}市町村の光回線カバー率を見る（高い順）</summary>
+        <div class="table-scroll" tabindex="0" role="region" aria-label="鹿児島県の市町村別 光回線カバー率">
+          <table>
+            <caption>鹿児島県の市町村別 FTTH世帯カバー率（{cy}年{cm}月末時点）</caption>
+            <thead><tr><th scope="col">市町村</th><th scope="col">カバー率</th><th scope="col">10ギガ</th></tr></thead>
+            <tbody>
+              {munis.map((mu) => (
+                <tr><th scope="row">{mu.name}</th><td>{mu.coverage.toFixed(1)}%</td><td>{tenGigaTowns.includes(mu.name) ? '提供地域あり' : '—'}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="table-note">{coverage.note} 10ギガは、NTT西日本が公表する提供市町村です（すべての住所で使えるとは限りません）。</p>
+      </details>
+      <h3>10ギガが使える12市町</h3>
+      <p class="town-list">{tenGigaTowns.join('、')}</p>
+      <p>同じNTT西日本の回線を使うドコモ光・ビッグローブ光などの10ギガプランも、この地域が目安です。市町の中でも、住所や建物によって使えない場合があります。</p>
+      <h3>離島に住んでいる場合</h3>
+      <p>種子島・屋久島・奄美群島などでも、NTT西日本のフレッツ光が使える島があります。ただし、自治体が整備した光ファイバーの地域は、公式サイトのエリア検索では調べられず、電話での確認になります。くわしくは<a href="/hikari/area/ritou/">離島の光回線の確認方法</a>を見てください。</p>
+      <p class="sources">出典：<a href={coverage.sourceUrl} target="_blank" rel="noopener">{coverage.sourceLabel}</a>（{coverage.checkedAt.replace(/-/g, '/')}確認）／<a href="https://flets-w.com/service/cross/area/detail.html" target="_blank" rel="noopener">NTT西日本「フレッツ 光クロス 提供エリア」</a>／<a href="https://www.bbiq.jp/hikari/internet/price/" target="_blank" rel="noopener">BBIQ 料金（6・10ギガの提供エリア）</a>／<a href="https://www.nuro.jp/" target="_blank" rel="noopener">NURO 光 提供エリア</a></p>
+    </section>
+  </KagoshimaComparison>
+</Base>
+
+<style>
+  .kagoshima-hero { padding-top: 14px; }
+  .kagoshima-hero h1 { margin: 12px 0 16px; font-size: clamp(26px, 3.6vw, 38px); font-weight: 800; line-height: 1.45; color: #1f3a30; }
+  .kagoshima-hero h1 span { display: inline-block; font-size: .62em; color: #175d50; margin-left: .3em; }
+  .answer-box { border: 2px solid #175d50; border-radius: 10px; background: #f0f6f1; padding: 20px 22px; }
+  .answer-label { display: inline-block; background: #175d50; color: #fff; font-size: 13px; font-weight: 800; border-radius: 4px; padding: 2px 10px; margin-bottom: 10px; }
+  .answer-box ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+  .answer-box li { font-size: 16px; line-height: 1.8; }
+  .answer-box li a { color: #175d50; font-weight: 800; text-decoration: underline; text-underline-offset: 4px; }
+  .answer-note { margin-top: 12px; font-size: 14px; line-height: 1.9; color: #4f6a5a; }
+  .byline { margin-top: 12px; font-size: 13px; color: #637268; line-height: 1.8; }
+  .byline a { text-decoration: underline; }
+  .facts-section { padding-top: 40px; }
+  .facts-section h2 { font-size: clamp(21px, 2.5vw, 26px); font-weight: 800; line-height: 1.55; }
+  .facts-section h3 { margin-top: 26px; font-size: 18px; font-weight: 800; color: #1f3a30; }
+  .facts-section p { margin-top: 10px; font-size: 15px; line-height: 1.95; color: #3f5548; }
+  .facts-section a { color: #175d50; text-decoration: underline; text-underline-offset: 3px; }
+  .fact-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 18px; }
+  .fact-card { border: 1px solid #ccdad2; border-radius: 8px; padding: 16px 18px; background: #fff; }
+  .facts-section .fact-label { margin: 0; font-size: 13px; font-weight: 700; color: #175d50; }
+  .facts-section .fact-value { margin: 4px 0 0; font-size: 34px; font-weight: 800; color: #1f3a30; line-height: 1.3; }
+  .fact-value small { font-size: 16px; margin-left: 2px; }
+  .facts-section .fact-text { margin: 6px 0 0; font-size: 17px; font-weight: 800; color: #1f3a30; line-height: 1.6; }
+  .facts-section .fact-note { margin: 6px 0 0; font-size: 12px; color: #69786e; line-height: 1.7; }
+  .coverage-table { margin-top: 16px; border: 1px solid #d5dfd7; border-radius: 8px; padding: 14px 18px; background: #fafcfa; }
+  .coverage-table summary { cursor: pointer; font-weight: 800; color: #175d50; font-size: 15px; }
+  .table-scroll { overflow-x: auto; margin-top: 12px; }
+  .coverage-table table { width: 100%; min-width: 360px; border-collapse: collapse; font-size: 14px; }
+  .coverage-table caption { text-align: left; font-size: 13px; color: #5d6f63; padding-bottom: 6px; }
+  .coverage-table th, .coverage-table td { border-bottom: 1px solid #e1e8e3; padding: 8px 10px; text-align: left; }
+  .coverage-table thead th { background: #175d50; color: #fff; }
+  .coverage-table .table-note { font-size: 12px; color: #69786e; }
+  .town-list { font-weight: 700; color: #1f3a30 !important; }
+  .facts-section .sources { font-size: 12px; color: #69786e; margin-top: 18px; }
+  @media (max-width: 760px) {
+    .fact-cards { grid-template-columns: 1fr; }
+    .answer-box { padding: 17px 16px; }
+  }
+</style>

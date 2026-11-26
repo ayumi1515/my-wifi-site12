@@ -1,0 +1,189 @@
+{
+ "title": "令和6年度末 FTTH世帯カバー率（都道府県別・市区町村別）",
+ "asOf": "2025-03-31",
+ "checkedAt": "2026-11-26",
+ "sourceLabel": "総務省「ブロードバンド基盤の整備状況」令和6年度末FTTH世帯カバー率",
+ "sourceUrl": "https://www.soumu.go.jp/main_sosiki/joho_tsusin/broadband/",
+ "fileUrl": "https://www.soumu.go.jp/main_content/001088979.xlsx",
+ "note": "事業者情報等から一定の仮定の下に推計した、エリア内の利用可能世帯数を総世帯数で割ったもの（総務省の注釈）。実際の提供は地理的条件や建物の設備で異なる。",
+ "prefecture": {
+  "name": "鹿児島県",
+  "coverage": 95.7,
+  "rank": 43,
+  "of": 47
+ },
+ "municipalities": [
+  {
+   "name": "伊仙町",
+   "coverage": 100.0
+  },
+  {
+   "name": "志布志市",
+   "coverage": 100.0
+  },
+  {
+   "name": "天城町",
+   "coverage": 100.0
+  },
+  {
+   "name": "徳之島町",
+   "coverage": 100.0
+  },
+  {
+   "name": "薩摩川内市",
+   "coverage": 99.4
+  },
+  {
+   "name": "鹿児島市",
+   "coverage": 98.7
+  },
+  {
+   "name": "姶良市",
+   "coverage": 98.0
+  },
+  {
+   "name": "霧島市",
+   "coverage": 96.8
+  },
+  {
+   "name": "いちき串木野市",
+   "coverage": 96.4
+  },
+  {
+   "name": "西之表市",
+   "coverage": 95.7
+  },
+  {
+   "name": "日置市",
+   "coverage": 95.6
+  },
+  {
+   "name": "肝付町",
+   "coverage": 95.0
+  },
+  {
+   "name": "三島村",
+   "coverage": 95.0
+  },
+  {
+   "name": "中種子町",
+   "coverage": 95.0
+  },
+  {
+   "name": "東串良町",
+   "coverage": 95.0
+  },
+  {
+   "name": "和泊町",
+   "coverage": 95.0
+  },
+  {
+   "name": "指宿市",
+   "coverage": 94.6
+  },
+  {
+   "name": "枕崎市",
+   "coverage": 94.1
+  },
+  {
+   "name": "龍郷町",
+   "coverage": 93.4
+  },
+  {
+   "name": "さつま町",
+   "coverage": 93.3
+  },
+  {
+   "name": "阿久根市",
+   "coverage": 93.3
+  },
+  {
+   "name": "鹿屋市",
+   "coverage": 92.9
+  },
+  {
+   "name": "曽於市",
+   "coverage": 92.4
+  },
+  {
+   "name": "南九州市",
+   "coverage": 92.3
+  },
+  {
+   "name": "屋久島町",
+   "coverage": 92.0
+  },
+  {
+   "name": "大崎町",
+   "coverage": 91.9
+  },
+  {
+   "name": "南種子町",
+   "coverage": 91.4
+  },
+  {
+   "name": "伊佐市",
+   "coverage": 90.8
+  },
+  {
+   "name": "奄美市",
+   "coverage": 89.5
+  },
+  {
+   "name": "喜界町",
+   "coverage": 89.1
+  },
+  {
+   "name": "出水市",
+   "coverage": 89.1
+  },
+  {
+   "name": "南さつま市",
+   "coverage": 87.9
+  },
+  {
+   "name": "宇検村",
+   "coverage": 87.6
+  },
+  {
+   "name": "瀬戸内町",
+   "coverage": 86.8
+  },
+  {
+   "name": "知名町",
+   "coverage": 86.7
+  },
+  {
+   "name": "南大隅町",
+   "coverage": 85.2
+  },
+  {
+   "name": "垂水市",
+   "coverage": 84.7
+  },
+  {
+   "name": "大和村",
+   "coverage": 84.0
+  },
+  {
+   "name": "長島町",
+   "coverage": 82.7
+  },
+  {
+   "name": "湧水町",
+   "coverage": 77.2
+  },
+  {
+   "name": "与論町",
+   "coverage": 77.2
+  },
+  {
+   "name": "錦江町",
+   "coverage": 75.0
+  },
+  {
+   "name": "十島村",
+   "coverage": 75.0
+  }
+ ]
+}

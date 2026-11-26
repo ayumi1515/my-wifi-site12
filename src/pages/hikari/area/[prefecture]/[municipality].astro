@@ -19,7 +19,7 @@ const existingDetail = getExistingMunicipalityPath(p, m);
 const sourceDate = nationalAreaSource.asOf ?? nationalAreaSource.checkedAt;
 const crumbs = [{ name: '総合トップ', href: '/' }, { name: '全国の提供エリア確認', href: '/hikari/area/' }, { name: p.name, href: getPrefecturePath(p) }, { name: m.name, href: getMunicipalityPath(p, m) }];
 ---
-<Base title={`${p.name}${m.name}のWi-Fi・光回線｜公式の住所別エリア確認`} description={`${p.name}${m.name}でネット回線を探す方へ。${ntt.name}を原則とする確認先、光回線・ホームルーターの公式エリア案内、戸建てと集合住宅の確認手順を掲載。市区町村名だけでは提供可否は確定しません。`} pr={false} jsonLd={[breadcrumbLd(SITE.url, crumbs)]}>
+<Base title={`${p.name}${m.name}のWi-Fi・光回線｜公式の住所別エリア確認`} description={`${p.name}${m.name}でネット回線を探す方へ。${ntt.name}を原則とする確認先、光回線・ホームルーターの公式エリア案内、戸建てと集合住宅の確認手順を掲載。市区町村名だけでは提供可否は確定しません。`} pr={false} noindex jsonLd={[breadcrumbLd(SITE.url, crumbs)]}>
   <div class="municipality-area-page site-container">
     <Breadcrumbs items={crumbs.map((c, i) => i === crumbs.length - 1 ? { name: c.name } : c)} />
     <header class="municipality-area-header">

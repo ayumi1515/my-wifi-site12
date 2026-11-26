@@ -6,13 +6,13 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { SITE } from '../../site.config.mjs';
 import { ranked, breadcrumbLd, jpDate, lastChecked } from '../../lib/data';
 const list = ranked('house', 'router');
-const crumbs = [{ name: 'ホーム', href: '/' }, { name: '工事なしのホームルーター', href: '/hikari/home-router/' }];
+const crumbs = [{ name: 'ホーム', href: '/' }, { name: '鹿児島県の光回線', href: '/hikari/kagoshima/' }, { name: '工事なしのホームルーター', href: '/hikari/home-router/' }];
 ---
 <Base title="鹿児島で工事なしで使えるネット｜ホームルーターと光回線のちがい"
   description="工事ができない・すぐにネットを使いたい人向けに、鹿児島で使えるホームルーター（home 5G・SoftBank Air）を公式情報で比較。光回線とのちがい、住所の制限、機械代の注意点をまとめました。"
   jsonLd={[breadcrumbLd(SITE.url, crumbs)]}>
   <div class="mx-auto max-w-5xl px-4 pt-8">
-    <Breadcrumbs items={[{ name: 'ホーム', href: '/' }, { name: '工事なしのホームルーター' }]} />
+    <Breadcrumbs items={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))} />
     <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 leading-snug">工事なしで使えるネット（ホームルーター）</h1>
     <div class="prose-ja mt-4">
       <p>ホームルーターは、スマホと同じ電波を使う、置くだけのWi-Fiの機械です。工事がいらず、機械が届けばすぐに使い始められます。</p>
