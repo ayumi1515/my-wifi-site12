@@ -43,6 +43,7 @@ const regionChoices = prefectures.map(p=>({code:p.code,name:p.name,nttRegion:p.n
   </div>
 </Base>
 <script>
+  import { attachSuggest, enhanceSelects, PREFECTURE_KANA } from '../../scripts/form-assist';
   // 以前ここにあった鹿児島の比較（#compare など）は /hikari/kagoshima/ に移した。古いリンクはそちらへ送る。
   const legacyHashes=new Set(['#compare','#finder','#ranking','#areas','#faq','#criteria','#quick']);
   if(legacyHashes.has(location.hash))location.replace('/hikari/kagoshima/'+location.hash);
@@ -71,7 +72,6 @@ const regionChoices = prefectures.map(p=>({code:p.code,name:p.name,nttRegion:p.n
     const loadMunicipalities=()=>loading??=fetch('/data/regions.json').then(r=>r.json()).then((data:Record<string,Municipality[]>)=>{municipalities=data;}).catch(()=>{municipalities={};});
     const muniOf=(p:RegionChoice)=>municipalities?.[p.code]??[];
     let selectedCity:Municipality|null=null;
-    const normalise=(value:string)=>value.normalize('NFKC').trim().toLowerCase().replace(/[ァ-ヶ]/g,c=>String.fromCharCode(c.charCodeAt(0)-0x60));
     const setLink=(link:HTMLAnchorElement,href:string|null)=>{if(href){link.href=href;link.removeAttribute('aria-disabled');link.removeAttribute('tabindex');}else{link.removeAttribute('href');link.setAttribute('aria-disabled','true');link.tabIndex=-1;}};
     const updateLinks=()=>{
       const p=regions.find(p=>p.code===prefecture.value);
@@ -90,15 +90,17 @@ const regionChoices = prefectures.map(p=>({code:p.code,name:p.name,nttRegion:p.n
       else{officialTitle.textContent='';officialLink.textContent='';officialLink.removeAttribute('href');}
       updateLinks();
     };
-    const searchCities=async()=>{
-      const p=regions.find(p=>p.code===prefecture.value);const query=normalise(cityQuery.value);selectedCity=null;updateLinks();cityList.replaceChildren();
-      if(!p||!query){cityResults.hidden=true;cityStatus.textContent='';return;}
-      if(!municipalities){cityResults.hidden=false;cityStatus.textContent='市区町村の一覧を読み込んでいます…';await loadMunicipalities();if(normalise(cityQuery.value)!==query)return;}
-      const matches=muniOf(p).filter(m=>normalise(m.search).includes(query));cityResults.hidden=false;cityStatus.textContent=matches.length?`${matches.length}件見つかりました。${matches.length>8?'先頭8件を表示しています。名前を続けて入力すると絞れます。':'市区町村を選んでください。'}`:'一致する市区町村がありません。読みがなや名前の一部でも試してください。';
-      matches.slice(0,8).forEach(m=>{const li=document.createElement('li');const button=document.createElement('button');button.type='button';const label=[m.countyName,m.parentCityName,m.name].filter(Boolean).join(' ');button.textContent=label+'を選ぶ';button.addEventListener('click',()=>{selectedCity=m;cityQuery.value=label;cityResults.hidden=true;updateLinks();});li.append(button);cityList.append(li);});
-    };
     prefecture.addEventListener('change',()=>{selectedCity=null;cityQuery.value='';cityResults.hidden=true;cityList.replaceChildren();cityStatus.textContent='';updateRegion();});
-    cityQuery.addEventListener('input',()=>{void searchCities();});
+    // 市区町村は、打つ前から候補を出す（読みがなでも探せる）
+    enhanceSelects(chooser,{kana:(o)=>[PREFECTURE_KANA[o.textContent??'']??'']});
+    const citySuggest=attachSuggest(cityQuery,{
+      items:()=>{const p=regions.find(p=>p.code===prefecture.value);return p?muniOf(p).map(m=>({label:[m.countyName,m.parentCityName,m.name].filter(Boolean).join(' '),keys:[m.search],data:m})):[];},
+      max:10,
+      emptyText:'一致する市区町村がありません。読みがなや名前の一部でも試してください。',
+      onPick:(item)=>{selectedCity=item.data as Municipality;cityResults.hidden=true;updateLinks();},
+    });
+    cityQuery.addEventListener('focus',()=>{if(!municipalities)void loadMunicipalities().then(()=>citySuggest?.refresh());});
+    cityQuery.addEventListener('input',(event)=>{if(event.isTrusted){selectedCity=null;updateLinks();}});
     const params=new URLSearchParams(location.search);const initial=regions.find(p=>p.code===params.get('prefecture'));
     if(initial){
       prefecture.value=initial.code;updateRegion();

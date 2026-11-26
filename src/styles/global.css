@@ -188,3 +188,54 @@ img { height: auto; }
 
 /* Expanded categories reflow at tablet widths. */
 .desktop-nav{flex-wrap:wrap;gap:0 24px}.desktop-nav>a{white-space:nowrap}
+
+/* ===== 入力をかんたんにする部品（src/scripts/form-assist.ts） ===== */
+.suggest-wrap{position:relative;display:block;flex:1 1 auto;min-width:0;width:100%}
+.suggest-list{position:absolute;z-index:40;left:0;right:0;top:calc(100% + 4px);max-height:min(360px,55vh);overflow-y:auto;margin:0;padding:6px;list-style:none;background:#fff;border:1px solid #9ebaa8;border-radius:8px;box-shadow:0 10px 28px rgba(23,61,43,.18)}
+.suggest-list[hidden]{display:none}
+.suggest-list [role=option]{display:flex;flex-direction:column;gap:1px;padding:11px 12px;min-height:44px;border-radius:6px;cursor:pointer;font-size:16px;line-height:1.5;color:#172c23}
+.suggest-list [role=option] small{font-size:12px;color:#5e7465}
+.suggest-list [role=option]:hover,.suggest-list [role=option][aria-selected=true]{background:#e6f1ea}
+.suggest-label{font-weight:700}
+.suggest-empty{padding:11px 12px;font-size:14px;color:#5e7465}
+.assist-native{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;border:0!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;opacity:0!important;pointer-events:none!important}
+.assist-combo{display:block;width:100%;min-height:50px;padding:11px 40px 11px 13px;border:1px solid #9ebaa8;border-radius:6px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath d='M2 5l5 5 5-5' fill='none' stroke='%23175d50' stroke-width='2'/%3E%3C/svg%3E") no-repeat right 14px center;font-size:16px;color:#172c23}
+.assist-combo:disabled{background-color:#f1f4f1;color:#7b8a80}
+.assist-combo.is-invalid,.choice-chips.is-invalid{outline:3px solid #b45b36;outline-offset:3px;border-radius:6px}
+.choice-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.choice-chips button{min-height:46px;padding:9px 15px;border:1.5px solid #adc6b7;border-radius:999px;background:#fff;font-size:15px;font-weight:700;line-height:1.5;color:#2f5141;cursor:pointer;text-align:left}
+.choice-chips button:hover{border-color:#175d50;background:#f1f7f3}
+.choice-chips button[aria-pressed=true]{background:#175d50;border-color:#175d50;color:#fff}
+.choice-chips button[aria-pressed=true]::before{content:'✓ '}
+.choice-chips button:disabled{opacity:.45;cursor:not-allowed}
+.choice-chips .chip-more{border-style:dashed;background:transparent;color:#175d50}
+.choice-chips button:focus-visible,.suggest-list [role=option]:focus-visible{outline:3px solid #b45b36;outline-offset:2px}
+
+/* 診断結果の「いくら得する？」 */
+.gain-summary{margin:18px 0 6px;padding:20px;border:2px solid #175d50;border-radius:10px;background:#f4faf5}
+.gain-title{font-size:20px;font-weight:800;line-height:1.6;color:#173d2b}
+.gain-rows{margin:12px 0 0}
+.gain-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:12px;align-items:baseline;padding:12px 0;border-bottom:1px dashed #c4d8ca}
+.gain-row dt{font-size:15px;font-weight:700;color:#3f5c4a;display:flex;align-items:center;gap:8px}
+.gain-no{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#dbe9df;color:#175d50;font-size:13px;flex-shrink:0}
+.gain-row dd{margin:0;text-align:right}
+.gain-row dd strong{display:block;font-size:20px;font-weight:800;line-height:1.5;color:#2f4a3a}
+.gain-row dd small{display:block;font-size:12px;line-height:1.7;color:#617568;margin-top:2px}
+.gain-row.is-plus dd strong{color:#175d50}
+.gain-row.is-minus dd strong{color:#9b482b}
+.gain-total{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 14px;margin-top:14px;padding:16px 18px;border-radius:8px;background:#175d50;color:#fff}
+.gain-total>span{font-size:15px;font-weight:700}
+.gain-total>strong{font-size:clamp(24px,4vw,32px);font-weight:800;line-height:1.4}
+.gain-total>small{flex-basis:100%;font-size:12px;line-height:1.7;opacity:.9}
+.gain-total.is-minus{background:#9b482b}
+.gain-note{font-size:12px;line-height:1.8;color:#5d7064;margin-top:10px}
+.gain-ask{margin-top:12px;padding:14px;border-radius:8px;background:#fff;border:1px solid #c9dccf}
+.gain-ask-title{font-size:15px;font-weight:700;line-height:1.7;color:#2f4a3a}
+.gain-ask-line{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:8px}
+.gain-ask-line .suggest-wrap{flex:1 1 160px;width:auto}
+.gain-ask-line input{width:100%;min-height:50px;padding:10px 12px;border:1px solid #9ebaa8;border-radius:6px;font-size:18px}
+.gain-ask-line>span{font-size:14px;color:#4f6858}
+.gain-ask-line button{min-height:50px;padding:10px 18px;border-radius:6px;background:#175d50;color:#fff;font-size:15px;font-weight:700;cursor:pointer}
+.choice-gain{color:#175d50!important;font-weight:700}
+@media(max-width:600px){.gain-summary{padding:16px}.gain-row{grid-template-columns:1fr;gap:4px}.gain-row dd{text-align:left}.gain-total{padding:14px}}
+.choice-chips .chip-hint{font-size:14px;line-height:1.8;color:#6a7b70;padding:6px 0}

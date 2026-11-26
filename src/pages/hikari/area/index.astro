@@ -63,6 +63,7 @@ const regions = [
   </div>
 </Base>
 <script>
+  import { attachSuggest, PREFECTURE_KANA } from '../../../scripts/form-assist';
   const search = document.querySelector<HTMLInputElement>('#prefecture-search');
   const status = document.querySelector('#prefecture-results');
   search?.addEventListener('input', () => {
@@ -77,6 +78,11 @@ const regions = [
     });
     if (status) status.textContent = count ? `${count}都道府県を表示しています` : '見つかりませんでした。都道府県名を確認してください。';
   });
+  if (search) {
+    const prefItems = Array.from(document.querySelectorAll<HTMLElement>('[data-prefecture-name]')).map(li => ({ label: li.dataset.prefectureName ?? '', sub: li.querySelector('span')?.textContent ?? '', keys: [PREFECTURE_KANA[li.dataset.prefectureName ?? ''] ?? ''], href: li.querySelector('a')?.href }));
+    const kagoshimaFirst = () => [...prefItems.filter(i => i.label === '鹿児島県'), ...prefItems.filter(i => ['東京都', '大阪府', '福岡県', '熊本県', '宮崎県'].includes(i.label))];
+    attachSuggest(search, { items: () => prefItems, initial: kagoshimaFirst, max: 10 });
+  }
 </script>
 <style>
 .directory-diagnosis{display:inline-flex;align-items:center;gap:15px;justify-content:center;min-height:48px;margin-top:18px;padding:12px 18px;border:1px solid #175d50;border-radius:6px;background:#175d50;color:#fff;font-size:15px;font-weight:700;line-height:1.7}.directory-diagnosis:hover{background:#103c36}@media(max-width:600px){.directory-diagnosis{display:flex}}

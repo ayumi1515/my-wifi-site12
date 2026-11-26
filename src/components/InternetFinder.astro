@@ -17,6 +17,7 @@ const finderProviders=providers.map(p=>({id:p.id,name:p.name,kind:p.kind,carrier
   <noscript><p class="finder-noscript">候補は<a href="/hikari/kodate/">戸建て</a>・<a href="/hikari/mansion/">マンション</a>・<a href="/hikari/home-router/">工事なし</a>の比較ページからも選べます。</p></noscript>
 </section>
 <script>
+  import { enhanceSelects } from '../scripts/form-assist';
   interface FinderPrice{monthly:number;label:string;note:string}
   interface FinderProvider{id:string;name:string;kind:'fiber'|'router';carriers:string[];house:FinderPrice|null;mansion:FinderPrice|null}
   const carrierKeys:Record<string,string[]>={docomo:['docomo'],au:['au','uq'],softbank:['softbank','ymobile'],other:[]};
@@ -25,6 +26,7 @@ const finderProviders=providers.map(p=>({id:p.id,name:p.name,kind:p.kind,carrier
     const result=finder.querySelector<HTMLDivElement>('.finder-results');
     const status=finder.querySelector<HTMLParagraphElement>('.finder-status');
     if(!form||!result||!status)return;
+    enhanceSelects(form);
     const list:FinderProvider[]=JSON.parse(finder.dataset.providers||'[]');
     const templates=new Map<string,HTMLTemplateElement>();
     finder.querySelectorAll<HTMLTemplateElement>('[data-finder-template]').forEach(template=>templates.set(template.dataset.finderTemplate||'',template));

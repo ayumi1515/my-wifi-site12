@@ -9,8 +9,8 @@ const test=(name,fn)=>{fn();tests.push(name);};
 test('home-only accepts zero phone inputs and never applies an inferred phone discount',()=>{
  const r=estimate({goal:'home',lines:[]});assert(r.complete);for(const p of r.proposals){assert.equal(p.mobileMonthly,0);assert.equal(p.optionMonthly,0);assert.deepEqual(p.lines,[]);}
 });
-test('construction unknown requires an address check instead of a fabricated total',()=>{
- const r=estimate({construction:'unknown'});assert(!r.complete);assert.equal(r.proposals.length,0);
+test('construction unknown compares fiber and router together and asks for a construction check',()=>{
+ const r=estimate({construction:'unknown'});assert(r.proposals.length>0);assert(r.warnings.some(w=>w.includes('工事ができるか')));
 });
 test('BBIQ is restricted to Kagoshima houses for this fixed-price comparison',()=>{
  for(let p=1;p<=47;p++){const r=estimate({prefecture:String(p).padStart(2,'0'),useCampaigns:true});if(p!==46)assert(!r.proposals.some(p=>p.homeId==='bbiq'));}
@@ -129,6 +129,6 @@ test('invalid actual prices and unknown switching costs cannot produce a savings
   const r=estimate({currentMonthly:null,currentHomeMonthly:5000,lines:[line({currentMonthly:value})]});assert.equal(r.baseline.lines[0].monthly,null);assert.equal(r.baseline.effectiveMonthly,null);assert(r.proposals.every(p=>p.periodSavings===null));
  }
  const r=estimate({currentMonthly:null,currentHomeMonthly:5000,switchingCost:null,lines:[line({currentMonthly:1000})]});assert.equal(r.baseline.effectiveMonthly,6000);assert(r.proposals.every(p=>p.periodSavings===null&&p.monthlySavings!==null));
- const unknown=estimate({construction:'unknown',currentMonthly:null,currentHomeMonthly:5000,lines:[line({currentMonthly:1000})]});assert(!unknown.complete);assert.equal(unknown.baseline.effectiveMonthly,6000);
+ const unknown=estimate({construction:'unknown',currentMonthly:null,currentHomeMonthly:5000,lines:[line({currentMonthly:1000})]});assert(unknown.proposals.length>0);assert.equal(unknown.baseline.effectiveMonthly,6000);
 });
 console.log('Family diagnosis checks passed: '+tests.length+' cases.');

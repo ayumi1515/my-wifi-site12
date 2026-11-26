@@ -11,7 +11,7 @@ interface Plan {id:string;brandId:string;name:string;familyGroup:string|null;sho
 interface Home {id:string;name:string;kind:'fiber'|'router';prefectures:string[]|null;buildings:string[];monthly:Record<'house'|'mansion',number|null>;decemberMonthly?:Record<'house'|'mansion',number|null>;introFirstMonth?:number;introMonthly?:number;introMonths?:number;requiredBundleOptionMonthly:number|null;contractMonths:number;note:string;url:string;sources:Source[]}
 interface Campaign {id:string;homeId:string;amount:number;receiveAfterMonths:number|null;minUseMonths:number;buildings:string[];conditions:string[];url:string;sourceCheckedAt:string}
 export interface HouseholdLine {brandId:string;planId:string;name:string;monthly:number;baseMonthly:number;familyDiscount:number;bundleDiscount:number;tenureDiscount:number;dataLabel:string;url:string;sources:Source[];note:string}
-export interface HouseholdProposal {homeId:string|null;monthly:number;homeMonthly:number;optionMonthly:number;mobileMonthly:number;referenceTotal:number;lines:HouseholdLine[];note:string;campaignAmount:number;campaignNote:string;periodSavings:number|null;monthlySavings:number|null}
+export interface HouseholdProposal {homeId:string|null;monthly:number;homeMonthly:number;optionMonthly:number;mobileMonthly:number;referenceTotal:number;lines:HouseholdLine[];note:string;campaignAmount:number;campaignNote:string;periodSavings:number|null;monthlySavings:number|null;periodBillSavings:number|null;possibleCampaignAmount:number;possibleCampaignNote:string}
 export interface CurrentPlanOption {id:string;name:string;tiers:{maxGb:number|null;monthly:number}[];note:string}
 export interface HouseholdBaselineLine {planId:string|null;planName:string;monthly:number|null;referenceMonthly:number|null;source:'actual'|'unknown'}
 export interface HouseholdBaseline {lines:HouseholdBaselineLine[];homeMonthly:number|null;derivedMonthly:number|null;effectiveMonthly:number|null;source:'total-override'|'line-items'|'unknown'}
@@ -77,7 +77,10 @@ function proposalFor(home:Home|null,selected:Plan[],input:HouseholdInput):Househ
   const effectiveMonthly=currentHouseholdBaseline(input).effectiveMonthly;
   const monthlySavings=effectiveMonthly!==null?effectiveMonthly-monthly:null;
   const periodSavings=effectiveMonthly!==null&&finiteCost(input.switchingCost)?effectiveMonthly*months-referenceTotal-input.switchingCost+campaign.amount:null;
-  return {homeId:home?.id??null,monthly,homeMonthly,optionMonthly,mobileMonthly,referenceTotal,lines,campaignAmount:campaign.amount,campaignNote:campaign.note,monthlySavings,periodSavings,note:`${home?.note??'自宅回線の基本料は含めず、スマホ回線のみを比較しています。'} 通常料金・対象条件の家族割とセット割で比較。期間参考額は開始月を1カ月とし、日割りをしない参考計算です。初期費用・工事費・端末代・解約費・通話料は別途。`};
+  // 「いくら得？」の表示用：料金だけの期間差と、条件を満たせば受け取れる特典（計算に入れるかどうかとは別に見せる）
+  const periodBillSavings=effectiveMonthly!==null?effectiveMonthly*months-referenceTotal:null;
+  const possible=input.useCampaigns?campaign:campaignFor(home,{...input,useCampaigns:true});
+  return {homeId:home?.id??null,monthly,homeMonthly,optionMonthly,mobileMonthly,referenceTotal,lines,campaignAmount:campaign.amount,campaignNote:campaign.note,monthlySavings,periodSavings,periodBillSavings,possibleCampaignAmount:possible.amount,possibleCampaignNote:possible.note,note:`${home?.note??'自宅回線の基本料は含めず、スマホ回線のみを比較しています。'} 通常料金・対象条件の家族割とセット割で比較。期間参考額は開始月を1カ月とし、日割りをしない参考計算です。初期費用・工事費・端末代・解約費・通話料は別途。`};
 }
 const objective=(p:HouseholdProposal)=>p.referenceTotal-p.campaignAmount;
 function phonePeriodDelta(plan:Plan,line:HouseholdInput['lines'][number],input:HouseholdInput){
@@ -113,7 +116,7 @@ export function estimateHousehold(input:HouseholdInput):HouseholdResult {
   const invalid=!['both','home','mobile'].includes(input.goal)||!/^\d{2}$/.test(input.prefecture)||!['house','mansion'].includes(input.building)||![1,2,3,5].includes(input.years)||(input.goal!=='home'&&input.lines.length<1)||input.lines.length>6||input.lines.some(l=>!Number.isFinite(l.dataGb)||l.dataGb<0);
   if(invalid)return {proposals:[],warnings:['地域・回線数・通信量を選び直してください。'],scope,complete:false,baseline};
   if(input.goal==='home')warnings.push('携帯の現在の契約プランが未入力のため、スマホのセット割を自宅費用から差し引いていません。家族合計を比べる場合は「両方」を選んでください。');
-  if(input.construction==='unknown'&&input.goal!=='mobile')return {proposals:[],warnings:['工事の可否が不明なため、自宅とスマホの合計金額を確定して候補を並べません。地域ページで住所と建物の工事可否を確認してから診断してください。'],scope,complete:false,baseline};
+  // 工事が「まだ分からない」でも、光回線と工事なしの両方から比べて候補を出す（工事できるかは申込み前に確認してもらう）
   if(input.homeTenure==='under1'||input.lines.some(l=>l.tenure==='under1'))warnings.push('切替から1年未満の契約があります。短期解約料・端末分割・工事費残額を、各契約の明細で確認してください。年数だけで残額0円とは計算しません。');
   if(input.years===1)warnings.push('1年利用では、光回線の工事費やホームルーター端末代の残額が大きくなる場合があります。乗換え費用欄に全額の見積りを入れて比べてください。');
   if(!finiteCost(input.switchingCost))warnings.push('解約金・残債・新規初期費用の合計が未入力です。期間全体でいくら得かは、費用を入力してから表示します。0円の場合も0と入力してください。');
@@ -125,7 +128,7 @@ export function estimateHousehold(input:HouseholdInput):HouseholdResult {
   const date=input.start==='december'?'2026-12-01':'2026-11-23';
   let eligible: (Home|null)[];
   if(input.goal==='mobile'){eligible=[homes.find(h=>h.id===input.currentHome)??null];if(input.currentHome!=='none')warnings.push('今の自宅回線を使うセット割は対象オプションを追加する想定です。加入済みのオプションと重複しないよう、窓口の見積りを確認してください。');}
-  else {eligible=homes.filter(h=>h.id!==input.currentHome&&h.buildings.includes(input.building)&&(!h.prefectures||h.prefectures.includes(input.prefecture))&&h.kind===(input.construction==='no'?'router':'fiber'));if(homes.some(h=>h.id===input.currentHome))warnings.push('現在の自宅回線と同じ会社への継続契約は乗換え先候補から除いています。継続する費用は入力した現在月額を基準に比較してください。');}
+  else {eligible=homes.filter(h=>h.id!==input.currentHome&&h.buildings.includes(input.building)&&(!h.prefectures||h.prefectures.includes(input.prefecture))&&(input.construction==='unknown'||h.kind===(input.construction==='no'?'router':'fiber')));if(input.construction==='unknown'&&input.goal!=='mobile')warnings.push('工事ができるかまだ分からないため、光回線と工事なし（ホームルーター）の両方から比べています。光回線を選ぶ場合は、申込み前に住所と建物で工事できるかを確認してください。');if(homes.some(h=>h.id===input.currentHome))warnings.push('現在の自宅回線と同じ会社への継続契約は乗換え先候補から除いています。継続する費用は入力した現在月額を基準に比較してください。');}
   const proposals=eligible.map(h=>optimizeForHome(h,input,date)).filter((p):p is HouseholdProposal=>p!==null).sort((a,b)=>objective(a)-objective(b)||a.monthly-b.monthly).slice(0,3);
   if(!proposals.length)warnings.unshift('掲載プランには、選択したブランド・通信量・店舗希望をすべて満たす候補がありません。条件を見直すか、公式窓口で確認してください。');
   return {proposals,warnings,scope,complete:proposals.length>0,baseline};

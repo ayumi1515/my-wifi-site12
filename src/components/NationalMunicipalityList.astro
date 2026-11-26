@@ -26,11 +26,16 @@ const { prefecture: p } = Astro.props as { prefecture: NationalPrefecture };
   <p class="directory-note">政令指定都市は市全体と行政区を掲載しています。この一覧は自治体の区分であり、回線の提供エリア一覧ではありません。</p>
 </section>
 <script>
+  import { attachSuggest } from '../scripts/form-assist';
   const municipalityInput = document.querySelector<HTMLInputElement>('#municipality-query');
   const municipalityRows = [...document.querySelectorAll<HTMLElement>('[data-municipality-item]')];
   const municipalityCount = document.querySelector('#municipality-count');
   const municipalityEmpty = document.querySelector<HTMLElement>('#municipality-empty');
   const normalise = (value: string) => value.normalize('NFKC').toLowerCase().replace(/[ァ-ヶ]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0x60));
+  if (municipalityInput) {
+    const muniItems = municipalityRows.map((row) => ({ label: row.querySelector('strong')?.textContent ?? '', sub: row.querySelector('.municipality-meta')?.textContent ?? '', keys: [row.dataset.search ?? ''], href: row.querySelector('a')?.href }));
+    attachSuggest(municipalityInput, { items: () => muniItems, max: 10 });
+  }
   municipalityInput?.addEventListener('input', () => {
     const query = normalise(municipalityInput.value.trim());
     let count = 0;

@@ -66,7 +66,7 @@ const adNotice = category === 'used' ? '在庫・状態・付属品・保証の�
         {services.map((s) => {
           const a = affiliates[s.id];
           const provider = { name: a?.name ?? s.name, officialUrl: s.officialUrl, affiliate: a?.affiliate ?? null };
-          return <article class="hub-service-card" data-service-card data-search={[s.name,s.summary,s.network,s.priceLabel,s.dataLabel,...s.goodFor,...s.cautions].filter(Boolean).join(' ')} data-tags={s.tags?.join(' ') ?? ''}>
+          return <article class="hub-service-card" data-service-card data-service-id={s.id} data-search={[s.name,s.summary,s.network,s.priceLabel,s.dataLabel,...s.goodFor,...s.cautions].filter(Boolean).join(' ')} data-tags={s.tags?.join(' ') ?? ''}>
             <header><h3>{s.name}</h3><p>{s.summary}</p></header>
             <div class="service-price"><span>{priceHeading}</span><strong>{s.priceLabel}</strong><p>{s.priceNote}</p></div>
             {category === 'mobile' && <a class="service-manga-link" href={`/mobile/${s.id}/`}>{s.name}を漫画で確認する <span aria-hidden="true">→</span></a>}
@@ -91,6 +91,7 @@ const adNotice = category === 'used' ? '在庫・状態・付属品・保証の�
   </div>
 </Base>
 <script>
+  import { attachSuggest, BRAND_KANA } from '../scripts/form-assist';
   const serviceHub = document.querySelector('[data-service-hub]');
   const serviceQuery = serviceHub?.querySelector<HTMLInputElement>('#service-query');
   const serviceCards = [...(serviceHub?.querySelectorAll<HTMLElement>('[data-service-card]') ?? [])];
@@ -111,6 +112,18 @@ const adNotice = category === 'used' ? '在庫・状態・付属品・保証の�
     if (serviceEmpty) serviceEmpty.hidden = count > 0;
   };
   serviceQuery?.addEventListener('input', applyServiceFilters);
+  if (serviceQuery) {
+    const serviceItems = serviceCards.map((card) => ({ label: card.querySelector('h3')?.textContent ?? '', sub: card.querySelector('.service-price strong')?.textContent ?? '', keys: [...(BRAND_KANA[card.dataset.serviceId ?? ''] ?? []), card.dataset.search ?? ''], data: card }));
+    const filterItems = serviceFilters.filter((b) => b.dataset.serviceFilter !== 'all').map((b) => ({ label: `条件でしぼる：${b.textContent}`, value: '', keys: [b.textContent ?? ''], data: b }));
+    attachSuggest(serviceQuery, {
+      items: () => [...serviceItems, ...filterItems],
+      max: 12,
+      onPick: (item) => {
+        if (item.data instanceof HTMLButtonElement) { item.data.click(); return; }
+        if (item.data instanceof HTMLElement) item.data.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      },
+    });
+  }
   serviceFilters.forEach((button) => button.addEventListener('click',() => {
     activeServiceFilter = button.dataset.serviceFilter ?? 'all';
     serviceFilters.forEach((item) => item.setAttribute('aria-pressed',String(item === button)));

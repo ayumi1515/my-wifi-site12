@@ -75,6 +75,7 @@ const categories = [...new Set(cards.map(card => card.category))];
 </Base>
 
 <script>
+  import { attachSuggest } from '../../scripts/form-assist';
   const form = document.querySelector<HTMLFormElement>('#guide-search');
   const input = document.querySelector<HTMLInputElement>('#guide-query');
   const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-category][aria-pressed]'));
@@ -97,6 +98,12 @@ const categories = [...new Set(cards.map(card => card.category))];
   };
   buttons.forEach(button => button.addEventListener('click', () => { category = button.dataset.category ?? 'all'; filter(); }));
   input?.addEventListener('input', filter);
+  if (input) {
+    const popular: [string, string][] = [['引越し', 'ひっこし'], ['解約・乗換え', 'かいやく のりかえ'], ['格安SIM', 'かくやすしむ'], ['光回線', 'ひかりかいせん'], ['ホームルーター', 'ほーむるーたー wifi'], ['鹿児島', 'かごしま'], ['10ギガ', 'じゅうぎが'], ['離島', 'りとう'], ['ahamo', 'あはも'], ['UQ mobile', 'ゆーきゅー'], ['楽天モバイル', 'らくてん'], ['英会話', 'えいかいわ']];
+    const words = popular.map(([label, kana]) => ({ label, sub: 'このことばで記事をしぼる', keys: kana.split(' ') }));
+    const titles = cards.map((card) => { const a = card.querySelector<HTMLAnchorElement>('h2 a'); return { label: a?.textContent ?? '', sub: card.querySelector('.tile-category')?.firstChild?.textContent ?? '', keys: [card.dataset.search ?? ''], href: a?.href }; });
+    attachSuggest(input, { items: () => [...titles, ...words], initial: () => words, max: 10 });
+  }
   form?.addEventListener('submit', event => event.preventDefault());
   form?.addEventListener('reset', () => { if (input) input.value = ''; category = 'all'; filter(); });
   filter();
