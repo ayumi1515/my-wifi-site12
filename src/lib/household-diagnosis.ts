@@ -128,7 +128,7 @@ export function estimateHousehold(input:HouseholdInput):HouseholdResult {
   const date=input.start==='december'?'2026-12-01':'2026-11-23';
   let eligible: (Home|null)[];
   if(input.goal==='mobile'){eligible=[homes.find(h=>h.id===input.currentHome)??null];if(input.currentHome!=='none')warnings.push('今の自宅回線を使うセット割は対象オプションを追加する想定です。加入済みのオプションと重複しないよう、窓口の見積りを確認してください。');}
-  else {eligible=homes.filter(h=>h.id!==input.currentHome&&h.buildings.includes(input.building)&&(!h.prefectures||h.prefectures.includes(input.prefecture))&&(input.construction==='unknown'||h.kind===(input.construction==='no'?'router':'fiber')));if(input.construction==='unknown'&&input.goal!=='mobile')warnings.push('工事ができるかまだ分からないため、光回線と工事なし（ホームルーター）の両方から比べています。光回線を選ぶ場合は、申込み前に住所と建物で工事できるかを確認してください。');if(homes.some(h=>h.id===input.currentHome))warnings.push('現在の自宅回線と同じ会社への継続契約は乗換え先候補から除いています。継続する費用は入力した現在月額を基準に比較してください。');}
+  else {eligible=homes.filter(h=>h.id!==input.currentHome&&h.buildings.includes(input.building)&&(!h.prefectures||h.prefectures.includes(input.prefecture))&&(input.construction==='unknown'||h.kind===(input.construction==='no'?'router':'fiber')));if(input.construction==='unknown')warnings.push('工事ができるかまだ分からないため、光回線と工事なし（ホームルーター）の両方から比べています。光回線を選ぶ場合は、申込み前に住所と建物で工事できるかを確認してください。');if(homes.some(h=>h.id===input.currentHome))warnings.push('現在の自宅回線と同じ会社への継続契約は乗換え先候補から除いています。継続する費用は入力した現在月額を基準に比較してください。');}
   const proposals=eligible.map(h=>optimizeForHome(h,input,date)).filter((p):p is HouseholdProposal=>p!==null).sort((a,b)=>objective(a)-objective(b)||a.monthly-b.monthly).slice(0,3);
   if(!proposals.length)warnings.unshift('掲載プランには、選択したブランド・通信量・店舗希望をすべて満たす候補がありません。条件を見直すか、公式窓口で確認してください。');
   return {proposals,warnings,scope,complete:proposals.length>0,baseline};
