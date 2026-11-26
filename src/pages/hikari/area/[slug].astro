@@ -36,6 +36,17 @@ const description = `${a.name}で使える光回線とホームルーターを�
           {s.body.map((b) => <p>{b}</p>)}
         </>
       ))}
+      {(a.slug === 'ritou' || a.tenGiga) && (
+        <>
+          <h2>あわせて読みたい</h2>
+          <ul>
+            {a.slug === 'ritou' && <li><a href="/guides/kagoshima-ritou-internet/">鹿児島の離島のネット回線｜島ごとのカバー率と確認方法</a></li>}
+            {a.tenGiga && <li><a href="/guides/kagoshima-10giga/">鹿児島で10ギガの光回線は使える？12市町と料金</a></li>}
+            <li><a href="/guides/kagoshima-hikari-coverage/">鹿児島の光回線カバー率｜市町村ごとの引きやすさ</a></li>
+            <li><a href="/hikari/kagoshima/">鹿児島県の光回線おすすめ比較</a></li>
+          </ul>
+        </>
+      )}
 
       <h2>スマホ会社別のおすすめ</h2>
       <table>

@@ -16,6 +16,11 @@ export interface Guide {
   sources: { label: string; url: string }[];
   relatedProviderIds: string[];
   relatedSlugs: string[];
+  /** 見出し用のイラスト（public/images/guides/ の名前。-640.webp の縮小版も置く）。なければ図で代わりに表示 */
+  image?: string;
+  /** false にすると、記事の上の「dポイント還元の条件」の欄を出さない */
+  showPoints?: boolean;
+  imageAlt?: string;
 }
 
 const modules = import.meta.glob<Guide[]>('../data/guides-*.json', { eager: true, import: 'default' });

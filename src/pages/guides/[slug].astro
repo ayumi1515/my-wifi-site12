@@ -39,9 +39,11 @@ const articleLd = { '@context':'https://schema.org','@type':'Article',headline:g
       <article class="guide-main">
         {g.category === 'internet' && internetMangaStory && <ConnectivityManga story={internetMangaStory} context={g.title} comparisonHref="#answer" diagnosisHref={shortStay ? '/shindan/#diagnosis-form' : '/shindan/?prefecture=46#diagnosis-form'} />}
         <GuideDecision slug={g.slug} />
-        {g.category === 'internet' && g.relatedProviderIds.includes('docomo-hikari') && <details class="guide-points"><summary>dポイント還元の条件も確認する</summary><PointsComparison systems={['dpoint']} scope="home" compact /></details>}
+        {g.category === 'internet' && g.showPoints !== false && g.relatedProviderIds.includes('docomo-hikari') && <details class="guide-points"><summary>dポイント還元の条件も確認する</summary><PointsComparison systems={['dpoint']} scope="home" compact /></details>}
         {shortStay && <><ShortTermCost /><CostStory /></>}
-        {!shortStay && <GuideArtwork slug={g.slug} compact={false} />}
+        {!shortStay && (g.image
+          ? <figure class="guide-hero-image"><img src={`/images/guides/${g.image}.webp`} srcset={`/images/guides/${g.image}-640.webp 640w, /images/guides/${g.image}.webp 1200w`} sizes="(max-width: 760px) 100vw, 760px" width="1200" height="675" alt={g.imageAlt ?? ''} loading="eager" decoding="async" /></figure>
+          : <GuideArtwork slug={g.slug} compact={false} />)}
         <nav class="inline-toc" aria-label="この記事の目次"><p>この記事で分かること</p><ol>{g.sections.map(section => <li><a href={`#${section.id}`}>{section.title}<span aria-hidden="true">↓</span></a></li>)}{g.faqs.length>0 && <li><a href="#faq">よくある質問<span aria-hidden="true">↓</span></a></li>}</ol></nav>
         <div id="article-details" class="article-copy prose-ja">
           {g.sections.map(section => <section aria-labelledby={section.id}>
@@ -52,6 +54,7 @@ const articleLd = { '@context':'https://schema.org','@type':'Article',headline:g
             {section.note && <aside class="article-note"><span>確認ポイント</span><p>{section.note}</p></aside>}
           </section>)}
         </div>
+        {g.category === 'internet' && <aside class="kagoshima-hub-link"><p>鹿児島県の光回線5社を、料金・工事費・セット割で比べるなら</p><a href="/hikari/kagoshima/">鹿児島県の光回線おすすめ比較を見る →</a></aside>}
         {!shortStay && (services.length > 0 || matchedOffers.length > 0) && <section id="next-step" class="next-step-section"><p class="section-kicker">次にすること</p><h2 class="guide-section-title">{shortStay ? '解約予定月の総額を、各窓口で確認。' : '条件が合う候補を、もう一度確認。'}</h2><p class="next-step-lead">申込みの前に、対象プラン・追加費用・特典の受取条件をリンク先で確かめてください。</p><div class="service-options">{services.map(p => <article class="surface-card service-option"><h3>{p.name}</h3><p>{shortStay ? '短期向けと断定するものではありません。工事費・端末代の残額と、解約予定月までの総額を確認してください。' : p.goodFor[0]}</p><a href={`/hikari/${p.id}/`} class="detail-link">料金と注意点を読む →</a><AffiliateButton provider={p} /></article>)}{matchedOffers.map(offer => <article class="surface-card service-option"><h3>{offer.name}</h3><p>{offer.note}</p><AffiliateButton provider={offer} /></article>)}</div></section>}
         {g.category === 'internet' && <><CancellationGuide ids={[...(shortStay?['en-hikari']:[]),...g.relatedProviderIds]} kind="home" compact /><RelatedConnectivityLinks /></>}
         {g.faqs.length > 0 && <section id="faq" class="guide-faq"><h2 class="guide-section-title">よくある質問</h2>{g.faqs.map(faq => <details><summary><span aria-hidden="true">Q</span>{faq.q}</summary><p>{faq.a}</p></details>)}</section>}
@@ -65,6 +68,8 @@ const articleLd = { '@context':'https://schema.org','@type':'Article',headline:g
 </Base>
 
 <style>
+.kagoshima-hub-link{margin:28px 0 8px;padding:16px 18px;border:2px solid #175d50;border-radius:10px;background:#f0f6f1}.kagoshima-hub-link p{font-size:14px;color:#4f6a5a;line-height:1.8}.kagoshima-hub-link a{display:inline-block;margin-top:6px;color:#175d50;font-weight:800;text-decoration:underline;text-underline-offset:4px}
+.guide-hero-image{margin:18px 0 6px}.guide-hero-image img{display:block;width:100%;height:auto;border-radius:10px;border:1px solid #d5dfd7;background:#f4f7f4}
 .guide-points{margin:22px 0;padding:16px 19px;border:1px solid #d8d6be;border-radius:7px;background:#fffdf4}.guide-points>summary{font-size:16px;font-weight:800;line-height:1.85;color:#175d50;cursor:pointer}
 .table-scroll-hint{display:none}
 .article-table:focus-visible{outline:3px solid #175d50;outline-offset:3px}

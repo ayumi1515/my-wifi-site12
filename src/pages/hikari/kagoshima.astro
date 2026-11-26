@@ -89,11 +89,12 @@ const [cy, cm] = coverage.asOf.split('-').map(Number);
         </div>
         <p class="table-note">{coverage.note} 10ギガは、NTT西日本が公表する提供市町村です（すべての住所で使えるとは限りません）。</p>
       </details>
+      <p>くわしくは<a href="/guides/kagoshima-hikari-coverage/">鹿児島の光回線カバー率（市町村別）</a>で、低い地域での選び方もまとめています。</p>
       <h3>10ギガが使える12市町</h3>
       <p class="town-list">{tenGigaTowns.join('、')}</p>
-      <p>同じNTT西日本の回線を使うドコモ光・ビッグローブ光などの10ギガプランも、この地域が目安です。市町の中でも、住所や建物によって使えない場合があります。</p>
+      <p>同じNTT西日本の回線を使うドコモ光・ビッグローブ光などの10ギガプランも、この地域が目安です。市町の中でも、住所や建物によって使えない場合があります。料金のくらべ方は<a href="/guides/kagoshima-10giga/">鹿児島で10ギガは使える？</a>にまとめました。</p>
       <h3>離島に住んでいる場合</h3>
-      <p>種子島・屋久島・奄美群島などでも、NTT西日本のフレッツ光が使える島があります。ただし、自治体が整備した光ファイバーの地域は、公式サイトのエリア検索では調べられず、電話での確認になります。くわしくは<a href="/hikari/area/ritou/">離島の光回線の確認方法</a>を見てください。</p>
+      <p>種子島・屋久島・奄美群島などでも、NTT西日本のフレッツ光が使える島があります。ただし、自治体が整備した光ファイバーの地域は、公式サイトのエリア検索では調べられず、電話での確認になります。くわしくは<a href="/guides/kagoshima-ritou-internet/">鹿児島の離島のネット回線（島ごとのカバー率）</a>と<a href="/hikari/area/ritou/">離島の確認方法</a>を見てください。BBIQのエリア外だった人は<a href="/guides/bbiq-lite/">BBIQライト</a>も候補です。</p>
       <p class="sources">出典：<a href={coverage.sourceUrl} target="_blank" rel="noopener">{coverage.sourceLabel}</a>（{coverage.checkedAt.replace(/-/g, '/')}確認）／<a href="https://flets-w.com/service/cross/area/detail.html" target="_blank" rel="noopener">NTT西日本「フレッツ 光クロス 提供エリア」</a>／<a href="https://www.bbiq.jp/hikari/internet/price/" target="_blank" rel="noopener">BBIQ 料金（6・10ギガの提供エリア）</a>／<a href="https://www.nuro.jp/" target="_blank" rel="noopener">NURO 光 提供エリア</a></p>
     </section>
   </KagoshimaComparison>
