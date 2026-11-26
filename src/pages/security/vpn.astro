@@ -1,0 +1,115 @@
+---
+// VPNは必要？選び方と3社の比較（個人向け）。NordVPN・ExpressVPN・Surfshark の広告リンクがある。
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import OfferCard from '../../components/OfferCard.astro';
+import { SITE } from '../../site.config.mjs';
+import { faqLd, breadcrumbLd } from '../../lib/data';
+import facts from '../../data/security-facts.json';
+
+const checkedAt = facts.checkedAt;
+const crumbs = [
+  { name: '総合トップ', href: '/' },
+  { name: 'セキュリティソフト', href: '/security/' },
+  { name: 'VPNの選び方', href: '/security/vpn/' },
+];
+const title = 'VPNは必要？いる人・いらない人と選び方｜NordVPN・ExpressVPN・Surfsharkを比較';
+const description = 'VPNが役に立つのは、カフェやホテルの公衆Wi-Fi、出張・旅行先など。いらない場面と合わせて整理し、NordVPN・ExpressVPN・Surfsharkの台数・返金保証・料金を公式情報で比べました。';
+const faqs = [
+  { q: '家のWi-FiやスマホのデータだけならVPNは必要ですか？', a: '多くの場合、なくても困りません。ネットバンキングや買い物のサイトは、もともと通信が暗号化（https）されています。VPNが役に立つのは、だれでもつなげる公衆Wi-Fiを使うときや、出張先・旅行先のホテルのWi-Fiなどです。' },
+  { q: 'VPNを使えばウイルスも防げますか？', a: 'VPNは通信の途中をのぞかれにくくするもので、ウイルス対策ソフトの代わりにはなりません。両方がほしいときは、ウイルス対策つきのセット（Surfshark Oneなど）や、VPNつきのセキュリティソフトを比べます。' },
+  { q: '無料のVPNでもいいですか？', a: '運営元がはっきりしない無料のVPNは、通信の記録や広告にデータが使われることがあります。使うなら、運営会社・記録を残さない方針（ノーログ）・第三者の監査が公開されているかを確かめましょう。' },
+  { q: '海外から日本の動画サービスを見るために使ってもいいですか？', a: '動画サービスの多くは、利用規約で視聴できる地域を決めています。VPNで地域を変えて見ることは、規約違反になる場合があります。使う前に各サービスの規約を確かめてください。' },
+];
+const articleLd = {
+  '@context': 'https://schema.org', '@type': 'Article', headline: 'VPNは必要？いる人・いらない人と選び方', description,
+  datePublished: checkedAt, dateModified: checkedAt, inLanguage: 'ja', mainEntityOfPage: `${SITE.url}/security/vpn/`,
+  author: { '@type': 'Organization', name: SITE.operator, url: `${SITE.url}/about/` },
+  publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url + '/' },
+};
+---
+<Base title={title} description={description} jsonLd={[breadcrumbLd(SITE.url, crumbs), articleLd, faqLd(faqs)]}>
+  <div class="site-container sec-page">
+    <Breadcrumbs items={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))} />
+    <h1>VPNは必要？<span>いる人・いらない人と、3社の比べ方</span></h1>
+
+    <div class="answer-box">
+      <p class="answer-label">先に結論</p>
+      <ul>
+        <li><strong>いる</strong>：カフェ・駅・ホテルなどの公衆Wi-Fiをよく使う／出張や旅行が多い</li>
+        <li><strong>別のもの</strong>：会社のパソコン・社内につなぐVPNは、会社が用意したものを会社の決まりどおりに使います（このページの3社とは別です）</li>
+        <li><strong>なくてもよいことが多い</strong>：家のWi-Fiとスマホのデータ通信だけ</li>
+        <li><strong>選ぶときは</strong>：使う台数／返金保証の日数と条件／<strong>更新後の料金</strong>／記録を残さない方針の監査</li>
+      </ul>
+    </div>
+    <p class="byline">公式サイトで{checkedAt.replace(/-/g, '/')}に確認 ／ 書いた人：{SITE.operator}（<a href="/about/">編集方針</a>）／ このページには広告リンク（PR）があります</p>
+
+    <section aria-labelledby="what">
+      <h2 id="what">VPNでできること・できないこと</h2>
+      <ul class="plain-list">
+        <li><strong>できる</strong>：通信を暗号化して、同じWi-Fiにつないだ人などから中身をのぞかれにくくする。接続元のIPアドレス（ネット上の住所のような番号）を隠す。</li>
+        <li><strong>できない</strong>：ウイルスを防ぐ、偽サイトに入れたパスワードを守る、詐欺のメールを止める。これらは<a href="/security/">ウイルス対策ソフト</a>や、<a href="/security/phishing/">見分け方を知ること</a>で防ぎます。</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="compare">
+      <h2 id="compare">3社を同じ目線で比べる</h2>
+      <p class="lead">料金はプランの長さとセールで大きく変わります。表の料金は確認日時点の公式の表示です。申し込む前に、最初の請求額と更新後の料金を必ず確かめてください。</p>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="VPN3社の比較表">
+        <table>
+          <thead><tr><th scope="col">サービス</th><th scope="col">同時に使える台数</th><th scope="col">返金保証</th><th scope="col">料金の目安（確認日時点）</th><th scope="col">記録を残さない方針の監査</th></tr></thead>
+          <tbody>
+            {facts.vpn.map((v) => <tr><th scope="row">{v.name}</th><td>{v.devices}</td><td>{v.refund}</td><td>{v.price}</td><td>{v.audit}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+      <p class="note">{facts.vpnSaleNote}税の扱いは3社で表示のしかたが違います（表のとおり）。「最安」などの順位はつけていません。セールの期限・対象プラン・税の扱いは公式で確認してください。</p>
+    </section>
+
+    <section aria-labelledby="pick">
+      <h2 id="pick">申込み先</h2>
+      <OfferCard id="nordvpn" heading="個人向けVPN" notice="料金・返金保証・自動更新の条件をリンク先で確認してください。" />
+      <OfferCard id="expressvpn" heading="個人向けVPN" notice="料金・返金保証・自動更新の条件をリンク先で確認してください。" />
+      <OfferCard id="surfshark-antivirus" heading="個人向けのウイルス対策（VPNとのセット）" notice="対応するOS・料金・返金保証の条件をリンク先で確認してください。" />
+    </section>
+
+    <section aria-labelledby="careful">
+      <h2 id="careful">申し込む前に気をつけること</h2>
+      <ul class="plain-list">
+        <li><strong>自動更新</strong>：長いプランは、期間が終わると自動で更新されることが多いです。更新後の料金と、自動更新の止め方を先に見ておきます。</li>
+        <li><strong>返金保証の条件</strong>：日数のほか、申込み方法（アプリ内の購入など）によっては対象外になる場合があります。</li>
+        <li><strong>会社のパソコン</strong>：会社が決めたルールがある場合は、勝手に入れないで担当者に聞きます（<a href="/security/houjin/">会社・お店のセキュリティ対策</a>）。</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="faq">
+      <h2 id="faq">よくある質問</h2>
+      {faqs.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}
+    </section>
+    <p class="sources">出典：{facts.vpn.map((v, i) => <>{i > 0 && '／'}<a href={v.sourceUrl} target="_blank" rel="noopener">{v.name} 公式</a></>)}</p>
+  </div>
+</Base>
+
+<style>
+  .sec-page { padding-top: 14px; padding-bottom: 30px; color: #23352e; }
+  .sec-page h1 { margin: 12px 0 16px; font-size: clamp(26px, 3.6vw, 36px); font-weight: 800; line-height: 1.45; color: #1f3a30; }
+  .sec-page h1 span { display: block; font-size: .55em; color: #175d50; margin-top: 4px; }
+  .sec-page h2 { margin-top: 38px; font-size: clamp(20px, 2.4vw, 25px); font-weight: 800; line-height: 1.55; }
+  .sec-page p, .sec-page li { font-size: 15px; line-height: 1.95; }
+  .sec-page a { color: #175d50; text-decoration: underline; text-underline-offset: 3px; }
+  .answer-box { border: 2px solid #175d50; border-radius: 10px; background: #f0f6f1; padding: 18px 20px; }
+  .answer-label { display: inline-block; background: #175d50; color: #fff; font-size: 13px !important; font-weight: 800; border-radius: 4px; padding: 2px 10px; margin-bottom: 8px; }
+  .answer-box ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+  .byline { margin-top: 10px; font-size: 13px !important; color: #637268; }
+  .lead { margin-top: 8px; color: #4f6a5a; }
+  .table-scroll { overflow-x: auto; margin-top: 14px; border: 1px solid #ccd9d0; border-radius: 8px; }
+  .table-scroll table { width: 100%; min-width: 760px; border-collapse: collapse; font-size: 14px; }
+  .table-scroll th, .table-scroll td { padding: 12px; border-bottom: 1px solid #dce5de; text-align: left; vertical-align: top; line-height: 1.75; }
+  .table-scroll thead th { background: #175d50; color: #fff; white-space: nowrap; }
+  .table-scroll tbody th { background: #f1f6f1; color: #175d50; font-size: 15px; }
+  .note { margin-top: 10px; font-size: 13px !important; color: #5d6f63; }
+  .plain-list { margin-top: 12px; padding-left: 1.2em; display: grid; gap: 8px; list-style: disc; }
+  .sec-page details { margin-top: 10px; padding: 14px 18px; border: 1px solid #d5dfd7; border-radius: 6px; }
+  .sec-page summary { cursor: pointer; font-weight: 700; }
+  .sources { margin-top: 26px; font-size: 12px !important; color: #69786e; }
+</style>

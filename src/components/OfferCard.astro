@@ -2,8 +2,8 @@
 // 1つの広告の窓口を、説明つきのカードで出す（データは src/data/offers.json）。
 import AffiliateButton from './AffiliateButton.astro';
 import { offers } from '../lib/offers';
-interface Props { id: string; heading?: string }
-const { id, heading } = Astro.props;
+interface Props { id: string; heading?: string; notice?: string }
+const { id, heading, notice = '料金・エリア・契約条件をリンク先で確認してください。' } = Astro.props;
 const o = offers.find((x) => x.id === id);
 ---
 {o && (
@@ -11,7 +11,7 @@ const o = offers.find((x) => x.id === id);
     <p class="offer-kicker">{heading ?? 'ほかの選択肢'}</p>
     <h3>{o.name}</h3>
     <p class="offer-note">{o.note}</p>
-    <AffiliateButton provider={{ name: o.name, officialUrl: o.officialUrl, affiliate: { ...o.affiliate, banner: null } }} showBanner={false} notice="料金・エリア・契約条件をリンク先で確認してください。" />
+    <AffiliateButton provider={{ name: o.name, officialUrl: o.officialUrl, affiliate: { ...o.affiliate, banner: null } }} showBanner={false} notice={notice} />
     <a class="offer-official" href={o.officialUrl} target="_blank" rel="noopener">{o.name}の公式サイト</a>
   </article>
 )}

@@ -1,0 +1,164 @@
+{
+  "checkedAt": "2026-11-26",
+  "ipaTop10": {
+    "title": "情報セキュリティ10大脅威 2026",
+    "organization": [
+      "ランサム攻撃による被害",
+      "サプライチェーンや委託先を狙った攻撃",
+      "AIの利用をめぐるサイバーリスク",
+      "システムの脆弱性を悪用した攻撃",
+      "機密情報を狙った標的型攻撃",
+      "地政学的リスクに起因するサイバー攻撃",
+      "内部不正による情報漏えい等",
+      "リモートワーク等の環境や仕組みを狙った攻撃",
+      "DDoS攻撃",
+      "ビジネスメール詐欺"
+    ],
+    "note": "2026年1月29日公開の組織編の1〜5位。6位以下には、内部不正、リモートワークの環境を狙った攻撃、ビジネスメール詐欺などが入っています。「AIの利用をめぐるサイバーリスク」は2026年版で初めて選ばれました。"
+  },
+  "ransomware": {
+    "text": "警察庁のまとめでは、2026年1〜6月に報告されたランサムウェア（データを使えなくして身代金を求めるウイルス）の被害は123件で、半期としては過去最多でした。そのうち79件（約6割）が中小企業で、侵入口の約5割はVPN機器（外から社内につなぐための機器）でした。復旧に1,000万円以上かかった組織が6割あります。"
+  },
+  "securityAction": {
+    "summary": "SECURITY ACTIONは、中小企業が情報セキュリティに取り組むことを自分で宣言するIPAの制度です。宣言すると、ロゴマークを名刺やホームページに使えます。2026年4月から申込のしくみが新しくなり、GビズID（国の共通のログインID）が必要になりました。",
+    "one": "IPAの「情報セキュリティ6か条」に取り組むことを宣言します。",
+    "two": "「5分でできる！情報セキュリティ自社診断」で自社の状況を確かめ、情報セキュリティ基本方針を作って外に公開します。",
+    "subsidy": "「デジタル化・AI導入補助金（旧IT導入補助金）」は、一つ星か二つ星を宣言していることが申請の条件です。2026年3月までの古いしくみで出した宣言は、この補助金には使えないと案内されています。申請する前に最新の公募要領で確かめてください。",
+    "feeAnswer": "IPAは、ロゴマークは無料で使えると案内しています。2026年4月からは、宣言の申込にGビズID（国の共通のログインID）が必要です。"
+  },
+  "otasuketai": {
+    "summary": "IPAの基準を満たした民間のサービスで、相談窓口・異常の見張り・事故のときの駆けつけ・簡易のサイバー保険をひとまとめにしたものです。基準では、端末の見張りは1台あたり月2,000円（税抜）までなど、値段の上限が決められています（1類の場合）。"
+  },
+  "contacts": [
+    {
+      "name": "IPA 情報セキュリティ安心相談窓口",
+      "url": "https://www.ipa.go.jp/security/anshin/",
+      "body": "ウイルス感染や不正アクセスなど、技術的な相談（電話 03-5978-7509）"
+    },
+    {
+      "name": "警察庁 サイバー事案の相談窓口",
+      "url": "https://www.npa.go.jp/bureau/cyber/soudan.html",
+      "body": "被害の相談・通報。最寄りの警察署でも相談できます"
+    },
+    {
+      "name": "IPA サイバーセキュリティお助け隊サービス",
+      "url": "https://www.ipa.go.jp/security/sme/otasuketai/",
+      "body": "中小企業向けの見張り・駆けつけのセットを探すとき"
+    },
+    {
+      "name": "IPA SECURITY ACTION",
+      "url": "https://www.ipa.go.jp/security/security-action/sa/",
+      "body": "一つ星・二つ星の宣言"
+    }
+  ],
+  "vpn": [
+    {
+      "id": "nordvpn",
+      "name": "NordVPN",
+      "devices": "10台まで",
+      "refund": "30日（最初の購入から30日以内にサポートへ）",
+      "price": "ベーシックの2年＋3か月：最初に11,070円（月あたり410円）。更新後は年21,960円。プランで含まれる機能がちがう。消費税は別にかかる場合あり",
+      "audit": "あり（デロイト、2025年12月の報告・6回目）",
+      "sourceUrl": "https://nordvpn.com/ja/pricing/"
+    },
+    {
+      "id": "expressvpn",
+      "name": "ExpressVPN",
+      "devices": "10台まで（上のプランは12台・14台）",
+      "refund": "30日（新しく使う人）",
+      "price": "ベーシックの2年＋4か月：最初に12,320円（月あたり440円）。更新後は年14,999円。消費税は購入時に加算",
+      "audit": "あり（KPMG、2025年2月時点のしくみ）",
+      "sourceUrl": "https://www.expressvpn.com/jp/pricing"
+    },
+    {
+      "id": "surfshark",
+      "name": "Surfshark",
+      "devices": "台数の制限なし",
+      "refund": "30日",
+      "price": "Starterの24か月＋3か月：最初に8,046円（月298円・税抜）。ウイルス対策つきのOneも同じ額（One+は16,146円）。更新後の料金は公式に書かれていない",
+      "audit": "あり（デロイト、2025年6月公開）",
+      "sourceUrl": "https://surfshark.com/ja/pricing"
+    }
+  ],
+  "vpnSaleNote": "3社とも、確認日（2026年11月26日）はブラックフライデーのセール中の表示です。セールの終わる日は公式に書かれていません。",
+  "phishing": {
+    "reportText": "フィッシング対策協議会によると、2026年10月に寄せられたフィッシングの報告は116,580件で、前の月より約23%増えました。SMSからのフィッシングが増えていて、電気・ガス・水道の料金の未納や、カード会社・決済サービスを名のる文面が届いています。",
+    "contacts": [
+      {
+        "name": "カード会社・銀行への連絡（警察庁の案内）",
+        "url": "https://www.npa.go.jp/bureau/cyber/countermeasures/phishing.html",
+        "body": "カードの裏や公式サイトの番号へ。不正な送金は金融機関、カードの不正利用はカード会社に連絡します"
+      },
+      {
+        "name": "警察庁 サイバー事案の相談窓口",
+        "url": "https://www.npa.go.jp/bureau/cyber/soudan.html",
+        "body": "最寄りの警察署、またはオンラインの受付窓口。急ぎでない相談は警察の相談専用電話 #9110"
+      },
+      {
+        "name": "消費者ホットライン 188",
+        "url": "https://www.caa.go.jp/policies/policy/local_cooperation/local_consumer_administration/hotline/",
+        "body": "お金を払ってしまったなど、消費生活の相談。住んでいる地域の消費生活センターにつながります"
+      },
+      {
+        "name": "IPA 情報セキュリティ安心相談窓口",
+        "url": "https://www.ipa.go.jp/security/anshin/",
+        "body": "アプリを入れてしまった、ウイルスが心配など技術的な相談（電話 03-5978-7509）"
+      },
+      {
+        "name": "フィッシング対策協議会",
+        "url": "https://www.antiphishing.jp/",
+        "body": "偽サイトのURLを見つけたときの報告先"
+      }
+    ]
+  },
+  "sources": {
+    "houjin": [
+      {
+        "name": "IPA 情報セキュリティ10大脅威 2026",
+        "url": "https://www.ipa.go.jp/security/10threats/10threats2026.html"
+      },
+      {
+        "name": "IPA 中小企業の情報セキュリティ対策ガイドライン（第4.0版）",
+        "url": "https://www.ipa.go.jp/security/guide/sme/about.html"
+      },
+      {
+        "name": "IPA SECURITY ACTION",
+        "url": "https://www.ipa.go.jp/security/security-action/sa/"
+      },
+      {
+        "name": "IPA SECURITY ACTIONと補助金",
+        "url": "https://www.ipa.go.jp/security/security-action/it-hojo.html"
+      },
+      {
+        "name": "IPA サイバーセキュリティお助け隊サービス基準（2.1版）",
+        "url": "https://www.ipa.go.jp/security/sme/otasuketai/nq6ept000000faii-att/000092713.pdf"
+      },
+      {
+        "name": "警察庁 令和8年上半期のサイバー空間をめぐる脅威の情勢等",
+        "url": "https://www.npa.go.jp/publications/statistics/cybersecurity/data/R8kami/R08_kami_cyber_jousei.pdf"
+      }
+    ],
+    "phishing": [
+      {
+        "name": "フィッシング対策協議会 2026/10 月次報告",
+        "url": "https://www.antiphishing.jp/report/monthly/202610.html"
+      },
+      {
+        "name": "警察庁 フィッシング対策",
+        "url": "https://www.npa.go.jp/bureau/cyber/countermeasures/phishing.html"
+      },
+      {
+        "name": "警察庁 サイバー事案の相談窓口",
+        "url": "https://www.npa.go.jp/bureau/cyber/soudan.html"
+      },
+      {
+        "name": "総務省 メール・SMSの詐欺対策",
+        "url": "https://www.soumu.go.jp/tokushusagi/email-sms/"
+      },
+      {
+        "name": "消費者庁 消費者ホットライン",
+        "url": "https://www.caa.go.jp/policies/policy/local_cooperation/local_consumer_administration/hotline/"
+      }
+    ]
+  }
+}

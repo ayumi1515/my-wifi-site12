@@ -273,11 +273,13 @@ const homes = homeData.homes;
     };
     // 「いくら安くなって、特典がいくらで、合わせていくら得か」を1つの箱で見せる
     const gainSummary=(proposal:Proposal,input:HouseholdInput)=>{
+      // 数字だけ大きく、単位や言葉は小さく（hikaku-lp-shinri スキル）
+      const numText=(tag:string,text:string,className='')=>{const node=el(tag,'',className);text.split(/([−+]?[\d,]+)/).forEach((part,i)=>{if(!part)return;node.append(i%2?el('span',part,'gain-num'):document.createTextNode(part));});return node;};
       const box=el('section','','gain-summary');box.setAttribute('aria-label','いくら得するか');
       const months=input.years*12;
       box.append(el('h4',`いくら得する？（${input.years}年使った場合）`,'gain-title'));
       const rows=el('dl','','gain-rows');
-      const row=(_no:string,label:string,value:string,sub='',tone='')=>{const d=el('div','','gain-row'+(tone?' '+tone:''));const dt=el('dt');dt.append(el('span','①②③④⑤'[rows.children.length]??'','gain-no'),document.createTextNode(label));const dd=el('dd');dd.append(el('strong',value));if(sub)dd.append(el('small',sub));d.append(dt,dd);rows.append(d);};
+      const row=(_no:string,label:string,value:string,sub='',tone='')=>{const d=el('div','','gain-row'+(tone?' '+tone:''));const dt=el('dt');dt.append(el('span','①②③④⑤'[rows.children.length]??'','gain-no'),document.createTextNode(label));const dd=el('dd');dd.append(numText('strong',value));if(sub)dd.append(el('small',sub));d.append(dt,dd);rows.append(d);};
       const signed=(n:number,less='安く',more='高く')=>n>=0?`${money(n)} ${less}`:`${money(-n)} ${more}`;
       const bill=proposal.periodBillSavings;
       const bonus=proposal.possibleCampaignAmount;
@@ -304,7 +306,7 @@ const homes = homeData.homes;
       const total=el('div','','gain-total');
       if(bill!==null){
         const sum=bill+bonus-(cost??0);
-        total.append(el('span',`合わせて${input.years}年で`),el('strong',sum>=0?`約 ${money(sum)} お得`:`約 ${money(-sum)} 高くなる`),el('small',`${input.years}年分の料金の差${bonus>0?'＋特典':''}${cost?'−乗換え費用':''}${cost===null?'（乗換え費用は未入力のため引いていません）':''}${bonus>0?'。特典は条件を満たして受け取れた場合':''}`));
+        total.append(el('span',`合わせて${input.years}年で`),numText('strong',sum>=0?`約 ${money(sum)} お得`:`約 ${money(-sum)} 高くなる`),el('small',`${input.years}年分の料金の差${bonus>0?'＋特典':''}${cost?'−乗換え費用':''}${cost===null?'（乗換え費用は未入力のため引いていません）':''}${bonus>0?'。特典は条件を満たして受け取れた場合':''}`));
         total.classList.add(sum>=0?'is-plus':'is-minus');
       }else total.append(el('span','合わせていくら得か'),el('strong','今の支払いを入れると出ます'));
       box.append(total);

@@ -219,13 +219,15 @@ img { height: auto; }
 .gain-row dt{font-size:15px;font-weight:700;color:#3f5c4a;display:flex;align-items:center;gap:8px}
 .gain-no{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#dbe9df;color:#175d50;font-size:13px;flex-shrink:0}
 .gain-row dd{margin:0;text-align:right}
-.gain-row dd strong{display:block;font-size:20px;font-weight:800;line-height:1.5;color:#2f4a3a}
+.gain-row dd strong{display:block;font-size:15px;font-weight:700;line-height:1.5;color:#2f4a3a}
+.gain-num{font-size:24px;font-weight:800;letter-spacing:.01em;margin:0 1px}
 .gain-row dd small{display:block;font-size:12px;line-height:1.7;color:#617568;margin-top:2px}
 .gain-row.is-plus dd strong{color:#175d50}
 .gain-row.is-minus dd strong{color:#9b482b}
 .gain-total{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 14px;margin-top:14px;padding:16px 18px;border-radius:8px;background:#175d50;color:#fff}
 .gain-total>span{font-size:15px;font-weight:700}
-.gain-total>strong{font-size:clamp(24px,4vw,32px);font-weight:800;line-height:1.4}
+.gain-total>strong{font-size:17px;font-weight:700;line-height:1.4}
+.gain-total .gain-num{font-size:clamp(30px,5vw,40px)}
 .gain-total>small{flex-basis:100%;font-size:12px;line-height:1.7;opacity:.9}
 .gain-total.is-minus{background:#9b482b}
 .gain-note{font-size:12px;line-height:1.8;color:#5d7064;margin-top:10px}

@@ -1,0 +1,154 @@
+---
+// 小さな会社・お店・個人事業主のセキュリティ対策（法人向け）
+// 防犯カメラの欄に、法人向けの見積り比較（一括.jp）の広告リンクがある。ほかは公式・公的機関へのふつうのリンク。
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import OfferCard from '../../components/OfferCard.astro';
+import { SITE } from '../../site.config.mjs';
+import { faqLd, breadcrumbLd } from '../../lib/data';
+import facts from '../../data/security-facts.json';
+
+const checkedAt = facts.checkedAt;
+const crumbs = [
+  { name: '総合トップ', href: '/' },
+  { name: 'セキュリティソフト', href: '/security/' },
+  { name: '会社・お店のセキュリティ対策', href: '/security/houjin/' },
+];
+const title = '小さな会社・お店のセキュリティ対策｜まず取り組む6つとランサムウェア・防犯カメラの備え';
+const description = '個人事業主・小さな会社・お店向けに、セキュリティ対策を順番にまとめました。IPAの「情報セキュリティ6か条」とSECURITY ACTION、ランサムウェアとメールの被害、バックアップ、防犯カメラ、困ったときの相談先まで公的な情報で確認。';
+const faqs = [
+  { q: '社員が数人の会社や、ひとりの個人事業主でも対策は必要ですか？', a: '必要です。取引先へのなりすましメールや、パソコンのデータを暗号化して身代金を求めるランサムウェアは、会社の大きさに関係なく届きます。まずはIPAの6か条（更新・ウイルス対策・パスワード・共有設定・バックアップ・手口を知る）から始めましょう。多くは、お金をかけずに始められます。' },
+  { q: 'SECURITY ACTIONの宣言にお金はかかりますか？', a: facts.securityAction.feeAnswer },
+  { q: 'バックアップは、外付けのハードディスクにコピーすれば十分ですか？', a: 'つないだままにしていると、ランサムウェアにバックアップごと暗号化されることがあります。バックアップを取ったら外しておく、別の場所（クラウドなど）にも残す、ときどき戻せるか試す、の3つを決めておくと安心です。' },
+  { q: '被害にあったかもしれないときは、どこに相談しますか？', a: '電源は切らずに、まずネットワーク（LANケーブル・Wi-Fi）から外します。そのうえで、契約している保守会社、IPAの「情報セキュリティ安心相談窓口」、警察のサイバー事案の相談窓口に連絡します。取引先や顧客の情報が漏れたおそれがあるときは、個人情報保護委員会への報告が必要になる場合があります。' },
+];
+const articleLd = {
+  '@context': 'https://schema.org', '@type': 'Article', headline: '小さな会社・お店のセキュリティ対策', description,
+  datePublished: checkedAt, dateModified: checkedAt, inLanguage: 'ja', mainEntityOfPage: `${SITE.url}/security/houjin/`,
+  author: { '@type': 'Organization', name: SITE.operator, url: `${SITE.url}/about/` },
+  publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url + '/' },
+};
+---
+<Base title={title} description={description} jsonLd={[breadcrumbLd(SITE.url, crumbs), articleLd, faqLd(faqs)]}>
+  <div class="site-container sec-page">
+    <Breadcrumbs items={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))} />
+    <h1>小さな会社・お店のセキュリティ対策<span>まず取り組む6つから、順番に</span></h1>
+
+    <div class="answer-box">
+      <p class="answer-label">先に結論</p>
+      <ol>
+        <li><strong>まず取り組む6つ</strong>（多くはお金をかけずに始められる）：ソフトを最新にする／ウイルス対策を入れる／パスワードを強くする／共有の設定を見直す／バックアップを取る／手口を知る（IPA「情報セキュリティ6か条」）</li>
+        <li><strong>データは、外したバックアップに</strong>：ランサムウェアに備えて、つなぎっぱなしにしない</li>
+        <li><strong>メールと請求書のなりすましに注意</strong>：振込先の変更は、電話など別の方法で確かめる</li>
+        <li><strong>現金や在庫があるお店は防犯カメラも</strong>：設置は業者で見積りをくらべる</li>
+        <li><strong>困ったら公的な窓口へ</strong>：IPAの相談窓口・警察・中小企業向けの「お助け隊サービス」</li>
+      </ol>
+    </div>
+    <p class="byline">公的機関・公式サイトで{checkedAt.replace(/-/g, '/')}に確認 ／ 書いた人：{SITE.operator}（<a href="/about/">編集方針</a>）／ このページには広告リンク（PR）があります</p>
+
+    <section aria-labelledby="threats">
+      <h2 id="threats">いま会社・お店に多い被害</h2>
+      <p class="lead">IPA（情報処理推進機構）が毎年まとめる「{facts.ipaTop10.title}」の組織向けの上位です。サプライチェーン＝取引先や委託先のつながり、標的型攻撃＝特定の会社をねらった攻撃、脆弱性＝ソフトの弱点のことです。</p>
+      <ol class="rank-list">
+        {facts.ipaTop10.organization.slice(0, 5).map((t) => <li>{t}</li>)}
+      </ol>
+      <p class="note">{facts.ipaTop10.note}</p>
+      {facts.ransomware.text && <p>{facts.ransomware.text}</p>}
+    </section>
+
+    <section aria-labelledby="six">
+      <h2 id="six">まず取り組む「情報セキュリティ6か条」</h2>
+      <p class="lead">IPAの「中小企業の情報セキュリティ対策ガイドライン」第4.0版（2026年3月）で、まず取り組む対策として示されているものです。前の版の5か条に「バックアップ」が加わりました。今日からできるやり方を添えました。</p>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="情報セキュリティ6か条">
+        <table>
+          <thead><tr><th scope="col">6か条</th><th scope="col">今日からできること</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">1. OSやソフトウェアは常に最新の状態にしよう</th><td>パソコン・スマホ・ルーターの自動更新をオンにする。サポートが終わったOS（WindowsやiOSなど、機械を動かす基本のソフト）は買い替えを計画する。</td></tr>
+            <tr><th scope="row">2. ウイルス対策ソフトを導入しよう</th><td>Windowsの標準機能が有効か確かめる。複数台をまとめて管理したいなら、法人向けのウイルス対策ソフトを比べる（<a href="/security/">セキュリティソフトの比較</a>）。</td></tr>
+            <tr><th scope="row">3. パスワードを強化しよう</th><td>長く、使い回さない。メール・ネットバンキング・会計ソフトは、2段階の認証（多要素認証）や、パスワードの代わりに指紋や顔で入るパスキーを使う。</td></tr>
+            <tr><th scope="row">4. 共有設定を見直そう</th><td>クラウドの共有リンクが「誰でも見られる」になっていないか、辞めた人のアカウントが残っていないかを見る。</td></tr>
+            <tr><th scope="row">5. バックアップを取ろう</th><td>なくなると仕事が止まるデータを決めて、外せる機器とクラウドなど2か所に残す（くわしくは下の「バックアップ」）。</td></tr>
+            <tr><th scope="row">6. 脅威や攻撃の手口を知ろう</th><td>なりすましメール・偽の請求書・偽のサポート画面の例を、従業員みんなで見ておく（<a href="/security/phishing/">偽SMS・フィッシングの見分け方</a>）。</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="action">
+      <h2 id="action">「SECURITY ACTION」を宣言する</h2>
+      <p>{facts.securityAction.summary}</p>
+      <ul class="plain-list">
+        <li><strong>一つ星</strong>：{facts.securityAction.one}</li>
+        <li><strong>二つ星</strong>：{facts.securityAction.two}</li>
+      </ul>
+      {facts.securityAction.subsidy && <p class="note">{facts.securityAction.subsidy}</p>}
+    </section>
+
+    <section aria-labelledby="backup">
+      <h2 id="backup">ランサムウェアに備えるバックアップ</h2>
+      <ul class="plain-list">
+        <li><strong>外しておく</strong>：外付けのハードディスクは、コピーが終わったら外す。つなぎっぱなしだと、一緒に暗号化されることがあります。</li>
+        <li><strong>2か所に残す</strong>：社内の機器と、クラウドなど別の場所の両方に置く。</li>
+        <li><strong>戻せるか試す</strong>：年に数回、バックアップからファイルを戻せるか試しておく。</li>
+        <li><strong>大事なものから</strong>：会計データ・顧客名簿・見積書や契約書など、なくなると仕事が止まるものを先に決める。</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="money">
+      <h2 id="money">お金をかけるなら、この順番で</h2>
+      <ol class="point-list">
+        <li><strong>ウイルス対策ソフト（台数分）</strong><span>個人向けの製品は、仕事での利用を利用規約で認めていないものがあります。仕事で使えるかを各社の規約で確かめ、台数をまとめて管理したいなら法人向けを選びます。</span></li>
+        <li><strong>バックアップの仕組み</strong><span>外付けの記録装置や、自動でコピーするクラウドのサービス。</span></li>
+        <li><strong>見張りと駆けつけのセット（お助け隊サービス）</strong><span>{facts.otasuketai.summary}</span></li>
+        <li><strong>外から社内につなぐなら、安全なつなぎ方</strong><span>自宅や出先から社内のパソコン・ファイルを使うときは、VPNなどの方法で。ただしVPN機器はランサムウェアの侵入口になりやすいので、機器のソフトを更新し続け、多要素認証を使います。ルーターの初期パスワードのまま外に開けるのは危険です。</span></li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="camera">
+      <h2 id="camera">現金や在庫があるお店は、防犯カメラも</h2>
+      <p>夜間の侵入や、レジまわりのトラブルに備えるなら、防犯カメラも選択肢です。録画をどこに残すか（本体かクラウドか）、何日分残すか、スマホから見られるか、を先に決めると、見積りを比べやすくなります。録画を外から見る機器は、初期のパスワードを必ず変えてください。</p>
+      <OfferCard id="bouhan-camera-ikkatsu" heading="会社・お店の防犯カメラの見積り比較" notice="費用・対応する地域・条件をリンク先で確認してください。" />
+    </section>
+
+    <section aria-labelledby="contact">
+      <h2 id="contact">困ったときの相談先</h2>
+      <ul class="plain-list">
+        {facts.contacts.map((c) => <li><a href={c.url} target="_blank" rel="noopener">{c.name}</a>：{c.body}</li>)}
+      </ul>
+    </section>
+
+    <section aria-labelledby="faq">
+      <h2 id="faq">よくある質問</h2>
+      {faqs.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}
+    </section>
+    <p class="sources">出典：{facts.sources.houjin.map((s, i) => <>{i > 0 && '／'}<a href={s.url} target="_blank" rel="noopener">{s.name}</a></>)}</p>
+  </div>
+</Base>
+
+<style>
+  .sec-page { padding-top: 14px; padding-bottom: 30px; color: #23352e; }
+  .sec-page h1 { margin: 12px 0 16px; font-size: clamp(26px, 3.6vw, 36px); font-weight: 800; line-height: 1.45; color: #1f3a30; }
+  .sec-page h1 span { display: block; font-size: .55em; color: #175d50; margin-top: 4px; }
+  .sec-page h2 { margin-top: 38px; font-size: clamp(20px, 2.4vw, 25px); font-weight: 800; line-height: 1.55; }
+  .sec-page p, .sec-page li { font-size: 15px; line-height: 1.95; }
+  .sec-page a { color: #175d50; text-decoration: underline; text-underline-offset: 3px; }
+  .answer-box { border: 2px solid #175d50; border-radius: 10px; background: #f0f6f1; padding: 18px 20px; }
+  .answer-label { display: inline-block; background: #175d50; color: #fff; font-size: 13px !important; font-weight: 800; border-radius: 4px; padding: 2px 10px; margin-bottom: 8px; }
+  .answer-box ol { padding-left: 1.3em; margin: 0; display: grid; gap: 6px; }
+  .byline { margin-top: 10px; font-size: 13px !important; color: #637268; }
+  .lead { margin-top: 8px; color: #4f6a5a; }
+  .rank-list { margin-top: 12px; padding-left: 1.6em; display: grid; gap: 4px; font-weight: 700; }
+  .point-list { margin-top: 14px; padding-left: 1.3em; display: grid; gap: 10px; }
+  .point-list strong { display: block; font-size: 16px; }
+  .point-list span { display: block; color: #4f6a5a; }
+  .table-scroll { overflow-x: auto; margin-top: 14px; border: 1px solid #ccd9d0; border-radius: 8px; }
+  .table-scroll table { width: 100%; min-width: 620px; border-collapse: collapse; font-size: 14px; }
+  .table-scroll th, .table-scroll td { padding: 12px; border-bottom: 1px solid #dce5de; text-align: left; vertical-align: top; line-height: 1.75; }
+  .table-scroll thead th { background: #175d50; color: #fff; white-space: nowrap; }
+  .table-scroll tbody th { background: #f1f6f1; color: #175d50; font-size: 14px; width: 38%; }
+  .note { margin-top: 10px; font-size: 13px !important; color: #5d6f63; }
+  .plain-list { margin-top: 12px; padding-left: 1.2em; display: grid; gap: 8px; list-style: disc; }
+  .sec-page details { margin-top: 10px; padding: 14px 18px; border: 1px solid #d5dfd7; border-radius: 6px; }
+  .sec-page summary { cursor: pointer; font-weight: 700; }
+  .sources { margin-top: 26px; font-size: 12px !important; color: #69786e; }
+</style>

@@ -1,0 +1,110 @@
+---
+// 偽SMS・フィッシング詐欺の見分け方と、入力してしまったときの連絡先（広告なし）
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { SITE } from '../../site.config.mjs';
+import { faqLd, breadcrumbLd } from '../../lib/data';
+import facts from '../../data/security-facts.json';
+
+const checkedAt = facts.checkedAt;
+const crumbs = [
+  { name: '総合トップ', href: '/' },
+  { name: 'セキュリティソフト', href: '/security/' },
+  { name: '偽SMS・フィッシングの見分け方', href: '/security/phishing/' },
+];
+const title = '偽SMS・フィッシング詐欺の見分け方｜開く前に見る5つと、入力してしまったときの連絡先';
+const description = '宅配・銀行・カード会社・携帯会社を名のる偽のSMSやメールの見分け方を、警察庁・フィッシング対策協議会などの公的な情報でまとめました。入力してしまったときにすぐやることと相談先も。';
+const faqs = [
+  { q: 'リンクを開いただけで被害にあいますか？', a: '開いただけで、すぐにお金を取られることは多くありません。ただし、その先でIDやパスワード、カード番号を入れたり、アプリを入れたりすると被害につながります。何も入れずに閉じ、念のためスマホやパソコンのソフトを最新にしておきましょう。' },
+  { q: '本物かどうか確かめるには？', a: 'メッセージの中のリンクや電話番号は使わず、公式アプリや、ブックマーク・検索で開いた公式サイトからログインして、お知らせが本当に届いているかを確かめます。' },
+  { q: 'カード番号を入れてしまいました。', a: 'すぐにカード会社に電話して止めてもらいます。カードの裏に書かれた番号を使ってください。そのあと、警察の相談窓口にも連絡します。' },
+];
+const articleLd = {
+  '@context': 'https://schema.org', '@type': 'Article', headline: '偽SMS・フィッシング詐欺の見分け方', description,
+  datePublished: checkedAt, dateModified: checkedAt, inLanguage: 'ja', mainEntityOfPage: `${SITE.url}/security/phishing/`,
+  author: { '@type': 'Organization', name: SITE.operator, url: `${SITE.url}/about/` },
+  publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url + '/' },
+};
+---
+<Base title={title} description={description} pr={false} jsonLd={[breadcrumbLd(SITE.url, crumbs), articleLd, faqLd(faqs)]}>
+  <div class="site-container sec-page">
+    <Breadcrumbs items={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))} />
+    <h1>偽SMS・フィッシング詐欺の見分け方<span>開く前に見る5つと、もしものときの連絡先</span></h1>
+
+    <div class="answer-box">
+      <p class="answer-label">先に結論</p>
+      <ul>
+        <li><strong>メッセージの中のリンクから、ログインしない</strong>。公式アプリやブックマークから開いて確かめる</li>
+        <li><strong>「急いで」「止まります」「当選」は疑う</strong>。あわてさせるのが手口です</li>
+        <li><strong>入れてしまったら、すぐパスワード変更とカードの停止</strong>。そのあと警察などに相談</li>
+      </ul>
+    </div>
+    <p class="byline">公的機関のサイトで{checkedAt.replace(/-/g, '/')}に確認 ／ 書いた人：{SITE.operator}（<a href="/about/">編集方針</a>）／ このページに広告はありません</p>
+
+    {facts.phishing.reportText && <section aria-labelledby="now"><h2 id="now">いま、どれくらい届いている？</h2><p>{facts.phishing.reportText}</p></section>}
+
+    <section aria-labelledby="check">
+      <h2 id="check">開く前に見る5つ</h2>
+      <ol class="point-list">
+        <li><strong>あわてさせる言葉</strong><span>「料金が未払い」「アカウントが止まります」「荷物を持ち帰りました」「当選しました」など。</span></li>
+        <li><strong>リンクのアドレス</strong><span>会社名に似せた、少しちがう文字のアドレスや、短縮URL（本当の行き先がわからない短いアドレス）に注意。ただし本物そっくりのものもあるので、見た目だけで安心しない。</span></li>
+        <li><strong>IDやパスワード、カード番号をすぐ求める</strong><span>警察庁は、金融機関がメールやSMSでIDやパスワードを聞くことはないと案内しています。送り主の名前やアドレスだけでは、本物かどうか見分けられません。</span></li>
+        <li><strong>アプリを入れさせようとする</strong><span>「このアプリで確認」と、公式ストア以外からアプリを入れさせる手口があります。</span></li>
+        <li><strong>心当たりがない</strong><span>頼んでいない荷物、使っていないサービスの請求は、まず疑います。</span></li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="after">
+      <h2 id="after">入力してしまったら、すぐやること</h2>
+      <ol class="point-list">
+        <li><strong>パスワードを変える</strong><span>同じパスワードを使っているほかのサービスも変えます。2段階の認証をオンにします。</span></li>
+        <li><strong>カード会社・銀行に連絡</strong><span>カードの裏や公式サイトの番号に電話して、止めてもらいます。</span></li>
+        <li><strong>アプリを入れてしまったら</strong><span>機内モードにして、携帯会社やメーカーの窓口に相談します。</span></li>
+        <li><strong>相談する</strong><span>下の窓口に連絡します。やりとりの画面は消さずに残しておきます。</span></li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="contact">
+      <h2 id="contact">相談先</h2>
+      <ul class="plain-list">
+        {facts.phishing.contacts.map((c) => <li><a href={c.url} target="_blank" rel="noopener">{c.name}</a>：{c.body}</li>)}
+      </ul>
+    </section>
+
+    <section aria-labelledby="protect">
+      <h2 id="protect">ふだんからできる備え</h2>
+      <ul class="plain-list">
+        <li>スマホ・パソコンのOSとアプリを最新にする</li>
+        <li>迷惑SMSのフィルター（携帯会社の無料の設定）をオンにする</li>
+        <li>危ないサイトを知らせてくれる<a href="/security/">セキュリティソフト</a>を使う</li>
+        <li>お店や会社では、従業員みんなで手口を共有する（<a href="/security/houjin/">会社・お店のセキュリティ対策</a>）</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="faq">
+      <h2 id="faq">よくある質問</h2>
+      {faqs.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}
+    </section>
+    <p class="sources">出典：{facts.sources.phishing.map((s, i) => <>{i > 0 && '／'}<a href={s.url} target="_blank" rel="noopener">{s.name}</a></>)}</p>
+  </div>
+</Base>
+
+<style>
+  .sec-page { padding-top: 14px; padding-bottom: 30px; color: #23352e; }
+  .sec-page h1 { margin: 12px 0 16px; font-size: clamp(26px, 3.6vw, 36px); font-weight: 800; line-height: 1.45; color: #1f3a30; }
+  .sec-page h1 span { display: block; font-size: .55em; color: #175d50; margin-top: 4px; }
+  .sec-page h2 { margin-top: 38px; font-size: clamp(20px, 2.4vw, 25px); font-weight: 800; line-height: 1.55; }
+  .sec-page p, .sec-page li { font-size: 15px; line-height: 1.95; }
+  .sec-page a { color: #175d50; text-decoration: underline; text-underline-offset: 3px; }
+  .answer-box { border: 2px solid #175d50; border-radius: 10px; background: #f0f6f1; padding: 18px 20px; }
+  .answer-label { display: inline-block; background: #175d50; color: #fff; font-size: 13px !important; font-weight: 800; border-radius: 4px; padding: 2px 10px; margin-bottom: 8px; }
+  .answer-box ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+  .byline { margin-top: 10px; font-size: 13px !important; color: #637268; }
+  .point-list { margin-top: 14px; padding-left: 1.3em; display: grid; gap: 10px; }
+  .point-list strong { display: block; font-size: 16px; }
+  .point-list span { display: block; color: #4f6a5a; }
+  .plain-list { margin-top: 12px; padding-left: 1.2em; display: grid; gap: 8px; list-style: disc; }
+  .sec-page details { margin-top: 10px; padding: 14px 18px; border: 1px solid #d5dfd7; border-radius: 6px; }
+  .sec-page summary { cursor: pointer; font-weight: 700; }
+  .sources { margin-top: 26px; font-size: 12px !important; color: #69786e; }
+</style>
