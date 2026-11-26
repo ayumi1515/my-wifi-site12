@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import ConnectivityManga from '../../components/ConnectivityManga.astro';
 import ProviderCard from '../../components/ProviderCard.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import OfferCard from '../../components/OfferCard.astro';
 import { SITE } from '../../site.config.mjs';
 import { ranked, breadcrumbLd, jpDate, lastChecked } from '../../lib/data';
 const list = ranked('house', 'router');
@@ -33,6 +34,11 @@ const crumbs = [{ name: 'ホーム', href: '/' }, { name: '鹿児島県の光回
     <div id="router-provider-comparison" class="mt-8 space-y-8">
       {list.map((p, i) => <ProviderCard provider={p} building="house" rank={i + 1} headingLevel="h2" />)}
     </div>
+    <section class="mt-12">
+      <h2 class="text-xl font-bold text-gray-900">WiMAXも候補になります</h2>
+      <p class="mt-2 text-sm leading-7 text-gray-700">WiMAXは、スマホとは別の電波も使うホームルーター・モバイルルーターのサービスです。家の中に置くだけでなく、持ち歩いて使えるタイプもあります。</p>
+      <OfferCard id="biglobe-wimax" heading="工事なし・持ち歩きもできる" />
+    </section>
     <section class="prose-ja mt-12">
       <h2>ホームルーターで気をつけること</h2>
       <ul>

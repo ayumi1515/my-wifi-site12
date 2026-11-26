@@ -1,44 +1,87 @@
 [
-  {
-    "id": "study-sapuri-toeic",
-    "name": "スタディサプリENGLISH TOEIC L&R TEST対策コース",
-    "officialUrl": "https://eigosapuri.jp/toeic/",
-    "affiliate": {
-      "href": "https://px.a8.net/svt/ejp?a8mat=2ZPIW9+EFRGNU+3AQG+C6QR6",
-      "label": "TOEICテスト対策",
-      "pixel": "https://www14.a8.net/0.gif?a8mat=2ZPIW9+EFRGNU+3AQG+C6QR6",
-      "banner": {
-        "href": "https://px.a8.net/svt/ejp?a8mat=2ZPIW9+EFRGNU+3AQG+C7TC1",
-        "src": "https://www28.a8.net/svt/bgt?aid=180909801873&wid=002&eno=01&mid=s00000015388002052000&mc=1",
-        "width": 300,
-        "height": 250,
-        "pixel": "https://www18.a8.net/0.gif?a8mat=2ZPIW9+EFRGNU+3AQG+C7TC1"
-      }
-    },
-    "note": "TOEIC L&R TEST対策の自習用コースです。無料対象・課金開始日・申込プランはリンク先で確認してください。",
-    "guideSlugs": [
-      "study-sapuri-toeic-vs-eikaiwa"
-    ]
+ {
+  "id": "study-sapuri-toeic",
+  "name": "スタディサプリENGLISH TOEIC L&R TEST対策コース",
+  "officialUrl": "https://eigosapuri.jp/toeic/",
+  "affiliate": {
+   "href": "https://px.a8.net/svt/ejp?a8mat=2ZPIW9+EFRGNU+3AQG+C6QR6",
+   "label": "TOEICテスト対策",
+   "pixel": "https://www14.a8.net/0.gif?a8mat=2ZPIW9+EFRGNU+3AQG+C6QR6",
+   "banner": {
+    "href": "https://px.a8.net/svt/ejp?a8mat=2ZPIW9+EFRGNU+3AQG+C7TC1",
+    "src": "https://www28.a8.net/svt/bgt?aid=180909801873&wid=002&eno=01&mid=s00000015388002052000&mc=1",
+    "width": 300,
+    "height": 250,
+    "pixel": "https://www18.a8.net/0.gif?a8mat=2ZPIW9+EFRGNU+3AQG+C7TC1"
+   }
   },
-  {
-    "id": "study-sapuri-daily",
-    "name": "スタディサプリENGLISH 新日常英会話コース",
-    "officialUrl": "https://eigosapuri.jp/conversation/daily/",
-    "affiliate": {
-      "href": "https://px.a8.net/svt/ejp?a8mat=35SIQO+OETCQ+3AQG+ZQ80I",
-      "label": "スタディサプリENGLISH（新日常英会話コース）",
-      "pixel": "https://www17.a8.net/0.gif?a8mat=35SIQO+OETCQ+3AQG+ZQ80I",
-      "banner": {
-        "href": "https://px.a8.net/svt/ejp?a8mat=35SIQO+OETCQ+3AQG+ZRALD",
-        "src": "https://www25.a8.net/svt/bgt?aid=191127264041&wid=002&eno=01&mid=s00000015388006006000&mc=1",
-        "width": 300,
-        "height": 250,
-        "pixel": "https://www16.a8.net/0.gif?a8mat=35SIQO+OETCQ+3AQG+ZRALD"
-      }
-    },
-    "note": "紹介するベーシックは自習アプリです。講師との会話は別の英会話セットプランで、料金・体験条件も異なります。",
-    "guideSlugs": [
-      "study-sapuri-toeic-vs-eikaiwa"
-    ]
-  }
+  "note": "TOEIC L&R TEST対策の自習用コースです。無料対象・課金開始日・申込プランはリンク先で確認してください。",
+  "guideSlugs": [
+   "study-sapuri-toeic-vs-eikaiwa"
+  ]
+ },
+ {
+  "id": "study-sapuri-daily",
+  "name": "スタディサプリENGLISH 新日常英会話コース",
+  "officialUrl": "https://eigosapuri.jp/conversation/daily/",
+  "affiliate": {
+   "href": "https://px.a8.net/svt/ejp?a8mat=35SIQO+OETCQ+3AQG+ZQ80I",
+   "label": "スタディサプリENGLISH（新日常英会話コース）",
+   "pixel": "https://www17.a8.net/0.gif?a8mat=35SIQO+OETCQ+3AQG+ZQ80I",
+   "banner": {
+    "href": "https://px.a8.net/svt/ejp?a8mat=35SIQO+OETCQ+3AQG+ZRALD",
+    "src": "https://www25.a8.net/svt/bgt?aid=191127264041&wid=002&eno=01&mid=s00000015388006006000&mc=1",
+    "width": 300,
+    "height": 250,
+    "pixel": "https://www16.a8.net/0.gif?a8mat=35SIQO+OETCQ+3AQG+ZRALD"
+   }
+  },
+  "note": "紹介するベーシックは自習アプリです。講師との会話は別の英会話セットプランで、料金・体験条件も異なります。",
+  "guideSlugs": [
+   "study-sapuri-toeic-vs-eikaiwa"
+  ]
+ },
+ {
+  "id": "biglobe-wimax",
+  "name": "BIGLOBE WiMAX +5G",
+  "officialUrl": "https://join.biglobe.ne.jp/mobile/wimax/",
+  "affiliate": {
+   "href": "https://px.a8.net/svt/ejp?a8mat=4BGUDZ+1F7BKQ+B4+2BCWEQ",
+   "label": "BIGLOBE WiMAX +5Gの料金と条件を見る",
+   "pixel": "https://www11.a8.net/0.gif?a8mat=4BGUDZ+1F7BKQ+B4+2BCWEQ",
+   "banner": null
+  },
+  "note": "工事のいらないWiMAXのサービスです。置いて使うホームルーターと、持ち歩けるモバイルルーターがあります。月額5,258円で、始めた翌月から24カ月は月1,650円の値引き。契約期間の縛りと解約金はありません。ルーター代33,264円と申込手数料3,300円は別です。電波が届くかは、公式のサービスエリアで住所を確かめてください（2026年11月26日に公式で確認）。",
+  "guideSlugs": [
+   "kagoshima-ritou-internet"
+  ]
+ },
+ {
+  "id": "bizair",
+  "name": "BizAir（法人・店舗向けWi-Fi）",
+  "officialUrl": "https://bizair.jp/",
+  "affiliate": {
+   "href": "https://px.a8.net/svt/ejp?a8mat=4BGUDZ+1VVGII+2BZM+354SDE",
+   "label": "法人・店舗向けWi-Fiの条件を見る",
+   "pixel": "https://www18.a8.net/0.gif?a8mat=4BGUDZ+1VVGII+2BZM+354SDE",
+   "banner": null
+  },
+  "note": "法人・店舗向け（個人事業主も対象）の、工事のいらない置き型Wi-Fiです。5G版は月6,248円（税込）で、契約期間は受け取った月から25カ月。WiMAXの回線を使い、申し込みから最短3日で使い始められます。電波は公式が案内するエリアマップで確かめてください（2026年11月26日に公式で確認）。",
+  "guideSlugs": []
+ },
+ {
+  "id": "hikkoshi-samurai",
+  "name": "引越し侍",
+  "officialUrl": "https://hikkoshizamurai.jp/",
+  "affiliate": {
+   "href": "https://px.a8.net/svt/ejp?a8mat=2ZPIW9+FT6FVE+ZXM+1BN3TU",
+   "label": "引越しの料金を比べて予約する",
+   "pixel": "https://www17.a8.net/0.gif?a8mat=2ZPIW9+FT6FVE+ZXM+1BN3TU",
+   "banner": null
+  },
+  "note": "引越し会社の料金を比べて、ネットで予約や一括見積もりができるサービスです。引越しの日が決まったら、ネット回線の手続きと同じころに進めると、段取りがそろいます。",
+  "guideSlugs": [
+   "moving-internet-kagoshima"
+  ]
+ }
 ]

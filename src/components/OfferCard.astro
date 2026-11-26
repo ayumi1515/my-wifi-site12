@@ -1,0 +1,24 @@
+---
+// 1つの広告の窓口を、説明つきのカードで出す（データは src/data/offers.json）。
+import AffiliateButton from './AffiliateButton.astro';
+import { offers } from '../lib/offers';
+interface Props { id: string; heading?: string }
+const { id, heading } = Astro.props;
+const o = offers.find((x) => x.id === id);
+---
+{o && (
+  <article class="offer-card">
+    <p class="offer-kicker">{heading ?? 'ほかの選択肢'}</p>
+    <h3>{o.name}</h3>
+    <p class="offer-note">{o.note}</p>
+    <AffiliateButton provider={{ name: o.name, officialUrl: o.officialUrl, affiliate: { ...o.affiliate, banner: null } }} showBanner={false} notice="料金・エリア・契約条件をリンク先で確認してください。" />
+    <a class="offer-official" href={o.officialUrl} target="_blank" rel="noopener">{o.name}の公式サイト</a>
+  </article>
+)}
+<style>
+  .offer-card { margin-top: 18px; padding: 18px 20px; border: 1px solid #ccdad2; border-top: 4px solid #175d50; border-radius: 8px; background: #fff; }
+  .offer-kicker { font-size: 13px; font-weight: 700; color: #175d50; }
+  .offer-card h3 { margin-top: 4px; font-size: 20px; font-weight: 800; color: #1f3a30; }
+  .offer-note { margin: 8px 0 12px; font-size: 14px; line-height: 1.9; color: #3f5548; }
+  .offer-official { display: inline-block; margin-top: 8px; font-size: 13px; color: #175d50; text-decoration: underline; text-underline-offset: 3px; }
+</style>

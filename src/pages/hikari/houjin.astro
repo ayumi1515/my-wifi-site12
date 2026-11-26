@@ -1,8 +1,9 @@
 ---
 // 鹿児島の会社・お店・事業所向けのネット回線の選び方（法人向け）
-// 提携している広告はないので、公式の法人窓口へのふつうのリンクだけにする（pr={false}）。
+// 予備の回線の欄に、法人・店舗向けWi-Fi（BizAir）の広告リンクがある。ほかは公式の法人窓口へのふつうのリンク。
 import Base from '../../layouts/Base.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import OfferCard from '../../components/OfferCard.astro';
 import { SITE } from '../../site.config.mjs';
 import { faqLd, breadcrumbLd } from '../../lib/data';
 
@@ -28,7 +29,7 @@ const articleLd = {
   publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url + '/' },
 };
 ---
-<Base title={title} description={description} pr={false} jsonLd={[breadcrumbLd(SITE.url, crumbs), articleLd, faqLd(faqs)]}>
+<Base title={title} description={description} jsonLd={[breadcrumbLd(SITE.url, crumbs), articleLd, faqLd(faqs)]}>
   <div class="site-container houjin-page">
     <Breadcrumbs items={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))} />
     <h1>鹿児島の会社・お店のネット回線<span>法人向け光回線の選び方</span></h1>
@@ -41,7 +42,7 @@ const articleLd = {
         <li><strong>止まると業務が止まる</strong>（決済・予約・遠隔の機器） → 24時間の保守、帯域の確保、<strong>予備の回線</strong>まで考える</li>
       </ul>
     </div>
-    <p class="byline">公式サイトで{checkedAt.replace(/-/g, '/')}に確認 ／ 書いた人：{SITE.operator}（<a href="/about/">編集方針</a>）／ このページに広告リンクはありません</p>
+    <p class="byline">公式サイトで{checkedAt.replace(/-/g, '/')}に確認 ／ 書いた人：{SITE.operator}（<a href="/about/">編集方針</a>）／ このページには広告リンク（PR）があります</p>
 
     <section aria-labelledby="points">
       <h2 id="points">法人で回線を選ぶときに見る5つのこと</h2>
@@ -86,6 +87,7 @@ const articleLd = {
     <section aria-labelledby="backup">
       <h2 id="backup">止まると困るお店は「予備の回線」も</h2>
       <p>保守の手厚いプランでも、故障や工事で一時的に使えなくなることはあります。キャッシュレス決済や予約の受付が止まると困るお店は、スマホのテザリングや、工事のいらない<a href="/hikari/home-router/">ホームルーター</a>を予備にする方法があります。予備の回線は、ふだん使わない月の費用も含めて考えます。</p>
+      <OfferCard id="bizair" heading="法人・店舗向けの工事なしWi-Fi" />
     </section>
 
     <section aria-labelledby="contact">
