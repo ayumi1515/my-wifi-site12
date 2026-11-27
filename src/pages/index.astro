@@ -25,6 +25,8 @@ const description = '今のスマホの会社から、セット割が使える�
 const heroImage = '/images/manga-lp/kojin/hero.webp'; // 公式ナビゲーターの専用の絵ができたら /images/navi/top-hero.webp に差し替える
 const yen = (n: number) => `${n.toLocaleString('ja-JP')}円`;
 const checked = homeData.checkedAt.replace(/-/g, '/');
+// Q1のボタンの左はしの色の点（会社を思わせる色だけ。ロゴは使わない）
+const brandDot: Record<string, string> = { docomo: '#b5121b', au: '#eb5505', softbank: '#9aa3ab', ymobile: '#e60012', 'uq-mobile': '#1d5fbf', 'rakuten-mobile': '#bf0d6a', ahamo: '#a7b800', linemo: '#2fae4a', povo: '#e0a800', other: '#94a3b8' };
 
 // ③ スマホ会社のタブ：そのスマホとセット割がある回線だけを出す（データはセット割診断と同じ）
 const prefName = (code: string) => prefectures.find((p) => p.code === code)?.name ?? code;
@@ -90,7 +92,6 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
         </div>
         <figure class="hx-visual">
           <img src={heroImage} alt="友だちのミナが、ママにスマホの画面を見せて説明している。" width="1200" height="800" fetchpriority="high" />
-          <figcaption><NaviTalk who="mina" text="スマホの会社を選ぶだけで、家族でいくら変わるか目安がわかるよ。" tone="dark" /></figcaption>
         </figure>
       </div>
     </header>
@@ -101,7 +102,7 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
         <NaviTalk who="mama" text="わたしのスマホでも、セット割って使えるの？" />
         <h2 id="quick-title"><span>Q1</span>今お使いのスマホの会社は？</h2>
         <div class="quick-options">
-          {brands.map((b) => <a href={`/shindan/?carrier=${b.id}#setwari`}>{b.name}</a>)}
+          {brands.map((b) => <a href={`/shindan/?carrier=${b.id}#setwari`}><span class="qdot" style={`background:${brandDot[b.id] ?? '#94a3b8'}`} aria-hidden="true"></span><span class="qlabel">{b.name}</span><span class="qarrow" aria-hidden="true">›</span></a>)}
         </div>
         <p class="quick-note">タップすると、2問目（台数）から続きます。全部で5問・約30秒です。</p>
       </div>
@@ -271,8 +272,8 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
   .hx-sub { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 14px; }
   .hx-sub a { font-size: 15px; font-weight: 700; color: var(--c-main); text-decoration: underline; text-underline-offset: 4px; }
   .hx-visual { position: relative; margin: 0; }
-  .hx-visual img { display: block; width: 100%; height: auto; border-radius: 24px; box-shadow: var(--shadow); background: #eaf3ec; }
-  .hx-visual figcaption { position: absolute; left: -18px; bottom: -22px; max-width: 360px; }
+  /* 絵の四角いふちが目立たないよう、外側をページの背景になじむようにぼかす */
+  .hx-visual img { display: block; width: 100%; height: auto; -webkit-mask-image: linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 12%, #000 86%, transparent 100%); -webkit-mask-composite: source-in; mask-image: linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 12%, #000 86%, transparent 100%); mask-composite: intersect; }
 
   /* 診断の1問目 */
   .quick { margin-top: 34px; }
@@ -280,8 +281,13 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
   .quick-card h2 { display: flex; align-items: center; gap: 10px; margin-top: 14px; font-size: clamp(20px, 2.4vw, 24px); }
   .quick-card h2 span { font-size: 14px; color: #fff; background: var(--c-main); border-radius: 8px; padding: 2px 10px; }
   .quick-options { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
-  .quick-options a { display: flex; align-items: center; justify-content: center; min-height: 52px; padding: 8px; border: 1.5px solid #c7d6cc; border-radius: 12px; background: #fff; font-size: 15px; font-weight: 800; color: var(--c-ink); text-align: center; text-decoration: none; transition: border-color .15s, background .15s; }
-  .quick-options a:hover { border-color: var(--c-accent); background: #fff7ed; color: var(--c-accent-dark); }
+  .quick-options a { display: flex; align-items: center; justify-content: flex-start; gap: 8px; text-align: left !important; min-height: 52px; padding: 8px 12px; transition: transform .15s, box-shadow .15s, border-color .15s, background .15s !important; border: 1.5px solid #c7d6cc; border-radius: 12px; background: #fff; font-size: 15px; font-weight: 800; color: var(--c-ink); text-align: center; text-decoration: none; transition: border-color .15s, background .15s; }
+  .quick-options a:hover, .quick-options a:focus-visible { border-color: var(--c-accent); background: #fff; color: var(--c-ink); transform: translateY(-2px); box-shadow: 0 0 0 3px rgba(234,88,12,.16), 0 8px 16px rgba(23,61,43,.10); }
+  .quick-options a:active { transform: translateY(0); box-shadow: 0 0 0 3px rgba(234,88,12,.22); background: #fff7ed; }
+  .qdot { flex-shrink: 0; width: 8px; height: 8px; border-radius: 50%; box-shadow: 0 0 0 2px rgba(255,255,255,.9); }
+  .qlabel { flex: 1; line-height: 1.4; }
+  .qarrow { flex-shrink: 0; font-size: 20px; font-weight: 700; line-height: 1; color: #a3b5aa; transition: color .15s, transform .15s; }
+  .quick-options a:hover .qarrow { color: var(--c-accent); transform: translateX(2px); }
   .quick-note { margin-top: 10px; font-size: 13px; color: #5d6f63; }
 
   /* タブ */
@@ -360,8 +366,7 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
   @media (max-width: 960px) {
     .hx-inner { grid-template-columns: 1fr; gap: 26px; }
     .hx-visual { order: 2; }
-    .hx-visual img { max-height: 280px; object-fit: cover; }
-    .hx-visual figcaption { position: static; margin-top: 12px; max-width: none; }
+    .hx-visual img { max-height: 230px; object-fit: cover; }
     .quick-options { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .guide-grid { grid-template-columns: 1fr 1fr; }
     .other-grid { grid-template-columns: 1fr 1fr; }
@@ -375,6 +380,14 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
     .quick-options { grid-template-columns: 1fr 1fr; }
     .guide-grid, .other-grid, .learning-grid { grid-template-columns: 1fr; }
     .sec { padding-top: 44px; }
+    .hx-inner { padding-bottom: 14px; gap: 18px; }
+    .quick { margin-top: 18px; }
+    .quick-card { padding: 16px 14px 14px; }
+    .quick-options a { font-size: 14px; padding: 8px 10px; }
+    /* タブ：スマホでは切れないように、ならべて全部見せる（スマホの会社は2列×2、地方は3列×2） */
+    .tab-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; overflow: visible; padding-bottom: 0; }
+    .area-tabs .tab-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .tab-list button { width: 100%; padding: 8px 6px; font-size: 14px; min-height: 44px; line-height: 1.35; white-space: normal; }
   }
   /* とても狭い画面（360px未満）だけは、2つのリンクを2行に折り返す */
   @media (max-width: 359px) {
