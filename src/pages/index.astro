@@ -16,6 +16,7 @@ import { mobileMangaGuides } from '../lib/manga-mobile';
 import type { ConnectivityMangaSheet } from '../lib/connectivity-manga';
 import { offers } from '../lib/offers';
 import { brands, brandInfo, homes } from '../lib/setwari';
+import { phrases } from '../lib/phrases';
 import homeData from '../data/household-homes.json';
 import { prefectures, getPrefecturePath } from '../lib/national-areas';
 import { SITE } from '../site.config.mjs';
@@ -35,7 +36,7 @@ const prefName = (code: string) => prefectures.find((p) => p.code === code)?.nam
 const tabDefs = [
   { key: 'docomo', label: 'ドコモ', brandIds: ['docomo'], note: 'ahamoはセット割の対象外です。' },
   { key: 'au', label: 'au・UQ', brandIds: ['au', 'uq-mobile'], note: 'UQ mobileは、家族割とセット割をいっしょに使えないプランがあります。' },
-  { key: 'sb', label: 'ソフトバンク・ワイモバ', brandIds: ['softbank', 'ymobile'], note: 'ワイモバイルは、家族割とセット割をいっしょに使えないプランがあります。' },
+  { key: 'sb', label: 'ソフトバンク・ワイモバイル', brandIds: ['softbank', 'ymobile'], note: 'ワイモバイルは、家族割とセット割をいっしょに使えないプランがあります。' },
   { key: 'other', label: '格安SIM・その他', brandIds: [] as string[], note: '楽天モバイル・povo・LINEMOなどは、このサイトで比べている回線とのセット割はありません。月額で選びます。' },
 ];
 const tabs = tabDefs.map((t) => {
@@ -136,7 +137,7 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
       <p class="sec-trust">※各社の公式情報をもとに掲載しています（{checkedMonth}確認／順位は広告の報酬ではなく条件で決めています）<a href="/about/">編集方針・掲載基準を見る →</a></p>
       <div class="tabs" data-tabs>
         <div class="tab-list" role="tablist" aria-label="スマホの会社">
-          {tabs.map((t, i) => <button type="button" role="tab" id={`tab-${t.key}`} aria-controls={`panel-${t.key}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{t.label}</button>)}
+          {tabs.map((t, i) => <button type="button" role="tab" id={`tab-${t.key}`} aria-controls={`panel-${t.key}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{phrases(t.label).map((w) => <span class="phrase">{w}</span>)}</button>)}
         </div>
         {tabs.map((t, i) => (
           <div class="tab-panel" role="tabpanel" id={`panel-${t.key}`} aria-labelledby={`tab-${t.key}`} data-panel hidden={i !== 0}>
@@ -179,7 +180,7 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
       </div>
       <div class="diag-box">
         <p class="diag-kicker">どれが合うか迷ったら</p>
-        <a class="diag-btn" href="/shindan/#setwari">家族の台数まで入れて30秒で診断する →<span>名前・住所は不要／回答は保存しません</span></a>
+        <a class="diag-btn" href="/shindan/#setwari"><span class="diag-main">{phrases('家族の台数まで入れて30秒で診断する →').map((w) => <span class="phrase">{w}</span>)}</span><span>名前・住所は不要／回答は保存しません</span></a>
         <a href="/hikari/" class="text-link">光回線を一覧で比べる →</a>
       </div>
     </section>
@@ -192,7 +193,7 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
         <NaviTalk who="mina" text="同じ回線でも、住所や建物で使えないことがあるよ。まず地域を選んでね。" />
         <div class="tabs area-tabs" data-tabs>
           <div class="tab-list" role="tablist" aria-label="地方">
-            {regions.map((r, i) => <button type="button" role="tab" id={`tab-${r.key}`} aria-controls={`panel-${r.key}`} aria-selected={r.key === 'kanto' ? 'true' : 'false'} tabindex={r.key === 'kanto' ? 0 : -1}>{r.label}</button>)}
+            {regions.map((r, i) => <button type="button" role="tab" id={`tab-${r.key}`} aria-controls={`panel-${r.key}`} aria-selected={r.key === 'kanto' ? 'true' : 'false'} tabindex={r.key === 'kanto' ? 0 : -1}>{phrases(r.label).map((w) => <span class="phrase">{w}</span>)}</button>)}
           </div>
           {regions.map((r) => (
             <div class="tab-panel" role="tabpanel" id={`panel-${r.key}`} aria-labelledby={`tab-${r.key}`} data-panel hidden={r.key !== 'kanto'}>
@@ -293,7 +294,7 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
   .diag-box { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; margin-top: 26px; padding: 18px 20px; border-radius: var(--radius); background: #fff7ed; border: 1px solid #f6d8bd; }
   .diag-kicker { width: 100%; font-size: 14px; font-weight: 800; color: var(--c-accent-dark); }
   .diag-btn { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; min-height: 58px; padding: 10px 22px; border-radius: 999px; background: var(--c-accent); color: #fff; font-size: 17px; font-weight: 900; text-align: center; text-decoration: none; text-wrap: balance; box-shadow: 0 6px 16px rgba(234,88,12,.28); }
-  .diag-btn span { font-size: 12px; font-weight: 700; opacity: .95; }
+  .diag-btn > span:last-child { font-size: 12px; font-weight: 700; opacity: .95; }
   .diag-btn:hover { background: var(--c-accent-dark); }
   .diag-btn:focus-visible { outline: 3px solid var(--c-main); outline-offset: 3px; }
   /* 全国共通のガイド：絵を使わず、タグ・題名・確認日だけのリスト */
@@ -346,6 +347,8 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
   .tabs { margin-top: 22px; }
   .tab-list { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
   .tab-list button { flex-shrink: 0; min-height: 46px; padding: 8px 18px; border: 1.5px solid #c7d6cc; border-radius: 999px; background: #fff; font-size: 15px; font-weight: 800; color: var(--c-ink); cursor: pointer; }
+  /* 言葉のまとまり（lib/phrases.ts）の途中では改行しない */
+  .phrase { white-space: nowrap; }
   .tab-list button[aria-selected="true"] { background: var(--c-main); border-color: var(--c-main); color: #fff; }
   .tab-list button:focus-visible { outline: 3px solid var(--c-accent); outline-offset: 2px; }
   .tab-panel { margin-top: 16px; }
