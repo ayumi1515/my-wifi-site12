@@ -6,6 +6,9 @@ import NationalInternetChecks from '../../../../components/NationalInternetCheck
 import { breadcrumbLd, jpDate } from '../../../../lib/data';
 import { getExistingMunicipalityPath, getMunicipalityKindLabel, getMunicipalityPath, getMunicipalityPrimaryPath, getPrefecturePath, nationalAreaSource, nttAreaChecks, prefectures, type NationalMunicipality, type NationalPrefecture } from '../../../../lib/national-areas';
 import { SITE } from '../../../../site.config.mjs';
+import indexedMunicipalities from '../../../../data/indexed-municipalities.json';
+// Googleの検索に実際に出た市区町村だけを検索に出す（ライバルが少ない地名にしぼる）。ほかは noindex のまま
+const indexedCodes = new Set(indexedMunicipalities.codes);
 
 export function getStaticPaths() {
   return prefectures.flatMap((p) => p.municipalities.map((m) => ({ params: { prefecture: p.code, municipality: m.code }, props: { p, m } })));
@@ -19,7 +22,7 @@ const existingDetail = getExistingMunicipalityPath(p, m);
 const sourceDate = nationalAreaSource.asOf ?? nationalAreaSource.checkedAt;
 const crumbs = [{ name: '総合トップ', href: '/' }, { name: '全国の提供エリア確認', href: '/hikari/area/' }, { name: p.name, href: getPrefecturePath(p) }, { name: m.name, href: getMunicipalityPath(p, m) }];
 ---
-<Base title={`${p.name}${m.name}のWi-Fi・光回線｜公式の住所別エリア確認`} description={`${p.name}${m.name}でネット回線を探す方へ。${ntt.name}を原則とする確認先、光回線・ホームルーターの公式エリア案内、戸建てと集合住宅の確認手順を掲載。市区町村名だけでは提供可否は確定しません。`} pr={false} noindex jsonLd={[breadcrumbLd(SITE.url, crumbs)]}>
+<Base title={`${p.name}${m.name}のWi-Fi・光回線｜公式の住所別エリア確認`} description={`${p.name}${m.name}でネット回線を探す方へ。${ntt.name}を原則とする確認先、光回線・ホームルーターの公式エリア案内、戸建てと集合住宅の確認手順を掲載。市区町村名だけでは提供可否は確定しません。`} pr={false} noindex={!indexedCodes.has(m.code)} jsonLd={[breadcrumbLd(SITE.url, crumbs)]}>
   <div class="municipality-area-page site-container">
     <Breadcrumbs items={crumbs.map((c, i) => i === crumbs.length - 1 ? { name: c.name } : c)} />
     <header class="municipality-area-header">
