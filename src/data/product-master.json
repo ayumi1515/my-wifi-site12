@@ -1,0 +1,153 @@
+{
+  "updatedAt": "2026-11-28",
+  "rule": "商品と窓口の一覧（公開してよい分だけ）。同じサービスに窓口が複数あるときは、読む人の支払総額（税込・送料・手数料）が上がらないことを先に確かめ、そのうえで main の窓口を決める。報酬の額は公開リポジトリに入れない（手元の affiliate-private.local/rewards.json に置く）。料金の数字は providers.json・offers.json などの元データにだけ書き、ここには書かない。審査中・見送りの案件と報酬は、公開しない手元の affiliate-private.local/product-pipeline.json で管理する。",
+  "statusLabels": {
+    "active": "掲載中"
+  },
+  "areaTiers": {
+    "fixed": {
+      "title": "固定回線（家族で・長く使う）",
+      "collab": [
+        "docomo-hikari",
+        "biglobe-hikari",
+        "softbank-hikari"
+      ],
+      "regionalFrom": "regional-fiber.json",
+      "bbiqAffiliatePrefectures": [
+        "46"
+      ],
+      "note": "BBIQの広告は、料金と窓口の条件を確かめた鹿児島県だけ。九州のほかの県は公式リンク。"
+    },
+    "homeRouter": {
+      "title": "工事なしの家のWi-Fi（すぐ使いたい・賃貸）",
+      "items": [
+        "softbank-air",
+        "home5g",
+        "biglobe-wimax",
+        "uq-wimax"
+      ]
+    },
+    "shortTerm": {
+      "title": "短い期間・工事までのつなぎ（ポケットWi-Fiのレンタル）",
+      "items": [],
+      "note": "A8で提携ずみのレンタルWi-Fi案件がまだ無いため空き。1日・1か月の料金、受け取り方、返し方を公式で確かめられた案件だけ入れる。空きのあいだはページに出さない。"
+    }
+  },
+  "products": [
+    {
+      "id": "docomo-hikari",
+      "name": "ドコモ光",
+      "kind": "光コラボ",
+      "status": "active",
+      "dataFrom": "providers.json",
+      "setwari": "ドコモ",
+      "windows": [
+        {
+          "asp": "A8",
+          "programId": "s00000017718004",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": "biglobe-hikari",
+      "name": "ビッグローブ光",
+      "kind": "光コラボ",
+      "status": "active",
+      "dataFrom": "providers.json",
+      "setwari": "au・UQ mobile",
+      "windows": [
+        {
+          "asp": "A8",
+          "programId": "s00000017718046",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": "softbank-hikari",
+      "name": "SoftBank 光",
+      "kind": "光コラボ",
+      "status": "active",
+      "dataFrom": "providers.json",
+      "setwari": "ソフトバンク・ワイモバイル",
+      "windows": [
+        {
+          "asp": "A8",
+          "programId": "s00000016370001",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": "bbiq",
+      "name": "BBIQ",
+      "kind": "地域の光回線（九州電力グループ）",
+      "status": "active",
+      "dataFrom": "providers.json",
+      "setwari": "au・UQ mobile",
+      "windows": [
+        {
+          "asp": "A8",
+          "programId": "s00000014546018",
+          "main": true,
+          "note": "広告主NEXT（kyushu-internet.com）。戸建てのみ・鹿児島で条件確認ずみ"
+        }
+      ]
+    },
+    {
+      "id": "au-hikari",
+      "name": "auひかり",
+      "kind": "光回線",
+      "status": "active",
+      "dataFrom": "providers.json",
+      "windows": [
+        {
+          "asp": "A8",
+          "programId": "s00000019044001",
+          "main": true,
+          "note": "鹿児島の提供は未確認"
+        }
+      ]
+    },
+    {
+      "id": "softbank-air",
+      "name": "SoftBank Air",
+      "kind": "ホームルーター",
+      "status": "active",
+      "dataFrom": "providers.json",
+      "setwari": "ソフトバンク・ワイモバイル",
+      "windows": [
+        {
+          "asp": "A8",
+          "programId": "s00000016370002",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": "home5g",
+      "name": "home 5G",
+      "kind": "ホームルーター",
+      "status": "active",
+      "dataFrom": "providers.json",
+      "setwari": "ドコモ",
+      "windows": []
+    },
+    {
+      "id": "biglobe-wimax",
+      "name": "BIGLOBE WiMAX +5G",
+      "kind": "ホームルーター・モバイルルーター",
+      "status": "active",
+      "dataFrom": "offers.json",
+      "areaLine": "月額5,258円（始めた翌月から24カ月は1,650円引き）。契約期間の縛り・解約金なし。ルーター代33,264円は別（2026/11/26確認）",
+      "windows": [
+        {
+          "asp": "A8",
+          "programId": "s00000000040014",
+          "main": true
+        }
+      ]
+    }
+  ]
+}

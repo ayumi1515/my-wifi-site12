@@ -5,6 +5,7 @@ import Breadcrumbs from '../../../../components/Breadcrumbs.astro';
 import NationalInternetChecks from '../../../../components/NationalInternetChecks.astro';
 import MunicipalityLocalFacts from '../../../../components/MunicipalityLocalFacts.astro';
 import MangaShelf from '../../../../components/MangaShelf.astro';
+import AreaProductTiers from '../../../../components/AreaProductTiers.astro';
 import ftthCoverage from '../../../../data/ftth-coverage-municipalities.json';
 import { breadcrumbLd, faqLd, jpDate } from '../../../../lib/data';
 import regional from '../../../../data/regional-fiber.json';
@@ -38,7 +39,7 @@ const faqs = [
 ];
 const crumbs = [{ name: '総合トップ', href: '/' }, { name: '全国の提供エリア確認', href: '/hikari/area/' }, { name: p.name, href: getPrefecturePath(p) }, { name: m.name, href: getMunicipalityPath(p, m) }];
 ---
-<Base title={`${p.name}${m.name}の光回線・Wi-Fi【2026年11月確認】提供エリアと選べる光回線`} description={`${p.name}${m.name}でネット回線を探す方へ。${localCov ? `光回線を使える世帯は推計${localCov}%（総務省・2025年3月末）。` : ''}${ntt.name}を原則とする確認先、光回線・ホームルーターの公式エリア案内、戸建てと集合住宅の確認手順を掲載。市区町村名だけでは提供可否は確定しません。`} pr={false} noindex={!indexedCodes.has(m.code)} jsonLd={[breadcrumbLd(SITE.url, crumbs), faqLd(faqs)]}>
+<Base title={`${p.name}${m.name}の光回線・Wi-Fi【2026年11月確認】提供エリアと選べる光回線`} description={`${p.name}${m.name}でネット回線を探す方へ。${localCov ? `光回線を使える世帯は推計${localCov}%（総務省・2025年3月末）。` : ''}${ntt.name}を原則とする確認先、光回線・ホームルーターの公式エリア案内、戸建てと集合住宅の確認手順を掲載。市区町村名だけでは提供可否は確定しません。`} pr={true} noindex={!indexedCodes.has(m.code)} jsonLd={[breadcrumbLd(SITE.url, crumbs), faqLd(faqs)]}>
   <div class="municipality-area-page site-container">
     <Breadcrumbs items={crumbs.map((c, i) => i === crumbs.length - 1 ? { name: c.name } : c)} />
     <header class="municipality-area-header">
@@ -60,6 +61,7 @@ const crumbs = [{ name: '総合トップ', href: '/' }, { name: '全国の提供
       {parentCity && <p>この行政区は{parentCity.name}内です。<a href={getMunicipalityPrimaryPath(p, parentCity)}>{parentCity.name}全体の確認ページを見る</a></p>}
     </section>
     <MunicipalityLocalFacts p={p} m={m} />
+    <AreaProductTiers prefCode={p.code} prefName={p.name} placeName={m.name} />
     {p.code === '46' && <MangaShelf ids={['kagoshima']} heading="漫画で読む：鹿児島で光回線を選ぶ" compact />}
     {existingDetail && <aside class="existing-area-detail"><h2>{m.name}の詳しい地域情報もあります</h2><p>この地域の既存ページでは、公式の提供エリア情報と回線の選び方をまとめています。</p><a href={existingDetail}>{m.name}の地域情報・選び方を見る</a></aside>}
     {wards.length > 0 && <section class="city-wards" aria-labelledby="city-wards-title"><h2 id="city-wards-title">{m.name}の行政区から選ぶ</h2><ul>{wards.map((ward) => <li><a href={getMunicipalityPath(p, ward)}>{ward.name}</a></li>)}</ul></section>}
