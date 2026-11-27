@@ -11,6 +11,13 @@ const explain = [
   { title: '保護したい場面を決める', body: '契約名だけで判断せず、どの場面で何を防ぎたいかを整理します。VPNやパスワード管理などの追加機能は、契約に含まれるか個別に確認します。', checks: ['利用台数と、端末を変更したときの扱い', 'VPN等の追加機能の有無と上限', '家族で使う場合のライセンス条件'] },
   { title: '契約期間と更新を確認', body: '月額・年額・複数年契約は、同じ利用期間と台数で比較します。購入先や契約方法によって条件が異なる場合もあるため、更新まで確認しましょう。', checks: ['新規購入時と更新時の料金', '自動更新の時期と停止方法', '返金・サポートの対象と受付方法'] },
 ];
+// 費用の比較表（security-services.json と同じ、2026-11-23 に公式で確認した数字。月あたり・1台あたりは年額からの計算値）
+const costRows = [
+  { id: 'eset', name: 'ESET HOME セキュリティ エッセンシャル', devices: 3, first: 6050, next: '6,050円（自動延長の登録で5,445円）', vpn: 'なし', ios: 'iPhoneはウイルス対策に非対応（詐欺・フィッシング対策アプリ）' },
+  { id: 'norton', name: 'ノートン 360 デラックス', devices: 3, first: 7680, next: '11,480円（更新価格表）', vpn: 'あり', ios: 'iPhoneはWeb・SMS・Wi-Fi対策など。PCと同じ機能ではない' },
+  { id: 'virusbuster', name: 'ウイルスバスター トータルセキュリティ スタンダード', devices: 6, first: 7480, next: '7,480円（自動更新に加入した場合）', vpn: 'あり（Android・iPhone）', ios: 'iPhoneはアプリスキャン・決済保護に非対応' },
+];
+const yen = (n: number) => `${Math.round(n).toLocaleString('ja-JP')}円`;
 const related = [
   { href: '/security/houjin/', title: '会社・お店のセキュリティ対策', body: '無料でできる基本の6つと、ランサムウェア・防犯カメラ・相談先までを順番に確認します。' },
   { href: '/security/vpn/', title: 'VPNは必要？選び方と3社の比較', body: '公衆Wi-Fiや出張で使うときに。台数・返金保証・更新後の料金をそろえて比べます。' },
@@ -20,4 +27,46 @@ const related = [
   { href: '/used-smartphones/', title: '中古スマホを買う前に', body: 'OSの更新対象・バッテリー・保証を確認して、使い続けられる端末を選びます。' },
 ];
 ---
-<RelatedServiceHub category="security" path="/security/" title="セキュリティソフトを比較｜対応OS・台数・新規料金と更新条件" description="ESET・ノートン・ウイルスバスターの契約条件を公式情報で比較。対応OS・利用台数・必要な機能、新規と更新の価格を分けて確認する選び方をまとめました。" eyebrow="セキュリティソフト" heading="端末に必要な機能と、更新までの条件で選ぶ。" lead="セキュリティソフトは、端末のOS・台数・必要な機能をそろえて比べます。OSの更新や基本設定を確認したうえで、追加したい保護と契約条件を選びましょう。" services={securityServices} intro={intro} explainTitle="セキュリティソフトの確認ポイント" explain={explain} related={related} />
+<RelatedServiceHub category="security" path="/security/" title="スマホのセキュリティ費用を比較【2026年11月確認】年額・月あたり・台数と更新料金" description="スマホ・パソコンのセキュリティソフトの費用を、ESET・ノートン・ウイルスバスターで比較。年額と月あたり、台数、2年目以降の更新料金、iPhoneで使える機能の違いと、OSの標準機能で始めやすい場合・有料ソフトを考える場合をまとめました。" eyebrow="セキュリティソフト" heading="スマホのセキュリティ、費用はいくら？年額・台数・更新料金で比べる" lead="セキュリティソフトの費用は、年額だけでなく「何台まで守れるか」「2年目からいくらか」で変わります。まず下の表で3製品の費用をそろえて比べ、OSの標準機能で足りるかどうかも確かめましょう。" services={securityServices} intro={intro} explainTitle="セキュリティソフトの確認ポイント" explain={explain} related={related}>
+  <section slot="summary" class="cost-summary" aria-labelledby="cost-summary-title">
+    <h2 id="cost-summary-title">3製品の費用をそろえて比べる（税込・1年版）</h2>
+    <p class="cost-hint">← 表は横にスクロールできます →</p>
+    <div class="cost-table-wrap" tabindex="0" aria-label="横にスクロールできます">
+      <table class="cost-table">
+        <thead><tr><th scope="col">製品</th><th scope="col">守れる台数</th><th scope="col">1年目</th><th scope="col">月あたり<small>（計算値）</small></th><th scope="col">1台・月あたり<small>（計算値）</small></th><th scope="col">2年目以降</th><th scope="col">VPN</th><th scope="col">iPhoneでの主な制限</th></tr></thead>
+        <tbody>
+          {costRows.map((r) => <tr><th scope="row">{r.name}</th><td>{r.devices}台</td><td><strong>{yen(r.first)}</strong></td><td>約{yen(r.first / 12)}</td><td>約{yen(r.first / 12 / r.devices)}</td><td>{r.next}</td><td>{r.vpn}</td><td>{r.ios}</td></tr>)}
+        </tbody>
+      </table>
+    </div>
+    <p class="cost-note">各社公式で2026年11月23日に確認した価格です（キャンペーン・3年版・販売店ごとの価格は含みません）。月あたり・1台あたりは、1年目の価格を12か月・台数で割った計算値です。出典は下の各製品のカードにあります。</p>
+    <div class="cost-cases">
+      <article><h3>OSの標準機能で始めやすい場合</h3><ul><li>使う端末が少なく、OSとアプリの更新を自分でこまめにできる</li><li>Windowsは標準の Microsoft Defender、Androidは Google Play プロテクト、iPhoneは Safari の詐欺Webサイトの警告など、端末に入っている機能を使う</li><li>知らないSMSやメールのリンクを開かない習慣がある（<a href="/security/phishing/">偽SMSの見分け方</a>）</li></ul></article>
+      <article><h3>有料ソフトを考える場合</h3><ul><li>家族のパソコンやスマホを、1つの契約でまとめて管理したい</li><li>外出先のWi-Fiで使うVPNや、パスワード管理もまとめたい（<a href="/security/vpn/">VPNは必要？</a>）</li><li>困ったときに、メーカーのサポート窓口に相談したい</li></ul></article>
+    </div>
+  </section>
+</RelatedServiceHub>
+<style>
+  .cost-summary { margin-top: 24px; padding: 20px; border: 2px solid #175d50; border-radius: 10px; background: #f4faf5; }
+  .cost-summary h2 { font-size: 21px; font-weight: 800; line-height: 1.6; color: #173d2b; }
+  .cost-table-wrap { margin-top: 12px; overflow-x: auto; }
+  .cost-hint { display: none; margin-top: 10px; font-size: 12px; color: #5d6f63; }
+  @media (max-width: 900px) { .cost-hint { display: block; } }
+  .cost-table { width: 100%; min-width: 900px; border-collapse: collapse; background: #fff; font-size: 14px; line-height: 1.7; }
+  .cost-table th, .cost-table td { border: 1px solid #d3e1d7; padding: 9px 10px; text-align: left; vertical-align: top; }
+  .cost-table thead th { background: #e8f2eb; font-size: 13px; color: #2f4d3d; }
+  .cost-table thead small { display: block; font-weight: 400; font-size: 11px; color: #5d6f63; }
+  .cost-table tbody th { font-weight: 700; color: #173d2b; }
+  .cost-table thead th, .cost-table td:nth-child(2), .cost-table td:nth-child(3), .cost-table td:nth-child(4), .cost-table td:nth-child(5) { white-space: nowrap; }
+  .cost-table tbody th { min-width: 170px; }
+  .cost-table td:nth-child(6) { min-width: 150px; } .cost-table td:nth-child(8) { min-width: 200px; }
+  .cost-table strong { font-size: 16px; color: #175d50; }
+  .cost-note { margin-top: 10px; font-size: 12.5px; line-height: 1.8; color: #5d6f63; }
+  .cost-cases { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+  .cost-cases article { padding: 14px 16px; border: 1px solid #d3e1d7; border-radius: 8px; background: #fff; }
+  .cost-cases h3 { font-size: 16px; font-weight: 800; color: #175d50; }
+  .cost-cases ul { list-style: disc; padding-left: 18px; margin-top: 6px; }
+  .cost-cases li { font-size: 14px; line-height: 1.8; color: #3f5548; margin-top: 4px; }
+  .cost-cases a { color: #175d50; text-decoration: underline; text-underline-offset: 3px; }
+  @media (max-width: 700px) { .cost-summary { padding: 16px; } .cost-summary h2 { font-size: 19px; } .cost-cases { grid-template-columns: 1fr; } }
+</style>

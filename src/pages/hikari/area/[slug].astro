@@ -17,8 +17,8 @@ const kagoshimaPrefecture = prefectures.find(p=>p.code==='46')!;
 const municipality = kagoshimaPrefecture.municipalities.find(m=>getExistingMunicipalityPath(kagoshimaPrefecture,m)===`/hikari/area/${a.slug}/`);
 const diagnosisHref = `/shindan/?prefecture=46${municipality ? '&municipality='+municipality.code : ''}#setwari`;
 const islandNote = (id: string) => (isIsland && id === 'bbiq' ? '（離島は要エリア確認）' : '');
-const title = `${a.name}の光回線おすすめ｜使える回線・10ギガ・選び方`;
-const description = `${a.name}で使える光回線とホームルーターを、公式の提供エリア情報をもとにまとめました。${a.tenGiga ? '10ギガが使える地域かどうか、' : ''}スマホ会社別の選び方と、申込み前に確認することを紹介します。`;
+const title = isIsland ? '鹿児島の離島の光回線｜奄美・種子島・屋久島で使える回線と提供エリアの確かめ方' : `${a.name}の光回線おすすめ｜使える回線・10ギガ・選び方`;
+const description = isIsland ? '鹿児島県の離島（奄美・種子島・屋久島など）で使える光回線を、NTT西日本の公式の提供エリア情報をもとにまとめました。島や地区で異なる提供のしかた、10ギガの状況、ホームルーターも含めた確かめ方を紹介します。' : `${a.name}で使える光回線とホームルーターを、公式の提供エリア情報をもとにまとめました。${a.tenGiga ? '10ギガが使える地域かどうか、' : ''}スマホ会社別の選び方と、申込み前に確認することを紹介します。`;
 ---
 <Base title={title} description={description} jsonLd={[breadcrumbLd(SITE.url, crumbs)]} pr={false}>
   <div class="mx-auto max-w-3xl px-4 pt-8">
