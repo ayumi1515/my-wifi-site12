@@ -359,7 +359,8 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
 
   @media (max-width: 960px) {
     .hx-inner { grid-template-columns: 1fr; gap: 26px; }
-    .hx-visual { order: -1; }
+    .hx-visual { order: 2; }
+    .hx-visual img { max-height: 280px; object-fit: cover; }
     .hx-visual figcaption { position: static; margin-top: 12px; max-width: none; }
     .quick-options { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .guide-grid { grid-template-columns: 1fr 1fr; }
