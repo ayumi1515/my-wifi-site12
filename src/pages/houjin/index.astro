@@ -61,6 +61,7 @@ const routes = [
     </div>
     <p class="byline">A8.netの広告の条件と公式サイトで{checkedAt.replace(/-/g, '/')}に確認 ／ 書いた人：{SITE.operator}（<a href="/about/">編集方針</a>）／ このページには広告リンク（PR）があります</p>
 
+    <p class="manga-link"><a href="/manga/houjin/">小さな会社の見直し方を漫画で読む（3分）→</a></p>
     <nav class="route-grid" aria-label="見直したいものを選ぶ">
       {routes.map((r) => <a href={r.href}><strong>{r.label}</strong><span>{r.body}</span></a>)}
     </nav>
@@ -156,6 +157,8 @@ const routes = [
   .answer-box ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
   .byline { margin-top: 10px; font-size: 13px !important; color: #637268; }
   .byline a, .plain-list a { text-decoration: underline; text-underline-offset: 3px; }
+  .manga-link { margin-top: 12px; font-size: 15px; font-weight: 700; }
+  .manga-link a { text-decoration: underline; text-underline-offset: 3px; }
   .route-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; margin-top: 20px; }
   .route-grid a { display: block; min-height: 72px; padding: 12px 14px; border: 1.5px solid #c7d9ca; border-radius: 10px; background: #fff; text-decoration: none; }
   .route-grid a:hover { border-color: #175d50; background: #f1f7f3; }

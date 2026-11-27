@@ -1,0 +1,64 @@
+---
+// 個人向けの縦読み漫画LP：家族のスマホとネットを「セット割」で見直す → 5問のセット割診断へ
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import MangaLp, { type MangaChapter } from '../../components/MangaLp.astro';
+import { breadcrumbLd } from '../../lib/data';
+import { SITE } from '../../site.config.mjs';
+
+const path = '/manga/setwari/';
+const title = '家族のスマホとネット、まだ別々に払っていませんか？｜セット割の見直しを漫画で';
+const description = '家族のスマホ代と家のネット代、合わせていくら？スマホと光回線の会社をそろえる「セット割」の見直し方を、縦読み漫画で3分で。最後に5問・30秒の診断で、家族で毎月いくら変わるかの目安がわかります。';
+const crumbs = [{ name: '総合トップ', href: '/' }, { name: '漫画で見るセット割', href: path }];
+const chapters: MangaChapter[] = [
+  { id: 'ch1', title: '家族の通信費、合わせていくら？', panels: [
+    { img: 'p1', alt: '夜のリビングで、通信費の明細を見て青ざめるママ。テーブルにスマホが3台。', narration: '家族3人のスマホと、家のネット。明細は別々に届くので、合計を見たのは初めてでした。', lines: [{ who: 'ママ', text: 'えっ…今月の通信費、合わせるとこんなにかかってたの？' }] },
+    { img: 'p2', alt: 'ソファでスマホを見るパパと娘に、ママが話しかける。', lines: [{ who: 'ママ', text: 'ねえ、スマホの料金プランって、最後に見直したのいつ？' }, { who: 'パパ', text: 'えーと…契約したとき、かな？', side: 'right' }, { who: '娘', text: 'わたしは知らな〜い', side: 'right' }] },
+    { img: 'p3', alt: 'カフェで友だちのミナに相談するママ。ミナはスマホを見せている。', lines: [{ who: 'ミナ', text: '家のネットとスマホの会社をそろえると、「セット割」で毎月安くなることがあるよ。' }, { who: 'ママ', text: 'セット割？ うちも使えるのかな。', side: 'right' }] },
+  ] },
+  { id: 'ch2', title: 'セット割って、どんなしくみ？', panels: [
+    { img: 'p4', alt: '家とWi-Fiルーターから、3台のスマホに線がつながっている図。', narration: 'セット割は、スマホと組み合わせの決まった光回線などを家で使うと、スマホ1台ごとに毎月の料金が割り引かれるしくみ。家族の台数が多いと、割引の合計も大きくなることが多いです（割引できる台数には上限があります）。', note: '割引の額や対象の料金プランは会社ごとにちがいます。ワイモバイル・UQ mobileなどは、家族割とセット割を一緒に使えない場合があります。' },
+    { img: 'p5', alt: 'スマホの画面をタップして質問に答えるママ。', lines: [{ who: 'ミナ', text: 'スマホの会社、台数、住まい、工事、都道府県。5つにタップで答えるだけで目安が出るよ。' }, { who: 'ママ', text: 'タップするだけなら、わたしにもできそう！', side: 'right' }] },
+    { img: 'p6', alt: 'スマホの結果画面を見て、驚いてうれしそうなママ。', lines: [{ who: 'ママ', text: '家族で毎月、こんなに変わるかもしれないんだ…！' }], note: '診断の金額は、公式の料金をもとにした目安です。実際の割引は料金プランや条件で変わります。' },
+  ] },
+  { id: 'ch3', title: '申し込む前に、ここだけ確かめよう', panels: [
+    { img: 'p7', alt: 'テーブルを囲み、書類とスマホで契約の内容を確かめる家族3人。', lines: [{ who: 'パパ', text: '申し込む前に、うちの住所で光回線が使えるか確かめよう。' }, { who: '娘', text: '今の契約をやめるときのお金も、見ておこうね。', side: 'right' }], narration: '光回線は、住所や建物によって使えないことがあります。今の契約の解約金や、端末の残りの支払いも先に確かめます。' },
+    { img: 'p8', alt: 'リビングで笑顔の家族3人。', narration: '家族の通信費は、知らないうちに増えていることも。まずは今の合計を知って、使えるセット割を確かめることから。', lines: [{ who: 'ママ', text: 'まずは、うちの合計を書き出してみよう！' }] },
+  ] },
+];
+const worries = [
+  { text: '家族のスマホ代とネット代、合わせていくらか知らない', chapter: 'ch1', face: 'p1', facePos: '45% 30%' },
+  { text: 'セット割って、うちも使えるの？', chapter: 'ch2', face: 'p3', facePos: '25% 30%' },
+  { text: '乗り換えは面倒そうで、つい後回し', chapter: 'ch3', face: 'p7', facePos: '50% 30%' },
+];
+const points = [
+  { title: '家族のスマホとネットの合計を知る', body: '明細を並べて、毎月の合計を書き出します。スマホは端末代と通信料を分けて見ます。' },
+  { title: 'スマホの会社に合う光回線を選ぶ', body: 'セット割の対象の回線は、スマホの会社ごとに決まっています。多くの場合、家族の台数が多いと割引の合計も大きくなります（台数の上限や、家族割と一緒に使えない会社もあります）。' },
+  { title: '住所と、やめるときのお金を確かめる', body: '光回線は住所で使えないことがあります。今の契約の解約金や端末の残りも、先に確かめましょう。' },
+];
+const articleLd = { '@context': 'https://schema.org', '@type': 'Article', headline: '家族のスマホとネットをセット割で見直す（漫画）', description, inLanguage: 'ja', mainEntityOfPage: `${SITE.url}${path}`, datePublished: '2026-11-27', dateModified: '2026-11-27', author: { '@type': 'Organization', name: SITE.operator, url: `${SITE.url}/about/` }, publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url + '/' } };
+---
+<Base title={title} description={description} jsonLd={[breadcrumbLd(SITE.url, crumbs), articleLd]}>
+  <div class="site-container">
+    <Breadcrumbs items={[crumbs[0], { name: crumbs[1].name }]} />
+    <MangaLp
+      base="/images/manga-lp/kojin"
+      kicker="漫画で3分"
+      title="家族のスマホとネット、まだ別々に払っていませんか？"
+      lead="スマホとネットの会社をそろえる「セット割」で、毎月の通信費が変わるかもしれません。見直しのコツを漫画で。"
+      heroAlt="友だちのミナが、ママにスマホの画面を見せている。"
+      worries={worries}
+      chapters={chapters}
+      points={points}
+      cta={{ href: '/shindan/#setwari', label: '30秒でセット割を診断', sub: '5問にタップで答えるだけ。家族で毎月いくら変わるかの目安' }}
+      sticky={{ href: '/shindan/#setwari', label: 'セット割を診断する（無料・30秒）' }}
+      speakers={{ 'ママ': '#b45b36', 'パパ': '#3d6a8c', '娘': '#a0527a', 'ミナ': '#175d50' }}
+    >
+      <p class="mlp-more">鹿児島にお住まいなら、<a href="/hikari/kagoshima/">鹿児島の光回線の比較</a>もあわせてどうぞ。</p>
+    </MangaLp>
+  </div>
+</Base>
+<style>
+  .mlp-more { margin-top: 14px; font-size: 14px; line-height: 1.8; color: #4f6a5a; }
+  .mlp-more a { color: #175d50; font-weight: 700; text-decoration: underline; }
+</style>

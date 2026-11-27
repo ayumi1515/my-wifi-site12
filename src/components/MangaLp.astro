@@ -1,0 +1,117 @@
+---
+// 縦読みの漫画LP（訴求ページ）の部品。絵はCodexが作った文字なしの画像、セリフはここで吹き出しにする。
+// 作りは「表紙 → 悩みのカード（マンガを読む）→ 章ごとのコマ → まとめ → 申込み・診断ボタン」、画面の下に固定ボタン。
+// 漫画はフィクション。金額・体験談はでっち上げない（金額は診断で本人の条件から出す）。
+export interface MangaLine { who: string; text: string; side?: 'left' | 'right' }
+export interface MangaPanel { img: string; alt: string; narration?: string; lines?: MangaLine[]; note?: string }
+export interface MangaChapter { id: string; title: string; panels: MangaPanel[] }
+interface Props {
+  base: string; // 画像のフォルダ（例：/images/manga-lp/kojin）
+  kicker: string;
+  title: string;
+  lead: string;
+  heroAlt: string;
+  worries: { text: string; chapter: string; face: string; facePos?: string }[];
+  chapters: MangaChapter[];
+  points: { title: string; body: string }[];
+  cta: { href: string; label: string; sub: string };
+  sticky: { href: string; label: string };
+  speakers: Record<string, string>; // 名前 → 色
+}
+const { base, kicker, title, lead, heroAlt, worries, chapters, points, cta, sticky, speakers } = Astro.props;
+---
+<div class="mlp">
+  <header class="mlp-hero">
+    <img src={`${base}/hero.webp`} alt={heroAlt} width="1200" height="800" fetchpriority="high" />
+    <div class="mlp-hero-copy">
+      <p class="mlp-kicker">{kicker}</p>
+      <h1>{title}</h1>
+      <p>{lead}</p>
+      <a class="mlp-cta" href={cta.href}>{cta.label}<span>{cta.sub}</span></a>
+    </div>
+  </header>
+
+  <section class="mlp-worries" aria-label="こんな悩みはありませんか">
+    {worries.map((w) => (
+      <a class="mlp-worry" href={`#${w.chapter}`}>
+        <span class="mlp-face" style={`background-image:url(${base}/${w.face}.webp);background-position:${w.facePos ?? 'center'}`} aria-hidden="true"></span>
+        <strong>{w.text}</strong>
+        <span class="mlp-read">マンガを読む ↓</span>
+      </a>
+    ))}
+  </section>
+
+  <p class="mlp-fiction">この漫画はフィクションです。登場人物は実在しません。料金や割引は会社・プラン・条件で変わります。</p>
+
+  {chapters.map((c, ci) => (
+    <section class="mlp-chapter" id={c.id} aria-labelledby={`${c.id}-title`}>
+      <p class="mlp-badge">マンガで解説 {ci + 1}</p>
+      <h2 id={`${c.id}-title`}>{c.title}</h2>
+      {c.panels.map((p) => (
+        <figure class="mlp-panel">
+          <img src={`${base}/${p.img}.webp`} alt={p.alt} width="1200" height="900" loading="lazy" decoding="async" />
+          <figcaption>
+            {p.narration && <p class="mlp-narration">{p.narration}</p>}
+            {p.lines?.map((l) => (
+              <p class={`mlp-line ${l.side === 'right' ? 'is-right' : ''}`}>
+                <span class="mlp-who" style={`background:${speakers[l.who] ?? '#175d50'}`}>{l.who}</span>
+                <span class="mlp-bubble">{l.text}</span>
+              </p>
+            ))}
+            {p.note && <p class="mlp-note">{p.note}</p>}
+          </figcaption>
+        </figure>
+      ))}
+    </section>
+  ))}
+
+  <section class="mlp-points" aria-labelledby="mlp-points-title">
+    <h2 id="mlp-points-title">まとめ：見直しの3つのポイント</h2>
+    <ol>{points.map((p) => <li><strong>{p.title}</strong><span>{p.body}</span></li>)}</ol>
+    <a class="mlp-cta is-big" href={cta.href}>{cta.label}<span>{cta.sub}</span></a>
+    <slot />
+  </section>
+
+  <div class="mlp-sticky"><a href={sticky.href}>{sticky.label}</a></div>
+</div>
+
+<style>
+  .mlp { max-width: 720px; margin: 0 auto; padding-bottom: 90px; color: #23352e; }
+  .mlp-hero { position: relative; margin-top: 10px; border-radius: 14px; overflow: hidden; background: #edf5ef; }
+  .mlp-hero img { display: block; width: 100%; height: auto; }
+  .mlp-hero-copy { padding: 18px 18px 22px; }
+  .mlp-kicker { display: inline-block; font-size: 13px; font-weight: 800; color: #fff; background: #b45b36; border-radius: 999px; padding: 2px 12px; }
+  .mlp-hero h1 { margin-top: 10px; font-size: clamp(25px, 5.4vw, 34px); font-weight: 800; line-height: 1.45; color: #173d2b; }
+  .mlp-hero-copy > p:last-of-type { margin-top: 10px; font-size: 15px; line-height: 1.9; color: #4f6a5a; }
+  .mlp-cta { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60px; margin-top: 16px; padding: 12px 16px; border-radius: 12px; background: #b45b36; color: #fff; font-size: 18px; font-weight: 800; text-align: center; box-shadow: 0 4px 0 #8c4426; }
+  .mlp-cta span { font-size: 12px; font-weight: 700; opacity: .9; margin-top: 2px; }
+  .mlp-cta:hover { background: #9b482b; }
+  .mlp-cta.is-big { font-size: 20px; min-height: 68px; }
+  .mlp-worries { display: grid; gap: 12px; margin-top: 22px; }
+  .mlp-worry { display: grid; grid-template-columns: 76px 1fr; grid-template-rows: auto auto; gap: 4px 14px; align-items: center; padding: 14px; border: 2px solid #c7d9ca; border-radius: 12px; background: #fff; text-decoration: none; }
+  .mlp-worry:hover { border-color: #175d50; }
+  .mlp-face { grid-row: span 2; width: 76px; height: 76px; border-radius: 50%; background-size: 260% auto; background-repeat: no-repeat; border: 3px solid #e3efe6; }
+  .mlp-worry strong { font-size: 17px; line-height: 1.6; color: #173d2b; }
+  .mlp-read { justify-self: start; font-size: 13px; font-weight: 800; color: #fff; background: #175d50; border-radius: 999px; padding: 3px 12px; }
+  .mlp-fiction { margin-top: 14px; font-size: 12px; line-height: 1.8; color: #6a7b70; }
+  .mlp-chapter { margin-top: 30px; padding: 18px 14px; border-radius: 14px; background: #eef6f1 repeating-linear-gradient(45deg, rgba(23,93,80,.04) 0 10px, transparent 10px 20px); scroll-margin-top: 12px; }
+  .mlp-badge { width: fit-content; margin: 0 auto; font-size: 13px; font-weight: 800; color: #fff; background: #175d50; border-radius: 999px; padding: 3px 14px; }
+  .mlp-chapter h2 { margin: 10px 0 6px; padding: 12px; border-radius: 10px; background: #fff; text-align: center; font-size: clamp(19px, 4.4vw, 23px); font-weight: 800; line-height: 1.6; color: #173d2b; }
+  .mlp-panel { margin: 16px 0 0; }
+  .mlp-panel img { display: block; width: 100%; height: auto; border: 3px solid #23352e; border-radius: 4px; background: #fff; }
+  .mlp-panel figcaption { margin-top: 8px; display: grid; gap: 8px; }
+  .mlp-narration { padding: 10px 14px; background: #fffdf4; border-left: 4px solid #b45b36; font-size: 15px; line-height: 1.85; color: #3f4a3f; }
+  .mlp-line { display: flex; align-items: flex-start; gap: 8px; }
+  .mlp-line.is-right { flex-direction: row-reverse; }
+  .mlp-who { flex-shrink: 0; min-width: 52px; padding: 4px 8px; border-radius: 999px; color: #fff; font-size: 12px; font-weight: 800; text-align: center; }
+  .mlp-bubble { position: relative; padding: 10px 14px; border: 2px solid #23352e; border-radius: 16px; background: #fff; font-size: 16px; font-weight: 700; line-height: 1.7; color: #1f2c26; }
+  .mlp-note { font-size: 12px; line-height: 1.7; color: #6a7b70; }
+  .mlp-points { margin-top: 30px; padding: 20px; border: 2px solid #175d50; border-radius: 14px; background: #fff; }
+  .mlp-points h2 { font-size: clamp(20px, 4.4vw, 24px); font-weight: 800; color: #173d2b; }
+  .mlp-points ol { margin: 12px 0 0; padding-left: 1.3em; display: grid; gap: 10px; }
+  .mlp-points li strong { display: block; font-size: 16px; color: #175d50; }
+  .mlp-points li span { display: block; font-size: 15px; line-height: 1.85; color: #4f6a5a; }
+  .mlp-sticky { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: rgba(255,255,255,.96); box-shadow: 0 -4px 14px rgba(0,0,0,.1); }
+  .mlp-sticky a { display: flex; align-items: center; justify-content: center; max-width: 520px; min-height: 54px; margin: 0 auto; border-radius: 12px; background: #b45b36; color: #fff; font-size: 17px; font-weight: 800; }
+  .mlp-cta:focus-visible, .mlp-sticky a:focus-visible, .mlp-worry:focus-visible { outline: 3px solid #175d50; outline-offset: 3px; }
+</style>

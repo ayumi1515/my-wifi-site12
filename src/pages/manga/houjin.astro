@@ -1,0 +1,67 @@
+---
+// 法人向けの縦読み漫画LP：会社・お店のスマホ・電話・コピー機・ネットをまとめて見直す → /houjin/ と一括見積り
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import MangaLp, { type MangaChapter } from '../../components/MangaLp.astro';
+import OfferCard from '../../components/OfferCard.astro';
+import { breadcrumbLd } from '../../lib/data';
+import { SITE } from '../../site.config.mjs';
+
+const path = '/manga/houjin/';
+const title = '会社のスマホ・電話・コピー機、毎月いくら？｜小さな会社の通信費の見直しを漫画で';
+const description = '社員のスマホ代の精算、コピー機のリース、バラバラの請求書。小さな会社・お店・個人事業主の「なんとなく続けている契約」を見直すコツを、縦読み漫画で。無料の一括見積りの使い方もわかります。';
+const crumbs = [{ name: '総合トップ', href: '/' }, { name: '会社・お店の通信費と事務機器', href: '/houjin/' }, { name: '漫画で見る見直し方', href: path }];
+const chapters: MangaChapter[] = [
+  { id: 'ch1', title: '月末の請求書、全部でいくら？', panels: [
+    { img: 'p1', alt: '小さな事務所で、請求書の束を前に頭を抱える店長。', lines: [{ who: '店長', text: '月末になると、請求書がこんなに…。スマホ、電話、コピー機、ネット…全部でいくらなんだ？' }] },
+    { img: 'p2', alt: '自分のスマホで仕事の電話をする社員と、机のレシートの山。', lines: [{ who: '社員', text: '店長、また自分のスマホで取引先に電話しちゃいました。精算お願いします！' }, { who: '店長', text: '毎月これ、どうにかならないかな…', side: 'right' }] },
+    { img: 'p3', alt: '紙詰まりしたコピー機の前で、契約書の束を持って困る事務の佐藤さん。', lines: [{ who: '佐藤', text: 'コピー機がまた紙詰まりです。リースの契約って、いつまででしたっけ？' }, { who: '店長', text: '…覚えてない。', side: 'right' }], note: 'リース＝数年の契約で、機械を借りて使うしくみ。途中でやめると残りの料金がかかる場合が多いです。' },
+  ] },
+  { id: 'ch2', title: 'まとめて見直す順番は？', panels: [
+    { img: 'p4', alt: 'ノートPCで比較のページを店長に見せる佐藤さん。', lines: [{ who: '佐藤', text: '店長、会社のスマホや電話、コピー機をまとめて比べられるページがありました！' }] },
+    { img: 'p5', alt: '会社の建物から、スマホ・電話機・コピー機・ルーターに線がつながる図。', narration: '見直す順番は、毎月かかる額が大きいものから。法人携帯（会社名義のスマホ）、ビジネスフォン（会社用の電話機）、コピー機、ネット回線の毎月の額を書き出して並べます。' },
+    { img: 'p6', alt: 'PCに向かって見積りを頼む入力をする店長と佐藤さん。', lines: [{ who: '佐藤', text: '条件を1回伝えるだけで、何社かから見積りが届くことがある、無料のサービスもあるんです。' }, { who: '店長', text: '1社ずつ電話しなくていいのは助かるね。', side: 'right' }], note: '一括見積りのサービスは、会社・個人事業主向けです。対応できる地域は、申込み後の案内で確かめます。' },
+  ] },
+  { id: 'ch3', title: '見積りは、ここをそろえて比べる', panels: [
+    { img: 'p7', alt: '3枚の見積書を並べ、ペンで印をつけて比べる店長。', lines: [{ who: '店長', text: '月額だけじゃなくて、契約期間と、途中でやめたときの費用も見るんだね。' }, { who: '佐藤', text: 'はい。故障したときの対応と、1枚あたりの印刷代もそろえて比べます。', side: 'right' }] },
+    { img: 'p8', alt: 'すっきりした事務所で会社のスマホで電話する社員と、笑顔の店長と佐藤さん。', narration: '社員のスマホを会社の名義にまとめれば、毎月の精算の手間を減らせます。なんとなく続けている契約は、更新の前に見直すのがおすすめです。', lines: [{ who: '店長', text: 'まずは、次の更新が近い契約から見直してみよう。' }] },
+  ] },
+];
+const worries = [
+  { text: '社員のスマホ代の精算が、毎月たいへん', chapter: 'ch1', face: 'p2', facePos: '35% 30%' },
+  { text: 'コピー機のリース、契約の中身を覚えていない', chapter: 'ch1', face: 'p3', facePos: '45% 30%' },
+  { text: '電話・ネット・スマホの請求がバラバラ', chapter: 'ch1', face: 'p1', facePos: '50% 30%' },
+];
+const points = [
+  { title: '毎月の額を書き出す', body: '法人携帯・電話・コピー機・ネット回線の請求を並べて、大きいものから見直します。' },
+  { title: '見積りは2〜3社でそろえる', body: '月額だけでなく、契約期間・途中でやめたときの費用・保守（故障の対応）をそろえて比べます。' },
+  { title: '地域と名義を確かめる', body: '訪問・設置ができる地域は会社ごとにちがいます。会社か個人事業主の名義で申し込みます。' },
+];
+const articleLd = { '@context': 'https://schema.org', '@type': 'Article', headline: '小さな会社の通信費と事務機器の見直し（漫画）', description, inLanguage: 'ja', mainEntityOfPage: `${SITE.url}${path}`, datePublished: '2026-11-27', dateModified: '2026-11-27', author: { '@type': 'Organization', name: SITE.operator, url: `${SITE.url}/about/` }, publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url + '/' } };
+---
+<Base title={title} description={description} jsonLd={[breadcrumbLd(SITE.url, crumbs), articleLd]}>
+  <div class="site-container">
+    <Breadcrumbs items={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))} />
+    <MangaLp
+      base="/images/manga-lp/houjin"
+      kicker="会社・お店向け｜漫画で3分"
+      title="会社のスマホ・電話・コピー機、毎月いくら払っていますか？"
+      lead="小さな会社・お店の「なんとなく続けている契約」を、漫画で見直します。無料の一括見積りの使い方もわかります。"
+      heroAlt="事務所で、タブレットを持つ事務の佐藤さんと店長が並んでいる。"
+      worries={worries}
+      chapters={chapters}
+      points={points}
+      cta={{ href: '/houjin/', label: '会社の通信費と事務機器を見直す', sub: '法人携帯・ビジネスフォン・コピー機・ネット回線' }}
+      sticky={{ href: '/houjin/', label: '会社の通信費・コピー機を見直す' }}
+      speakers={{ '店長': '#3d6a8c', '佐藤': '#b45b36', '社員': '#6b7c3a' }}
+    >
+      <div class="mlp-offers">
+        <OfferCard id="ikkatsu-keitai" heading="法人携帯をまとめて見積り（無料）" notice="対象は会社・個人事業主です。対応できる地域は、申込み後の案内で確かめてください。" />
+        <OfferCard id="ikkatsu-copy" heading="コピー機をまとめて見積り（無料）" notice="対象は会社・個人事業主です。対応できる地域は、申込み後の案内で確かめてください。" />
+      </div>
+    </MangaLp>
+  </div>
+</Base>
+<style>
+  .mlp-offers { margin-top: 10px; }
+</style>
