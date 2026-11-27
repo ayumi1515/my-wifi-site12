@@ -94,6 +94,13 @@ const familyManga = ['kojin', 'sim', 'card', 'sagi'];
 const bizManga = ['houjin', 'hkeitai', 'copy', 'hcard', 'mise-net', 'ransom'];
 const checkedMonth = `${homeData.checkedAt.slice(0, 4)}年${Number(homeData.checkedAt.slice(5, 7))}月`;
 const learning = ['study-sapuri-toeic', 'study-sapuri-daily'].map((id) => offers.find((o) => o.id === id)).filter((o) => o !== undefined);
+// 英語学習カードの比べる3項目（リクルート公式のコース紹介・料金・特定商取引法に関する表示で 2026-11-22 に確認した事実だけ）
+const learningInfo = [
+  { style: '問題演習・講義・単語の自習（講師との会話レッスンは含まない）', goodFor: 'TOEIC L&R TESTの受験に向けて、問題形式に沿って対策したい人' },
+  { style: '日常や旅行の場面を扱うドラマ式レッスンの自習（講師と話す英会話セットは別プラン）', goodFor: '旅行・日常会話の基礎表現を、自分のペースで練習したい人' },
+];
+const learningTrial = '初回7日間の無料体験あり（申込日が1日目。申込履歴などの条件あり）。期間内に自動更新を止めないと有料に切りかわる。表示はWeb申込の月額で、アプリ内課金は条件が異なる';
+const learningChecked = '2026/11/22';
 const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPage', name: title, url: SITE.url + '/', description, inLanguage: 'ja', mainEntity: { '@type': 'ItemList', itemListElement: homeGuideCards.map((card, i) => ({ '@type': 'ListItem', position: i + 1, name: card.title, url: SITE.url + card.href })) } };
 ---
 <Base title={title} description={description} jsonLd={[collectionLd]}>
@@ -154,6 +161,7 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
                       <div><dt>戸建て</dt><dd>{h.monthly.house != null ? <><strong>{yen(h.monthly.house)}</strong>/月</> : '対象外'}</dd></div>
                       <div><dt>マンション</dt><dd>{h.monthly.mansion != null ? <><strong>{yen(h.monthly.mansion)}</strong>/月</> : '対象外'}</dd></div>
                     </dl>
+                    <p class="net-price-note">{h.priceNote}</p>
                     <ul class="net-set">{discounts.map((d) => <li><span>{d.brand}のセット割</span>スマホ1台につき<strong>最大{yen(d.max)}</strong>/月引き{d.exclusive && '（家族割と併用不可のプランあり）'}</li>)}</ul>
                     <dl class="net-compare">
                       <div><dt>工事</dt><dd>{h.constructionLabel}</dd></div>
@@ -200,7 +208,8 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
           {regions.map((r) => (
             <div class="tab-panel" role="tabpanel" id={`panel-${r.key}`} aria-labelledby={`tab-${r.key}`} data-panel hidden={r.key !== 'kanto'}>
               {r.key === 'kyushu' && <a class="area-feature" href="/hikari/kagoshima/"><strong>鹿児島の光回線をくわしく</strong><span>5社の料金・市町村ごとの提供率・離島の注意点</span></a>}
-              <div class="pref-grid">{r.prefs.map((p) => <a href={getPrefecturePath(p)}>{p.name}</a>)}</div>
+              <p class="pref-hint">都道府県を選ぶと、地域ごとの対応回線ページへ進みます</p>
+              <div class="pref-grid">{r.prefs.map((p) => <a href={getPrefecturePath(p)}>{p.name}<i aria-hidden="true">›</i></a>)}</div>
             </div>
           ))}
         </div>
@@ -224,10 +233,10 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
         <p class="sec-eyebrow">通信のほかのテーマ</p>
         <h2 id="other-title">お金・安全・学びの見直しも</h2>
         <div class="other-grid">
-          <a href="/card/"><strong>クレジットカード</strong><span>スマホ代でおトクなカードと、年会費無料のカード</span></a>
-          <a href="/security/"><strong>セキュリティ・詐欺対策</strong><span>ウイルス対策ソフト・VPN・偽SMSの見分け方</span></a>
-          <a href="/used-smartphones/"><strong>中古スマホ</strong><span>保証と返品の条件で比べる</span></a>
-          <a href="/houjin/"><strong>会社・お店向け</strong><span>法人携帯・電話・コピー機・法人カード</span></a>
+          <a href="/card/"><strong>クレジットカード</strong><span>スマホ代でおトクなカードと、年会費無料のカード</span><i aria-hidden="true">›</i></a>
+          <a href="/security/"><strong>セキュリティ・詐欺対策</strong><span>ウイルス対策ソフト・VPN・偽SMSの見分け方</span><i aria-hidden="true">›</i></a>
+          <a href="/used-smartphones/"><strong>中古スマホ</strong><span>保証と返品の条件で比べる</span><i aria-hidden="true">›</i></a>
+          <a href="#learning"><strong>英語学習・スキル</strong><span>TOEIC対策と日常英会話のコース・無料体験の条件</span><i aria-hidden="true">›</i></a>
         </div>
         <div class="biz-manga">
           <MangaShelf ids={bizManga} swipe moreHref="/houjin/" moreLabel="会社・お店向けの記事一覧を見る →" heading="会社・お店向けの通信・経費の見直し" lead="社員のスマホ、コピー機、お店のネット、ランサムウェア、法人カード。小さな会社・お店向けの漫画です。" />
@@ -240,6 +249,11 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
                 <p class="learning-aud">{index === 0 ? 'TOEIC L&R TESTの受験が目的' : '旅行・日常のフレーズを学びたい'}</p>
                 <h4>{index === 0 ? 'TOEIC L&R TEST対策コース' : '新日常英会話コース'}</h4>
                 <p class="learning-price">スタディサプリENGLISH・Web月額 <strong>{index === 0 ? '3,278円' : '2,178円'}</strong></p>
+                <dl class="net-compare learning-compare">
+                  <div><dt>学習スタイル</dt><dd>{learningInfo[index].style}</dd></div>
+                  <div><dt>向いている人</dt><dd>{learningInfo[index].goodFor}</dd></div>
+                  <div class="is-benefit"><dt>無料体験・条件</dt><dd>{learningTrial}<small>（{learningChecked}確認）</small></dd></div>
+                </dl>
                 <AffiliateButton provider={offer} actionFirst={true} showBanner={false} ctaLabel="申込み窓口で料金・無料体験の条件を確認する →" />
                 <details class="net-more"><summary>料金の条件を見る</summary><p>税込・2026年11月22日確認。月額払いの通常料金です。複数月パックやアプリ内決済は条件が異なります。無料体験の対象と課金開始日は、申込画面で確認してください。<a href="https://eigosapuri.jp/plan/" target="_blank" rel="noopener">出典：リクルート公式料金</a></p></details>
               </article>
@@ -270,7 +284,8 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
     const bar = document.querySelector<HTMLElement>('[data-sticky-diag]');
     const hero = document.querySelector<HTMLElement>('[data-diag-watch="hero"]');
     if (!bar || !hero || !('IntersectionObserver' in window)) return;
-    const watched = [...document.querySelectorAll<HTMLElement>('[data-diag-watch]'), ...document.querySelectorAll<HTMLElement>('.site-footer')];
+    // 申込み条件を見ているカード（回線比較・英語学習）の間は、外の申込み窓口へのボタンと競合しないように消す
+    const watched = [...document.querySelectorAll<HTMLElement>('[data-diag-watch], .net-card, .learning-grid > article'), ...document.querySelectorAll<HTMLElement>('.site-footer')];
     // 見えているかは、そのつど位置で確かめる（大きく飛んだときに知らせが遅れても、まちがえないように）
     const inView = (el: Element) => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < window.innerHeight; };
     let shown = false;
@@ -338,6 +353,22 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
   .guide-list time { grid-area: date; font-size: 12px; color: #637467; }
   .gl-arrow { grid-area: arrow; font-size: 22px; color: #a3b5aa; }
   .biz-manga { margin-top: 34px; }
+  .net-price-note { margin: 6px 0 0; font-size: 11.5px; line-height: 1.6; color: #6b7d71; }
+  /* 英語学習カード：回線カードと同じ並べ方で、PCでは左右のボタンの高さをそろえる */
+  .learning-grid { align-items: stretch; }
+  .learning-grid article { display: grid; grid-row: span 6; grid-template-rows: subgrid; row-gap: 0; }
+  @supports not (grid-template-rows: subgrid) { .learning-grid article { display: flex; flex-direction: column; } }
+  .learning-compare { margin-bottom: 14px; }
+  /* 4枚の箱：右はしの › で押せるとわかるように */
+  .other-grid a { position: relative; padding-right: 36px; transition: border-color .15s, box-shadow .15s; }
+  .other-grid a > i { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-style: normal; font-size: 22px; line-height: 1; color: #9aa89e; }
+  .other-grid a:hover { border-color: var(--c-main); box-shadow: 0 10px 26px rgba(23,61,43,.12); }
+  .other-grid a:hover > i { color: var(--c-main); }
+  /* 都道府県ボタン */
+  .pref-hint { margin: 0 0 8px; font-size: 12px; color: #5d6f63; }
+  .pref-grid a { position: relative; padding: 0 22px 0 10px; }
+  .pref-grid a > i { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-style: normal; font-size: 18px; line-height: 1; color: #9aa89e; }
+  .pref-grid a:hover > i { color: var(--c-main); }
   .net-compare .is-benefit dd small { display: block; margin-top: 2px; font-size: 12px; color: #6b7d71; }
   /* ② 追従バー（スマホだけ） */
   .sticky-diag { display: none; }
@@ -397,7 +428,7 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
   .tab-note { font-size: 13px; color: #5d6f63; }
   .net-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-top: 12px; align-items: stretch; }
   /* カードの中の7つの行（種類・名前・料金・セット割・比べる3項目・ボタン・くわしい条件）を、となりのカードとそろえる */
-  .net-card { display: grid; grid-row: span 7; grid-template-rows: subgrid; row-gap: 0; border: 1px solid var(--c-line); border-radius: var(--radius); background: #fff; box-shadow: var(--shadow); padding: 18px; min-width: 0; }
+  .net-card { display: grid; grid-row: span 8; grid-template-rows: subgrid; row-gap: 0; border: 1px solid var(--c-line); border-radius: var(--radius); background: #fff; box-shadow: var(--shadow); padding: 18px; min-width: 0; }
   /* 比べる3項目（どのカードも同じ並び） */
   .net-compare { display: grid; gap: 0; margin: 0 0 14px; border-top: 1px solid var(--c-line); }
   .net-compare div { display: grid; grid-template-columns: 6.2em 1fr; gap: 8px; padding: 8px 2px; border-bottom: 1px solid var(--c-line); }

@@ -88,6 +88,7 @@ img { height: auto; }
 .desktop-nav > .nav-compare { gap: 14px; margin-left: auto; color: var(--color-brand-700); }
 .nav-compare > span { font-size: 16px; font-weight: 400; }
 .mobile-menu { display: none; }
+.mobile-diag { display: none; }
 
 /* 長い比較記事でも、確認条件と本文を読み分けやすくする。 */
 .prose-ja { color: #344538; }
@@ -142,6 +143,8 @@ img { height: auto; }
   .brand-name { font-size: 20px; letter-spacing: .02em; }
   .brand-tagline { font-size: 8px; letter-spacing: .01em; }
   .navigation-bar { display: none; }
+  .mobile-diag { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; min-height: 40px; margin-left: auto; padding: 0 13px; border: 1.5px solid #175d50; border-radius: 999px; color: #175d50; font-size: 13px; font-weight: 800; text-decoration: none; white-space: nowrap; }
+  .mobile-diag:focus-visible { outline: 3px solid #ea580c; outline-offset: 2px; }
   .mobile-menu { display: block; position: relative; flex-shrink: 0; }
   .mobile-menu summary { display: flex; min-width: 48px; min-height: 46px; flex-direction: column; align-items: center; justify-content: center; gap: 6px; border-radius: 5px; color: #3c5442; cursor: pointer; list-style: none; font-size: 8px; line-height: 1; }
   .mobile-menu summary::-webkit-details-marker { display: none; }
@@ -241,3 +244,11 @@ img { height: auto; }
 .choice-gain{color:#175d50!important;font-weight:700}
 @media(max-width:600px){.gain-summary{padding:16px}.gain-row{grid-template-columns:1fr;gap:4px}.gain-row dd{text-align:left}.gain-total{padding:14px}}
 .choice-chips .chip-hint{font-size:14px;line-height:1.8;color:#6a7b70;padding:6px 0}
+
+/* とても狭いスマホ（360px未満）：ロゴの文字を少し小さくして、診断とメニューのボタンを並べる */
+@media (max-width: 359px) {
+  .masthead { gap: 8px; }
+  .brand-name { font-size: 18px; }
+  .brand-mark { width: 32px; height: 32px; }
+  .mobile-diag { padding: 0 10px; }
+}
