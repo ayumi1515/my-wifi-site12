@@ -1,0 +1,39 @@
+---
+// A8が「JSタグ（ブランドセーフ広告）」でしか出していないバナーを出す部品（例：エポスカード）。
+// A8の広告リンク作成ページの「通常広告用」コードの値を、そのまま props で受け取って組み立てる（値は変えない）。
+// 読み込むのは A8 の公式スクリプト（ad-verification.a8.net）だけ。広告であることが分かるよう「PR」を出す。
+interface Props {
+  name: string;           // 広告の名前（PR表示用）
+  site: string; article: string; link: string; image: string; sad: string; // brandsafe の引数
+  aid: string; mat: string; pixelHost: string;                             // 計測用
+  width?: number; height?: number;
+}
+const { name, site, article, link, image, sad, aid, mat, pixelHost, width = 300, height = 250 } = Astro.props;
+const divId = `div_admane_async_${site}_${article}_${link}`;
+const params = `_site=${site}&_article=${article}&_link=${link}&_image=${image}&_ns=1&sad=${sad}`;
+const pixel = `https://${pixelHost}.a8.net/0.gif?a8mat=${mat}`;
+---
+<div class="a8s-banner">
+  <span class="a8s-label">PR・{name}</span>
+  <div class="a8s-slot" style={`width:${width}px;min-height:${height}px`}>
+    <div id={divId}></div>
+  </div>
+  <img src={pixel} width="1" height="1" alt="" class="a8s-pixel" />
+</div>
+<script is:inline src="https://ad-verification.a8.net/ad/js/brandsafe.js"></script>
+<script is:inline define:vars={{ params, aid, mat, divId }}>
+  // A8のスクリプトが読めないとき（広告ブロックなど）は、約10秒で待つのをやめて、空の枠を隠す。
+  (function run(n) {
+    if (typeof window.brandsafe_js_async === 'function') { window.brandsafe_js_async('//ad-verification.a8.net/ad', params, aid, mat); return; }
+    if (n > 50) { var el = document.getElementById(divId); var box = el && el.closest('.a8s-banner'); if (box) box.hidden = true; return; }
+    setTimeout(function () { run(n + 1); }, 200);
+  })(0);
+</script>
+<style>
+  .a8s-banner { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; margin-top: 12px; padding: 10px; border: 1px solid #d9e2db; border-radius: 6px; background: #fbfdfb; }
+  .a8s-banner[hidden] { display: none; }
+  .a8s-label { align-self: flex-start; font-size: 11px; font-weight: 700; color: #617367; line-height: 1.5; }
+  .a8s-slot { max-width: 100%; overflow: hidden; display: flex; justify-content: center; }
+  .a8s-slot :global(img) { max-width: 100%; height: auto; }
+  .a8s-pixel { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+</style>

@@ -4,8 +4,8 @@
 // 広告があるカードはまだないので、公式へのふつうのリンク。報酬で並び順を変えない。
 import data from '../data/carrier-cards.json';
 type Entry = { carrier: string; card: string; points: string[]; fee: string; caution?: string; url: string };
-interface Props { brand?: string; heading?: string }
-const { brand, heading } = Astro.props;
+interface Props { brand?: string; heading?: string; hideMore?: boolean }
+const { brand, heading, hideMore = false } = Astro.props;
 const brands = data.brands as Record<string, Entry>;
 const one = brand ? brands[brand] : undefined;
 const date = data.checkedAt.replace(/-/g, '/');
@@ -44,6 +44,7 @@ const date = data.checkedAt.replace(/-/g, '/');
       </table>
     </div>
     <p class="cc-date">{data.general.body}（例：<a href={data.general.url} target="_blank" rel="noopener">エポスカード</a>）　各社の公式サイトで{date}に確認、金額は税込。</p>
+    {!hideMore && <a class="cc-more" href="/card/">年会費・ポイント・家族カードまで比べる（クレジットカードの選び方）→</a>}
   </section>
 )}
 <style>

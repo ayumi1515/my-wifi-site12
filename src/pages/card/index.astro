@@ -1,0 +1,159 @@
+---
+// 個人向けクレジットカードの選び方。スマホ会社ごとのカードと、年会費無料のカードを同じ目線で比べる。
+// 順位はつけない。数字は各カード会社の公式で2026-11-27に確認（ふだんの基本の率。キャンペーンの最大値は使わない）。
+// 広告はA8で提携しているエポスカードだけ（A8のJSタグのバナー）。ほかは公式へのふつうのリンク。
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CarrierCards from '../../components/CarrierCards.astro';
+import MangaShelf from '../../components/MangaShelf.astro';
+import A8ScriptBanner from '../../components/A8ScriptBanner.astro';
+import scriptBanners from '../../data/script-banners.json';
+import { SITE } from '../../site.config.mjs';
+import { faqLd, breadcrumbLd } from '../../lib/data';
+
+const checkedAt = '2026-11-27';
+const path = '/card/';
+const crumbs = [{ name: '総合トップ', href: '/' }, { name: 'クレジットカードの選び方', href: path }];
+const title = 'クレジットカードの選び方｜スマホ代でおトクなカードと年会費無料カードを比較';
+const description = 'dカード・au PAY カード・PayPayカード・楽天カード・エポスカードなど8枚を、年会費・基本のポイント・スマホ料金の特典・家族カード・ETCで比較。スマホ会社ごとの組み合わせと、使いすぎを防ぐ注意点も公式情報でまとめました。';
+const epos = scriptBanners.epos;
+const cards = [
+  { name: 'dカード', fee: '無料（2027年1月からは、前の年度に一度も使わないと1,650円）', point: '100円（税込）で1ポイント（2027年1月利用分から200円で1ポイント）', pt: 'dポイント', phone: 'ドコモの対象プランが月220円引き', brand: 'Visa・Mastercard', family: '無料', etc: '初年度無料。2年目以降は年に一度も使わないと550円', who: '18歳以上（高校生を除く）', url: 'https://dcard.docomo.ne.jp/st/dcard_dcard/index.html' },
+  { name: 'dカード GOLD', fee: '11,000円', point: '100円（税込）で1ポイント', pt: 'dポイント', phone: 'ドコモのケータイ・ドコモ光の料金の10%をポイントで還元（ahamo・irumo・ドコモ miniなどは対象外）。対象プランは月550円引き', brand: 'Visa・Mastercard', family: '1枚目無料、2枚目から1,100円', etc: '無料', who: '18歳以上（高校生を除く）で、安定した継続収入がある人', url: 'https://dcard.docomo.ne.jp/st/dcard_gold/index.html' },
+  { name: 'au PAY カード', fee: '永年無料', point: '100円（税込）で1ポイント', pt: 'Pontaポイント', phone: 'auとUQ mobileの対象プランが月220円引き（法人契約は対象外）', brand: 'Visa・Mastercard・American Express', family: '無料', etc: '年会費無料（発行手数料1,100円。決まった期間内に使うと無料）', who: '18歳以上で、本人か配偶者に定期収入がある人（学生は申込み可）。au IDが必要', url: 'https://www.au.com/payment/card/' },
+  { name: 'au PAY ゴールドカード', fee: '11,000円', point: '100円（税込）で1ポイント', pt: 'Pontaポイント', phone: 'auの料金に最大10%のPontaポイント（代表の1回線・対象プラン）', brand: 'Visa・Mastercard・American Express', family: '1枚目無料、2枚目から2,200円', etc: '無料', who: '18歳以上で、本人か配偶者に定期収入がある人。au IDが必要', url: 'https://www.kddi-fs.com/function/cardspec/' },
+  { name: 'PayPayカード', fee: '永年無料', point: '1%（200円ごとに計算。電気・ガス・水道・税金は0.5%）', pt: 'PayPayポイント', phone: 'ソフトバンクの対象プランが月330円引き、ワイモバイルのシンプル3が月330円引き', brand: 'Visa（1枚目）。2枚目からMastercard・JCBも', family: '無料（最大10枚）', etc: '550円', who: '18歳以上で、本人か配偶者に安定した継続収入がある人', url: 'https://www.paypay-card.co.jp/service/card/compare/' },
+  { name: 'PayPayカード ゴールド', fee: '11,000円', point: '1%（200円ごとに計算）。年に100万円以上使うと11,000ポイント', pt: 'PayPayポイント', phone: 'ソフトバンクの対象プランが月550円引き、ワイモバイルのシンプル3が月550円引き', brand: 'Visa（1枚目）。2枚目からMastercard・JCBも', family: '無料（最大3枚）', etc: '無料（最大5枚）', who: '公式に、ゴールドだけの条件の記載なし（共通の条件は18歳以上ほか）', url: 'https://www.paypay-card.co.jp/service/card/compare/' },
+  { name: '楽天カード', fee: '永年無料', point: '100円で1ポイント', pt: '楽天ポイント', phone: '楽天モバイルの料金も100円で1ポイント（割引の記載はなし）', brand: 'Visa・Mastercard・JCB・American Express', family: '無料（2枚まで）', etc: '550円（楽天会員ランクがダイヤモンド・プラチナなら無料）', who: '18歳以上（海外在住の人は不可）', url: 'https://www.rakuten-card.co.jp/card/rakuten-card/' },
+  { name: 'エポスカード', fee: '永年無料', point: '200円（税込）で1ポイント', pt: 'エポスポイント', phone: 'スマホ会社と組んだ割引はなし', brand: 'Visa', family: '公式サイトに記載なし', etc: '無料', who: '18歳以上（高校生を除く）', url: 'https://www.eposcard.co.jp/cm2014/index.html' },
+];
+const rows: [string, keyof (typeof cards)[number]][] = [['年会費（税込）', 'fee'], ['基本のポイント', 'point'], ['たまるポイント', 'pt'], ['スマホ料金の特典', 'phone'], ['国際ブランド', 'brand'], ['家族カード', 'family'], ['ETCカード', 'etc'], ['申し込める人', 'who']];
+const faqs = [
+  { q: 'スマホ代は、どのカードで払うとおトクですか？', a: 'スマホ会社と組んだカードで払うと、対象の料金プランで割引やポイントがつくことがあります。ドコモはdカード、auとUQ mobileはau PAY カード、ソフトバンクとワイモバイルはPayPayカード、楽天モバイルは楽天カードです。割引は対象プランだけなので、自分のプランが対象か公式で確かめてください。' },
+  { q: 'ゴールドカードの年会費は、元が取れますか？', a: 'ゴールドカードは年会費11,000円（税込）です。スマホ料金のポイント還元や割引、ふだんの買い物のポイントの合計が年会費を上回るかを、自分の料金で計算しましょう。対象外のプランもあります。' },
+  { q: 'リボ払いや分割払いは使っても大丈夫ですか？', a: 'リボ払い・分割払いは手数料がかかります。たとえばau PAY カードのリボ払いは、2027年1月か2月の請求分から（カードによってちがいます）実質年率19.80%に改定すると案内されています。使った分は1回払いで払い、毎月の明細で金額を確かめるのが安心です。' },
+  { q: 'povoやIIJmioを使っています。おトクなカードはありますか？', a: 'povo・IIJmio・mineoなどは、カード払いでの料金の割引が公式では見つかりませんでした。年会費無料のカードで払って、ポイントをためる方法があります。' },
+];
+const articleLd = {
+  '@context': 'https://schema.org', '@type': 'Article', headline: 'クレジットカードの選び方（スマホ代・年会費無料）', description,
+  datePublished: checkedAt, dateModified: checkedAt, inLanguage: 'ja', mainEntityOfPage: `${SITE.url}${path}`,
+  author: { '@type': 'Organization', name: SITE.operator, url: `${SITE.url}/about/` },
+  publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url + '/' },
+};
+---
+<Base title={title} description={description} jsonLd={[breadcrumbLd(SITE.url, crumbs), articleLd, faqLd(faqs)]}>
+  <div class="site-container card-page">
+    <Breadcrumbs items={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))} />
+    <h1>クレジットカードの選び方<span>スマホ代でおトクなカードと、年会費無料のカード</span></h1>
+    <MangaShelf ids={["card"]} heading="" compact />
+
+    <div class="answer-box">
+      <p class="answer-label">目的別に、まず見るカード</p>
+      <ul>
+        <li><strong>スマホ代でおトクにしたい</strong> → 使っているスマホ会社と組んだカード（<a href="#carrier">スマホ会社ごとの表</a>）</li>
+        <li><strong>年会費をかけたくない</strong> → au PAY カード・PayPayカード・楽天カード・エポスカード（永年無料と公式に案内）。dカードは2027年1月から、前の年度に一度も使わないと年会費がかかります</li>
+        <li><strong>スマホ料金が高い・カードをよく使う</strong> → ゴールドカード（年会費11,000円）。スマホ料金の還元や割引が年会費を上回るかを計算</li>
+        <li><strong>povo・IIJmio・mineoなどを使っている</strong> → 年会費無料のカードで払って、ポイントをためる</li>
+      </ul>
+    </div>
+    <p class="byline">各カード会社の公式サイトで{checkedAt.replace(/-/g, '/')}に確認 ／ 書いた人：{SITE.operator}（<a href="/about/">編集方針</a>）／ このページには広告（PR）があります。順位はつけていません。</p>
+
+    <section id="carrier" aria-labelledby="cc-all-title">
+      <CarrierCards heading="スマホ会社ごとの、おトクなカード" hideMore />
+    </section>
+
+    <section aria-labelledby="compare">
+      <h2 id="compare">8枚を、同じ目線で比べる</h2>
+      <p class="lead">ポイントは、キャンペーンの最大値ではなく、ふだんの基本の率です。カードには審査があります。</p>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="クレジットカードの比較表">
+        <table>
+          <thead><tr><th scope="col">項目</th>{cards.map((c) => <th scope="col">{c.name}</th>)}</tr></thead>
+          <tbody>
+            {rows.map(([label, key]) => <tr><th scope="row">{label}</th>{cards.map((c) => <td>{c[key]}</td>)}</tr>)}
+            <tr><th scope="row">申込み・くわしく</th>{cards.map((c) => <td><a class="tbl-btn" href={c.url} target="_blank" rel="noopener">公式サイトへ ↗</a></td>)}</tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">表は横にスクロールできます。年会費・手数料は税込。入会特典は期間と条件が変わるため、表には入れていません。表のカード会社のリンクは広告ではありません（公式サイトへのふつうのリンクです）。</p>
+      <ul class="memo-list">
+        <li><strong>dカード</strong>：2027年1月利用分から、ふだんの買い物が200円（税込）で1ポイントに変わると公式で案内されています（dカード GOLDは対象外）。</li>
+        <li><strong>PayPayカード</strong>：ふだんの利用特典（1%）は、ソフトバンク・ワイモバイル・LINEMOの携帯電話料金には付きません。スマホ料金には、ソフトバンク社の別の特典があります。ポイントをもらうには、PayPayアプリへのカード登録と本人確認が必要です。</li>
+        <li><strong>エポスカード</strong>：2026年8月1日から、交通系ICなどへのチャージにはポイントが付きません。</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="free">
+      <h2 id="free">スマホ会社と組んだカードがない人に：年会費無料のカード</h2>
+      <p>povo・IIJmio・mineoなどは、カード払いでの料金の割引が公式では見つかりませんでした。年会費無料のカードで払って、ポイントをためる方法があります。エポスカードは入会金・年会費が永年無料で、Visaの使えるお店で200円（税込）ごとに1ポイントです。</p>
+      <A8ScriptBanner {...epos} />
+    </section>
+
+    <section aria-labelledby="choose">
+      <h2 id="choose">選ぶときに見る5つのこと</h2>
+      <ol class="point-list">
+        <li><strong>スマホ会社との組み合わせ</strong><span>割引やポイントがつくのは、対象の料金プランだけです。</span></li>
+        <li><strong>年会費</strong><span>ゴールドは11,000円。無料のカードでも、条件つきで年会費がかかるものがあります。</span></li>
+        <li><strong>ふだんのポイントの率と、使い道</strong><span>dポイント・Ponta・PayPay・楽天など、ふだん使うお店で使えるポイントかを見ます。</span></li>
+        <li><strong>家族カードとETCカード</strong><span>家族の分も同じカードにまとめるか、ETCカードの年会費がかかるかを確かめます。</span></li>
+        <li><strong>支払い方法</strong><span>リボ払い・分割払いは手数料がかかります。1回払いが基本です。</span></li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="safe">
+      <h2 id="safe">使いすぎを防ぐために</h2>
+      <ul class="plain-list">
+        <li>使った分は、1回払いで払う。リボ払いにしない（au PAY カードのリボ払いは、2027年1月か2月の請求分から実質年率19.80%に改定と案内されています）。</li>
+        <li>毎月の明細を、アプリやWebで見る。身に覚えのない請求がないかも確かめる。</li>
+        <li>カード番号やパスワードを聞いてくるメール・SMSは開かない（<a href="/security/phishing/">偽SMS・フィッシング対策</a>）。</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="more">
+      <h2 id="more">あわせて見る</h2>
+      <ul class="plain-list">
+        <li><a href="/mobile/">スマホ・格安SIMを比べる</a></li>
+        <li><a href="/shindan/#setwari">スマホとネットのセット割診断</a></li>
+        <li><a href="/houjin/card/">会社・個人事業主向けの法人カード</a></li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="faq">
+      <h2 id="faq">よくある質問</h2>
+      {faqs.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}
+    </section>
+    <p class="sources">出典：各カード会社の公式サイト（表の「公式サイトへ」）、<a href="https://dcard.docomo.ne.jp/std/info/correction20260901.html" target="_blank" rel="noopener">dカードの改定のお知らせ</a>、<a href="https://www.paypay-card.co.jp/service/benefit/point/" target="_blank" rel="noopener">PayPayカードのポイント</a>、<a href="https://www.kddi-fs.com/contents/important/850.html" target="_blank" rel="noopener">au PAY カードの手数料改定</a>、<a href="https://www.eposcard.co.jp/articles/news/260601.html" target="_blank" rel="noopener">エポスカードのお知らせ</a>。2026年11月27日に確認。</p>
+  </div>
+</Base>
+
+<style>
+  .card-page { padding-top: 14px; padding-bottom: 30px; color: #23352e; }
+  .card-page h1 { margin: 12px 0 16px; font-size: clamp(26px, 3.6vw, 36px); font-weight: 800; line-height: 1.45; color: #1f3a30; }
+  .card-page h1 span { display: block; font-size: .55em; color: #175d50; margin-top: 4px; }
+  .card-page h2 { margin-top: 40px; font-size: clamp(21px, 2.5vw, 26px); font-weight: 800; line-height: 1.55; scroll-margin-top: 16px; }
+  .card-page p, .card-page li { font-size: 15px; line-height: 1.95; }
+  .card-page section > p { margin-top: 8px; }
+  .card-page a { color: #175d50; }
+  .answer-box { margin-top: 18px; border: 2px solid #175d50; border-radius: 10px; background: #f0f6f1; padding: 18px 20px; }
+  .answer-label { display: inline-block; background: #175d50; color: #fff; font-size: 13px !important; font-weight: 800; border-radius: 4px; padding: 2px 10px; margin-bottom: 8px; }
+  .answer-box ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+  .answer-box a, .byline a, .plain-list a, .note a, .sources a { text-decoration: underline; text-underline-offset: 3px; }
+  .byline { margin-top: 10px; font-size: 13px !important; color: #637268; }
+  .lead { color: #4f6a5a; }
+  .table-scroll { overflow-x: auto; margin-top: 12px; border: 1px solid #ccd9d0; border-radius: 8px; }
+  .table-scroll table { width: 100%; min-width: 1300px; border-collapse: collapse; font-size: 13px; }
+  .table-scroll th, .table-scroll td { padding: 10px 12px; border-bottom: 1px solid #dce5de; border-right: 1px solid #edf2ee; text-align: left; vertical-align: top; line-height: 1.7; }
+  .table-scroll thead th { background: #175d50; color: #fff; }
+  .table-scroll tbody th { position: sticky; left: 0; background: #f1f6f1; color: #175d50; white-space: nowrap; }
+  .table-scroll td a.tbl-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 6px 12px; border-radius: 8px; background: #175d50; color: #fff; font-weight: 800; text-decoration: none; white-space: nowrap; }
+  .table-scroll td a.tbl-btn:hover { background: #0f463c; }
+  .note { margin-top: 10px; font-size: 13px !important; color: #5d6f63; }
+  .memo-list { margin-top: 8px; padding-left: 1.2em; list-style: disc; display: grid; gap: 4px; }
+  .memo-list li { font-size: 13px; color: #4f6a5a; }
+  .point-list { margin-top: 12px; padding-left: 1.3em; display: grid; gap: 10px; }
+  .point-list strong { display: block; font-size: 16px; }
+  .point-list span { display: block; color: #4f6a5a; }
+  .plain-list { margin-top: 10px; padding-left: 1.2em; display: grid; gap: 6px; list-style: disc; }
+  .card-page details { margin-top: 10px; padding: 14px 18px; border: 1px solid #d5dfd7; border-radius: 6px; }
+  .card-page summary { cursor: pointer; font-weight: 700; }
+  .sources { margin-top: 26px; font-size: 12px !important; color: #69786e; }
+</style>

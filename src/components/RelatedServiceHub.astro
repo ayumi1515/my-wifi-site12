@@ -53,7 +53,7 @@ const adNotice = category === 'used' ? '在庫・状態・付属品・保証の�
       <p class="hub-lead">{lead}</p>
       <nav class="hub-jump-links" aria-label="このページの案内">{category === 'mobile' && <a href="#mobile-manga-start">漫画で選び方を見る</a>}<a href="#service-list">掲載サービスを比較する</a><a href="#how-to-choose">選ぶ前の確認ポイント</a></nav>
     </header>
-    {category === 'mobile' && <MangaShelf ids={['sim','kojin']} heading="まず漫画で、選び方をつかむ" compact />}
+    {category === 'mobile' && <MangaShelf ids={['sim','card','kojin']} heading="まず漫画で、選び方をつかむ" compact />}
     {category === 'security' && <MangaShelf ids={['sagi']} heading="" compact />}
     <section class="hub-intro" aria-label="比較する前に整理すること">
       {intro.map((item) => <article><h2>{item.title}</h2><p>{item.body}</p></article>)}

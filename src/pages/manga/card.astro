@@ -1,0 +1,71 @@
+---
+// 個人向け漫画LP：スマホ代をどのカードで払うか → /card/
+// 絵はCodex作の文字なし画像（public/images/manga-lp/card/）。漫画はフィクション。金額や体験談はつくらない。
+// スマホ会社とカードの組み合わせは src/data/carrier-cards.json（公式で確認）にそろえる。
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import MangaLp, { type MangaChapter } from '../../components/MangaLp.astro';
+import A8ScriptBanner from '../../components/A8ScriptBanner.astro';
+import scriptBanners from '../../data/script-banners.json';
+import { breadcrumbLd } from '../../lib/data';
+import { SITE } from '../../site.config.mjs';
+
+const path = '/manga/card/';
+const title = 'スマホ代、どのカードで払っていますか？｜スマホ会社と組んだカードを漫画で';
+const description = 'スマホ代は、スマホ会社と組んだカードで払うと割引やポイントがつくことがあります。年会費・家族カード・使いすぎの注意まで、夫婦の会話の縦読み漫画で3分。';
+const crumbs = [{ name: '総合トップ', href: '/' }, { name: 'クレジットカードの選び方', href: '/card/' }, { name: '漫画で見るスマホ代とカード', href: path }];
+const epos = scriptBanners.epos;
+const chapters: MangaChapter[] = [
+  { id: 'ch1', title: 'スマホ代の払い方、見直したことある？', panels: [
+    { img: 'p1', alt: '夜のリビングで、さきがスマホを見てため息をつき、だいちが横からのぞいている。', lines: [{ who: 'さき', text: 'スマホ代、家族で毎月けっこう払ってるな…' }] },
+    { img: 'p2', alt: 'だいちがスマホを見て、はっと気づいた顔をしている。', lines: [{ who: 'だいち', text: 'スマホ会社と組んだカードで払うと、割引やポイントがつくことがあるんだって。', side: 'right' }] },
+    { img: 'p3', alt: 'テーブルに銀色と金色の無地のカードを並べ、二人で見比べている。', narration: 'たとえば、ドコモはdカード、auとUQ mobileはau PAY カード、ソフトバンクとワイモバイルはPayPayカード、楽天モバイルは楽天カード。割引は対象の料金プランだけで、年会費がかかるカードもあります。', lines: [{ who: 'さき', text: '年会費と、おトクになる額。両方見ないとね。' }] },
+  ] },
+  { id: 'ch2', title: '家族で使うときと、使いすぎの注意', panels: [
+    { img: 'p4', alt: 'さきが、もう1枚の無地のカードをだいちに手渡している。', lines: [{ who: 'さき', text: '家族カードも割引の対象になるカードがあるみたい。' }], note: '家族カードが対象になるかは、カードと料金プランによってちがいます。' },
+    { img: 'p5', alt: 'さきが人さし指を立てて注意し、だいちがうなずいている。そばに電卓。', lines: [{ who: 'さき', text: 'でも、リボ払いや分割払いは手数料がかかるから、1回払いにしようね。' }, { who: 'だいち', text: '使いすぎないように、毎月の明細も見よう。', side: 'right' }] },
+  ] },
+  { id: 'ch3', title: '支払い方法を変えてみる', panels: [
+    { img: 'p6', alt: 'ソファでだいちがスマホを操作し、さきが隣で見守っている。', narration: 'スマホ代の支払い方法の変更は、スマホ会社の会員ページやアプリから申し込みます。', lines: [{ who: 'だいち', text: 'カードが届いたら、支払い方法を変えておくね。', side: 'right' }] },
+    { img: 'p7', alt: 'スーパーのレジで、さきが無地のカードで支払っている。', lines: [{ who: 'さき', text: 'ふだんの買い物も同じカードにすれば、ポイントがまとまるね。' }] },
+    { img: 'p8', alt: 'ソファで二人がくつろいで笑っている。', lines: [{ who: 'だいち', text: 'まずは、うちのスマホ会社と組んだカードを確かめよう。', side: 'right' }] },
+  ] },
+];
+const worries = [
+  { text: 'スマホ代を、もう少し下げたい', chapter: 'ch1', face: 'p1', facePos: '50% 35%' },
+  { text: 'どのカードで払えばいいか、わからない', chapter: 'ch1', face: 'p2', facePos: '50% 35%' },
+  { text: 'カードの使いすぎが、こわい', chapter: 'ch2', face: 'p5', facePos: '50% 35%' },
+];
+const points = [
+  { title: 'スマホ会社と組んだカードを確かめる', body: '割引やポイントがつくのは、対象の料金プランだけです。' },
+  { title: '年会費とおトクの額を比べる', body: 'ゴールドカードは年会費がかかります。おトクの額が年会費より大きいかを見ます。' },
+  { title: '1回払いで、明細を見る', body: 'リボ払い・分割払いは手数料がかかります。毎月の明細で使った額を確かめます。' },
+];
+const articleLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'スマホ代とクレジットカード（漫画）', description, inLanguage: 'ja', mainEntityOfPage: `${SITE.url}${path}`, datePublished: '2026-11-27', dateModified: '2026-11-27', author: { '@type': 'Organization', name: SITE.operator, url: `${SITE.url}/about/` }, publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url + '/' } };
+---
+<Base title={title} description={description} jsonLd={[breadcrumbLd(SITE.url, crumbs), articleLd]}>
+  <div class="site-container">
+    <Breadcrumbs items={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))} />
+    <MangaLp
+      base="/images/manga-lp/card"
+      kicker="家族・個人｜漫画で3分"
+      title="スマホ代、どのカードで払っていますか？"
+      lead="スマホ会社と組んだカードで払うと、割引やポイントがつくことがあります。夫婦の会話で、選び方を漫画に。"
+      heroAlt="リビングのテーブルで、さきとだいちが銀色と金色の無地のカードを持って並んでいる。"
+      worries={worries}
+      chapters={chapters}
+      points={points}
+      cta={{ href: '/card/', label: 'スマホ代におトクなカードを見る', sub: 'スマホ会社ごと・年会費・ポイント' }}
+      sticky={{ href: '/card/', label: 'カードを比べる' }}
+      speakers={{ 'さき': '#b45b36', 'だいち': '#3d6a8c' }}
+      pointsTitle="まとめ：カード選びの3つのポイント"
+      fictionNote="この漫画はフィクションです。登場人物は実在しません。割引・ポイント・年会費は、カードと料金プランによって変わります。"
+    >
+      <p class="mlp-more">スマホ会社と組んだカードがない場合は、年会費無料のカードで払ってポイントをためる方法もあります。</p>
+      <A8ScriptBanner {...epos} />
+    </MangaLp>
+  </div>
+</Base>
+<style>
+  .mlp-more { margin-top: 14px; font-size: 14px; line-height: 1.8; color: #4f6a5a; }
+</style>

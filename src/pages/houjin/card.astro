@@ -44,6 +44,7 @@ const rows: [string, keyof (typeof cards)[number]][] = [['申し込める人', '
     <Breadcrumbs items={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))} />
     <h1>法人カード・ビジネスカードの選び方<span>会社・個人事業主のカードを、目的別に</span></h1>
 
+    <MangaShelf ids={["hcard"]} heading="" compact />
     <div class="answer-box">
       <p class="answer-label">目的別に、まず見るカード</p>
       <ul>
@@ -64,11 +65,21 @@ const rows: [string, keyof (typeof cards)[number]][] = [['申し込める人', '
           <thead><tr><th scope="col">項目</th>{cards.map((c) => <th scope="col">{c.name}</th>)}</tr></thead>
           <tbody>
             {rows.map(([label, key]) => <tr><th scope="row">{label}</th>{cards.map((c) => <td>{c[key]}</td>)}</tr>)}
-            <tr><th scope="row">公式</th>{cards.map((c) => <td><a href={c.url} target="_blank" rel="noopener">公式で見る</a></td>)}</tr>
+            <tr><th scope="row">申込み・くわしく</th>{cards.map((c) => <td><a class="tbl-btn" href={c.url} target="_blank" rel="noopener">公式サイトへ ↗</a></td>)}</tr>
           </tbody>
         </table>
       </div>
       <p class="note">表は横にスクロールできます。年会費・手数料は公式の表示どおり（税込の記載があるものは税込）。入会特典は期間と条件が変わるため、表には入れていません。</p>
+      <div class="official-grid" role="group" aria-label="6枚の公式サイト">
+        {cards.map((c) => (
+          <a class="official-btn" href={c.url} target="_blank" rel="noopener">
+            <strong>{c.name}</strong>
+            <span>年会費：{c.fee}</span>
+            <em>公式サイトで申込み条件を見る ↗</em>
+          </a>
+        ))}
+      </div>
+      <p class="note">表と下のボタンの6枚のリンクは、広告ではありません（公式サイトへのふつうのリンクです）。</p>
       <ul class="memo-list">{cards.filter((c) => c.memo).map((c) => <li><strong>{c.name}</strong>：{c.memo}</li>)}</ul>
     </section>
 
@@ -115,7 +126,7 @@ const rows: [string, keyof (typeof cards)[number]][] = [['申し込める人', '
       <h2 id="faq">よくある質問</h2>
       {faqs.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}
     </section>
-    <p class="sources">出典：各カードの公式サイト（表の「公式で見る」）、<a href="https://www.kousoku-etc.com/" target="_blank" rel="noopener">高速情報協同組合（法人ETCカード）</a>、<a href="https://www.kousoku-j.jp/gasoline-card/index.html" target="_blank" rel="noopener">同（ガソリンカード）</a>、<a href="https://labol.co.jp/" target="_blank" rel="noopener">ラボル</a>、<a href="https://go.invoy.jp/lp/settlement/pay/" target="_blank" rel="noopener">INVOY</a>。2026年11月27日に確認。</p>
+    <p class="sources">出典：各カードの公式サイト（表の「公式サイトへ」）、<a href="https://www.kousoku-etc.com/" target="_blank" rel="noopener">高速情報協同組合（法人ETCカード）</a>、<a href="https://www.kousoku-j.jp/gasoline-card/index.html" target="_blank" rel="noopener">同（ガソリンカード）</a>、<a href="https://labol.co.jp/" target="_blank" rel="noopener">ラボル</a>、<a href="https://go.invoy.jp/lp/settlement/pay/" target="_blank" rel="noopener">INVOY</a>。2026年11月27日に確認。</p>
   </div>
 </Base>
 
@@ -138,7 +149,15 @@ const rows: [string, keyof (typeof cards)[number]][] = [['申し込める人', '
   .table-scroll th, .table-scroll td { padding: 10px 12px; border-bottom: 1px solid #dce5de; border-right: 1px solid #edf2ee; text-align: left; vertical-align: top; line-height: 1.7; }
   .table-scroll thead th { background: #175d50; color: #fff; }
   .table-scroll tbody th { position: sticky; left: 0; background: #f1f6f1; color: #175d50; white-space: nowrap; }
-  .table-scroll td a { font-weight: 700; text-decoration: underline; }
+  .table-scroll td a.tbl-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 6px 12px; border-radius: 8px; background: #175d50; color: #fff; font-weight: 800; text-decoration: none; white-space: nowrap; }
+  .table-scroll td a.tbl-btn:hover { background: #0f463c; }
+  .official-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; margin-top: 14px; }
+  .official-btn { display: flex; flex-direction: column; gap: 4px; padding: 14px 16px; border: 2px solid #175d50; border-radius: 12px; background: #fff; text-decoration: none !important; box-shadow: 0 3px 0 #cfe0d6; }
+  .official-btn:hover { background: #f0f6f1; }
+  .official-btn strong { font-size: 16px; color: #173d2b; line-height: 1.5; }
+  .official-btn span { font-size: 13px; color: #4f6a5a; line-height: 1.6; }
+  .official-btn em { font-style: normal; margin-top: 4px; font-size: 14px; font-weight: 800; color: #175d50; }
+  .official-btn:focus-visible { outline: 3px solid #175d50; outline-offset: 3px; }
   .note { margin-top: 10px; font-size: 13px !important; color: #5d6f63; }
   .memo-list { margin-top: 8px; padding-left: 1.2em; list-style: disc; display: grid; gap: 4px; }
   .memo-list li { font-size: 13px; color: #4f6a5a; }

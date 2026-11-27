@@ -1,0 +1,70 @@
+---
+// 会社向け漫画LP：法人カード（仕事の支払いを1枚にまとめる）→ /houjin/card/
+// 絵はCodex作の文字なし画像（public/images/manga-lp/hcard/）。漫画はフィクション。金額や体験談はつくらない。
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import MangaLp, { type MangaChapter } from '../../components/MangaLp.astro';
+import OfferCard from '../../components/OfferCard.astro';
+import { breadcrumbLd } from '../../lib/data';
+import { SITE } from '../../site.config.mjs';
+
+const path = '/manga/hcard/';
+const title = '仕事の支払い、私用とまざっていませんか？｜法人カードの選び方を漫画で';
+const description = 'レシートの山、私用と仕事の支払いがまざる…。小さなお店が法人カード（会社・個人事業主向けのカード）を選ぶときに見るところを、縦読み漫画で3分。年会費・追加カード・ETC・会計ソフト連携。';
+const crumbs = [{ name: '総合トップ', href: '/' }, { name: '会社・お店の通信費と事務機器', href: '/houjin/' }, { name: '漫画で見る法人カード', href: path }];
+const chapters: MangaChapter[] = [
+  { id: 'ch1', title: '仕事の支払い、まざっていませんか？', panels: [
+    { img: 'p1', alt: 'カウンターのレシートと領収書の山、財布が2つ。店長のまなみが頭を抱えている。', lines: [{ who: 'まなみ', text: 'このレシート、どれが仕事の買い物だっけ…' }] },
+    { img: 'p2', alt: '弟のりょうがノートパソコンを見せながら説明し、まなみが聞いている。', lines: [{ who: 'りょう', text: '仕事の支払いを1枚のカードにまとめたら？明細から、経費の記録をつけやすくなるよ。', side: 'right' }] },
+    { img: 'p3', alt: '二人で、色のちがう無地のカード2枚を見比べている。', narration: '法人カード（会社・個人事業主向けのカード）は、申し込める人・年会費・追加カード・ETCカード・会計ソフトとの連携で比べます。', lines: [{ who: 'まなみ', text: '年会費が無料のカードもあるのね。' }] },
+  ] },
+  { id: 'ch2', title: 'スタッフのカードと、経理の手間', panels: [
+    { img: 'p4', alt: 'まなみが若い女性スタッフに無地のカードを手渡している。', lines: [{ who: 'まなみ', text: '仕入れのときは、このカードを使ってね。' }], narration: '追加カードを渡すと、だれがいくら使ったかを明細で確かめられます。持てる枚数や費用は、カードによってちがいます。' },
+    { img: 'p5', alt: 'りょうがノートパソコンで作業し、机の上が片付いている。', lines: [{ who: 'りょう', text: '明細を会計ソフトに取り込めば、手で入力する手間が減るよ。', side: 'right' }], note: '連携できる会計ソフトは、カードによってちがいます。' },
+  ] },
+  { id: 'ch3', title: 'ETC・ガソリン・請求書の支払い', panels: [
+    { img: 'p6', alt: '軽ワゴン車を運転するまなみが、料金所のゲートを通っている。', narration: '配達で高速道路やガソリンを使うなら、ETCカードの費用も見ておきます。クレジットの審査が不安なときは、組合に入って使う、クレジット機能のないETCカードもあります（出資金や手数料がかかります）。' },
+    { img: 'p7', alt: 'まなみが白紙の請求書を持ってスマホで手続きし、りょうが親指を立てている。', lines: [{ who: 'まなみ', text: '振込でしか払えない請求書も、カードで払えるサービスがあるのね。' }, { who: 'りょう', text: '手数料がかかるから、使う場面を決めておこう。', side: 'right' }] },
+    { img: 'p8', alt: '片付いたカウンターで、二人がお茶を飲んで笑っている。', lines: [{ who: 'まなみ', text: 'まずは年会費と、申し込める条件から比べてみよう。' }] },
+  ] },
+];
+const worries = [
+  { text: '仕事と私用の支払いが、まざってしまう', chapter: 'ch1', face: 'p1', facePos: '50% 35%' },
+  { text: 'スタッフにも、支払いを任せたい', chapter: 'ch2', face: 'p4', facePos: '50% 35%' },
+  { text: 'ETCやガソリン代も、まとめたい', chapter: 'ch3', face: 'p6', facePos: '50% 35%' },
+];
+const points = [
+  { title: '申し込める人を確かめる', body: '法人だけか、個人事業主・副業も申し込めるか。カードによってちがいます。' },
+  { title: '年会費と、追加カード・ETCの費用', body: '本カードが無料でも、追加カードやETCカードに条件がある場合があります。' },
+  { title: '会計ソフトとの連携', body: '明細を取り込めると、経理の手間が減ります。使っているソフトに対応しているか確かめます。' },
+];
+const articleLd = { '@context': 'https://schema.org', '@type': 'Article', headline: '法人カードの選び方（漫画）', description, inLanguage: 'ja', mainEntityOfPage: `${SITE.url}${path}`, datePublished: '2026-11-27', dateModified: '2026-11-27', author: { '@type': 'Organization', name: SITE.operator, url: `${SITE.url}/about/` }, publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url + '/' } };
+---
+<Base title={title} description={description} jsonLd={[breadcrumbLd(SITE.url, crumbs), articleLd]}>
+  <div class="site-container">
+    <Breadcrumbs items={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))} />
+    <MangaLp
+      base="/images/manga-lp/hcard"
+      kicker="会社・お店向け｜漫画で3分"
+      title="仕事の支払い、私用とまざっていませんか？"
+      lead="レシートの山から卒業。小さなお店が法人カードを選ぶときに見るところを、漫画で。"
+      heroAlt="雑貨店のカウンターで、店長のまなみと弟のりょうが無地のカードを持って並んでいる。"
+      worries={worries}
+      chapters={chapters}
+      points={points}
+      cta={{ href: '/houjin/card/', label: '法人カードを比べる', sub: '年会費・追加カード・ETC・会計ソフト連携' }}
+      sticky={{ href: '/houjin/card/', label: '法人カードを比べる' }}
+      speakers={{ 'まなみ': '#b45b36', 'りょう': '#3d6a8c' }}
+      pointsTitle="まとめ：法人カードの3つのポイント"
+      fictionNote="この漫画はフィクションです。登場人物は実在しません。年会費・条件・審査は、カード会社によって変わります。"
+    >
+      <div class="mlp-offers">
+        <OfferCard id="houjin-etc" heading="クレジット機能のないETCカード（法人・個人事業主）" notice="出資金・手数料と条件をリンク先で確認してください。" />
+        <OfferCard id="labol" heading="振込でしか払えない請求書をカードで払う" notice="手数料と、使えない支払い（自分あて・借金の返済など）をリンク先で確認してください。" />
+      </div>
+    </MangaLp>
+  </div>
+</Base>
+<style>
+  .mlp-offers { margin-top: 10px; }
+</style>

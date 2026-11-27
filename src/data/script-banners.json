@@ -1,0 +1,17 @@
+{
+  "note": "A8が「JSタグ（ブランドセーフ広告）」でしか出していないバナー。A8の広告リンク作成ページの通常広告用コードの値をそのまま入れる（変えない）。部品は src/components/A8ScriptBanner.astro。2026-11-27 にA8で取得。",
+  "epos": {
+    "name": "エポスカード",
+    "programId": "s00000015110002",
+    "site": "1734",
+    "article": "658",
+    "link": "2971",
+    "image": "3218",
+    "sad": "s00000015110002",
+    "aid": "261126359198",
+    "mat": "4BGUDZ+39VVBU+38L8+BXQOH",
+    "pixelHost": "www19",
+    "width": 300,
+    "height": 250
+  }
+}
