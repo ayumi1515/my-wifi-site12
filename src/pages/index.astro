@@ -1,78 +1,375 @@
 ---
+// トップページ（2026-11-27 リデザイン）。
+// 方針：①通信・ネットを主役にして、ほかのジャンルは背景色で分ける ②公式ナビゲーター（ママ・ミナ）で案内をそろえる
+// ③スマホ会社のタブ・エリアのタブ・診断の1問目で「触れる」 ④主役のボタンは「30秒で診断」1つだけ ⑤色は3色（白〜薄いグレー／深い緑／オレンジ）。
+// 金額は公式で確認したデータ（household-homes.json・household-plans.json）だけを使い、見本の数字は出さない。
 import Base from '../layouts/Base.astro';
 import MangaShelf from '../components/MangaShelf.astro';
-import VisualHero from '../components/VisualHero.astro';
-import MangaEntry from '../components/MangaEntry.astro';
+import NaviTalk from '../components/NaviTalk.astro';
 import GuideArtwork from '../components/GuideArtwork.astro';
 import MangaThumbnail from '../components/MangaThumbnail.astro';
-import RelatedConnectivityLinks from '../components/RelatedConnectivityLinks.astro';
 import AffiliateButton from '../components/AffiliateButton.astro';
-import { providers, byId, jpDate } from '../lib/data';
+import { providers, jpDate } from '../lib/data';
 import { guides, categoryLabel, type GuideCategory } from '../lib/guides';
 import mobileServices from '../data/mobile-services.json';
 import { mobileMangaGuides } from '../lib/manga-mobile';
 import type { ConnectivityMangaSheet } from '../lib/connectivity-manga';
 import { offers } from '../lib/offers';
+import { brands, brandInfo, homes } from '../lib/setwari';
+import homeData from '../data/household-homes.json';
+import { prefectures, getPrefecturePath } from '../lib/national-areas';
 import { SITE } from '../site.config.mjs';
-const picks=[{id:'bbiq',audience:'au・UQ mobileと九州電力',reason:'戸建ての電気・スマホをまとめる',label:'13カ月目以降・割引条件あり'},{id:'docomo-hikari',audience:'ドコモの対象プラン',reason:'家族のドコモ回線とセットに',label:'1ギガ・タイプA・2年定期'},{id:'softbank-hikari',audience:'ソフトバンク・ワイモバイル',reason:'指定オプションとおうち割を使う',label:'1ギガ・2年自動更新'}].map(p=>({...p,provider:byId(p.id)!}));
-const title='しらべまとめ帳｜通信・スマホ・学習サービスの条件を比較';
-const description='全国のWi-Fi・光回線、主要なスマホ・SIM、セキュリティソフト、中古スマホと英語学習を比較。公式情報をもとに、料金・契約・保証の条件から選べます。47都道府県・市区町村から提供エリアの確認先も探せます。';
-interface HomeGuideCard {
-  href: string; category: GuideCategory; title: string; description: string; updatedAt: string;
-  artworkSlug: string; manga: { sheet: ConnectivityMangaSheet; frame: number } | null;
-}
+
+const title = 'しらべまとめ帳｜スマホとネットのセット割・光回線を公式情報で比較';
+const description = '今のスマホの会社から、セット割が使える光回線・ホームルーターを比較。30秒・登録不要の診断、47都道府県の提供エリア確認、漫画でわかる選び方。料金・還元条件・解約金まで公式情報で確認日つきで載せています。';
+const heroImage = '/images/manga-lp/kojin/hero.webp'; // 公式ナビゲーターの専用の絵ができたら /images/navi/top-hero.webp に差し替える
+const yen = (n: number) => `${n.toLocaleString('ja-JP')}円`;
+const checked = homeData.checkedAt.replace(/-/g, '/');
+
+// ③ スマホ会社のタブ：そのスマホとセット割がある回線だけを出す（データはセット割診断と同じ）
+const prefName = (code: string) => prefectures.find((p) => p.code === code)?.name ?? code;
+const tabDefs = [
+  { key: 'docomo', label: 'ドコモ', brandIds: ['docomo'], note: 'ahamoはセット割の対象外です。' },
+  { key: 'au', label: 'au・UQ', brandIds: ['au', 'uq-mobile'], note: 'UQ mobileは、家族割とセット割をいっしょに使えないプランがあります。' },
+  { key: 'sb', label: 'ソフトバンク・ワイモバ', brandIds: ['softbank', 'ymobile'], note: 'ワイモバイルは、家族割とセット割をいっしょに使えないプランがあります。' },
+  { key: 'other', label: '格安SIM・その他', brandIds: [] as string[], note: '楽天モバイル・povo・LINEMOなどは、このサイトで比べている回線とのセット割はありません。月額で選びます。' },
+];
+const tabs = tabDefs.map((t) => {
+  const list = homes
+    .map((h) => {
+      const discounts = t.brandIds
+        .map((b) => ({ brand: brands.find((x) => x.id === b)!.name, d: brandInfo[b]?.homes[h.id] }))
+        .filter((x) => x.d && x.d.max > 0)
+        .map((x) => ({ brand: x.brand, max: x.d!.max, exclusive: x.d!.exclusive }));
+      return { h, discounts };
+    })
+    .filter((x) => (t.brandIds.length ? x.discounts.length > 0 : true))
+    .sort((a, b) => (a.h.monthly.house ?? 99999) - (b.h.monthly.house ?? 99999))
+    .slice(0, t.brandIds.length ? 4 : 3);
+  return { ...t, list };
+});
+
+// ① エリアのタブ：地方ごとに都道府県を並べる
+const regionDefs = [
+  { key: 'hokkaido', label: '北海道・東北', from: 1, to: 7 }, { key: 'kanto', label: '関東', from: 8, to: 14 },
+  { key: 'chubu', label: '中部', from: 15, to: 23 }, { key: 'kinki', label: '近畿', from: 24, to: 30 },
+  { key: 'chugoku', label: '中国・四国', from: 31, to: 39 }, { key: 'kyushu', label: '九州・沖縄', from: 40, to: 47 },
+];
+const regions = regionDefs.map((r) => ({ ...r, prefs: prefectures.filter((p) => +p.code >= r.from && +p.code <= r.to) }));
+
+// 選び方ガイド（これまでと同じ）
+interface HomeGuideCard { href: string; category: GuideCategory; title: string; description: string; updatedAt: string; artworkSlug: string; manga: { sheet: ConnectivityMangaSheet; frame: number } | null }
 const homeGuideCards: HomeGuideCard[] = [
   ...guides.map((guide, index) => ({
-    href: `/guides/${guide.slug}/`, category: guide.category, title: guide.title,
-    description: guide.description, updatedAt: guide.updatedAt, artworkSlug: guide.slug,
-    manga: guide.category === 'internet' ? {
-      sheet: (guide.slug === 'hikari-one-year' || guide.slug === 'moving-internet-kagoshima' ? 'moving' : 'compare') as ConnectivityMangaSheet,
-      frame: guide.slug === 'hikari-one-year' ? 2 : guide.slug === 'moving-internet-kagoshima' ? 0 : index % 2 === 0 ? 0 : 3,
-    } : null,
+    href: `/guides/${guide.slug}/`, category: guide.category, title: guide.title, description: guide.description, updatedAt: guide.updatedAt, artworkSlug: guide.slug,
+    manga: guide.category === 'internet' ? { sheet: (guide.slug === 'hikari-one-year' || guide.slug === 'moving-internet-kagoshima' ? 'moving' : 'compare') as ConnectivityMangaSheet, frame: guide.slug === 'hikari-one-year' ? 2 : guide.slug === 'moving-internet-kagoshima' ? 0 : index % 2 === 0 ? 0 : 3 } : null,
   })),
   ...['uq-mobile', 'x-mobile'].flatMap((id, index) => {
-    const service = mobileServices.find(item => item.id === id);
-    return service ? [{
-      href: `/mobile/${service.id}/`, category: 'internet' as GuideCategory,
-      title: `${service.name}を漫画で比較｜料金の条件と申込み前の確認`,
-      description: mobileMangaGuides[service.id].intro, updatedAt: service.checkedAt, artworkSlug: '',
-      manga: { sheet: 'mobile' as ConnectivityMangaSheet, frame: index === 0 ? 1 : 4 },
-    }] : [];
+    const service = mobileServices.find((item) => item.id === id);
+    return service ? [{ href: `/mobile/${service.id}/`, category: 'internet' as GuideCategory, title: `${service.name}を漫画で比較｜料金の条件と申込み前の確認`, description: mobileMangaGuides[service.id].intro, updatedAt: service.checkedAt, artworkSlug: '', manga: { sheet: 'mobile' as ConnectivityMangaSheet, frame: index === 0 ? 1 : 4 } }] : [];
   }),
 ];
+const internetGuides = homeGuideCards.filter((c) => c.category === 'internet').slice(0, 6);
 const guideCount = guides.length + mobileServices.length + 1;
-const collectionLd={'@context':'https://schema.org','@type':'CollectionPage',name:title,url:SITE.url+'/',description,inLanguage:'ja',mainEntity:{'@type':'ItemList',itemListElement:homeGuideCards.map((card,i)=>({'@type':'ListItem',position:i+1,name:card.title,url:SITE.url+card.href}))}};
+const learning = ['study-sapuri-toeic', 'study-sapuri-daily'].map((id) => offers.find((o) => o.id === id)).filter((o) => o !== undefined);
+const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPage', name: title, url: SITE.url + '/', description, inLanguage: 'ja', mainEntity: { '@type': 'ItemList', itemListElement: homeGuideCards.map((card, i) => ({ '@type': 'ListItem', position: i + 1, name: card.title, url: SITE.url + card.href })) } };
 ---
 <Base title={title} description={description} jsonLd={[collectionLd]}>
-  <div class="home-comparison">
-    <div class="site-container"><MangaShelf swipe heading="漫画でわかる、ネットとスマホの見直し" lead="気になるテーマを選んで、3分で読めます。読んだあとは、診断や比較で自分の条件を確かめられます。" /></div>
-    <header class="home-intro site-container"><VisualHero title={"家族の通信費を、\nまとめて診断。"} lead="家族の回線数・キャリア・使う年数から、自宅とスマホの組合せを比較。今の契約条件も確かめながら、自分たちに合う候補を探せます。" image="internet" eyebrow="回線・スマホをまとめて見直す"><div class="home-diagnosis-entry"><a class="home-diagnosis-button" href="/shindan/#setwari"><strong>家族の通信費を診断する</strong><span>詳しい住所・連絡先の入力は不要</span></a><a class="home-diagnosis-area" href="/hikari/area/">都道府県・市区町村からエリアを確認</a></div><nav aria-label="比較するテーマ"><a class="topic-shortcut" href="/hikari/"><strong>光回線の比較を見る</strong></a><a class="topic-shortcut" href="#learning"><strong>英語学習を選ぶ</strong></a></nav></VisualHero></header>
+  <div class="top">
+    <!-- ④ ファーストビュー：3秒でわかる見出しと、主役のボタン1つ -->
+    <header class="hx">
+      <div class="site-container hx-inner">
+        <div class="hx-copy">
+          <ul class="hx-badges" aria-label="この診断の特長">
+            <li>30秒・登録不要</li><li>回答は保存しません</li><li>公式情報で確認日つき</li>
+          </ul>
+          <h1>家族のスマホとネット、<br /><span>まとめて見直す。</span></h1>
+          <p class="hx-lead">今のスマホの会社から、セット割が使える光回線とホームルーターを比べられます。料金・還元の条件・解約金まで、かくさず載せています。</p>
+          <a class="btn-main" href="/shindan/#setwari">30秒で通信費を診断する<span>タップで5問・名前や住所は不要</span></a>
+          <p class="hx-sub"><a href="#area">住まいの地域で回線をさがす</a><a href="#carrier">スマホの会社で比べる</a></p>
+        </div>
+        <figure class="hx-visual">
+          <img src={heroImage} alt="友だちのミナが、ママにスマホの画面を見せて説明している。" width="1200" height="800" fetchpriority="high" />
+          <figcaption><NaviTalk who="mina" text="スマホの会社を選ぶだけで、家族でいくら変わるか目安がわかるよ。" tone="dark" /></figcaption>
+        </figure>
+      </div>
+    </header>
 
-    <div class="site-container"><MangaEntry /></div>
-    <aside class="site-container national-entry" aria-labelledby="national-entry-title"><div><p>全国のWi-Fi・光回線</p><h2 id="national-entry-title">自分の住む地域で、使える回線を確認する</h2></div><a href="/hikari/area/">47都道府県・市区町村から探す</a></aside>
-    <div class="site-container"><RelatedConnectivityLinks /></div>
-    <section id="internet" class="site-container home-section" aria-labelledby="internet-title"><div class="section-heading"><div><h2 id="internet-title">鹿児島の光回線は、スマホから絞る</h2></div><a href="/hikari/kagoshima/" class="all-link">{providers.filter(p=>p.kind==='fiber').length}社の料金・工事費を比べる →</a></div>
-      <div class="home-picks">{picks.map(({provider:p,...item})=><article><p class="pick-audience">{item.audience}</p><h3>{p.name}</h3><p class="pick-price"><span>戸建て月額</span><strong>{p.house?.label}</strong></p><p class="pick-condition">{item.label}</p>{p.campaign && <aside class="campaign-note"><strong>{p.campaign.label}</strong><p>戸建限定・6カ月内開通・8カ月継続・口座登録</p><details><summary>還元条件の詳細</summary><p>{p.campaign.detail}</p><a href={p.campaign.url} target="_blank" rel="noopener">還元条件の出典 ↗</a></details></aside>}<AffiliateButton provider={p} building="house" /><a class="detail-link" href={`/hikari/${p.id}/`}>料金・エリア・注意点を見る →</a></article>)}</div>
-      <div class="need-links"><a href="/hikari/kagoshima/#compare">格安SIM・月額で比べたい →</a><a href="/hikari/mansion/">マンションで使いたい →</a><a href="/hikari/home-router/">工事なしで使いたい →</a><a href="/guides/hikari-one-year/">1年だけ使いたい →</a></div>
-      <p class="source-note">料金は税込。BBIQは電気・3年自動更新の割引条件を含みます。SoftBank 光は2026年12月以降、契約によって料金改定の適用月が異なります。各社ページに確認日と公式出典を掲載しています。</p>
+    <!-- ③ 診断の1問目をここに。タップすると診断の2問目から始まる -->
+    <section class="quick site-container" aria-labelledby="quick-title">
+      <div class="quick-card">
+        <NaviTalk who="mama" text="わたしのスマホでも、セット割って使えるの？" />
+        <h2 id="quick-title"><span>Q1</span>今お使いのスマホの会社は？</h2>
+        <div class="quick-options">
+          {brands.map((b) => <a href={`/shindan/?carrier=${b.id}#setwari`}>{b.name}</a>)}
+        </div>
+        <p class="quick-note">タップすると、2問目（台数）から続きます。全部で5問・約30秒です。</p>
+      </div>
     </section>
 
-    <section id="learning" class="home-learning"><div class="site-container home-section"><VisualHero heading="h2" compact title={"英語学習は、\n目的から選ぶ。"} lead="TOEIC対策か、日常会話の基礎か。自習と講師レッスンの違いを見て、自分に合うコースへ。" image="learning" eyebrow="学び・スキル"><a href="/guides/study-sapuri-toeic-vs-eikaiwa/" class="learning-visual-link">コースの違いを比較する →</a></VisualHero>
-      <div class="learning-picks">{['study-sapuri-toeic','study-sapuri-daily'].map((id)=>offers.find((o)=>o.id===id)).filter((o)=>o!==undefined).map((offer,index)=><article><p class="pick-audience">{index===0?'TOEIC L&R TESTの受験が目的':'旅行・日常のフレーズを学びたい'}</p><h3>{index===0?'TOEIC L&R TEST対策コース':'新日常英会話コース'}</h3><p class="learning-service">スタディサプリENGLISH / ベーシック</p><p class="pick-price"><span>Web月額</span><strong>{index===0?'3,278円':'2,178円'}</strong></p><ul>{(index===0?['試験形式の問題演習と解説で学ぶ','受験日から学習計画を立てたい人に']:['ストーリー形式で日常表現を学ぶ','講師との会話レッスンは含まれません']).map(point=><li>{point}</li>)}</ul><AffiliateButton provider={offer} /><a class="detail-link" href="/guides/study-sapuri-toeic-vs-eikaiwa/">料金・プランの比較を読む →</a></article>)}</div>
-      <p class="source-note">税込・2026年11月22日確認。月額払いの通常料金です。複数月パックやアプリ内決済は条件が異なります。無料体験の対象と課金開始日は、申込画面で確認してください。<a href="https://eigosapuri.jp/plan/" target="_blank" rel="noopener">出典：リクルート公式料金</a></p><a class="learning-checklist" href="/guides/online-english-trial-checklist/">無料体験の前に：課金日・予約回数・やめ方のチェックリスト →</a>
-    </div></section>
+    <div class="site-container"><MangaShelf swipe heading="漫画でわかる、ネットとスマホの見直し" lead="ママとミナの会話で、3分で読めます。読んだあとは、診断や比較で自分の条件を確かめられます。" /></div>
 
-    <section class="site-container home-section" aria-labelledby="guides-title"><div class="section-heading"><div><p class="eyebrow">漫画と選び方ガイド</p><h2 id="guides-title">迷っている内容から読む</h2></div><a href="/guides/" class="all-link">全{guideCount}本を検索する →</a></div><div class="guide-grid">{homeGuideCards.map(card=><article><a href={card.href}>{card.manga ? <MangaThumbnail sheet={card.manga.sheet} frame={card.manga.frame} /> : <GuideArtwork slug={card.artworkSlug} />}<span class="guide-category">{categoryLabel[card.category]}{card.manga && <span class="manga-label">漫画で比較</span>}</span><h3>{card.title}</h3><p>{card.description}</p><span class="guide-bottom"><time datetime={card.updatedAt}>{jpDate(card.updatedAt)}</time><b>{card.manga ? '漫画で比較 →' : '比較を見る →'}</b></span></a></article>)}</div></section>
-    <aside class="site-container editorial-note"><h2>料金だけでなく、使う条件まで比較します</h2><p>公式情報をもとに、対象プラン・契約期間・追加費用・向かないケースを整理しています。自分の条件に合った候補が見つかったら、申込先の最新情報を確認してお進みください。</p><a href="/about/">編集方針・情報の調べ方 →</a></aside>
+    <!-- ③ スマホの会社のタブ：タップで、そのスマホに合う回線だけに切りかわる -->
+    <section id="carrier" class="sec site-container" aria-labelledby="carrier-title">
+      <p class="sec-eyebrow">光回線・ホームルーター</p>
+      <h2 id="carrier-title">スマホの会社で、合う回線を絞る</h2>
+      <p class="sec-lead">セット割は「スマホの会社」と「家のネット」の組み合わせで決まります。タブを選ぶと、そのスマホとセット割がある回線だけが出ます。</p>
+      <div class="tabs" data-tabs>
+        <div class="tab-list" role="tablist" aria-label="スマホの会社">
+          {tabs.map((t, i) => <button type="button" role="tab" id={`tab-${t.key}`} aria-controls={`panel-${t.key}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{t.label}</button>)}
+        </div>
+        {tabs.map((t, i) => (
+          <div class="tab-panel" role="tabpanel" id={`panel-${t.key}`} aria-labelledby={`tab-${t.key}`} data-panel hidden={i !== 0}>
+            <p class="tab-note">{t.note}</p>
+            <div class="net-grid">
+              {t.list.map(({ h, discounts }) => {
+                const p = providers.find((x) => x.id === h.id);
+                return (
+                  <article class="net-card">
+                    <p class="net-kind">{h.kind === 'fiber' ? '光回線' : 'ホームルーター（工事なし）'}{h.prefectures && <span class="net-area">{h.prefectures.map(prefName).join('・')}で確認</span>}</p>
+                    <h3>{h.name}</h3>
+                    <dl class="net-price">
+                      <div><dt>戸建て</dt><dd>{h.monthly.house != null ? <><strong>{yen(h.monthly.house)}</strong>/月</> : '対象外'}</dd></div>
+                      <div><dt>マンション</dt><dd>{h.monthly.mansion != null ? <><strong>{yen(h.monthly.mansion)}</strong>/月</> : '対象外'}</dd></div>
+                    </dl>
+                    {discounts.length > 0 && <ul class="net-set">{discounts.map((d) => <li><span>{d.brand}のセット割</span>スマホ1台につき<strong>最大{yen(d.max)}</strong>/月引き{d.exclusive && '（家族割と併用不可のプランあり）'}</li>)}</ul>}
+                    <AffiliateButton provider={p ?? { id: h.id, name: h.name, officialUrl: h.url, affiliate: null }} actionFirst={true} building="house" notice="対象プラン・必要なオプション・提供エリアを申込先で確認してください。" />
+                    <details class="net-more">
+                      <summary>料金・セット割の条件の詳細を見る</summary>
+                      <ul>
+                        {(h.requiredBundleOptionMonthly ?? 0) > 0 && <li>セット割には、月{yen(h.requiredBundleOptionMonthly ?? 0)}のオプションが必要です。</li>}
+                        {h.decemberMonthly && <li>2026年12月以降は、戸建て{h.decemberMonthly.house != null ? yen(h.decemberMonthly.house) : '-'}・マンション{h.decemberMonthly.mansion != null ? yen(h.decemberMonthly.mansion) : '-'}に改定（契約によって適用の月がちがいます）。</li>}
+                        <li>契約期間：{h.contractMonths ? `${h.contractMonths}カ月` : 'なし'}</li>
+                        {homeData.homes.find((x) => x.id === h.id)?.note && <li>{homeData.homes.find((x) => x.id === h.id)?.note}</li>}
+                      </ul>
+                      <p class="net-src">出典：{homeData.homes.find((x) => x.id === h.id)?.sources?.map((s, k) => <>{k > 0 && '・'}<a href={s.url} target="_blank" rel="noopener">{s.label}</a></>)}（{checked}確認・税込）</p>
+                    </details>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="sec-links"><a href="/shindan/#setwari" class="btn-ghost">家族の台数まで入れて診断する →</a><a href="/hikari/" class="text-link">光回線を一覧で比べる →</a></div>
+    </section>
+
+    <!-- ① エリアのタブ：自分の地域を選ぶ -->
+    <section id="area" class="sec sec-tint" aria-labelledby="area-title">
+      <div class="site-container">
+        <p class="sec-eyebrow">提供エリア</p>
+        <h2 id="area-title">住まいの地域で、使える回線を確かめる</h2>
+        <NaviTalk who="mina" text="同じ回線でも、住所や建物で使えないことがあるよ。まず地域を選んでね。" />
+        <div class="tabs area-tabs" data-tabs>
+          <div class="tab-list" role="tablist" aria-label="地方">
+            {regions.map((r, i) => <button type="button" role="tab" id={`tab-${r.key}`} aria-controls={`panel-${r.key}`} aria-selected={r.key === 'kyushu' ? 'true' : 'false'} tabindex={r.key === 'kyushu' ? 0 : -1}>{r.label}</button>)}
+          </div>
+          {regions.map((r) => (
+            <div class="tab-panel" role="tabpanel" id={`panel-${r.key}`} aria-labelledby={`tab-${r.key}`} data-panel hidden={r.key !== 'kyushu'}>
+              {r.key === 'kyushu' && <a class="area-feature" href="/hikari/kagoshima/"><strong>鹿児島の光回線をくわしく</strong><span>5社の料金・市町村ごとの提供率・離島の注意点</span></a>}
+              <div class="pref-grid">{r.prefs.map((p) => <a href={getPrefecturePath(p)}>{p.name}</a>)}</div>
+            </div>
+          ))}
+        </div>
+        <p class="sec-links"><a href="/hikari/area/" class="text-link">47都道府県・市区町村の名前から探す →</a></p>
+      </div>
+    </section>
+
+    <!-- 選び方ガイド（通信） -->
+    <section class="sec site-container" aria-labelledby="guides-title">
+      <p class="sec-eyebrow">漫画と選び方ガイド</p>
+      <h2 id="guides-title">迷っていることから読む</h2>
+      <div class="guide-grid">{internetGuides.map((card) => <article><a href={card.href}>{card.manga ? <MangaThumbnail sheet={card.manga.sheet} frame={card.manga.frame} /> : <GuideArtwork slug={card.artworkSlug} />}<span class="guide-category">{categoryLabel[card.category]}{card.manga && <span class="manga-label">漫画で比較</span>}</span><h3>{card.title}</h3><span class="guide-bottom"><time datetime={card.updatedAt}>{jpDate(card.updatedAt)}</time><b>読む →</b></span></a></article>)}</div>
+      <p class="sec-links"><a href="/guides/" class="text-link">全{guideCount}本を検索する →</a></p>
+    </section>
+
+    <!-- ① ほかのジャンル：背景色を変えて、通信とはっきり分ける -->
+    <section class="other" aria-labelledby="other-title">
+      <div class="site-container">
+        <p class="sec-eyebrow">通信のほかのテーマ</p>
+        <h2 id="other-title">お金・安全・学びの見直しも</h2>
+        <div class="other-grid">
+          <a href="/card/"><strong>クレジットカード</strong><span>スマホ代でおトクなカードと、年会費無料のカード</span></a>
+          <a href="/security/"><strong>セキュリティ・詐欺対策</strong><span>ウイルス対策ソフト・VPN・偽SMSの見分け方</span></a>
+          <a href="/used-smartphones/"><strong>中古スマホ</strong><span>保証と返品の条件で比べる</span></a>
+          <a href="/houjin/"><strong>会社・お店向け</strong><span>法人携帯・電話・コピー機・法人カード</span></a>
+        </div>
+        <div id="learning" class="learning">
+          <h3>英語学習は、目的から選ぶ</h3>
+          <div class="learning-grid">
+            {learning.map((offer, index) => (
+              <article>
+                <p class="learning-aud">{index === 0 ? 'TOEIC L&R TESTの受験が目的' : '旅行・日常のフレーズを学びたい'}</p>
+                <h4>{index === 0 ? 'TOEIC L&R TEST対策コース' : '新日常英会話コース'}</h4>
+                <p class="learning-price">スタディサプリENGLISH・Web月額 <strong>{index === 0 ? '3,278円' : '2,178円'}</strong></p>
+                <AffiliateButton provider={offer} />
+                <details class="net-more"><summary>料金の条件を見る</summary><p>税込・2026年11月22日確認。月額払いの通常料金です。複数月パックやアプリ内決済は条件が異なります。無料体験の対象と課金開始日は、申込画面で確認してください。<a href="https://eigosapuri.jp/plan/" target="_blank" rel="noopener">出典：リクルート公式料金</a></p></details>
+              </article>
+            ))}
+          </div>
+          <p class="sec-links"><a href="/guides/study-sapuri-toeic-vs-eikaiwa/" class="text-link">コースのちがいを比べる →</a></p>
+        </div>
+      </div>
+    </section>
+
+    <aside class="site-container trust">
+      <h2>料金だけでなく、使う条件まで比べます</h2>
+      <p>公式情報をもとに、対象プラン・契約期間・追加費用・向かないケースを整理しています。各ページに確認日と出典を載せています。順位は、広告の報酬ではなく条件で決めています。</p>
+      <a href="/about/">編集方針・運営者情報を見る →</a>
+    </aside>
   </div>
 </Base>
-<style>
-.manga-label{display:inline-block;margin-left:8px;padding:2px 7px;border-radius:4px;background:#f7ead7;color:#8c4a29;font-size:11px;line-height:1.7}.guide-grid article{min-width:0;overflow:hidden}.guide-grid h3,.guide-grid p{overflow-wrap:anywhere}.guide-bottom{flex-wrap:wrap}.guide-grid article>a:focus-visible{outline:3px solid #175d50;outline-offset:-3px}
-.home-diagnosis-entry{margin-top:18px;max-width:420px}.home-diagnosis-button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:66px;padding:13px 18px;border:1px solid #9b4627;border-radius:7px;background:#ae512e;box-shadow:0 3px 0 #843a20;color:#fff;text-align:center;text-decoration:none}.home-diagnosis-button:hover{background:#914023}.home-diagnosis-button:focus-visible{outline:3px solid #175d50;outline-offset:5px}.home-diagnosis-button strong{font-size:19px;line-height:1.6;font-weight:800}.home-diagnosis-button span{font-size:13px;line-height:1.6;color:#fff4e9}.home-diagnosis-area{display:inline-block;min-height:44px;padding:11px 0 5px;color:#175d50;font-size:13px;line-height:1.8;text-decoration:underline;text-underline-offset:4px}.home-intro .topic-shortcut{padding:7px 12px;background:transparent;border-color:#d5d9ce}.home-intro .topic-shortcut strong{font-size:13px;font-weight:700}@media(max-width:700px){.home-diagnosis-entry{margin-top:16px;max-width:none}.home-diagnosis-button{min-height:65px;padding:11px 10px}.home-diagnosis-button strong{font-size:18px}.home-diagnosis-button span{font-size:12px}.home-diagnosis-area{font-size:13px}.home-intro nav{margin-top:8px!important}.home-intro .topic-shortcut{padding:8px 5px}.home-intro .topic-shortcut strong{font-size:12px}}
-.national-entry{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:20px;border:1px solid #c9dcd0;border-radius:7px;background:#f0f6f2;padding:18px 20px}.national-entry p{font-size:13px;font-weight:700;color:#175d50}.national-entry h2{font-size:20px;font-weight:700;line-height:1.7;margin-top:4px}.national-entry>a{display:flex;align-items:center;justify-content:center;flex-shrink:0;min-height:46px;border:1px solid #175d50;border-radius:5px;background:#fff;padding:10px 14px;color:#175d50;font-size:14px;font-weight:700;text-align:center;line-height:1.7}.national-entry>a:hover{background:#e5efe8}@media(max-width:800px){.national-entry{align-items:stretch;flex-direction:column;gap:12px;padding:17px}.national-entry h2{font-size:18px}.national-entry>a{width:100%;font-size:14px}}
 
-  .home-comparison{background:#fff;color:#24392e;font-size:16px;line-height:1.85;padding-bottom:26px}.home-intro{padding-block:20px 18px;border-bottom:1px solid #dce5de}.eyebrow{color:#175d50;font-size:14px;font-weight:700;margin-bottom:8px}.home-intro h1{font-family:var(--font-sans);font-size:clamp(28px,4vw,43px);font-weight:800;line-height:1.5;margin:0}.home-intro h1 span{color:#175d50}.mobile-break{display:none}.home-intro>p:last-of-type{font-size:16px;color:#57675d;margin-top:12px;line-height:1.9}.home-intro nav{display:flex;flex-wrap:wrap;gap:10px;margin-top:13px;max-width:870px}.topic-shortcut{display:flex;gap:10px;align-items:center;padding:8px 14px;background:#f0f6f1;border:1px solid #d5e2d8;border-radius:7px}.topic-shortcut>span:first-child{display:none}.topic-shortcut strong{font-size:15px}.topic-shortcut>span:last-child{font-size:13px;color:#5c7061}.topic-shortcut:last-child{background:#fff8ef;border-color:#eadfce}.topic-shortcut:last-child>span:first-child{color:#bc6a3a}.home-section{padding-block:23px 0}.section-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:20px}.section-heading h2{font-family:var(--font-sans);font-size:clamp(22px,2.6vw,28px);font-weight:800;line-height:1.5}.section-heading .eyebrow{margin-bottom:5px}.all-link{flex-shrink:0;font-size:14px;font-weight:700;color:#175d50;text-decoration:underline;text-underline-offset:4px}.section-lead{font-size:15px;line-height:1.9;color:#58685e;margin-top:10px}.home-picks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:16px;margin-top:13px}.home-picks>article,.learning-picks>article{display:flex;flex-direction:column;border:1px solid #cddcd2;border-top:4px solid #175d50;border-radius:7px;background:#fff;padding:20px}.pick-audience{align-self:flex-start;padding:3px 8px;background:#edf4ef;color:#175d50;font-size:13px;font-weight:700;border-radius:4px}.home-picks h3,.learning-picks h3{font-size:23px;font-weight:800;line-height:1.6;margin-top:8px}.pick-reason{font-size:15px;color:#4e6356;line-height:1.8;margin-top:3px}.pick-price{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline;margin-top:11px}.pick-price>span{font-size:13px;color:#5d7062}.pick-price strong{font-size:27px;line-height:1.5;color:#175d50}.campaign-note{border:1px solid #ecd8be;background:#fff7e9;border-radius:5px;padding:9px 10px;margin-bottom:12px;color:#8c4a25}.campaign-note>strong{display:block;font-size:16px;line-height:1.6}.campaign-note>p{font-size:13px;line-height:1.8;margin-top:5px}.campaign-note>a{font-size:13px;text-decoration:underline;text-underline-offset:3px}.pick-condition{font-size:13px;line-height:1.8;color:#5b6d60;margin:4px 0 16px}.home-picks :global(.affiliate-block),.learning-picks :global(.affiliate-block){margin-top:0}.home-picks :global(a[data-affiliate-link]),.learning-picks :global(a[data-affiliate-link]){font-size:14px;line-height:1.65;padding:12px 8px}.home-picks :global(.text-\[11px\]),.learning-picks :global(.text-\[11px\]){font-size:13px;line-height:1.6}.detail-link{display:block;font-size:13px;font-weight:700;text-align:center;color:#175d50;text-decoration:underline;text-underline-offset:3px;margin-top:10px}.need-links{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:14px}.need-links a{display:flex;min-height:48px;align-items:center;justify-content:center;border:1px solid #d5dfd8;border-radius:5px;background:#f6f9f5;padding:10px;font-size:14px;font-weight:700;color:#175d50}.source-note{font-size:13px;line-height:1.9;color:#607164;margin-top:12px}.source-note a{color:#175d50;text-decoration:underline;text-underline-offset:3px;margin-left:4px}.home-learning{background:#f4f7f2;border-block:1px solid #dce5de;margin-top:32px;padding-bottom:28px}.learning-picks{display:grid;grid-template-columns:1fr 1fr;align-items:start;gap:18px;margin-top:18px}.learning-picks>article{border-top-color:#ab602f}.learning-picks .pick-audience{background:#fff3e2;color:#8b4c24}.learning-service{font-size:13px;color:#647166;margin-top:3px}.learning-picks ul{padding-left:20px;list-style:disc;margin:12px 0 18px;font-size:15px;line-height:1.85;color:#4e6455}.learning-checklist{display:block;margin-top:14px;padding:14px 18px;border:1px solid #d2dfd4;border-radius:5px;background:#fff;font-size:15px;font-weight:700;color:#175d50}.guide-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px;margin-top:19px}.guide-grid article{border:1px solid #d6e1d8;border-radius:6px;background:#fff}.guide-grid article>a{display:flex;flex-direction:column;height:100%;padding:20px}.guide-category{font-size:13px;color:#a35a32;font-weight:700}.guide-grid h3{font-size:18px;font-weight:700;line-height:1.75;margin-top:7px}.guide-grid p{font-size:14px;line-height:1.9;color:#607064;margin:10px 0 18px}.guide-bottom{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:auto;font-size:13px;color:#637467}.guide-bottom b{color:#175d50;white-space:nowrap}.editorial-note{padding:22px 24px;border:1px solid #d5e1d8;border-radius:6px;background:#f5f8f3;margin-top:32px}.editorial-note h2{font-family:var(--font-sans);font-size:19px;font-weight:700;line-height:1.7}.editorial-note p{font-size:14px;color:#5c6f60;line-height:1.9;margin-top:8px}.editorial-note>a{display:inline-block;margin-top:10px;font-size:14px;font-weight:700;color:#175d50;text-decoration:underline;text-underline-offset:3px}@media(max-width:950px){.section-heading{display:block}.all-link{display:inline-block;margin-top:10px}.home-picks{gap:12px}.home-picks>article{padding:16px}.home-picks h3{font-size:21px}.pick-reason{font-size:14px}.need-links{grid-template-columns:1fr 1fr}.guide-grid{grid-template-columns:1fr 1fr}}@media(max-width:700px){.home-intro{padding-block:20px}.home-intro h1{font-size:29px;line-height:1.5}.mobile-break{display:block}.desktop-break{display:none}.home-intro>p:last-of-type{font-size:15px;margin-top:10px}.home-intro nav{grid-template-columns:1fr;gap:9px;margin-top:17px}.topic-shortcut{padding:11px 15px}.topic-shortcut strong{font-size:17px}.topic-shortcut>span:last-child{font-size:13px}.home-section{padding-top:25px}.section-heading h2{font-size:23px;line-height:1.6}.section-lead{font-size:15px}.home-picks,.learning-picks{grid-template-columns:1fr;gap:14px}.home-picks>article,.learning-picks>article{padding:18px}.home-picks h3,.learning-picks h3{font-size:23px}.pick-reason{font-size:15px}.pick-price strong{font-size:28px}.home-picks :global(a[data-affiliate-link]),.learning-picks :global(a[data-affiliate-link]){font-size:15px}.need-links{gap:8px}.need-links a{font-size:13px;padding:9px}.home-learning{margin-top:25px;padding-bottom:24px}.guide-grid{grid-template-columns:1fr;gap:13px}.guide-grid article>a{padding:18px}.guide-grid h3{font-size:18px}.guide-bottom{font-size:13px}.editorial-note{padding:18px;margin-top:25px}.editorial-note h2{font-size:18px}}
-.campaign-note details{margin-top:4px;font-size:13px;line-height:1.7}.campaign-note summary{cursor:pointer;font-weight:700;text-decoration:underline;text-underline-offset:3px}.campaign-note details p{margin-top:7px;font-size:13px;line-height:1.8}.campaign-note details a{font-size:13px;text-decoration:underline;text-underline-offset:3px}
-@media(max-width:700px){.home-intro nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.topic-shortcut{justify-content:center;padding:10px 6px;min-width:0;min-height:44px}.topic-shortcut strong{font-size:13px}}
-.guide-grid article>a{padding:0 0 20px;overflow:hidden}.guide-grid article>a>span,.guide-grid article>a>h3,.guide-grid article>a>p{margin-left:20px;margin-right:20px}.guide-grid article>a>.guide-category{margin-top:16px}.guide-grid :global(.guide-artwork){margin:0}.home-intro{border:0;padding-bottom:5px}.home-learning :global(.visual-hero){margin-bottom:16px}.learning-visual-link{display:inline-flex;align-items:center;gap:8px;background:#175d50;color:white;font-size:14px;font-weight:700;border-radius:5px;padding:10px 14px;margin-top:12px}
+<script>
+  // タブ（キーボードの左右でも動く）。JavaScriptが動かないときは、最初のパネルだけが見える
+  document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((box) => {
+    const tabs = [...box.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const select = (t: HTMLButtonElement) => {
+      tabs.forEach((x) => {
+        const on = x === t;
+        x.setAttribute('aria-selected', String(on));
+        x.tabIndex = on ? 0 : -1;
+        const panel = document.getElementById(x.getAttribute('aria-controls')!);
+        if (panel) panel.hidden = !on;
+      });
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(t));
+      t.addEventListener('keydown', (e) => {
+        const k = (e as KeyboardEvent).key;
+        if (k !== 'ArrowRight' && k !== 'ArrowLeft') return;
+        const n = tabs[(i + (k === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+        select(n); n.focus();
+      });
+    });
+  });
+</script>
+
+<style>
+  /* ⑤ デザインの決まり：色は3つ（白〜薄いグレー／深い緑／オレンジ）、角丸16px、うすい影、広めの余白 */
+  .top { --c-base: #f6f8f6; --c-main: #175d50; --c-main-dark: #0f463c; --c-ink: #173d2b; --c-accent: #ea580c; --c-accent-dark: #c2410c; --c-line: #dbe5dd; --radius: 16px; --shadow: 0 8px 24px rgba(23,61,43,.08); color: #23352e; background: #fff; }
+  .top h2 { font-size: clamp(23px, 3vw, 30px); font-weight: 900; line-height: 1.45; color: var(--c-ink); }
+  .sec { padding-block: 56px 8px; }
+  .sec-tint { background: var(--c-base); padding-block: 56px; margin-top: 56px; }
+  .sec-eyebrow { font-size: 13px; font-weight: 800; letter-spacing: .06em; color: var(--c-main); margin-bottom: 6px; }
+  .sec-lead { margin-top: 10px; font-size: 15px; line-height: 1.9; color: #4f6a5a; max-width: 760px; }
+  .sec-links { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 22px; }
+  .text-link { font-size: 15px; font-weight: 800; color: var(--c-main); text-decoration: underline; text-underline-offset: 4px; }
+
+  /* ファーストビュー */
+  .hx { background: linear-gradient(160deg, #f1f7f2 0%, #ffffff 62%); border-bottom: 1px solid var(--c-line); }
+  .hx-inner { display: grid; grid-template-columns: 1.05fr .95fr; gap: 36px; align-items: center; padding-block: 40px 44px; }
+  .hx-badges { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0 0 16px; }
+  .hx-badges li { font-size: 13px; font-weight: 800; color: var(--c-main-dark); background: #fff; border: 1.5px solid #bcd3c3; border-radius: 999px; padding: 4px 12px; }
+  .hx h1 { font-size: clamp(30px, 4.4vw, 46px); font-weight: 900; line-height: 1.35; color: var(--c-ink); }
+  .hx h1 span { color: var(--c-main); }
+  .hx-lead { margin-top: 14px; font-size: 16px; line-height: 1.95; color: #4f6a5a; max-width: 560px; }
+  .btn-main { display: flex; flex-direction: column; align-items: center; justify-content: center; max-width: 460px; min-height: 72px; margin-top: 22px; padding: 14px 22px; border-radius: 999px; background: var(--c-accent); color: #fff; font-size: 20px; font-weight: 900; text-decoration: none; text-align: center; box-shadow: 0 8px 20px rgba(234,88,12,.32); transition: transform .15s, background .15s; }
+  .btn-main span { font-size: 13px; font-weight: 700; opacity: .95; margin-top: 2px; }
+  .btn-main:hover { background: var(--c-accent-dark); transform: translateY(-1px); }
+  .btn-main:focus-visible, .btn-ghost:focus-visible, .quick-options a:focus-visible, .pref-grid a:focus-visible, .other-grid a:focus-visible { outline: 3px solid var(--c-main); outline-offset: 3px; }
+  .hx-sub { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 14px; }
+  .hx-sub a { font-size: 15px; font-weight: 700; color: var(--c-main); text-decoration: underline; text-underline-offset: 4px; }
+  .hx-visual { position: relative; margin: 0; }
+  .hx-visual img { display: block; width: 100%; height: auto; border-radius: 24px; box-shadow: var(--shadow); background: #eaf3ec; }
+  .hx-visual figcaption { position: absolute; left: -18px; bottom: -22px; max-width: 360px; }
+
+  /* 診断の1問目 */
+  .quick { margin-top: 34px; }
+  .quick-card { border: 2px solid var(--c-main); border-radius: var(--radius); background: #fff; box-shadow: var(--shadow); padding: 22px 22px 18px; }
+  .quick-card h2 { display: flex; align-items: center; gap: 10px; margin-top: 14px; font-size: clamp(20px, 2.4vw, 24px); }
+  .quick-card h2 span { font-size: 14px; color: #fff; background: var(--c-main); border-radius: 8px; padding: 2px 10px; }
+  .quick-options { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+  .quick-options a { display: flex; align-items: center; justify-content: center; min-height: 52px; padding: 8px; border: 1.5px solid #c7d6cc; border-radius: 12px; background: #fff; font-size: 15px; font-weight: 800; color: var(--c-ink); text-align: center; text-decoration: none; transition: border-color .15s, background .15s; }
+  .quick-options a:hover { border-color: var(--c-accent); background: #fff7ed; color: var(--c-accent-dark); }
+  .quick-note { margin-top: 10px; font-size: 13px; color: #5d6f63; }
+
+  /* タブ */
+  .tabs { margin-top: 22px; }
+  .tab-list { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+  .tab-list button { flex-shrink: 0; min-height: 46px; padding: 8px 18px; border: 1.5px solid #c7d6cc; border-radius: 999px; background: #fff; font-size: 15px; font-weight: 800; color: var(--c-ink); cursor: pointer; }
+  .tab-list button[aria-selected="true"] { background: var(--c-main); border-color: var(--c-main); color: #fff; }
+  .tab-list button:focus-visible { outline: 3px solid var(--c-accent); outline-offset: 2px; }
+  .tab-panel { margin-top: 16px; }
+  .tab-note { font-size: 13px; color: #5d6f63; }
+  .net-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-top: 12px; align-items: start; }
+  .net-card { border: 1px solid var(--c-line); border-radius: var(--radius); background: #fff; box-shadow: var(--shadow); padding: 18px; min-width: 0; }
+  .net-kind { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 12px; font-weight: 800; color: var(--c-main); }
+  .net-area { color: #8a4b1e; background: #fff3e6; border-radius: 999px; padding: 1px 8px; }
+  .net-card h3 { margin-top: 4px; font-size: 20px; font-weight: 900; line-height: 1.5; color: var(--c-ink); }
+  .net-price { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
+  .net-price div { background: var(--c-base); border-radius: 10px; padding: 8px 10px; }
+  .net-price dt { font-size: 12px; color: #5d6f63; }
+  .net-price dd { margin: 0; font-size: 13px; }
+  .net-price strong { font-size: 20px; font-weight: 900; color: var(--c-ink); }
+  .net-set { list-style: none; padding: 0; margin: 0 0 12px; display: grid; gap: 6px; }
+  .net-set li { font-size: 13px; line-height: 1.7; background: #fff7ed; border-radius: 10px; padding: 8px 10px; }
+  .net-set span { display: block; font-size: 12px; font-weight: 800; color: var(--c-accent-dark); }
+  .net-set strong { font-size: 16px; color: var(--c-accent-dark); margin: 0 2px; }
+  .net-more { margin-top: 10px; border-top: 1px dashed var(--c-line); padding-top: 8px; }
+  .net-more summary { cursor: pointer; font-size: 13px; font-weight: 800; color: var(--c-main); }
+  .net-more ul { margin: 8px 0 0; padding-left: 1.2em; display: grid; gap: 4px; list-style: disc; }
+  .net-more li, .net-more p { font-size: 12px; line-height: 1.8; color: #4f6a5a; }
+  .net-more a { color: var(--c-main); text-decoration: underline; }
+  .net-src { margin-top: 6px; }
+  .btn-ghost { display: inline-flex; align-items: center; min-height: 50px; padding: 10px 20px; border: 2px solid var(--c-main); border-radius: 999px; font-size: 15px; font-weight: 800; color: var(--c-main); text-decoration: none; background: #fff; }
+  .btn-ghost:hover { background: #f0f6f1; }
+
+  /* エリア */
+  #area :global(.navi) { margin-top: 16px; max-width: 640px; }
+  .area-feature { display: flex; flex-direction: column; gap: 2px; margin-bottom: 12px; padding: 14px 18px; border-radius: var(--radius); background: var(--c-main); color: #fff; text-decoration: none; }
+  .area-feature strong { font-size: 17px; }
+  .area-feature span { font-size: 13px; opacity: .92; }
+  .pref-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px; }
+  .pref-grid a { display: flex; align-items: center; justify-content: center; min-height: 46px; border: 1px solid var(--c-line); border-radius: 12px; background: #fff; font-size: 15px; font-weight: 700; color: var(--c-ink); text-decoration: none; }
+  .pref-grid a:hover { border-color: var(--c-main); color: var(--c-main); }
+
+  /* ガイド */
+  .guide-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 20px; }
+  .guide-grid article { border: 1px solid var(--c-line); border-radius: var(--radius); background: #fff; overflow: hidden; box-shadow: var(--shadow); min-width: 0; }
+  .guide-grid article > a { display: flex; flex-direction: column; height: 100%; padding: 0 0 16px; text-decoration: none; color: inherit; }
+  .guide-grid article > a > span, .guide-grid article > a > h3 { margin-left: 18px; margin-right: 18px; }
+  .guide-grid :global(.guide-artwork) { margin: 0; }
+  .guide-category { margin-top: 14px; font-size: 12px; font-weight: 800; color: var(--c-accent-dark); }
+  .manga-label { margin-left: 8px; padding: 1px 7px; border-radius: 4px; background: #fff3e6; color: #8c4a29; font-size: 11px; }
+  .guide-grid h3 { margin-top: 6px; font-size: 17px; font-weight: 800; line-height: 1.7; color: var(--c-ink); overflow-wrap: anywhere; }
+  .guide-bottom { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 10px; font-size: 13px; color: #637467; }
+  .guide-bottom b { color: var(--c-main); }
+
+  /* ほかのジャンル */
+  .other { margin-top: 64px; padding-block: 56px; background: #fbf6ef; border-block: 1px solid #efe2cf; }
+  .other .sec-eyebrow { color: #a5522a; }
+  .other-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 20px; }
+  .other-grid a { display: flex; flex-direction: column; gap: 6px; padding: 18px; border-radius: var(--radius); background: #fff; border: 1px solid #efe2cf; box-shadow: var(--shadow); text-decoration: none; }
+  .other-grid strong { font-size: 17px; color: var(--c-ink); }
+  .other-grid span { font-size: 13px; line-height: 1.7; color: #5d6f63; }
+  .learning { margin-top: 36px; }
+  .learning h3 { font-size: 21px; font-weight: 900; color: var(--c-ink); }
+  .learning-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 14px; align-items: start; }
+  .learning-grid article { border-radius: var(--radius); background: #fff; border: 1px solid #efe2cf; box-shadow: var(--shadow); padding: 18px; min-width: 0; }
+  .learning-aud { width: fit-content; font-size: 12px; font-weight: 800; color: #8b4c24; background: #fff3e2; border-radius: 6px; padding: 2px 8px; }
+  .learning-grid h4 { margin-top: 6px; font-size: 19px; font-weight: 900; color: var(--c-ink); }
+  .learning-price { margin: 6px 0 12px; font-size: 13px; color: #5d6f63; }
+  .learning-price strong { font-size: 20px; color: var(--c-ink); }
+
+  .trust { margin-block: 56px 40px; padding: 24px; border-radius: var(--radius); background: var(--c-base); border: 1px solid var(--c-line); }
+  .trust h2 { font-size: 20px; }
+  .trust p { margin-top: 8px; font-size: 14px; line-height: 1.9; color: #5c6f60; }
+  .trust a { display: inline-block; margin-top: 10px; font-size: 14px; font-weight: 800; color: var(--c-main); text-decoration: underline; }
+
+  @media (max-width: 960px) {
+    .hx-inner { grid-template-columns: 1fr; gap: 26px; }
+    .hx-visual { order: -1; }
+    .hx-visual figcaption { position: static; margin-top: 12px; max-width: none; }
+    .quick-options { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .guide-grid { grid-template-columns: 1fr 1fr; }
+    .other-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 640px) {
+    .hx-inner { padding-block: 20px 30px; }
+    .btn-main { font-size: 18px; }
+    .quick-options { grid-template-columns: 1fr 1fr; }
+    .guide-grid, .other-grid, .learning-grid { grid-template-columns: 1fr; }
+    .sec { padding-top: 44px; }
+  }
 </style>

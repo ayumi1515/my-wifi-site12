@@ -1,0 +1,23 @@
+---
+// 公式ナビゲーター（疑問を持つ「ママ」と、くわしい友だちの「ミナ」）の吹き出し。
+// 顔の絵は public/images/navi/{mama,mina}.webp（漫画LP「セット割」と同じ人物）。漫画と同じ二人で、サイト全体の案内をそろえる。
+interface Props { who: 'mama' | 'mina'; text: string; side?: 'left' | 'right'; tone?: 'light' | 'dark' }
+const { who, text, side = 'left', tone = 'light' } = Astro.props;
+const name = who === 'mama' ? 'ママ' : 'ミナ';
+---
+<p class:list={['navi', `is-${who}`, `is-${side}`, `tone-${tone}`]}>
+  <img src={`/images/navi/${who}.webp`} alt="" width="240" height="240" loading="lazy" decoding="async" />
+  <span class="navi-text"><span class="navi-name">{name}</span>{text}</span>
+</p>
+<style>
+  .navi { display: flex; align-items: flex-end; gap: 10px; margin: 0; }
+  .navi.is-right { flex-direction: row-reverse; }
+  .navi img { flex-shrink: 0; width: 56px; height: 56px; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 3px 10px rgba(23,61,43,.16); object-fit: cover; background: #edf5ef; }
+  .navi-text { position: relative; display: block; padding: 10px 14px; border-radius: 16px; background: #fff; border: 1.5px solid #d6e2da; font-size: 14px; font-weight: 700; line-height: 1.7; color: #23352e; }
+  .navi.is-left .navi-text { border-bottom-left-radius: 4px; }
+  .navi.is-right .navi-text { border-bottom-right-radius: 4px; }
+  .navi-name { display: block; font-size: 11px; font-weight: 800; line-height: 1.4; margin-bottom: 2px; }
+  .is-mama .navi-name { color: #c2410c; }
+  .is-mina .navi-name { color: #175d50; }
+  .tone-dark .navi-text { background: rgba(255,255,255,.96); border-color: transparent; }
+</style>

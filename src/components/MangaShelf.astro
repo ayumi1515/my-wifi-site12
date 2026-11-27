@@ -12,11 +12,14 @@ const lps = ids ? ids.map((id) => data.lps.find((l) => l.id === id)).filter((l):
   <div class="ms-grid">
     {lps.map((l) => (
       <a class="ms-card" href={l.href}>
-        <img src={`/images/manga-lp/${l.id}/hero.webp`} alt={l.alt} width="1200" height="800" loading="lazy" decoding="async" />
+        <span class="ms-cover">
+          <img src={`/images/manga-lp/${l.id}/hero.webp`} alt={l.alt} width="1200" height="800" loading="lazy" decoding="async" />
+          <span class="ms-badges"><span class="ms-badge is-time">漫画で3分</span><span class="ms-badge">{l.audience}</span></span>
+          <strong class="ms-cover-title">{l.title}</strong>
+        </span>
         <span class="ms-body">
-          <span class="ms-aud">{l.audience}</span>
-          <strong>{l.title}</strong>
-          <span class="ms-read">漫画で読む（3分）→</span>
+          <span class="ms-short">{l.short}</span>
+          <span class="ms-read">漫画で読む →</span>
         </span>
       </a>
     ))}
@@ -29,16 +32,23 @@ const lps = ids ? ids.map((id) => data.lps.find((l) => l.id === id)).filter((l):
   .ms-lead { margin-top: 6px; font-size: 15px; line-height: 1.85; color: #4f6a5a; }
   .ms-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; margin-top: 12px; }
   .is-compact .ms-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
-  .ms-card { display: flex; flex-direction: column; overflow: hidden; border: 2px solid #c7d9ca; border-radius: 14px; background: #fff; text-decoration: none; transition: border-color .15s, transform .15s; }
-  .ms-card:hover { border-color: #175d50; transform: translateY(-2px); }
-  .ms-card:focus-visible { outline: 3px solid #b45b36; outline-offset: 3px; }
-  .ms-card img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; background: #edf5ef; }
-  .ms-body { display: flex; flex-direction: column; gap: 6px; padding: 12px 14px 14px; }
-  .ms-aud { width: fit-content; font-size: 12px; font-weight: 800; color: #fff; background: #175d50; border-radius: 999px; padding: 2px 10px; }
-  .ms-card strong { font-size: 17px; font-weight: 800; line-height: 1.55; color: #173d2b; }
-  .ms-read { margin-top: 2px; font-size: 14px; font-weight: 800; color: #b45b36; }
+  /* 雑誌の表紙のように：イラストの上に、太い見出しとバッジを重ねる（絵に文字は入れない） */
+  .ms-card { display: flex; flex-direction: column; overflow: hidden; border: 1px solid #dbe5dd; border-radius: 16px; background: #fff; text-decoration: none; box-shadow: 0 8px 22px rgba(23,61,43,.08); transition: transform .15s, box-shadow .15s; }
+  .ms-card:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(23,61,43,.14); }
+  .ms-card:focus-visible { outline: 3px solid #ea580c; outline-offset: 3px; }
+  .ms-cover { position: relative; display: block; aspect-ratio: 3 / 2; overflow: hidden; background: #edf5ef; }
+  .ms-cover img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .ms-cover::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,30,22,0) 38%, rgba(10,30,22,.78) 100%); }
+  .ms-badges { position: absolute; top: 10px; left: 10px; right: 10px; z-index: 1; display: flex; flex-wrap: wrap; gap: 6px; }
+  .ms-badge { font-size: 12px; font-weight: 800; line-height: 1.5; color: #173d2b; background: rgba(255,255,255,.92); border-radius: 999px; padding: 2px 10px; }
+  .ms-badge.is-time { color: #fff; background: #ea580c; }
+  .ms-cover-title { position: absolute; left: 14px; right: 14px; bottom: 12px; z-index: 1; font-size: clamp(17px, 1.6vw, 20px); font-weight: 900; line-height: 1.45; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,.45); }
+  .ms-body { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 14px; }
+  .ms-short { font-size: 14px; font-weight: 700; color: #4f6a5a; line-height: 1.6; }
+  .ms-read { flex-shrink: 0; font-size: 14px; font-weight: 800; color: #c2410c; }
   .is-compact .ms-card { flex-direction: row; align-items: stretch; }
-  .is-compact .ms-card img { width: 42%; aspect-ratio: auto; }
+  .is-compact .ms-cover { width: 46%; aspect-ratio: auto; min-height: 150px; }
+  .is-compact .ms-body { flex-direction: column; align-items: flex-start; justify-content: center; }
   /* スマホでは横にスワイプ（トップページ用）。次のカードが少し見えるようにする */
   .ms-swipe-hint { display: none; }
   @media (max-width: 700px) {
@@ -46,5 +56,5 @@ const lps = ids ? ids.map((id) => data.lps.find((l) => l.id === id)).filter((l):
     .is-swipe .ms-card { flex: 0 0 78%; scroll-snap-align: start; }
     .is-swipe .ms-swipe-hint { display: block; margin-top: 4px; font-size: 13px; color: #5d6f63; }
   }
-  @media (max-width: 600px) { .is-compact .ms-card { flex-direction: column; } .is-compact .ms-card img { width: 100%; aspect-ratio: 3 / 2; } }
+  @media (max-width: 600px) { .is-compact .ms-card { flex-direction: column; } .is-compact .ms-cover { width: 100%; aspect-ratio: 3 / 2; } }
 </style>
