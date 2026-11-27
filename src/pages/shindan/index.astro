@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import MangaShelf from '../../components/MangaShelf.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import HouseholdDiagnosis from '../../components/HouseholdDiagnosis.astro';
 import SetWariDiagnosis from '../../components/SetWariDiagnosis.astro';
@@ -15,6 +16,7 @@ const crumbs=[{name:'総合トップ',href:'/'},{name:'回線・スマホ診断'
     <SetWariDiagnosis />
     <section class="detail-diagnosis" aria-labelledby="detail-diagnosis-title"><h2 id="detail-diagnosis-title">くわしく計算する（家族の今の料金と比べる）</h2><p>スマホの料金プラン・ギガ数・今の支払い・乗換え費用まで入れると、乗換え前と後をくわしく比べられます。</p></section>
     <HouseholdDiagnosis />
+    <MangaShelf ids={["kojin","sim"]} heading="漫画で読む：見直しのコツ" compact />
     <section class="method"><h2>計算に入れる条件と確認すること</h2><p>掲載した代表プランの通常料金と、対象となる家族割・セット割を比較します。各自宅回線について、入力された通信量とブランド・店舗の希望を満たすスマホの組合せを探し、利用期間の参考費用から、受け取る想定を選んだ特典を差し引いた順に最大3案を表示します。</p><p>回線の提供・通信品質・通話条件は住所や利用状況で変わります。費用を確認できないプランやpovoの都度購入、建物ごとに料金が変わるプランは、定額の自動比較に含めません。全商品・すべての割引を網羅した順位ではありません。</p><p><a href="/hikari/area/">全国の提供エリア確認</a> ／ <a href="/mobile/">掲載中のスマホ・SIM</a> ／ <a href="/guides/hikari-one-year/">1年利用の総額比較</a> ／ <a href="/about/">編集方針</a></p></section>
   </div>
 </Base>

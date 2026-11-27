@@ -2,6 +2,7 @@
 // 会社・お店の「ネット・電話・スマホ・コピー機」をまとめて見直すページ（法人・個人事業主向け）
 // 法人携帯・ビジネスフォン・コピー機の欄にA8の広告リンク（PR）がある。並び順は報酬ではなく、選び方の説明の順。
 import Base from '../../layouts/Base.astro';
+import MangaShelf from '../../components/MangaShelf.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import OfferCard from '../../components/OfferCard.astro';
 import { SITE } from '../../site.config.mjs';
@@ -61,7 +62,7 @@ const routes = [
     </div>
     <p class="byline">A8.netの広告の条件と公式サイトで{checkedAt.replace(/-/g, '/')}に確認 ／ 書いた人：{SITE.operator}（<a href="/about/">編集方針</a>）／ このページには広告リンク（PR）があります</p>
 
-    <p class="manga-link"><a href="/manga/houjin/">小さな会社の見直し方を漫画で読む（3分）→</a></p>
+    <MangaShelf ids={["houjin"]} heading="" compact />
     <nav class="route-grid" aria-label="見直したいものを選ぶ">
       {routes.map((r) => <a href={r.href}><strong>{r.label}</strong><span>{r.body}</span></a>)}
     </nav>

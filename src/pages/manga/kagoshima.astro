@@ -1,0 +1,66 @@
+---
+// 鹿児島で光回線を選ぶ縦読み漫画LP → 鹿児島の光回線の比較へ
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import MangaLp, { type MangaChapter } from '../../components/MangaLp.astro';
+import { breadcrumbLd } from '../../lib/data';
+import { SITE } from '../../site.config.mjs';
+
+const path = '/manga/kagoshima/';
+const title = '鹿児島で新生活。光回線、どこで選ぶ？｜鹿児島の光回線の選び方を漫画で';
+const description = '鹿児島で一人暮らしをはじめるとき、光回線はどう選ぶ？BBIQとフレッツ光・光コラボという選び方、建物の設備、工事、離島や山あいでの注意を、縦読み漫画で3分。最後に鹿児島の光回線を比べられます。';
+const crumbs = [{ name: '総合トップ', href: '/' }, { name: '鹿児島県の光回線', href: '/hikari/kagoshima/' }, { name: '漫画で見る選び方', href: '/manga/kagoshima/' }];
+const chapters: MangaChapter[] = [
+  { id: 'ch1', title: '新しい部屋に、Wi-Fiがない！', panels: [
+    { img: 'p1', alt: '段ボールだらけの部屋で、スマホを見て困るあおい。', lines: [{ who: 'あおい', text: '引っ越したのはいいけど…この部屋、Wi-Fiがない！' }] },
+    { img: 'p2', alt: '外で近所のとくさんに相談するあおい。', lines: [{ who: 'とくさん', text: '光回線は、住所と建物で使えるものが変わるんじゃよ。' }, { who: 'あおい', text: 'えっ、どこでも同じじゃないんですか？', side: 'right' }] },
+  ] },
+  { id: 'ch2', title: '鹿児島で選べる光回線は？', panels: [
+    { img: 'p3', alt: '九州の形の地図に光の線が走り、家につながっている図。', narration: '鹿児島では、全国で使えるフレッツ光・光コラボ（NTTの光回線を借りて各社が売るサービス。ドコモ光など）に加えて、九州の地域の光回線BBIQも候補になります。総務省の推計では、県の光回線の世帯カバー率は95.7%（2025年3月末）です。' },
+    { img: 'p4', alt: 'ノートPCで光回線の比較表を見るあおい。', lines: [{ who: 'あおい', text: '月額だけじゃなくて、工事費と、スマホとのセット割も一緒に比べるんだ。' }] },
+    { img: 'p5', alt: '管理会社に電話で建物の設備を確かめるあおい。', lines: [{ who: 'あおい', text: 'この建物に、どの回線の設備が入っているか教えてください。' }], narration: 'マンション・アパートは、建物に入っている設備で選べる回線や月額が変わります。' },
+  ] },
+  { id: 'ch3', title: '申し込む前に、ここを確かめる', panels: [
+    { img: 'p6', alt: '工事の人が部屋で機器をつないでいる。', narration: '工事が必要な場合は、開通まで日数がかかることがあります。工事ができない建物なら、工事のいらないホームルーターも候補です。' },
+    { img: 'p7', alt: '島へ向かうフェリーと海の風景。', lines: [{ who: 'とくさん', text: '島や山あいでは、使えないプランもある。住所で確かめるのがいちばんじゃ。' }], narration: '10ギガの光回線が使えるのは、県内の一部の市町だけです。' },
+    { img: 'p8', alt: '新しい部屋で笑顔のあおい。窓の外に桜島。', lines: [{ who: 'あおい', text: 'まずは住所で使える回線を確かめて、それから比べよう！' }] },
+  ] },
+];
+const worries = [
+  { text: '新しい家に、Wi-Fiがない', chapter: 'ch1', face: 'p1', facePos: '50% 35%' },
+  { text: 'BBIQとドコモ光、どっちがいい？', chapter: 'ch2', face: 'p4', facePos: '50% 35%' },
+  { text: '離島や山あいでも使える？', chapter: 'ch3', face: 'p7', facePos: '50% 50%' },
+];
+const points = [
+  { title: '住所と建物で使える回線を確かめる', body: 'マンション・アパートは管理会社に設備を聞き、戸建ては公式のエリア検索に住所を入れます。' },
+  { title: '月額・工事費・セット割をまとめて比べる', body: 'スマホの会社に合うセット割があるかで、家族の毎月の合計が変わります。' },
+  { title: '工事ができないときはホームルーターも', body: '工事が難しい建物や、すぐに使いたいときは、工事のいらないホームルーターも候補です。' },
+];
+const articleLd = { '@context': 'https://schema.org', '@type': 'Article', headline: '鹿児島で光回線を選ぶ（漫画）', description, inLanguage: 'ja', mainEntityOfPage: `${SITE.url}${path}`, datePublished: '2026-11-27', dateModified: '2026-11-27', author: { '@type': 'Organization', name: SITE.operator, url: `${SITE.url}/about/` }, publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url + '/' } };
+---
+<Base title={title} description={description} jsonLd={[breadcrumbLd(SITE.url, crumbs), articleLd]}>
+  <div class="site-container">
+    <Breadcrumbs items={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))} />
+    <MangaLp
+      base="/images/manga-lp/kagoshima"
+      kicker="漫画で3分｜鹿児島"
+      title="鹿児島で新生活。光回線、どこで選ぶ？"
+      lead="鹿児島で光回線を選ぶときは、住所と建物、スマホとのセット割、工事の有無がポイント。新生活のつまずきを漫画で。"
+      heroAlt="桜島の見える街並みで、新生活のあおいと近所のとくさんが並んでいる。"
+      worries={worries}
+      chapters={chapters}
+      points={points}
+      cta={{ href: '/hikari/kagoshima/', label: '鹿児島の光回線を比べる', sub: 'BBIQ・ドコモ光など5社の料金と工事費' }}
+      sticky={{ href: '/hikari/kagoshima/', label: '鹿児島の光回線を比べる' }}
+      speakers={{ 'あおい': '#b45b36', 'とくさん': '#175d50' }}
+      pointsTitle="まとめ：光回線選びの3つのポイント"
+      fictionNote="この漫画はフィクションです。登場人物は実在しません。使える回線や料金は、住所・建物・プランで変わります。"
+    >
+      <p class="mlp-more">スマホとのセット割から選ぶなら、<a href="/shindan/?prefecture=46#setwari">5問のセット割診断</a>もどうぞ。</p>
+    </MangaLp>
+  </div>
+</Base>
+<style>
+  .mlp-more { margin-top: 14px; font-size: 14px; line-height: 1.8; color: #4f6a5a; }
+  .mlp-more a { color: #175d50; font-weight: 700; text-decoration: underline; }
+</style>

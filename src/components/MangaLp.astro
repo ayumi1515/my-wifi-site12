@@ -17,8 +17,10 @@ interface Props {
   cta: { href: string; label: string; sub: string };
   sticky: { href: string; label: string };
   speakers: Record<string, string>; // 名前 → 色
+  pointsTitle?: string;
+  fictionNote?: string;
 }
-const { base, kicker, title, lead, heroAlt, worries, chapters, points, cta, sticky, speakers } = Astro.props;
+const { base, kicker, title, lead, heroAlt, worries, chapters, points, cta, sticky, speakers, pointsTitle = 'まとめ：見直しの3つのポイント', fictionNote = 'この漫画はフィクションです。登場人物は実在しません。料金や割引は会社・プラン・条件で変わります。' } = Astro.props;
 ---
 <div class="mlp">
   <header class="mlp-hero">
@@ -41,7 +43,7 @@ const { base, kicker, title, lead, heroAlt, worries, chapters, points, cta, stic
     ))}
   </section>
 
-  <p class="mlp-fiction">この漫画はフィクションです。登場人物は実在しません。料金や割引は会社・プラン・条件で変わります。</p>
+  <p class="mlp-fiction">{fictionNote}</p>
 
   {chapters.map((c, ci) => (
     <section class="mlp-chapter" id={c.id} aria-labelledby={`${c.id}-title`}>
@@ -66,7 +68,7 @@ const { base, kicker, title, lead, heroAlt, worries, chapters, points, cta, stic
   ))}
 
   <section class="mlp-points" aria-labelledby="mlp-points-title">
-    <h2 id="mlp-points-title">まとめ：見直しの3つのポイント</h2>
+    <h2 id="mlp-points-title">{pointsTitle}</h2>
     <ol>{points.map((p) => <li><strong>{p.title}</strong><span>{p.body}</span></li>)}</ol>
     <a class="mlp-cta is-big" href={cta.href}>{cta.label}<span>{cta.sub}</span></a>
     <slot />

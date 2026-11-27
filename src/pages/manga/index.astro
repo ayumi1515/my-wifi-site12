@@ -1,0 +1,25 @@
+---
+// 漫画LPの一覧ページ。サイトの入口のひとつ。
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import MangaShelf from '../../components/MangaShelf.astro';
+import { breadcrumbLd } from '../../lib/data';
+import { SITE } from '../../site.config.mjs';
+const crumbs = [{ name: '総合トップ', href: '/' }, { name: '漫画で読む', href: '/manga/' }];
+---
+<Base title="漫画で読む｜光回線・スマホ・詐欺対策・会社の通信費の見直し" description="家族のセット割、鹿児島の光回線、格安SIMへの乗り換え、偽SMS・詐欺の見分け方、小さな会社の通信費とコピー機。気になるテーマを縦読み漫画で3分。読んだあとは診断や比較で自分の条件を確かめられます。" jsonLd={[breadcrumbLd(SITE.url, crumbs)]}>
+  <div class="site-container manga-index">
+    <Breadcrumbs items={[crumbs[0], { name: crumbs[1].name }]} />
+    <h1>漫画で読む、ネットとスマホの見直し</h1>
+    <p class="lead">気になるテーマを選んで、3分で読めます。漫画はフィクションです。料金や割引は会社・プラン・条件で変わるので、最後は診断や公式の情報で確かめてください。</p>
+    <MangaShelf heading="" />
+    <p class="more"><a href="/manga/family-telecom/">6コマ漫画：家族のスマホ代・Wi-Fiを見直す順番</a></p>
+  </div>
+</Base>
+<style>
+  .manga-index { padding-top: 14px; padding-bottom: 30px; }
+  .manga-index h1 { margin-top: 12px; font-size: clamp(26px, 3.6vw, 36px); font-weight: 800; line-height: 1.45; color: #1f3a30; }
+  .lead { margin-top: 10px; font-size: 15px; line-height: 1.9; color: #4f6a5a; max-width: 820px; }
+  .more { margin-top: 22px; font-size: 15px; }
+  .more a { color: #175d50; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+</style>

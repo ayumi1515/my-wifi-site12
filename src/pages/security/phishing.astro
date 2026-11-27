@@ -1,6 +1,7 @@
 ---
 // 偽SMS・フィッシング詐欺の見分け方と、入力してしまったときの連絡先（広告なし）
 import Base from '../../layouts/Base.astro';
+import MangaShelf from '../../components/MangaShelf.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { SITE } from '../../site.config.mjs';
 import { faqLd, breadcrumbLd } from '../../lib/data';
@@ -31,6 +32,7 @@ const articleLd = {
     <Breadcrumbs items={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))} />
     <h1>偽SMS・フィッシング詐欺の見分け方<span>開く前に見る5つと、もしものときの連絡先</span></h1>
 
+    <MangaShelf ids={["sagi"]} heading="" compact />
     <div class="answer-box">
       <p class="answer-label">先に結論</p>
       <ul>

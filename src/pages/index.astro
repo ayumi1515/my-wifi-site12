@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import MangaShelf from '../components/MangaShelf.astro';
 import VisualHero from '../components/VisualHero.astro';
 import MangaEntry from '../components/MangaEntry.astro';
 import GuideArtwork from '../components/GuideArtwork.astro';
@@ -44,6 +45,7 @@ const collectionLd={'@context':'https://schema.org','@type':'CollectionPage',nam
 ---
 <Base title={title} description={description} jsonLd={[collectionLd]}>
   <div class="home-comparison">
+    <div class="site-container"><MangaShelf swipe heading="漫画でわかる、ネットとスマホの見直し" lead="気になるテーマを選んで、3分で読めます。読んだあとは、診断や比較で自分の条件を確かめられます。" /></div>
     <header class="home-intro site-container"><VisualHero title={"家族の通信費を、\nまとめて診断。"} lead="家族の回線数・キャリア・使う年数から、自宅とスマホの組合せを比較。今の契約条件も確かめながら、自分たちに合う候補を探せます。" image="internet" eyebrow="回線・スマホをまとめて見直す"><div class="home-diagnosis-entry"><a class="home-diagnosis-button" href="/shindan/#setwari"><strong>家族の通信費を診断する</strong><span>詳しい住所・連絡先の入力は不要</span></a><a class="home-diagnosis-area" href="/hikari/area/">都道府県・市区町村からエリアを確認</a></div><nav aria-label="比較するテーマ"><a class="topic-shortcut" href="/hikari/"><strong>光回線の比較を見る</strong></a><a class="topic-shortcut" href="#learning"><strong>英語学習を選ぶ</strong></a></nav></VisualHero></header>
 
     <div class="site-container"><MangaEntry /></div>

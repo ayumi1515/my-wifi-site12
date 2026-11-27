@@ -1,0 +1,50 @@
+---
+// 漫画LPの入口。サイト全体を「漫画で3分 → 診断・比較・申込み」の流れにするための部品。
+// ids を渡すと、その漫画だけを出す（各分野のページ用）。heading を空にすると見出しなし。
+import data from '../data/manga-lps.json';
+interface Props { ids?: string[]; heading?: string; lead?: string; compact?: boolean; swipe?: boolean }
+const { ids, heading = '漫画で3分、まず読んでみる', lead, compact = false, swipe = false } = Astro.props;
+const lps = ids ? ids.map((id) => data.lps.find((l) => l.id === id)).filter((l): l is (typeof data.lps)[number] => !!l) : data.lps;
+---
+<section class:list={['manga-shelf', { 'is-compact': compact, 'is-swipe': swipe }]} aria-label={heading || '漫画で読む'}>
+  {heading && <h2>{heading}</h2>}
+  {lead && <p class="ms-lead">{lead}</p>}
+  <div class="ms-grid">
+    {lps.map((l) => (
+      <a class="ms-card" href={l.href}>
+        <img src={`/images/manga-lp/${l.id}/hero.webp`} alt={l.alt} width="1200" height="800" loading="lazy" decoding="async" />
+        <span class="ms-body">
+          <span class="ms-aud">{l.audience}</span>
+          <strong>{l.title}</strong>
+          <span class="ms-read">漫画で読む（3分）→</span>
+        </span>
+      </a>
+    ))}
+  </div>
+  {swipe && <p class="ms-swipe-hint">← 横にスワイプして、ほかの漫画も見られます →</p>}
+</section>
+<style>
+  .manga-shelf { margin-top: 22px; }
+  .manga-shelf h2 { font-size: clamp(21px, 2.6vw, 27px); font-weight: 800; line-height: 1.5; color: #173d2b; }
+  .ms-lead { margin-top: 6px; font-size: 15px; line-height: 1.85; color: #4f6a5a; }
+  .ms-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; margin-top: 12px; }
+  .is-compact .ms-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+  .ms-card { display: flex; flex-direction: column; overflow: hidden; border: 2px solid #c7d9ca; border-radius: 14px; background: #fff; text-decoration: none; transition: border-color .15s, transform .15s; }
+  .ms-card:hover { border-color: #175d50; transform: translateY(-2px); }
+  .ms-card:focus-visible { outline: 3px solid #b45b36; outline-offset: 3px; }
+  .ms-card img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; background: #edf5ef; }
+  .ms-body { display: flex; flex-direction: column; gap: 6px; padding: 12px 14px 14px; }
+  .ms-aud { width: fit-content; font-size: 12px; font-weight: 800; color: #fff; background: #175d50; border-radius: 999px; padding: 2px 10px; }
+  .ms-card strong { font-size: 17px; font-weight: 800; line-height: 1.55; color: #173d2b; }
+  .ms-read { margin-top: 2px; font-size: 14px; font-weight: 800; color: #b45b36; }
+  .is-compact .ms-card { flex-direction: row; align-items: stretch; }
+  .is-compact .ms-card img { width: 42%; aspect-ratio: auto; }
+  /* スマホでは横にスワイプ（トップページ用）。次のカードが少し見えるようにする */
+  .ms-swipe-hint { display: none; }
+  @media (max-width: 700px) {
+    .is-swipe .ms-grid { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; margin-right: -16px; padding-right: 16px; }
+    .is-swipe .ms-card { flex: 0 0 78%; scroll-snap-align: start; }
+    .is-swipe .ms-swipe-hint { display: block; margin-top: 4px; font-size: 13px; color: #5d6f63; }
+  }
+  @media (max-width: 600px) { .is-compact .ms-card { flex-direction: column; } .is-compact .ms-card img { width: 100%; aspect-ratio: 3 / 2; } }
+</style>

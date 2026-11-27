@@ -2,6 +2,7 @@
 // 鹿児島の会社・お店・事業所向けのネット回線の選び方（法人向け）
 // 予備の回線の欄に、法人・店舗向けWi-Fi（BizAir）の広告リンクがある。ほかは公式の法人窓口へのふつうのリンク。
 import Base from '../../layouts/Base.astro';
+import MangaShelf from '../../components/MangaShelf.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import OfferCard from '../../components/OfferCard.astro';
 import { SITE } from '../../site.config.mjs';
@@ -90,6 +91,7 @@ const articleLd = {
       <OfferCard id="bizair" heading="法人・店舗向けの工事なしWi-Fi" />
     </section>
 
+    <MangaShelf ids={["houjin"]} heading="漫画で読む：小さな会社の通信費の見直し" compact />
     <aside class="biz-hub-link"><p>法人携帯・ビジネスフォン・コピー機もまとめて見直すなら</p><a href="/houjin/">会社・お店の通信費と事務機器の見直し →</a></aside>
     <section aria-labelledby="contact">
       <h2 id="contact">法人向けの公式窓口</h2>

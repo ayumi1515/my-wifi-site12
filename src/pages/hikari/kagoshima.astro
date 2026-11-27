@@ -2,6 +2,7 @@
 // 鹿児島県の光回線の看板ページ。「光回線 おすすめ 鹿児島」などの検索で読まれることを狙う。
 // 比較の本体は KagoshimaComparison（/hikari/ から移した）。ここでは結論・公的データ・地域の注意を足す。
 import Base from '../../layouts/Base.astro';
+import MangaShelf from '../../components/MangaShelf.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import KagoshimaComparison from '../../components/KagoshimaComparison.astro';
 import { SITE } from '../../site.config.mjs';
@@ -37,6 +38,7 @@ const [cy, cm] = coverage.asOf.split('-').map(Number);
   <header class="site-container kagoshima-hero">
     <Breadcrumbs items={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))} />
     <h1>鹿児島県の光回線おすすめ比較<span>【{y}年{m}月】</span></h1>
+    <MangaShelf ids={["kagoshima"]} heading="" compact />
     <div class="answer-box">
       <p class="answer-label">先に結論</p>
       <ul>

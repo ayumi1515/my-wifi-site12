@@ -1,0 +1,66 @@
+---
+// 偽SMS・詐欺の縦読み漫画LP（広告なしの見分け方ページと、セキュリティソフトの比較へ）
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import MangaLp, { type MangaChapter } from '../../components/MangaLp.astro';
+import { breadcrumbLd } from '../../lib/data';
+import { SITE } from '../../site.config.mjs';
+
+const path = '/manga/sagi/';
+const title = 'そのSMS、開く前にちょっと待って！｜偽SMS・フィッシング詐欺の見分け方を漫画で';
+const description = '宅配や銀行を名のる偽のSMS。リンクを押す前に何を見ればいい？入力してしまったらどうする？家族で知っておきたい見分け方と相談先を、縦読み漫画で3分。';
+const crumbs = [{ name: '総合トップ', href: '/' }, { name: 'セキュリティソフト', href: '/security/' }, { name: '漫画で見る詐欺対策', href: '/manga/sagi/' }];
+const chapters: MangaChapter[] = [
+  { id: 'ch1', title: '知らないSMSが届いたら', panels: [
+    { img: 'p1', alt: 'スマホに届いた通知を見て驚くはなこ。', lines: [{ who: 'はなこ', text: '「お荷物をお届けできませんでした」…？ 何か頼んだかしら。' }] },
+    { img: 'p2', alt: 'リンクを押しそうになる指。', narration: 'SMSのリンクから偽のサイトに誘い、IDやカード番号を入れさせる手口を「フィッシング」といいます。2026年10月の報告は11万件をこえました（フィッシング対策協議会）。' },
+    { img: 'p3', alt: '孫のりんが「待って」と止めている。', lines: [{ who: 'りん', text: 'おばあちゃん、待って！ そのリンク、押さないで！' }] },
+  ] },
+  { id: 'ch2', title: '本物かどうか、どう確かめる？', panels: [
+    { img: 'p4', alt: '本物と偽物の封筒を虫めがねで見比べる図。', lines: [{ who: 'りん', text: '送り主の名前だけでは、本物か見分けられないんだって。' }], narration: '警察庁は、金融機関がメールやSMSでIDやパスワードを聞くことはないと案内しています。' },
+    { img: 'p5', alt: '二人で公式アプリを開いて確かめている。', lines: [{ who: 'りん', text: '確かめるときは、届いたリンクじゃなくて、公式アプリかブックマークから開こう。' }] },
+    { img: 'p6', alt: 'りんが、はなこのスマホで設定をしている。', lines: [{ who: 'りん', text: '迷惑メッセージを止める設定もしておくね。' }], narration: '携帯会社には、迷惑なSMSを止める機能があります。' },
+  ] },
+  { id: 'ch3', title: 'もし入力してしまったら', panels: [
+    { img: 'p7', alt: '落ち着いた表情で電話をするはなこ。', lines: [{ who: 'はなこ', text: 'カード番号を入れてしまったときは、すぐカード会社に連絡するのね。' }], narration: '被害が出ていて急ぐときは110番か近くの警察署へ。急ぎでない相談は警察の相談専用電話「#9110」、お金の契約のトラブルは消費者ホットライン「188」に相談できます。' },
+    { img: 'p8', alt: 'ソファで笑顔のはなことりん。', lines: [{ who: 'はなこ', text: 'これからは、開く前にひと呼吸おくわ。' }] },
+  ] },
+];
+const worries = [
+  { text: '知らないSMSが届いた', chapter: 'ch1', face: 'p1', facePos: '50% 35%' },
+  { text: '本物か偽物か、見分けられない', chapter: 'ch2', face: 'p4', facePos: '50% 40%' },
+  { text: '入力してしまったら、どうする？', chapter: 'ch3', face: 'p7', facePos: '50% 35%' },
+];
+const points = [
+  { title: 'メッセージの中のリンクから開かない', body: '公式アプリやブックマークから開いて、お知らせが本当に届いているかを確かめます。' },
+  { title: '迷惑メッセージを止める設定をする', body: '携帯会社の機能や、危ないサイトを知らせるセキュリティソフトで、家族のスマホを守ります。' },
+  { title: '入力してしまったら、すぐ連絡と相談', body: 'カード会社・銀行に連絡し、パスワードを変えます。#9110 や 188 にも相談できます。' },
+];
+const articleLd = { '@context': 'https://schema.org', '@type': 'Article', headline: '偽SMS・詐欺の見分け方（漫画）', description, inLanguage: 'ja', mainEntityOfPage: `${SITE.url}${path}`, datePublished: '2026-11-27', dateModified: '2026-11-27', author: { '@type': 'Organization', name: SITE.operator, url: `${SITE.url}/about/` }, publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url + '/' } };
+---
+<Base title={title} description={description} pr={false} jsonLd={[breadcrumbLd(SITE.url, crumbs), articleLd]}>
+  <div class="site-container">
+    <Breadcrumbs items={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))} />
+    <MangaLp
+      base="/images/manga-lp/sagi"
+      kicker="漫画で3分｜詐欺対策"
+      title="そのSMS、開く前にちょっと待って！"
+      lead="宅配や銀行、電気・ガスの料金などを名のる偽のSMSが届いています。見分け方と、もしものときの相談先を漫画で。"
+      heroAlt="スマホを持つはなこに、孫のりんが「待って」と手を出している。"
+      worries={worries}
+      chapters={chapters}
+      points={points}
+      cta={{ href: '/security/phishing/', label: '見分け方と相談先を見る', sub: '開く前に見る5つ・入力してしまったときの連絡先' }}
+      sticky={{ href: '/security/phishing/', label: '偽SMSの見分け方を見る' }}
+      speakers={{ 'はなこ': '#b45b36', 'りん': '#a0527a' }}
+      pointsTitle="まとめ：家族を守る3つのポイント"
+      fictionNote="この漫画はフィクションです。登場人物は実在しません。手口は変わっていくので、新しい情報は警察庁などの公式の案内で確かめてください。"
+    >
+      <p class="mlp-more">家族のスマホを守るなら、<a href="/security/">セキュリティソフトの比較</a>もどうぞ。</p>
+    </MangaLp>
+  </div>
+</Base>
+<style>
+  .mlp-more { margin-top: 14px; font-size: 14px; line-height: 1.8; color: #4f6a5a; }
+  .mlp-more a { color: #175d50; font-weight: 700; text-decoration: underline; }
+</style>

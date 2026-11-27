@@ -1,0 +1,64 @@
+---
+// 格安SIMへの乗り換えの縦読み漫画LP → スマホ・格安SIMの比較へ
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import MangaLp, { type MangaChapter } from '../../components/MangaLp.astro';
+import { breadcrumbLd } from '../../lib/data';
+import { SITE } from '../../site.config.mjs';
+
+const path = '/manga/sim/';
+const title = 'そのスマホ代、使い方に合っていますか？｜格安SIMへの乗り換えを漫画で';
+const description = '毎月使うデータ量に比べて、大きすぎるプランのままになっていませんか？格安SIMの選び方、今の電話番号のまま乗り換える流れ、店で相談できる会社を、縦読み漫画で3分。';
+const crumbs = [{ name: '総合トップ', href: '/' }, { name: 'スマホ・関連サービス', href: '/mobile/' }, { name: '漫画で見る乗り換え', href: '/manga/sim/' }];
+const chapters: MangaChapter[] = [
+  { id: 'ch1', title: 'スマホ代、使い方に合ってる？', panels: [
+    { img: 'p1', alt: '通信費の明細を見て驚く父。', lines: [{ who: '父', text: 'スマホ代、毎月こんなに払ってたのか…' }] },
+    { img: 'p2', alt: 'そうたが父のスマホの使用量の画面を見せている。', lines: [{ who: 'そうた', text: '父さん、データは月に数ギガしか使ってないよ。' }], narration: '使うデータ量に比べて、大きすぎるプランのままになっていることがあります。' },
+  ] },
+  { id: 'ch2', title: '格安SIMの選び方', panels: [
+    { img: 'p3', alt: '大きなスマホのアイコンから、いくつかのSIMカードが並ぶ図。', narration: '格安SIM（月額をおさえたプランが多いスマホの会社）は、少ないデータ量のプランを選べることが多いです。電話が多い人は、かけ放題のオプションも見ます。' },
+    { img: 'p4', alt: '二人でPCの比較表を見ている。', lines: [{ who: 'そうた', text: 'データ量、電話の多さ、お店で相談できるか。この3つで比べよう。' }] },
+    { img: 'p5', alt: '父がスマホの設定画面を開き、そうたが横で手伝っている。', lines: [{ who: 'そうた', text: '今の電話番号は、そのまま使えるよ。番号の引きつぎの手続きをするんだ。' }], narration: '番号の引きつぎ（MNP）の手続きは、今の会社によって方法がちがいます。' },
+  ] },
+  { id: 'ch3', title: '乗り換える前に、ここを確かめる', panels: [
+    { img: 'p6', alt: 'SIMカードを入れ替えている手元。', narration: 'SIMを入れ替える前に、今のスマホが新しい会社で使えるか（動作確認）を確かめます。端末の分割の支払いが残っていないかも見ておきます。' },
+    { img: 'p7', alt: '店のカウンターで相談する父。', lines: [{ who: '父', text: 'お店で相談できる会社もあるんだね。' }], narration: '格安SIMには、店で相談できる会社と、オンラインだけの会社があります。' },
+    { img: 'p8', alt: 'リビングで笑顔の父とそうた。', lines: [{ who: '父', text: 'まずは、自分の使い方に合うプランを探してみるか。' }] },
+  ] },
+];
+const worries = [
+  { text: 'スマホ代が高い気がする', chapter: 'ch1', face: 'p1', facePos: '50% 35%' },
+  { text: '格安SIMって、むずかしそう', chapter: 'ch2', face: 'p4', facePos: '50% 35%' },
+  { text: '今の電話番号のまま変えられる？', chapter: 'ch2', face: 'p5', facePos: '45% 30%' },
+];
+const points = [
+  { title: '毎月使うデータ量を見る', body: 'スマホの設定や、今の会社のアプリで、ここ数か月のデータ量を確かめます。' },
+  { title: 'データ量・電話・相談のしかたで比べる', body: 'かけ放題が要るか、店で相談したいかで、合う会社が変わります。' },
+  { title: '動作確認と、残りの支払いを確かめる', body: '今のスマホが使えるか、端末の分割の残りや解約金がないかを先に確かめます。' },
+];
+const articleLd = { '@context': 'https://schema.org', '@type': 'Article', headline: '格安SIMへの乗り換え（漫画）', description, inLanguage: 'ja', mainEntityOfPage: `${SITE.url}${path}`, datePublished: '2026-11-27', dateModified: '2026-11-27', author: { '@type': 'Organization', name: SITE.operator, url: `${SITE.url}/about/` }, publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url + '/' } };
+---
+<Base title={title} description={description} jsonLd={[breadcrumbLd(SITE.url, crumbs), articleLd]}>
+  <div class="site-container">
+    <Breadcrumbs items={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))} />
+    <MangaLp
+      base="/images/manga-lp/sim"
+      kicker="漫画で3分｜スマホ代"
+      title="そのスマホ代、使い方に合っていますか？"
+      lead="毎月使うデータ量に比べて、大きすぎるプランのままかもしれません。格安SIMへの乗り換えの流れを漫画で。"
+      heroAlt="大学生の息子のそうたが、父にスマホの画面を見せて説明している。"
+      worries={worries}
+      chapters={chapters}
+      points={points}
+      cta={{ href: '/mobile/', label: 'スマホ・格安SIMを比べる', sub: '主な12ブランドの料金と条件' }}
+      sticky={{ href: '/mobile/', label: 'スマホ・格安SIMを比べる' }}
+      speakers={{ '父': '#3d6a8c', 'そうた': '#175d50' }}
+    >
+      <p class="mlp-more">家族のスマホと家のネットをまとめて見直すなら、<a href="/shindan/#setwari">5問のセット割診断</a>もどうぞ。</p>
+    </MangaLp>
+  </div>
+</Base>
+<style>
+  .mlp-more { margin-top: 14px; font-size: 14px; line-height: 1.8; color: #4f6a5a; }
+  .mlp-more a { color: #175d50; font-weight: 700; text-decoration: underline; }
+</style>
