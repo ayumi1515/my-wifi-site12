@@ -7,6 +7,7 @@ import { providers } from '../lib/data';
 import { prefectures } from '../lib/national-areas';
 import planData from '../data/household-plans.json';
 import homeData from '../data/household-homes.json';
+import cardData from '../data/carrier-cards.json';
 
 const today = new Date().toISOString().slice(0, 10);
 const brands = [
@@ -32,7 +33,7 @@ const brandInfo = Object.fromEntries(brands.map((b) => {
 }));
 const homeList = homes.map((h) => ({ id: h.id, name: h.name, kind: h.kind, prefectures: h.prefectures, buildings: h.buildings, monthly: h.monthly, decemberMonthly: h.decemberMonthly ?? null, option: h.requiredBundleOptionMonthly ?? 0, contractMonths: h.contractMonths, url: h.url }));
 ---
-<section id="setwari" class="setwari" data-setwari data-brands={JSON.stringify(brandInfo)} data-homes={JSON.stringify(homeList)} aria-labelledby="setwari-title">
+<section id="setwari" class="setwari" data-cards={JSON.stringify(cardData)} data-setwari data-brands={JSON.stringify(brandInfo)} data-homes={JSON.stringify(homeList)} aria-labelledby="setwari-title">
   <header class="sw-head">
     <p class="sw-kicker">30秒・5問</p>
     <h2 id="setwari-title">スマホとのセット割で、ネット回線を選ぶ</h2>
@@ -68,6 +69,7 @@ const homeList = homes.map((h) => ({ id: h.id, name: h.name, kind: h.kind, prefe
     <ul class="sw-tags" data-sw-tags></ul>
     <div class="sw-big" data-sw-big></div>
     <div class="sw-cards" data-sw-cards></div>
+    <div class="sw-cardbox" data-sw-cardbox hidden></div>
     <p class="sw-note" data-sw-note></p>
     <div class="sw-more">
       <a href="#diagnosis-form" class="sw-detail" data-sw-detail>家族の今の料金と比べて、くわしく計算する →</a>
@@ -178,6 +180,21 @@ const homeList = homes.map((h) => ({ id: h.id, name: h.name, kind: h.kind, prefe
         cards.append(card);
       });
       if (!rows.length) cards.append(el('p', 'この条件で比べられる回線が見つかりませんでした。条件を変えるか、地域のエリア確認ページを見てください。', 'sw-empty'));
+      // スマホ代をこのカードで払うとおトク（公式で確認した内容）
+      const cardsData = JSON.parse(root.dataset.cards || '{}');
+      const cb = result.querySelector<HTMLElement>('[data-sw-cardbox]')!;
+      const entry = cardsData.brands?.[answers.carrier];
+      cb.replaceChildren();
+      if (entry || (answers.carrier !== 'other')) {
+        const e = entry ?? { carrier: brand.name, card: cardsData.general.card, points: [cardsData.general.body, cardsData.general.offerNote], fee: '', url: cardsData.general.url };
+        cb.append(el('p', 'スマホ代の払い方でもおトクに', 'sw-cb-kicker'), el('h4', entry ? `${e.carrier}なら、${e.card}で払う` : cardsData.general.title));
+        const ul = el('ul'); (e.points as string[]).forEach((t) => ul.append(el('li', t))); cb.append(ul);
+        if (e.fee) cb.append(el('p', e.fee, 'sw-cb-fee'));
+        if (e.caution) cb.append(el('p', e.caution, 'sw-cb-caution'));
+        const a = document.createElement('a'); a.href = e.url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = '公式でくわしく見る →'; cb.append(a);
+        cb.append(el('p', `各社の公式サイトで${(cardsData.checkedAt || '').replace(/-/g, '/')}に確認。割引は対象の料金プランだけです。`, 'sw-cb-date'));
+        cb.hidden = false;
+      } else cb.hidden = true;
       result.querySelector<HTMLElement>('[data-sw-note]')!.textContent = '「実質」は、ネットの月額＋セット割に必要なオプション−スマホのセット割（最大の額）で計算した目安です。工事費・事務手数料・端末代・特典は含めていません。住所によって使えない回線があるので、申込先で住所を入れて確かめてください。セット割は、対象の料金プランと申込みが必要です。';
       result.focus({ preventScroll: true });
       result.scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
@@ -242,6 +259,15 @@ const homeList = homes.map((h) => ({ id: h.id, name: h.name, kind: h.kind, prefe
   .sw-figs .is-save dd { color: #175d50; }
   .sw-figs .is-total { border-bottom: 0; }
   .sw-figs .is-total dd .sw-num { font-size: 26px; color: #9b482b; }
+  .sw-cardbox { margin-top: 16px; padding: 16px 18px; border: 2px solid #b45b36; border-radius: 12px; background: #fff8f1; }
+  .sw-cb-kicker { font-size: 12px; font-weight: 800; color: #b45b36; }
+  .sw-cardbox h4 { margin-top: 4px; font-size: 18px; font-weight: 800; line-height: 1.5; color: #173d2b; }
+  .sw-cardbox ul { margin: 8px 0 0; padding-left: 1.2em; list-style: disc; display: grid; gap: 4px; }
+  .sw-cardbox li, .sw-cardbox p { font-size: 14px; line-height: 1.8; color: #2f4a3a; }
+  .sw-cb-fee { margin-top: 6px; font-weight: 700; }
+  .sw-cb-caution { margin-top: 4px; color: #8c4426 !important; }
+  .sw-cardbox a { display: inline-block; margin-top: 8px; font-size: 14px; font-weight: 700; color: #175d50; text-decoration: underline; }
+  .sw-cb-date { margin-top: 6px; font-size: 12px !important; color: #69786e !important; }
   .sw-note { margin-top: 12px; font-size: 12px; line-height: 1.8; color: #5d6f63; }
   .sw-empty { font-size: 15px; }
   .sw-more { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin-top: 16px; }

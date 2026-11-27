@@ -1,0 +1,101 @@
+{
+  "checkedAt": "2026-11-27",
+  "note": "スマホの会社ごとの「支払いに使うとおトクなカード」。各社の公式サイトで2026-11-27に確認（金額は税込）。広告があるカードだけ offerId を入れる。割引の額は料金プランで変わるので「対象プラン」と書く。",
+  "brands": {
+    "docomo": {
+      "carrier": "ドコモ",
+      "card": "dカード／dカード GOLD",
+      "points": [
+        "ドコモ MAX・ポイ活 MAX など対象の料金プランは、dカード GOLDなら月550円、一般のdカードなら月220円引き（dカードお支払割）。家族カードも対象",
+        "dカード GOLDなら、ドコモの料金の10%をdポイントで還元（GOLD Uは5%、mini・irumoは1%）"
+      ],
+      "fee": "年会費：一般のdカードは無料、dカード GOLDは11,000円",
+      "caution": "dカードは、2026年12月以降にポイント還元率・条件・年会費を見直す予定と公式に案内されています（中身は未公表）。",
+      "url": "https://dcard.docomo.ne.jp/st/teikure/index.html"
+    },
+    "ahamo": {
+      "carrier": "ahamo",
+      "card": "dカード／dカード GOLD",
+      "points": [
+        "dカードで払うと、毎月のデータ量が増える（dカード GOLD系は+5GB、一般のdカードは+1GB）",
+        "ahamoは、dカードお支払割（料金の割引）とドコモの料金のポイント還元の対象外"
+      ],
+      "fee": "年会費：一般のdカードは無料、dカード GOLDは11,000円",
+      "caution": "2026年12月の料金改定のあとも同じ特典が続くかは、公式で確かめてください。",
+      "url": "https://ahamo.com/plan/"
+    },
+    "au": {
+      "carrier": "au",
+      "card": "au PAY カード／au PAY ゴールドカード",
+      "points": [
+        "使い放題MAX＋など対象の料金プランは、月220円引き（au PAY カードお支払い割）。申込みは不要で、支払い方法をau PAY カードにするだけ",
+        "ゴールドカードなら、auの料金に最大10%のPontaポイント（au IDの代表の1回線）"
+      ],
+      "fee": "年会費：一般は無料、ゴールドは11,000円",
+      "caution": "法人契約は対象外です。",
+      "url": "https://www.au.com/mobile/charge/"
+    },
+    "uq-mobile": {
+      "carrier": "UQ mobile",
+      "card": "au PAY カード",
+      "points": [
+        "トクトクプラン2は、au PAY カードで払うと月220円引き（受付を終えたトクトクプラン・ミニミニプランは月187円）",
+        "申込みは不要で、支払い方法をau PAY カードにするだけ"
+      ],
+      "fee": "年会費：一般は無料、ゴールドは11,000円",
+      "caution": "法人契約は対象外です。",
+      "url": "https://www.uqwimax.jp/mobile/newplan/aupaycard/"
+    },
+    "softbank": {
+      "carrier": "ソフトバンク",
+      "card": "PayPayカード／PayPayカード ゴールド",
+      "points": [
+        "ペイトク2・テイガク無制限・ミニフィット2は、ゴールドなら月550円、一般のPayPayカードなら月330円引き。家族カードも対象",
+        "これらの新しいプランでは、カード払いのポイントは最大1%"
+      ],
+      "fee": "年会費：一般は無料、ゴールドは11,000円",
+      "caution": "2026年6月1日より前の旧プランは、割引が月187円です。",
+      "url": "https://www.paypay-card.co.jp/info/010242.html"
+    },
+    "ymobile": {
+      "carrier": "ワイモバイル",
+      "card": "PayPayカード／PayPayカード ゴールド",
+      "points": [
+        "シンプル3は、ゴールドなら月770円（550円＋増額220円）、一般のPayPayカードなら月330円引き",
+        "シンプル3では、カード払いのポイントは最大1%"
+      ],
+      "fee": "年会費：一般は無料、ゴールドは11,000円",
+      "caution": "家族割と一緒に使えない割引もあるので、合計は公式で確かめてください。",
+      "url": "https://www.ymobile.jp/plan/"
+    },
+    "linemo": {
+      "carrier": "LINEMO",
+      "card": "PayPayカード",
+      "points": [
+        "PayPayカードで払うと、料金の1%がポイントに（ゴールドも一般も1%）"
+      ],
+      "fee": "年会費：一般は無料",
+      "caution": "料金の割引は、公式で確かめられませんでした。",
+      "url": "https://www.paypay-card.co.jp/service/benefit/mobile/"
+    },
+    "rakuten-mobile": {
+      "carrier": "楽天モバイル",
+      "card": "楽天カード",
+      "points": [
+        "楽天カードで払うと、料金100円につき1ポイント",
+        "はじめて楽天カードで払うとポイント10倍（エントリーが必要）"
+      ],
+      "fee": "年会費：永年無料",
+      "caution": "楽天カード払いでの料金の割引は、公式に書かれていません。",
+      "url": "https://network.mobile.rakuten.co.jp/guide/payment/"
+    }
+  },
+  "general": {
+    "title": "スマホ会社と組んだカードがない場合",
+    "body": "povo・IIJmio・mineoなどは、カード払いでの料金の割引はありません。年会費無料のカードで払って、ポイントをためる方法があります。",
+    "offerId": null,
+    "offerNote": "エポスカードは年会費永年無料。携帯料金などの固定費を払うと抽選でポイントが当たるキャンペーン（エントリーは2026年12月31日まで・合計5,500円以上の支払いが条件）があります。",
+    "url": "https://www.eposcard.co.jp/campaign/20973.html",
+    "card": "エポスカード（年会費永年無料）"
+  }
+}

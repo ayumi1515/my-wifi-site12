@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import MangaShelf from './MangaShelf.astro';
+import CarrierCards from './CarrierCards.astro';
 import Breadcrumbs from './Breadcrumbs.astro';
 import AffiliateButton from './AffiliateButton.astro';
 import PointsComparison from './PointsComparison.astro';
@@ -86,6 +87,7 @@ const adNotice = category === 'used' ? '在庫・状態・付属品・保証の�
       <p class="hub-catalog-note">{category === 'used' ? '同じ機種名でも容量・状態・付属品・保証により価格は変わります。在庫と商品ページの個別条件を確かめてください。' : category === 'security' ? '対応OS・利用台数・契約期間をそろえて比較してください。新規価格と更新価格は別条件の場合があります。' : '基本料だけでなく、通話オプション・初期費用・端末代・割引条件も合わせて比べてください。電波状況は利用場所で変わります。'}</p>
       {category === 'mobile' && <aside class="mobile-after-comparison"><div><h3>候補が見えたら、家族の条件で比べる</h3><p>掲載中の代表的な月額プランを、家族の通信量や使う年数から比較します。povoの都度購入は月額最適化の対象外です。</p></div><a href="/shindan/?goal=mobile#diagnosis-form">スマホの通信費を診断する <span aria-hidden="true">→</span></a></aside>}
     </section>
+    {category === 'mobile' && <CarrierCards />}
     {category === 'mobile' && <details class="hub-points"><summary>ポイントを重視したい方へ：還元条件も比べる</summary><PointsComparison scope="mobile" compact /></details>}
     <section id="how-to-choose" class="hub-howto" aria-labelledby="hub-howto-title"><h2 id="hub-howto-title">{explainTitle}</h2><div>{explain.map((item) => <article><h3>{item.title}</h3><p>{item.body}</p><ul>{item.checks.map((c) => <li>{c}</li>)}</ul></article>)}</div></section>
     {category === 'mobile' && <CancellationGuide ids={services.map(service=>service.id)} kind="mobile" compact />}

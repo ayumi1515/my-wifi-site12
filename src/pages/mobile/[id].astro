@@ -5,6 +5,7 @@ import ConnectivityManga from '../../components/ConnectivityManga.astro';
 import AffiliateButton from '../../components/AffiliateButton.astro';
 import PointsComparison from '../../components/PointsComparison.astro';
 import CancellationGuide from '../../components/CancellationGuide.astro';
+import CarrierCards from '../../components/CarrierCards.astro';
 import mobileServices from '../../data/mobile-services.json';
 import affiliatesRaw from '../../data/category-affiliates.json';
 import { mobileMangaGuides } from '../../lib/manga-mobile';
@@ -61,6 +62,7 @@ const articleLd = { '@context': 'https://schema.org', '@type': 'Article', headli
       <p class="comparison-note">容量・通話の付帯・購入期間が異なる掲載例です。金額だけの安い順や、おすすめ順位を示す表ではありません。申込み前に希望する容量と条件をそろえて確認してください。</p>
     </section>
 
+    <CarrierCards brand={s.id} />
     <details class="article-points"><summary>ポイント還元も比較する（dポイント・楽天・Ponta・PayPay）</summary><PointsComparison scope="mobile" compact /></details>
     <section id="next-step" class="next-step article-section" aria-labelledby="next-step-title">
       <h2 id="next-step-title">比較したら、自分の条件で確かめる</h2>
