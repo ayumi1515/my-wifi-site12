@@ -15,6 +15,7 @@ export interface Provider {
     href: string; label: string;
     banner: { href: string; src: string; width: number; height: number; pixel?: string | null } | null;
     pixel: string | null;
+    bannerRequired?: boolean;
   } | null;
   campaign?: { label: string; detail: string; url: string; summary?: string };
   officialUrl: string; sources: { label: string; url: string }[]; checkedAt: string;

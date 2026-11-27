@@ -5,16 +5,20 @@ interface Affiliate {
   href: string; label: string;
   banner?: { href: string; src: string; width: number; height: number; pixel?: string | null } | null;
   pixel?: string | null;
+  /** ASPの提携条件で「指定バナーの掲載が必須」の案件は true。ボタンだけの表示の場所でも、バナーを出す */
+  bannerRequired?: boolean;
 }
-const { provider, showBanner = true, actionFirst = false, building, notice = '特典はプラン・追加オプション・受取手続き等の条件があります。申込先で最新条件を確認してください。' } = Astro.props as {
+const { provider, showBanner = true, actionFirst = false, building, ctaLabel, notice = '特典はプラン・追加オプション・受取手続き等の条件があります。申込先で最新条件を確認してください。' } = Astro.props as {
   provider: { id?: string; name: string; officialUrl: string; affiliate: Affiliate | null };
   showBanner?: boolean;
   actionFirst?: boolean;
   building?: 'house' | 'mansion';
   notice?: string;
+  /** actionFirst のボタンの文言をかえる（例：「申込み窓口で提供エリア・条件を確認する」） */
+  ctaLabel?: string;
 };
 const a = provider.id === 'bbiq' && building === 'mansion' ? null : provider.affiliate;
-const banner = showBanner ? a?.banner : null;
+const banner = showBanner || a?.bannerRequired ? a?.banner : null;
 ---
 <div class="affiliate-block flex flex-col gap-2">
   {a ? (
@@ -22,10 +26,10 @@ const banner = showBanner ? a?.banner : null;
       {actionFirst && <span class="action-disclosure">PR・申込み窓口</span>}
       {banner && !actionFirst && <div class="affiliate-banner"><span class="banner-label">PR・{provider.name}</span><a href={banner.href} rel="sponsored noopener" target="_blank" data-affiliate-link={provider.name} aria-label={`${provider.name}の広告バナー（特典・申込条件を確認、新しいタブで開きます）`}><img src={banner.src} width={banner.width} height={banner.height} alt={`${provider.name}の広告。画像を押すと申込み窓口へ移動します`} loading="lazy" decoding="async" /></a>{banner.pixel&&<img src={banner.pixel} width="1" height="1" alt="" class="tracking-pixel" />}</div>}
       <a href={a.href} rel="sponsored noopener" target="_blank"
-         aria-label={`${actionFirst ? provider.name+'の申込み窓口へ' : a.label}（広告・新しいタブで開きます）`}
+         aria-label={`${actionFirst ? (ctaLabel ? `${provider.name}：${ctaLabel}` : provider.name+'の申込み窓口へ') : a.label}（広告・新しいタブで開きます）`}
          data-affiliate-link={provider.name}
          class:list={actionFirst ? ['application-cta'] : banner ? ['banner-text-link'] : ['flex items-center justify-center gap-2 rounded-lg bg-cta-500 hover:bg-cta-600 text-white text-center font-bold py-3.5 px-4 shadow-sm transition focus:outline-none focus-visible:ring-4 focus-visible:ring-orange-200']}>
-        {actionFirst ? provider.name+'の申込み窓口へ' : a.label}
+        {actionFirst ? (ctaLabel ?? provider.name+'の申込み窓口へ') : a.label}
         {!actionFirst && <span aria-hidden="true">→</span>}
       </a>
       {banner && actionFirst && <div class="affiliate-banner"><span class="banner-label">PR・{provider.name}</span><a href={banner.href} rel="sponsored noopener" target="_blank" data-affiliate-link={provider.name} aria-label={`${provider.name}の広告バナー（特典・申込条件を確認、新しいタブで開きます）`}><img src={banner.src} width={banner.width} height={banner.height} alt={`${provider.name}の広告。画像を押すと申込み窓口へ移動します`} loading="lazy" decoding="async" /></a>{banner.pixel&&<img src={banner.pixel} width="1" height="1" alt="" class="tracking-pixel" />}</div>}
@@ -36,15 +40,18 @@ const banner = showBanner ? a?.banner : null;
       {banner && provider.id && !provider.id.startsWith('study-') && <p class="banner-context">画像内の「当サイト限定」は、リンク先の申込み窓口の特典です。</p>}
     </>
   ) : (
+    <>
+    {actionFirst && <span class="action-disclosure">公式サイト（広告ではありません）</span>}
     <a href={provider.officialUrl} target="_blank" rel="noopener"
        aria-label={`${provider.name}の公式サイト（新しいタブで開きます）`}
-       class="flex items-center justify-center gap-2 rounded-lg border-2 border-brand-600 text-brand-700 hover:bg-brand-50 text-center font-bold py-3 px-4 transition">
-      {provider.name}{actionFirst ? 'の公式申込みを確認' : 'の公式サイトを見る'}
+       class:list={actionFirst ? ['application-cta', 'is-official'] : ['flex items-center justify-center gap-2 rounded-lg border-2 border-brand-600 text-brand-700 hover:bg-brand-50 text-center font-bold py-3 px-4 transition']}>
+      {actionFirst && ctaLabel ? ctaLabel.replace('申込み窓口', '公式サイト') : provider.name + (actionFirst ? 'の公式申込みを確認' : 'の公式サイトを見る')}
       {!actionFirst && <span aria-hidden="true">↗</span>}
     </a>
+    </>
   )}
 </div>
 <style>
-.action-disclosure{font-size:12px;font-weight:700;color:#617367}.application-cta{display:flex;align-items:center;justify-content:center;min-height:56px;width:100%;border-radius:6px;background:#ae512e;color:#fff;font-size:16px;font-weight:800;text-align:center;line-height:1.7;padding:14px 18px;margin-bottom:5px}.application-cta:hover{background:#8c3f24}.application-cta:focus-visible{outline:3px solid #175d50;outline-offset:4px}
+.action-disclosure{font-size:12px;font-weight:700;color:#617367}.application-cta{text-wrap:balance;display:flex;align-items:center;justify-content:center;min-height:56px;width:100%;border-radius:6px;background:#ae512e;color:#fff;font-size:16px;font-weight:800;text-align:center;line-height:1.7;padding:14px 18px;margin-bottom:5px}.application-cta:hover{background:#8c3f24}.application-cta.is-official{background:#fff;color:#175d50;border:2px solid #175d50}.application-cta.is-official:hover{background:#f0f6f1}.application-cta:focus-visible{outline:3px solid #175d50;outline-offset:4px}
 .affiliate-block{width:100%;min-width:0}.affiliate-banner{position:relative;display:flex;flex-direction:column;align-items:center;gap:7px;padding:10px;border:1px solid #d9e2db;border-radius:6px;background:#fff}.banner-label{font-size:11px;font-weight:700;color:#617367;align-self:flex-start;line-height:1.5}.affiliate-banner>a{display:block;max-width:100%;line-height:0}.affiliate-banner>a>img{display:block;max-width:100%;height:auto}.tracking-pixel{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}.banner-text-link{display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px!important;line-height:1.6;text-align:center;color:#175d50;text-decoration:underline;text-underline-offset:3px;font-weight:700;padding:7px 5px}.banner-text-link:hover{color:#9e381b}.banner-text-link:focus-visible{outline:3px solid #bc4826;outline-offset:3px}.banner-context{font-size:12px;color:#5b6c60;line-height:1.7}
 </style>

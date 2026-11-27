@@ -19,6 +19,8 @@ import { brands, brandInfo, homes } from '../lib/setwari';
 import homeData from '../data/household-homes.json';
 import { prefectures, getPrefecturePath } from '../lib/national-areas';
 import { SITE } from '../site.config.mjs';
+import cancellationData from '../data/cancellation-guides.json';
+import securityFacts from '../data/security-facts.json';
 
 const title = 'しらべまとめ帳｜スマホとネットのセット割・光回線を公式情報で比較';
 const description = '今のスマホの会社から、セット割が使える光回線・ホームルーターを比較。30秒・登録不要の診断、47都道府県の提供エリア確認、漫画でわかる選び方。料金・還元条件・解約金まで公式情報で確認日つきで載せています。';
@@ -73,6 +75,22 @@ const homeGuideCards: HomeGuideCard[] = [
 ];
 const internetGuides = homeGuideCards.filter((c) => c.category === 'internet').slice(0, 6);
 const guideCount = guides.length + mobileServices.length + 1;
+// ② 「迷っていることから読む」は、全国どこでも役立つものだけ（鹿児島の記事は地域のページから）
+const uqService = mobileServices.find((x) => x.id === 'uq-mobile');
+const xService = mobileServices.find((x) => x.id === 'x-mobile');
+const oneYear = guides.find((g) => g.slug === 'hikari-one-year');
+const nationalGuides = [
+  oneYear && { tag: '光回線', title: oneYear.title, href: `/guides/${oneYear.slug}/`, date: oneYear.updatedAt },
+  { tag: '解約・乗り換え', title: 'Wi-Fi・スマホの解約方法｜MNP・事業者変更・機器返却の流れ', href: '/guides/cancellation-flow/', date: cancellationData.checkedAt },
+  uqService && { tag: 'スマホ', title: `${uqService.name}を漫画で比較｜料金の条件と申込み前の確認`, href: `/mobile/${uqService.id}/`, date: uqService.checkedAt },
+  xService && { tag: 'スマホ', title: `${xService.name}を漫画で比較｜料金の条件と申込み前の確認`, href: `/mobile/${xService.id}/`, date: xService.checkedAt },
+  { tag: 'お金', title: 'クレジットカードの選び方｜スマホ代でおトクなカードと年会費無料カードを比較', href: '/card/', date: '2026-11-27' },
+  { tag: '安全', title: '偽SMS・フィッシング詐欺の見分け方｜開く前に見る5つと、入力してしまったときの連絡先', href: '/security/phishing/', date: securityFacts.checkedAt },
+].filter((x): x is { tag: string; title: string; href: string; date: string } => !!x);
+// ③ 漫画：上は家族・個人向けの4本だけ。会社・お店向けは下の「会社・お店向け」へ
+const familyManga = ['kojin', 'sim', 'card', 'sagi'];
+const bizManga = ['houjin', 'hkeitai', 'copy', 'hcard', 'mise-net', 'ransom'];
+const checkedMonth = `${homeData.checkedAt.slice(0, 4)}年${Number(homeData.checkedAt.slice(5, 7))}月`;
 const learning = ['study-sapuri-toeic', 'study-sapuri-daily'].map((id) => offers.find((o) => o.id === id)).filter((o) => o !== undefined);
 const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPage', name: title, url: SITE.url + '/', description, inLanguage: 'ja', mainEntity: { '@type': 'ItemList', itemListElement: homeGuideCards.map((card, i) => ({ '@type': 'ListItem', position: i + 1, name: card.title, url: SITE.url + card.href })) } };
 ---
@@ -108,13 +126,14 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
       </div>
     </section>
 
-    <div class="site-container"><MangaShelf swipe heading="漫画でわかる、ネットとスマホの見直し" lead="ママとミナの会話で、3分で読めます。読んだあとは、診断や比較で自分の条件を確かめられます。" /></div>
+    <div class="site-container"><MangaShelf ids={familyManga} swipe heading="漫画でわかる、ネットとスマホの見直し" lead="ママとミナの会話で、3分で読めます。読んだあとは、診断や比較で自分の条件を確かめられます。" /></div>
 
     <!-- ③ スマホの会社のタブ：タップで、そのスマホに合う回線だけに切りかわる -->
     <section id="carrier" class="sec site-container" aria-labelledby="carrier-title">
       <p class="sec-eyebrow">光回線・ホームルーター</p>
       <h2 id="carrier-title">スマホの会社で、合う回線を絞る</h2>
       <p class="sec-lead">セット割は「スマホの会社」と「家のネット」の組み合わせで決まります。タブを選ぶと、そのスマホとセット割がある回線だけが出ます。</p>
+      <p class="sec-trust">※各社の公式情報をもとに掲載しています（{checkedMonth}確認／順位は広告の報酬ではなく条件で決めています）<a href="/about/">編集方針・掲載基準を見る →</a></p>
       <div class="tabs" data-tabs>
         <div class="tab-list" role="tablist" aria-label="スマホの会社">
           {tabs.map((t, i) => <button type="button" role="tab" id={`tab-${t.key}`} aria-controls={`panel-${t.key}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{t.label}</button>)}
@@ -133,14 +152,20 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
                       <div><dt>戸建て</dt><dd>{h.monthly.house != null ? <><strong>{yen(h.monthly.house)}</strong>/月</> : '対象外'}</dd></div>
                       <div><dt>マンション</dt><dd>{h.monthly.mansion != null ? <><strong>{yen(h.monthly.mansion)}</strong>/月</> : '対象外'}</dd></div>
                     </dl>
-                    {discounts.length > 0 && <ul class="net-set">{discounts.map((d) => <li><span>{d.brand}のセット割</span>スマホ1台につき<strong>最大{yen(d.max)}</strong>/月引き{d.exclusive && '（家族割と併用不可のプランあり）'}</li>)}</ul>}
-                    <AffiliateButton provider={p ?? { id: h.id, name: h.name, officialUrl: h.url, affiliate: null }} actionFirst={true} building="house" notice="対象プラン・必要なオプション・提供エリアを申込先で確認してください。" />
+                    <ul class="net-set">{discounts.map((d) => <li><span>{d.brand}のセット割</span>スマホ1台につき<strong>最大{yen(d.max)}</strong>/月引き{d.exclusive && '（家族割と併用不可のプランあり）'}</li>)}</ul>
+                    <dl class="net-compare">
+                      <div><dt>工事</dt><dd>{h.constructionLabel}</dd></div>
+                      <div><dt>契約期間</dt><dd>{h.contractLabel}</dd></div>
+                      <div><dt>向いている人</dt><dd>{h.goodFor}</dd></div>
+                    </dl>
+                    <div class="net-cta">
+                      <AffiliateButton provider={p ?? { id: h.id, name: h.name, officialUrl: h.url, affiliate: null }} actionFirst={true} showBanner={false} building="house" ctaLabel="申込み窓口で提供エリア・条件を確認する →" notice="対象プラン・必要なオプション・提供エリアを申込先で確認してください。" />
+                    </div>
                     <details class="net-more">
                       <summary>料金・セット割の条件の詳細を見る</summary>
                       <ul>
                         {(h.requiredBundleOptionMonthly ?? 0) > 0 && <li>セット割には、月{yen(h.requiredBundleOptionMonthly ?? 0)}のオプションが必要です。</li>}
                         {h.decemberMonthly && <li>2026年12月以降は、戸建て{h.decemberMonthly.house != null ? yen(h.decemberMonthly.house) : '-'}・マンション{h.decemberMonthly.mansion != null ? yen(h.decemberMonthly.mansion) : '-'}に改定（契約によって適用の月がちがいます）。</li>}
-                        <li>契約期間：{h.contractMonths ? `${h.contractMonths}カ月` : 'なし'}</li>
                         {homeData.homes.find((x) => x.id === h.id)?.note && <li>{homeData.homes.find((x) => x.id === h.id)?.note}</li>}
                       </ul>
                       <p class="net-src">出典：{homeData.homes.find((x) => x.id === h.id)?.sources?.map((s, k) => <>{k > 0 && '・'}<a href={s.url} target="_blank" rel="noopener">{s.label}</a></>)}（{checked}確認・税込）</p>
@@ -152,7 +177,11 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
           </div>
         ))}
       </div>
-      <div class="sec-links"><a href="/shindan/#setwari" class="btn-ghost">家族の台数まで入れて診断する →</a><a href="/hikari/" class="text-link">光回線を一覧で比べる →</a></div>
+      <div class="diag-box">
+        <p class="diag-kicker">どれが合うか迷ったら</p>
+        <a class="diag-btn" href="/shindan/#setwari">家族の台数まで入れて30秒で診断する →<span>名前・住所は不要／回答は保存しません</span></a>
+        <a href="/hikari/" class="text-link">光回線を一覧で比べる →</a>
+      </div>
     </section>
 
     <!-- ① エリアのタブ：自分の地域を選ぶ -->
@@ -163,10 +192,10 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
         <NaviTalk who="mina" text="同じ回線でも、住所や建物で使えないことがあるよ。まず地域を選んでね。" />
         <div class="tabs area-tabs" data-tabs>
           <div class="tab-list" role="tablist" aria-label="地方">
-            {regions.map((r, i) => <button type="button" role="tab" id={`tab-${r.key}`} aria-controls={`panel-${r.key}`} aria-selected={r.key === 'kyushu' ? 'true' : 'false'} tabindex={r.key === 'kyushu' ? 0 : -1}>{r.label}</button>)}
+            {regions.map((r, i) => <button type="button" role="tab" id={`tab-${r.key}`} aria-controls={`panel-${r.key}`} aria-selected={r.key === 'kanto' ? 'true' : 'false'} tabindex={r.key === 'kanto' ? 0 : -1}>{r.label}</button>)}
           </div>
           {regions.map((r) => (
-            <div class="tab-panel" role="tabpanel" id={`panel-${r.key}`} aria-labelledby={`tab-${r.key}`} data-panel hidden={r.key !== 'kyushu'}>
+            <div class="tab-panel" role="tabpanel" id={`panel-${r.key}`} aria-labelledby={`tab-${r.key}`} data-panel hidden={r.key !== 'kanto'}>
               {r.key === 'kyushu' && <a class="area-feature" href="/hikari/kagoshima/"><strong>鹿児島の光回線をくわしく</strong><span>5社の料金・市町村ごとの提供率・離島の注意点</span></a>}
               <div class="pref-grid">{r.prefs.map((p) => <a href={getPrefecturePath(p)}>{p.name}</a>)}</div>
             </div>
@@ -178,9 +207,11 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
 
     <!-- 選び方ガイド（通信） -->
     <section class="sec site-container" aria-labelledby="guides-title">
-      <p class="sec-eyebrow">漫画と選び方ガイド</p>
+      <p class="sec-eyebrow">選び方ガイド（全国共通）</p>
       <h2 id="guides-title">迷っていることから読む</h2>
-      <div class="guide-grid">{internetGuides.map((card) => <article><a href={card.href}>{card.manga ? <MangaThumbnail sheet={card.manga.sheet} frame={card.manga.frame} /> : <GuideArtwork slug={card.artworkSlug} />}<span class="guide-category">{categoryLabel[card.category]}{card.manga && <span class="manga-label">漫画で比較</span>}</span><h3>{card.title}</h3><span class="guide-bottom"><time datetime={card.updatedAt}>{jpDate(card.updatedAt)}</time><b>読む →</b></span></a></article>)}</div>
+      <ul class="guide-list">
+        {nationalGuides.map((g) => <li><a href={g.href}><span class="gl-tag">{g.tag}</span><span class="gl-title">{g.title}</span><time datetime={g.date}>{jpDate(g.date)}確認</time><span class="gl-arrow" aria-hidden="true">›</span></a></li>)}
+      </ul>
       <p class="sec-links"><a href="/guides/" class="text-link">全{guideCount}本を検索する →</a></p>
     </section>
 
@@ -195,6 +226,9 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
           <a href="/used-smartphones/"><strong>中古スマホ</strong><span>保証と返品の条件で比べる</span></a>
           <a href="/houjin/"><strong>会社・お店向け</strong><span>法人携帯・電話・コピー機・法人カード</span></a>
         </div>
+        <div class="biz-manga">
+          <MangaShelf ids={bizManga} heading="会社・お店向けの通信・経費の見直し" lead="社員のスマホ、コピー機、お店のネット、ランサムウェア、法人カード。小さな会社・お店向けの漫画です。" />
+        </div>
         <div id="learning" class="learning">
           <h3>英語学習は、目的から選ぶ</h3>
           <div class="learning-grid">
@@ -203,7 +237,7 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
                 <p class="learning-aud">{index === 0 ? 'TOEIC L&R TESTの受験が目的' : '旅行・日常のフレーズを学びたい'}</p>
                 <h4>{index === 0 ? 'TOEIC L&R TEST対策コース' : '新日常英会話コース'}</h4>
                 <p class="learning-price">スタディサプリENGLISH・Web月額 <strong>{index === 0 ? '3,278円' : '2,178円'}</strong></p>
-                <AffiliateButton provider={offer} />
+                <AffiliateButton provider={offer} actionFirst={true} showBanner={false} ctaLabel="申込み窓口で料金・無料体験の条件を確認する →" />
                 <details class="net-more"><summary>料金の条件を見る</summary><p>税込・2026年11月22日確認。月額払いの通常料金です。複数月パックやアプリ内決済は条件が異なります。無料体験の対象と課金開始日は、申込画面で確認してください。<a href="https://eigosapuri.jp/plan/" target="_blank" rel="noopener">出典：リクルート公式料金</a></p></details>
               </article>
             ))}
@@ -254,6 +288,24 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
   .sec-tint { background: var(--c-base); padding-block: 56px; margin-top: 56px; }
   .sec-eyebrow { font-size: 13px; font-weight: 800; letter-spacing: .06em; color: var(--c-main); margin-bottom: 6px; }
   .sec-lead { margin-top: 10px; font-size: 15px; line-height: 1.9; color: #4f6a5a; max-width: 760px; }
+  .sec-trust { margin-top: 8px; font-size: 13px; line-height: 1.8; color: #5d6f63; }
+  .sec-trust a { margin-left: 6px; font-weight: 700; color: var(--c-main); text-decoration: underline; text-underline-offset: 3px; }
+  .diag-box { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; margin-top: 26px; padding: 18px 20px; border-radius: var(--radius); background: #fff7ed; border: 1px solid #f6d8bd; }
+  .diag-kicker { width: 100%; font-size: 14px; font-weight: 800; color: var(--c-accent-dark); }
+  .diag-btn { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; min-height: 58px; padding: 10px 22px; border-radius: 999px; background: var(--c-accent); color: #fff; font-size: 17px; font-weight: 900; text-align: center; text-decoration: none; text-wrap: balance; box-shadow: 0 6px 16px rgba(234,88,12,.28); }
+  .diag-btn span { font-size: 12px; font-weight: 700; opacity: .95; }
+  .diag-btn:hover { background: var(--c-accent-dark); }
+  .diag-btn:focus-visible { outline: 3px solid var(--c-main); outline-offset: 3px; }
+  /* 全国共通のガイド：絵を使わず、タグ・題名・確認日だけのリスト */
+  .guide-list { list-style: none; padding: 0; margin: 18px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .guide-list a { display: grid; grid-template-columns: auto 1fr auto; grid-template-areas: 'tag title arrow' 'tag date arrow'; gap: 2px 12px; align-items: center; padding: 14px 16px; border: 1px solid var(--c-line); border-radius: 14px; background: #fff; box-shadow: var(--shadow); text-decoration: none; color: inherit; transition: border-color .15s, transform .15s; }
+  .guide-list a:hover { border-color: var(--c-main); transform: translateY(-1px); }
+  .guide-list a:focus-visible { outline: 3px solid var(--c-main); outline-offset: 3px; }
+  .gl-tag { grid-area: tag; align-self: start; font-size: 12px; font-weight: 800; color: #fff; background: var(--c-main); border-radius: 6px; padding: 2px 8px; white-space: nowrap; }
+  .gl-title { grid-area: title; font-size: 15px; font-weight: 800; line-height: 1.6; color: var(--c-ink); overflow-wrap: anywhere; }
+  .guide-list time { grid-area: date; font-size: 12px; color: #637467; }
+  .gl-arrow { grid-area: arrow; font-size: 22px; color: #a3b5aa; }
+  .biz-manga { margin-top: 34px; }
   .sec-links { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 22px; }
   .text-link { font-size: 15px; font-weight: 800; color: var(--c-main); text-decoration: underline; text-underline-offset: 4px; }
 
@@ -298,8 +350,20 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
   .tab-list button:focus-visible { outline: 3px solid var(--c-accent); outline-offset: 2px; }
   .tab-panel { margin-top: 16px; }
   .tab-note { font-size: 13px; color: #5d6f63; }
-  .net-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-top: 12px; align-items: start; }
-  .net-card { border: 1px solid var(--c-line); border-radius: var(--radius); background: #fff; box-shadow: var(--shadow); padding: 18px; min-width: 0; }
+  .net-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-top: 12px; align-items: stretch; }
+  /* カードの中の7つの行（種類・名前・料金・セット割・比べる3項目・ボタン・くわしい条件）を、となりのカードとそろえる */
+  .net-card { display: grid; grid-row: span 7; grid-template-rows: subgrid; row-gap: 0; border: 1px solid var(--c-line); border-radius: var(--radius); background: #fff; box-shadow: var(--shadow); padding: 18px; min-width: 0; }
+  /* 比べる3項目（どのカードも同じ並び） */
+  .net-compare { display: grid; gap: 0; margin: 0 0 14px; border-top: 1px solid var(--c-line); }
+  .net-compare div { display: grid; grid-template-columns: 6.2em 1fr; gap: 8px; padding: 8px 2px; border-bottom: 1px solid var(--c-line); }
+  .net-compare dt { font-size: 12px; font-weight: 800; color: var(--c-main); line-height: 1.7; }
+  .net-compare dd { margin: 0; font-size: 13px; line-height: 1.7; color: #33473c; }
+  /* 申込みボタンは、どのカードも下にそろえる */
+  .net-cta :global(.application-cta) { margin-bottom: 4px; }
+  .net-cta :global(.application-cta.is-official) { padding-inline: 8px; }
+  /* subgrid が使えない古いブラウザでは、ボタンをカードの下に寄せる */
+  @supports not (grid-template-rows: subgrid) { .net-card { display: flex; flex-direction: column; } .net-cta { margin-top: auto; } }
+  .net-cta :global(.application-cta) { font-size: 15px; padding: 12px 14px; min-height: 60px; }
   .net-kind { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 12px; font-weight: 800; color: var(--c-main); }
   .net-area { color: #8a4b1e; background: #fff3e6; border-radius: 999px; padding: 1px 8px; }
   .net-card h3 { margin-top: 4px; font-size: 20px; font-weight: 900; line-height: 1.5; color: var(--c-ink); }
@@ -378,7 +442,8 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
     .hx-sub a { display: inline-flex; align-items: center; min-height: 44px; font-size: 13.5px; white-space: nowrap; }
     .btn-main { font-size: 18px; }
     .quick-options { grid-template-columns: 1fr 1fr; }
-    .guide-grid, .other-grid, .learning-grid { grid-template-columns: 1fr; }
+    .guide-grid, .other-grid, .learning-grid, .guide-list { grid-template-columns: 1fr; }
+    .diag-btn { width: 100%; font-size: 16px; }
     .sec { padding-top: 44px; }
     .hx-inner { padding-bottom: 14px; gap: 18px; }
     .quick { margin-top: 18px; }

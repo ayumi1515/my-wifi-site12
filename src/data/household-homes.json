@@ -6,93 +6,190 @@
       "name": "ドコモ光 1ギガ・タイプA",
       "kind": "fiber",
       "prefectures": null,
-      "buildings": ["house", "mansion"],
-      "monthly": {"house": 5720, "mansion": 4400},
+      "buildings": [
+        "house",
+        "mansion"
+      ],
+      "monthly": {
+        "house": 5720,
+        "mansion": 4400
+      },
       "requiredBundleOptionMonthly": 0,
       "contractMonths": 24,
       "note": "2年定期・タイプAの通常月額。固定電話はドコモ光セット割の必須条件ではありません。事務手数料・工事費・機器・ユニバーサルサービス料等は別。新規工事料のdポイント特典は現金キャッシュバックとして差し引きません。住所と建物で提供可否を確認してください。",
       "url": "https://www.docomo.ne.jp/hikari/",
       "sources": [
-        {"label": "ドコモ光の公式料金", "url": "https://www.docomo.ne.jp/internet/hikari/charge/index.html"},
-        {"label": "ドコモ光セット割の条件", "url": "https://www.docomo.ne.jp/charge/hikari_set/"}
-      ]
+        {
+          "label": "ドコモ光の公式料金",
+          "url": "https://www.docomo.ne.jp/internet/hikari/charge/index.html"
+        },
+        {
+          "label": "ドコモ光セット割の条件",
+          "url": "https://www.docomo.ne.jp/charge/hikari_set/"
+        }
+      ],
+      "constructionLabel": "開通工事あり（建物の設備で、作業員が来るかどうかが決まる）",
+      "contractLabel": "2年定期契約",
+      "goodFor": "ドコモのスマホを家族で使っていて、工事ができる家"
     },
     {
       "id": "biglobe-hikari",
       "name": "ビッグローブ光 1ギガ",
       "kind": "fiber",
       "prefectures": null,
-      "buildings": ["house", "mansion"],
-      "monthly": {"house": 5478, "mansion": 4378},
+      "buildings": [
+        "house",
+        "mansion"
+      ],
+      "monthly": {
+        "house": 5478,
+        "mansion": 4378
+      },
       "requiredBundleOptionMonthly": 550,
       "contractMonths": 36,
       "note": "3年プランの通常月額。au/UQの対象プランでネットとのセット割を計算する場合に、BIGLOBE光電話の基本プラン550円/月を世帯につき加算します。スマホセット割を使わなければ、電話はこの比較の必須費用ではありません。初期手数料・工事費・電話工事・通話・機器等は別。公式窓口のキャッシュバックと既存広告窓口の特典は自動的に合算しません。",
       "url": "https://join.biglobe.ne.jp/ftth/hikari/",
       "sources": [
-        {"label": "BIGLOBE光の公式料金", "url": "https://join.biglobe.ne.jp/ftth/hikari/price/"},
-        {"label": "BIGLOBE光電話とスマホセット割", "url": "https://join.biglobe.ne.jp/ftth/hikari/option/hikaridenwa/"},
-        {"label": "BIGLOBE光の提供エリア", "url": "https://join.biglobe.ne.jp/ftth/hikari/area.html"}
-      ]
+        {
+          "label": "BIGLOBE光の公式料金",
+          "url": "https://join.biglobe.ne.jp/ftth/hikari/price/"
+        },
+        {
+          "label": "BIGLOBE光電話とスマホセット割",
+          "url": "https://join.biglobe.ne.jp/ftth/hikari/option/hikaridenwa/"
+        },
+        {
+          "label": "BIGLOBE光の提供エリア",
+          "url": "https://join.biglobe.ne.jp/ftth/hikari/area.html"
+        }
+      ],
+      "constructionLabel": "開通工事あり（建物の設備で、作業員が来るかどうかが決まる）",
+      "contractLabel": "3年プラン",
+      "goodFor": "au・UQ mobileのスマホを使っていて、工事ができる家"
     },
     {
       "id": "softbank-hikari",
       "name": "SoftBank 光 1ギガ",
       "kind": "fiber",
       "prefectures": null,
-      "buildings": ["house", "mansion"],
-      "monthly": {"house": 5720, "mansion": 4180},
-      "decemberMonthly": {"house": 6050, "mansion": 4510},
+      "buildings": [
+        "house",
+        "mansion"
+      ],
+      "monthly": {
+        "house": 5720,
+        "mansion": 4180
+      },
+      "decemberMonthly": {
+        "house": 6050,
+        "mansion": 4510
+      },
       "requiredBundleOptionMonthly": 550,
       "contractMonths": 24,
       "note": "2年自動更新の通常料金。おうち割を計算する場合は指定オプション550円/月〜を世帯につき加算。12月以降の開始では、新たに加入する場合の改定後料金で比較します。11月末時点の自動更新あり契約は、12月以降の契約満了月の翌月から改定されるため、一律に12月から値上げしないでください。初期費用・工事費・通話・追加オプションは別。",
       "url": "https://www.softbank.jp/internet/sbhikari/",
       "sources": [
-        {"label": "SoftBank 光の公式案内", "url": "https://www.softbank.jp/internet/sbhikari/"},
-        {"label": "12月以降の料金改定と適用時期", "url": "https://www.softbank.jp/internet/special/information2026/"},
-        {"label": "おうち割の指定オプション", "url": "https://www.softbank.jp/support/faq/view/14699"}
-      ]
+        {
+          "label": "SoftBank 光の公式案内",
+          "url": "https://www.softbank.jp/internet/sbhikari/"
+        },
+        {
+          "label": "12月以降の料金改定と適用時期",
+          "url": "https://www.softbank.jp/internet/special/information2026/"
+        },
+        {
+          "label": "おうち割の指定オプション",
+          "url": "https://www.softbank.jp/support/faq/view/14699"
+        }
+      ],
+      "constructionLabel": "開通工事あり（建物の設備で、作業員が来るかどうかが決まる）",
+      "contractLabel": "2年自動更新",
+      "goodFor": "ソフトバンク・ワイモバイルを使っていて、工事ができる家"
     },
     {
       "id": "home5g",
       "name": "home 5G",
       "kind": "router",
       "prefectures": null,
-      "buildings": ["house", "mansion"],
-      "monthly": {"house": 5280, "mansion": 5280},
+      "buildings": [
+        "house",
+        "mansion"
+      ],
+      "monthly": {
+        "house": 5280,
+        "mansion": 5280
+      },
       "requiredBundleOptionMonthly": 0,
       "contractMonths": 0,
       "note": "home 5Gプランの通常月額。対応端末の購入代と事務手数料等は別。端末分割代と月々サポートは継続期間で異なり、短期解約には残額が発生します。2025年7月以降の新規契約で1年以内解約は1,100円の契約解除料の対象となる場合があります。工事不要でも、設置住所の申込み可否と屋内の電波を確認してください。",
       "url": "https://www.docomo.ne.jp/home_5g/",
       "sources": [
-        {"label": "home 5G公式料金・機器代別", "url": "https://www.docomo.ne.jp/home_5g/charge/"},
-        {"label": "home 5G解約時の費用", "url": "https://www.docomo.ne.jp/home_5g/cancellation/"}
-      ]
+        {
+          "label": "home 5G公式料金・機器代別",
+          "url": "https://www.docomo.ne.jp/home_5g/charge/"
+        },
+        {
+          "label": "home 5G解約時の費用",
+          "url": "https://www.docomo.ne.jp/home_5g/cancellation/"
+        }
+      ],
+      "constructionLabel": "工事なし（届いた機器をコンセントに挿して使う）",
+      "contractLabel": "契約期間の定めなし（1年以内の解約は、解除料1,100円の対象になる場合あり）",
+      "goodFor": "工事なしですぐ使いたい、ドコモのスマホを使う家"
     },
     {
       "id": "softbank-air",
       "name": "SoftBank Air",
       "kind": "router",
       "prefectures": null,
-      "buildings": ["house", "mansion"],
-      "monthly": {"house": 5368, "mansion": 5368},
-      "decemberMonthly": {"house": 5698, "mansion": 5698},
+      "buildings": [
+        "house",
+        "mansion"
+      ],
+      "monthly": {
+        "house": 5368,
+        "mansion": 5368
+      },
+      "decemberMonthly": {
+        "house": 5698,
+        "mansion": 5698
+      },
       "requiredBundleOptionMonthly": 0,
       "contractMonths": 0,
       "note": "Air 4G/5G共通プランの通常月額。2026年12月利用分から5,698円。契約期間と契約解除料の設定はありませんが、端末購入代・残額やレンタル料は別です。Airターミナル6購入の期間限定割引はこの通常料金から差し引いていません。設置住所・機種・屋内電波によって利用条件が異なります。",
       "url": "https://www.softbank.jp/internet/air/",
       "sources": [
-        {"label": "Airの現行料金プランと契約解除料", "url": "https://www.softbank.jp/support/faq/view/51651"},
-        {"label": "12月利用分からの料金改定", "url": "https://www.softbank.jp/internet/special/information2026/"},
-        {"label": "SoftBank Airの通常料金と端末代", "url": "https://www.softbank.jp/internet/special/air5/"}
-      ]
+        {
+          "label": "Airの現行料金プランと契約解除料",
+          "url": "https://www.softbank.jp/support/faq/view/51651"
+        },
+        {
+          "label": "12月利用分からの料金改定",
+          "url": "https://www.softbank.jp/internet/special/information2026/"
+        },
+        {
+          "label": "SoftBank Airの通常料金と端末代",
+          "url": "https://www.softbank.jp/internet/special/air5/"
+        }
+      ],
+      "constructionLabel": "工事なし（届いた機器をコンセントに挿して使う）",
+      "contractLabel": "契約期間・解除料なし（端末代の残りは別）",
+      "goodFor": "工事なしですぐ使いたい、ソフトバンク・ワイモバイルを使う家"
     },
     {
       "id": "bbiq",
       "name": "BBIQ 1ギガ・つづけて割",
       "kind": "fiber",
-      "prefectures": ["46"],
-      "buildings": ["house"],
-      "monthly": {"house": 5830, "mansion": null},
+      "prefectures": [
+        "46"
+      ],
+      "buildings": [
+        "house"
+      ],
+      "monthly": {
+        "house": 5830,
+        "mansion": null
+      },
       "introFirstMonth": 0,
       "introMonthly": 4400,
       "introMonths": 11,
@@ -101,26 +198,53 @@
       "note": "3年つづけて割を適用し、九州電力の電気割引は含めない13カ月目以降の通常料金。確認済みの鹿児島県・戸建てだけを数値比較します。マンションは設備で料金が異なり数値比較対象外です。au/UQセット割に電話を追加する場合はBBIQ光電話660円/月を加算。開通月0円・2〜12カ月目4,400円の割引は、同じNEXT窓口に掲載されたギガスタート割の対象となる新規申込みを想定。過去6カ月以内の同一世帯の利用実績等で対象外になる場合があります。事務手数料・工事費残額等は別。公式Web限定の追加1,100円/月割引をNEXTキャッシュバックと混ぜないでください。",
       "url": "https://www.bbiq.jp/hikari/internet/",
       "sources": [
-        {"label": "申込窓口NEXTの料金とつづけて割", "url": "https://kyushu-internet.com/plan/"},
-        {"label": "BBIQの公式料金と割引条件", "url": "https://www.bbiq.jp/hikari/internet/price/"},
-        {"label": "BBIQ光電話660円/月", "url": "https://www.bbiq.jp/hikari/telephone/price/"},
-        {"label": "BBIQのauスマートバリュー条件", "url": "https://www.bbiq.jp/hikari/recommend/smartvalue/"}
-      ]
+        {
+          "label": "申込窓口NEXTの料金とつづけて割",
+          "url": "https://kyushu-internet.com/plan/"
+        },
+        {
+          "label": "BBIQの公式料金と割引条件",
+          "url": "https://www.bbiq.jp/hikari/internet/price/"
+        },
+        {
+          "label": "BBIQ光電話660円/月",
+          "url": "https://www.bbiq.jp/hikari/telephone/price/"
+        },
+        {
+          "label": "BBIQのauスマートバリュー条件",
+          "url": "https://www.bbiq.jp/hikari/recommend/smartvalue/"
+        }
+      ],
+      "constructionLabel": "開通工事あり（建物の設備で、作業員が来るかどうかが決まる）",
+      "contractLabel": "3年（つづけて割）",
+      "goodFor": "九州の戸建てで、au・UQ mobileのスマホを使う家（このサイトでは鹿児島で確認）"
     },
     {
       "id": "en-hikari",
       "name": "enひかり 1ギガ・v6プラス込み",
       "kind": "fiber",
       "prefectures": null,
-      "buildings": ["house", "mansion"],
-      "monthly": {"house": 4818, "mansion": 3718},
+      "buildings": [
+        "house",
+        "mansion"
+      ],
+      "monthly": {
+        "house": 4818,
+        "mansion": 3718
+      },
       "requiredBundleOptionMonthly": 0,
       "contractMonths": 0,
       "note": "基本料金4,620円/3,520円にv6プラス198円/月を加算。最低利用期間・解約手数料なし。集合住宅設備がない建物や小規模集合住宅は戸建て料金になる場合があります。初期事務手数料3,300円、ルーターや特殊工事等は別。基本工事費0円キャンペーンは適用条件を公式で確認してください。UQ/ahamo/povo向けの勝手に割り110円は申請と条件が必要なため標準料金に含めていません。",
       "url": "https://www.enhikari.jp/",
       "sources": [
-        {"label": "enひかりの料金・IPv6・契約条件", "url": "https://www.enhikari.jp/"}
-      ]
+        {
+          "label": "enひかりの料金・IPv6・契約条件",
+          "url": "https://www.enhikari.jp/"
+        }
+      ],
+      "constructionLabel": "開通工事あり（建物の設備で、作業員が来るかどうかが決まる）",
+      "contractLabel": "最低利用期間・解約手数料なし",
+      "goodFor": "スマホのセット割にこだわらず、月額をおさえたい家"
     }
   ],
   "campaigns": [
@@ -130,7 +254,9 @@
       "amount": 30000,
       "receiveAfterMonths": null,
       "minUseMonths": 8,
-      "buildings": ["house"],
+      "buildings": [
+        "house"
+      ],
       "conditions": [
         "NEXTの対象申込み窓口からホームタイプのネットへ新規または他社から乗換え申込み。集合住宅はNEXT受付対象外。",
         "申込みから6カ月以内に開通し、開通月を含め8カ月以上継続利用すること。期間内の解約・料金不払い等は還元額全額の返還対象。",
