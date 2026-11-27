@@ -1,0 +1,180 @@
+---
+// 会社・お店の「ネット・電話・スマホ・コピー機」をまとめて見直すページ（法人・個人事業主向け）
+// 法人携帯・ビジネスフォン・コピー機の欄にA8の広告リンク（PR）がある。並び順は報酬ではなく、選び方の説明の順。
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import OfferCard from '../../components/OfferCard.astro';
+import { SITE } from '../../site.config.mjs';
+import { faqLd, breadcrumbLd } from '../../lib/data';
+
+const checkedAt = '2026-11-27';
+const crumbs = [
+  { name: '総合トップ', href: '/' },
+  { name: '会社・お店の通信と事務機器', href: '/houjin/' },
+];
+const title = '会社・お店の通信費と事務機器の見直し｜法人携帯・ビジネスフォン・コピー機・ネット回線';
+const description = '小さな会社・お店・個人事業主向けに、法人携帯・ビジネスフォン（クラウド電話）・コピー機（複合機）・ネット回線の見直し方を1ページにまとめました。契約の形のちがい、見積りで見るところ、窓口を比べられます。';
+const faqs = [
+  { q: '個人事業主でも法人携帯やビジネスフォンを契約できますか？', a: 'このページの窓口は、会社（法人）と個人事業主の名義を対象にしています。個人名義（家庭用）の申込みは対象外です。名義と支払い方法（請求書払い・口座振替など）を、見積りのときに確かめましょう。' },
+  { q: 'コピー機はリースとレンタル、どちらがいいですか？', a: 'リースは月額が抑えやすい代わりに、数年の長い契約になることが多く、途中でやめると残りの料金がかかる場合が多いです。レンタルは短い期間で使え、やめやすい代わりに、選べる機種が限られることがあります。何年使うか、月に何枚刷るかで決めます。' },
+  { q: '見積りは何社くらい取ればいいですか？', a: '2〜3社から取ると、相場がわかりやすくなります。月額だけでなく、契約期間・途中解約の費用・保守（故障したときの対応）・1枚あたりの印刷代（カウンター料金）をそろえて比べましょう。' },
+  { q: '鹿児島の離島でも使えますか？', a: '窓口によって、訪問や設置ができる地域がちがいます。離島や山あいの事業所は、申し込む前に「設置・訪問ができるか」「修理に来てもらえるまでの日数」を確かめてください。' },
+];
+const articleLd = {
+  '@context': 'https://schema.org', '@type': 'Article', headline: '会社・お店の通信費と事務機器の見直し', description,
+  datePublished: checkedAt, dateModified: checkedAt, inLanguage: 'ja', mainEntityOfPage: `${SITE.url}/houjin/`,
+  author: { '@type': 'Organization', name: SITE.operator, url: `${SITE.url}/about/` },
+  publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url + '/' },
+};
+const sources = [
+  { name: 'コピー機ドットコム', url: 'https://copyki-pr.com/' },
+  { name: '一括.jp 複合機', url: 'https://www.ikkatsu.jp/hukugouki/' },
+  { name: 'EMEAO! 複合機', url: 'https://emeao.jp/mfp-lp2/' },
+  { name: 'プリント革命（よくある質問）', url: 'https://printing.ink-revolution.com/contents/article-qa' },
+  { name: 'ビジフォン.com 対応エリア', url: 'https://biziphone.com/area' },
+  { name: 'EMEAO! ビジネスホン', url: 'https://emeao.jp/businessphone-lp2/' },
+  { name: 'ナイセンクラウド 料金', url: 'https://naisen.jp/charge.html' },
+  { name: '法人携帯の窓口', url: 'https://mobile.012cloud.jp/' },
+  { name: '一括.jp 法人携帯', url: 'https://www.ikkatsu.jp/corporationmobile/' },
+  { name: '法人携帯ドットコム', url: 'https://houjin-keitai.com/' },
+];
+const routes = [
+  { href: '#keitai', label: '法人携帯', body: '社員のスマホを会社の名義でまとめる' },
+  { href: '#phone', label: 'ビジネスフォン・クラウド電話', body: '会社の電話番号を、電話機やスマホで受ける' },
+  { href: '#copy', label: 'コピー機（複合機）', body: 'リース・レンタル・見積り比較' },
+  { href: '/hikari/houjin/', label: '会社・お店のネット回線', body: '法人向け光回線・固定IP・保守' },
+  { href: '/security/houjin/', label: 'セキュリティ対策', body: 'まず取り組む6か条・ランサムウェア' },
+];
+---
+<Base title={title} description={description} jsonLd={[breadcrumbLd(SITE.url, crumbs), articleLd, faqLd(faqs)]}>
+  <div class="site-container biz-page">
+    <Breadcrumbs items={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))} />
+    <h1>会社・お店の通信費と事務機器を見直す<span>法人携帯・電話・コピー機・ネット回線を1ページで</span></h1>
+
+    <div class="answer-box">
+      <p class="answer-label">先に結論</p>
+      <ul>
+        <li><strong>見直す順番</strong>：毎月かかる額が大きいものから。請求書や明細を並べて、スマホ・電話・コピー機・ネットの毎月の額を書き出してみましょう</li>
+        <li><strong>見積りは2〜3社</strong>：月額だけでなく、<strong>契約期間・途中でやめたときの費用・保守</strong>をそろえて比べる</li>
+        <li><strong>迷ったら一括見積り</strong>：条件を1回伝えるだけで、複数の業者から見積りが届く無料のサービスがあります</li>
+      </ul>
+    </div>
+    <p class="byline">A8.netの広告の条件と公式サイトで{checkedAt.replace(/-/g, '/')}に確認 ／ 書いた人：{SITE.operator}（<a href="/about/">編集方針</a>）／ このページには広告リンク（PR）があります</p>
+
+    <nav class="route-grid" aria-label="見直したいものを選ぶ">
+      {routes.map((r) => <a href={r.href}><strong>{r.label}</strong><span>{r.body}</span></a>)}
+    </nav>
+
+    <section id="keitai" aria-labelledby="keitai-title">
+      <h2 id="keitai-title">法人携帯（会社のスマホ）</h2>
+      <p>社員が自分のスマホを仕事に使っていると、電話代の精算や、辞めたあとの連絡先・データの扱いが手間になります。会社の名義でまとめて契約すると、請求が1つになり、台数の増減もしやすくなります。</p>
+      <h3>見積りで見ること</h3>
+      <ul class="plain-list">
+        <li><strong>台数と使い方</strong>：電話が多いか（かけ放題が要るか）、データをどれくらい使うか</li>
+        <li><strong>端末代</strong>：本体を買うか、今のスマホにSIMだけ入れるか。分割の残りがある場合の扱い</li>
+        <li><strong>名義と支払い</strong>：法人・個人事業主の名義、請求書払いができるか</li>
+        <li><strong>今の契約をやめる費用</strong>：乗り換え前の契約の解約金・端末の残り</li>
+      </ul>
+      <p class="note">個人名義（家庭用）や、今使っている会社での機種変更は、窓口の対象外になる場合があります。</p>
+      <div class="offer-grid">
+        <OfferCard id="ikkatsu-keitai" heading="まとめて見積り（無料）" notice="対象は会社・個人事業主です。条件と対応地域をリンク先で確認してください。" />
+        <OfferCard id="houjin-madoguchi" heading="法人携帯の窓口" notice="対象は会社・個人事業主の新規・乗り換えです。条件をリンク先で確認してください。" />
+        <OfferCard id="houjin-keitai-com" heading="ソフトバンクの法人携帯" notice="対象は会社・個人事業主です。訪問の日程や条件をリンク先で確認してください。" />
+      </div>
+    </section>
+
+    <section id="phone" aria-labelledby="phone-title">
+      <h2 id="phone-title">ビジネスフォン・クラウド電話</h2>
+      <p>会社の電話は、大きく2つの形があります。</p>
+      <div class="two-col">
+        <div><h3>ビジネスフォン（電話機と主装置）</h3><p>事務所に電話機と、電話をつなぎ分ける機械（主装置）を置きます。受付や事務所での内線・転送に向いています。機器の購入やリースと、配線の工事が必要です。</p></div>
+        <div><h3>クラウド電話（クラウドPBX）</h3><p>インターネットを通して、スマホやパソコンで会社の電話番号（099などの市外局番や050番号など）を使います。工事が少なく、外出先や在宅でも会社の番号で電話できます。通話の品質はネットの状態に左右されます。</p></div>
+      </div>
+      <p class="note">今の電話番号を引き続き使えるかは、番号の種類と契約先によってちがいます。見積りのときに必ず確かめてください。</p>
+      <div class="offer-grid">
+        <OfferCard id="emeao-phone" heading="ビジネスホンの業者紹介（無料）" notice="対象は会社・個人事業主です。条件と対応地域をリンク先で確認してください。" />
+        <OfferCard id="biziphone" heading="ビジネスフォンの販売・工事" notice="工事・設置ができる地域と条件をリンク先で確認してください。" />
+        <OfferCard id="naisen" heading="スマホで会社の番号（クラウド電話）" notice="使える番号の種類・料金・通話品質の条件をリンク先で確認してください。" />
+      </div>
+    </section>
+
+    <section id="copy" aria-labelledby="copy-title">
+      <h2 id="copy-title">コピー機（複合機）</h2>
+      <p>コピー機の費用は、<strong>本体（リース・レンタル・購入）</strong>と、<strong>印刷した枚数に応じた料金（カウンター料金）</strong>と、<strong>保守</strong>の合計で考えます。月額のリース料だけで比べないようにしましょう。</p>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="コピー機の契約の形のちがい">
+        <table>
+          <thead><tr><th scope="col">契約の形</th><th scope="col">向いている会社</th><th scope="col">気をつけること</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">リース</th><td>同じ機械を長く（数年）使う</td><td>契約期間が長いことが多く、途中でやめると残りの料金がかかる場合が多い</td></tr>
+            <tr><th scope="row">レンタル</th><td>短い期間だけ・やめやすさ重視</td><td>選べる機種が限られることがある。月額はリースより高めのことも</td></tr>
+            <tr><th scope="row">購入（中古を含む）</th><td>印刷が少なく、長く使う</td><td>修理・トナーなどの保守を別に用意する</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>見積りで見ること</h3>
+      <ul class="plain-list">
+        <li>月に何枚刷るか（白黒・カラー別）と、1枚あたりの料金</li>
+        <li>契約期間と、途中でやめたときの費用</li>
+        <li>故障したときに来てもらえるまでの時間（離島・山あいは特に）</li>
+        <li>今のリースが残っている場合の扱い</li>
+      </ul>
+      <div class="offer-grid">
+        <OfferCard id="ikkatsu-copy" heading="まとめて見積り（無料）" notice="対象は会社・個人事業主です。条件と対応地域をリンク先で確認してください。" />
+        <OfferCard id="emeao-copy" heading="複合機の業者紹介（無料）" notice="対象は会社・個人事業主です。条件と対応地域をリンク先で確認してください。" />
+        <OfferCard id="copyki" heading="コピー機の販売・リース" notice="設置できる地域・機種・契約期間をリンク先で確認してください。" />
+        <OfferCard id="print-kakumei" heading="定額のレンタル" notice="月額・印刷できる枚数・契約期間・対応地域をリンク先で確認してください。" />
+      </div>
+    </section>
+
+    <section aria-labelledby="more-title">
+      <h2 id="more-title">あわせて見直す</h2>
+      <ul class="plain-list">
+        <li><a href="/hikari/houjin/">会社・お店のネット回線（法人向け光回線・固定IP・保守）</a></li>
+        <li><a href="/security/houjin/">会社・お店のセキュリティ対策（防犯カメラの見積り比較も）</a></li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="faq">
+      <h2 id="faq">よくある質問</h2>
+      {faqs.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}
+    </section>
+    <p class="sources">出典（各社の公式サイト、2026年11月27日に確認）：{sources.map((s, i) => <>{i > 0 && '／'}<a href={s.url} target="_blank" rel="noopener">{s.name}</a></>)}</p>
+  </div>
+</Base>
+
+<style>
+  .biz-page { padding-top: 14px; padding-bottom: 30px; color: #23352e; }
+  .biz-page h1 { margin: 12px 0 16px; font-size: clamp(26px, 3.6vw, 36px); font-weight: 800; line-height: 1.45; color: #1f3a30; }
+  .biz-page h1 span { display: block; font-size: .55em; color: #175d50; margin-top: 4px; }
+  .biz-page h2 { margin-top: 40px; font-size: clamp(21px, 2.5vw, 26px); font-weight: 800; line-height: 1.55; scroll-margin-top: 16px; }
+  .biz-page h3 { margin-top: 18px; font-size: 17px; font-weight: 800; }
+  .biz-page p, .biz-page li { font-size: 15px; line-height: 1.95; }
+  .biz-page section > p { margin-top: 8px; }
+  .biz-page a { color: #175d50; }
+  .answer-box { border: 2px solid #175d50; border-radius: 10px; background: #f0f6f1; padding: 18px 20px; }
+  .answer-label { display: inline-block; background: #175d50; color: #fff; font-size: 13px !important; font-weight: 800; border-radius: 4px; padding: 2px 10px; margin-bottom: 8px; }
+  .answer-box ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+  .byline { margin-top: 10px; font-size: 13px !important; color: #637268; }
+  .byline a, .plain-list a { text-decoration: underline; text-underline-offset: 3px; }
+  .route-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; margin-top: 20px; }
+  .route-grid a { display: block; min-height: 72px; padding: 12px 14px; border: 1.5px solid #c7d9ca; border-radius: 10px; background: #fff; text-decoration: none; }
+  .route-grid a:hover { border-color: #175d50; background: #f1f7f3; }
+  .route-grid strong { display: block; font-size: 16px; color: #175d50; }
+  .route-grid span { display: block; font-size: 13px; line-height: 1.6; color: #5d6f63; margin-top: 2px; }
+  .plain-list { margin-top: 10px; padding-left: 1.2em; display: grid; gap: 6px; list-style: disc; }
+  .note { margin-top: 10px; font-size: 13px !important; color: #5d6f63; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 10px; }
+  .two-col > div { padding: 14px 16px; border: 1px solid #d5e2d9; border-radius: 8px; background: #f7faf7; }
+  .two-col h3 { margin-top: 0; }
+  .offer-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 14px; align-items: start; }
+  .table-scroll { overflow-x: auto; margin-top: 12px; border: 1px solid #ccd9d0; border-radius: 8px; }
+  .table-scroll table { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 14px; }
+  .table-scroll th, .table-scroll td { padding: 12px; border-bottom: 1px solid #dce5de; text-align: left; vertical-align: top; line-height: 1.75; }
+  .table-scroll thead th { background: #175d50; color: #fff; }
+  .table-scroll tbody th { background: #f1f6f1; color: #175d50; width: 22%; }
+  .sources { margin-top: 26px; font-size: 12px !important; color: #69786e; }
+  .sources a { text-decoration: underline; }
+  .biz-page details { margin-top: 10px; padding: 14px 18px; border: 1px solid #d5dfd7; border-radius: 6px; }
+  .biz-page summary { cursor: pointer; font-weight: 700; }
+  @media (max-width: 700px) { .two-col, .offer-grid { grid-template-columns: 1fr; } }
+</style>

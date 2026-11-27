@@ -131,5 +131,125 @@
     },
     "note": "会社・お店の防犯カメラの設置業者を紹介してもらえる見積り比較です。法人・個人事業主向けで、家庭向けではありません（2026年11月26日に広告の案内で確認）。費用や条件はリンク先で確認してください。",
     "guideSlugs": []
+  },
+  {
+    "id": "copyki",
+    "name": "コピー機ドットコム",
+    "officialUrl": "https://copyki-pr.com/",
+    "affiliate": {
+      "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+A4DBRU+1MWA+44VNJ6",
+      "label": "業務用コピー機・複合機",
+      "pixel": "https://www17.a8.net/0.gif?a8mat=4BGV60+A4DBRU+1MWA+44VNJ6"
+    },
+    "note": "会社・お店向けのコピー機・複合機のリース・レンタル・中古販売の窓口（運営：株式会社ビジョン）。公式では全国対応で鹿児島県も対象、ただし離島など一部地域は除くと案内されています。月額は公式に2,400円（税込）〜とありますが、機種と条件で変わります（2026年11月27日に公式サイトで確認）。",
+    "guideSlugs": []
+  },
+  {
+    "id": "ikkatsu-copy",
+    "name": "一括.jp 複合機・コピー機",
+    "officialUrl": "https://www.ikkatsu.jp/hukugouki/",
+    "affiliate": {
+      "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+79YRQ2+2LHA+ZTNGY",
+      "label": "コピー機 一括.jp",
+      "pixel": "https://www15.a8.net/0.gif?a8mat=4BGV60+79YRQ2+2LHA+ZTNGY"
+    },
+    "note": "複数の業者から、複合機・コピー機の見積りをまとめて取れる無料の比較サービス（運営：株式会社eclore）。会社・個人事業主向けです。鹿児島で紹介できる業者がいるかは、申込み後の案内で確かめてください（2026年11月27日に公式サイトで確認）。",
+    "guideSlugs": []
+  },
+  {
+    "id": "emeao-copy",
+    "name": "EMEAO!（複合機の業者紹介）",
+    "officialUrl": "https://emeao.jp/mfp-lp2/",
+    "affiliate": {
+      "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+AMTRIY+2LHA+3YW8WI",
+      "label": "複合機の一括見積もり",
+      "pixel": "https://www13.a8.net/0.gif?a8mat=4BGV60+AMTRIY+2LHA+3YW8WI"
+    },
+    "note": "条件を伝えると、合う複合機の業者（購入・リース・レンタル）を紹介してもらえる無料のサービス（運営：株式会社eclore）。会社・個人事業主向けです。対応地域は公式に書かれていません（2026年11月27日に公式サイトで確認）。",
+    "guideSlugs": []
+  },
+  {
+    "id": "print-kakumei",
+    "name": "プリント革命",
+    "officialUrl": "https://printing.ink-revolution.com/",
+    "affiliate": {
+      "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+AOM2CA+34XA+ZQ80I",
+      "label": "プリント革命",
+      "pixel": "https://www11.a8.net/0.gif?a8mat=4BGV60+AOM2CA+34XA+ZQ80I"
+    },
+    "note": "プリンター・複合機の定額レンタル（運営：株式会社シー・コネクト）。公式では月額8,800円〜43,780円（税込）、初期費用とカウンター料金（1枚ごとの印刷代）は0円、最低利用期間は12か月と案内されています。対応地域は書かれていません（2026年11月27日に公式サイトで確認）。",
+    "guideSlugs": []
+  },
+  {
+    "id": "biziphone",
+    "name": "ビジフォン.com",
+    "officialUrl": "https://biziphone.com/",
+    "affiliate": {
+      "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+BOC2MY+1MWA+1HMAQQ",
+      "label": "ビジフォン.com",
+      "pixel": "https://www10.a8.net/0.gif?a8mat=4BGV60+BOC2MY+1MWA+1HMAQQ"
+    },
+    "note": "ビジネスフォンの新品・中古の販売、リース、電話工事の窓口（運営：株式会社ビジョン）。公式では全国対応で鹿児島県も対象ですが、地域によって工事・訪問できる範囲が違うと案内されています（2026年11月27日に公式サイトで確認）。",
+    "guideSlugs": []
+  },
+  {
+    "id": "emeao-phone",
+    "name": "EMEAO!（ビジネスホンの業者紹介）",
+    "officialUrl": "https://emeao.jp/businessphone-lp2/",
+    "affiliate": {
+      "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+BQ4DGA+2LHA+6M5LOY",
+      "label": "ビジネスホンの一括見積もり",
+      "pixel": "https://www17.a8.net/0.gif?a8mat=4BGV60+BQ4DGA+2LHA+6M5LOY"
+    },
+    "note": "条件を伝えると、ビジネスホンの業者を最大8社紹介してもらえる無料のサービス（運営：株式会社eclore）。会社・個人事業主向けです。対応地域は公式に書かれていません（2026年11月27日に公式サイトで確認）。",
+    "guideSlugs": []
+  },
+  {
+    "id": "naisen",
+    "name": "ナイセンクラウド",
+    "officialUrl": "https://naisen.jp/",
+    "affiliate": {
+      "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+BRB8NU+38EU+5YRHE",
+      "label": "クラウドPBX「ナイセンクラウド」",
+      "pixel": "https://www10.a8.net/0.gif?a8mat=4BGV60+BRB8NU+38EU+5YRHE"
+    },
+    "note": "スマホやパソコンで会社の電話番号（固定番号・050番号）を使えるクラウドの電話（運営：アイティオール株式会社）。公式の料金表では初期費用10,000円、月額2,000円（1内線）〜、違約金なし。鹿児島の市外局番が使えるかはリンク先で確かめてください（2026年11月27日に公式サイトで確認）。",
+    "guideSlugs": []
+  },
+  {
+    "id": "houjin-madoguchi",
+    "name": "法人携帯の窓口",
+    "officialUrl": "https://mobile.012cloud.jp/",
+    "affiliate": {
+      "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+AC3YMY+3SPO+B8V6SI",
+      "label": "法人携帯の窓口",
+      "pixel": "https://www12.a8.net/0.gif?a8mat=4BGV60+AC3YMY+3SPO+B8V6SI"
+    },
+    "note": "ソフトバンクの販売代理店で、オンラインで全国から申し込める法人携帯の窓口（運営：株式会社Wiz）。会社の名義で1台から契約できます。月額の割引には条件と期間があるので、リンク先で確かめてください（2026年11月27日に公式サイトで確認）。",
+    "guideSlugs": []
+  },
+  {
+    "id": "ikkatsu-keitai",
+    "name": "一括.jp 法人携帯",
+    "officialUrl": "https://www.ikkatsu.jp/corporationmobile/",
+    "affiliate": {
+      "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+BSI3VE+2LHA+3SXWUQ",
+      "label": "法人携帯の一括お問い合わせ",
+      "pixel": "https://www11.a8.net/0.gif?a8mat=4BGV60+BSI3VE+2LHA+3SXWUQ"
+    },
+    "note": "複数の業者に、法人携帯の見積りをまとめて頼める無料の比較サービス（運営：株式会社eclore）。会社・個人事業主向けです。対応地域は公式に書かれていないので、鹿児島で紹介できる業者がいるかは申込み後の案内で確かめてください（2026年11月27日に公式サイトで確認）。",
+    "guideSlugs": []
+  },
+  {
+    "id": "houjin-keitai-com",
+    "name": "法人携帯ドットコム",
+    "officialUrl": "https://houjin-keitai.com/",
+    "affiliate": {
+      "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+BW2PI2+1MWA+HXD0Y",
+      "label": "法人携帯ドットコム",
+      "pixel": "https://www15.a8.net/0.gif?a8mat=4BGV60+BW2PI2+1MWA+HXD0Y"
+    },
+    "note": "ソフトバンクの正規代理店で、ドコモ回線の格安SIMも扱う法人携帯の窓口（運営：株式会社ビジョン）。公式では47都道府県に対応（鹿児島県も対象）、法人・個人事業主が1台から使えると案内されています（2026年11月27日に公式サイトで確認）。",
+    "guideSlugs": []
   }
 ]
