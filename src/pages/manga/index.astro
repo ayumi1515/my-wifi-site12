@@ -7,12 +7,14 @@ import { breadcrumbLd } from '../../lib/data';
 import { SITE } from '../../site.config.mjs';
 const crumbs = [{ name: '総合トップ', href: '/' }, { name: '漫画で読む', href: '/manga/' }];
 ---
-<Base title="漫画で読む｜光回線・スマホ・詐欺対策・会社の通信費の見直し" description="家族のセット割、鹿児島の光回線、格安SIMへの乗り換え、偽SMS・詐欺の見分け方、小さな会社の通信費とコピー機。気になるテーマを縦読み漫画で3分。読んだあとは診断や比較で自分の条件を確かめられます。" jsonLd={[breadcrumbLd(SITE.url, crumbs)]}>
+<Base title="漫画で読む｜光回線・スマホ・詐欺対策・会社の通信費の見直し" description="家族のセット割、格安SIM、偽SMS・詐欺の見分け方。会社・お店向けには法人携帯、コピー機、お店の回線、ランサムウェア対策も。気になるテーマを縦読み漫画で3分。読んだあとは診断や比較で自分の条件を確かめられます。" jsonLd={[breadcrumbLd(SITE.url, crumbs)]}>
   <div class="site-container manga-index">
     <Breadcrumbs items={[crumbs[0], { name: crumbs[1].name }]} />
     <h1>漫画で読む、ネットとスマホの見直し</h1>
     <p class="lead">気になるテーマを選んで、3分で読めます。漫画はフィクションです。料金や割引は会社・プラン・条件で変わるので、最後は診断や公式の情報で確かめてください。</p>
-    <MangaShelf heading="" />
+    <MangaShelf ids={["kojin","sim","sagi"]} heading="家族・個人向け" />
+    <MangaShelf ids={["houjin","hkeitai","copy","mise-net","ransom"]} heading="会社・お店向け" />
+    <p class="more">鹿児島にお住まいの方へ：<a href="/manga/kagoshima/">鹿児島で光回線を選ぶ漫画</a></p>
     <p class="more"><a href="/manga/family-telecom/">6コマ漫画：家族のスマホ代・Wi-Fiを見直す順番</a></p>
   </div>
 </Base>

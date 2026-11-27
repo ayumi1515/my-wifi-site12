@@ -1,0 +1,71 @@
+---
+// 会社向け漫画LP：社員のスマホを会社名義に（法人携帯）→ /houjin/#keitai と法人携帯の窓口
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import MangaLp, { type MangaChapter } from '../../components/MangaLp.astro';
+import OfferCard from '../../components/OfferCard.astro';
+import { breadcrumbLd } from '../../lib/data';
+import { SITE } from '../../site.config.mjs';
+
+const path = '/manga/hkeitai/';
+const title = '社員のスマホ、会社名義にしていますか？｜法人携帯の見直しを漫画で';
+const description = '社員が自分のスマホで仕事の電話、毎月の経費精算、辞めたときの顧客の連絡先…。小さな会社が法人携帯にまとめるときの考え方と、見積りの比べ方を縦読み漫画で3分。';
+const crumbs = [{ name: '総合トップ', href: '/' }, { name: '会社・お店の通信費と事務機器', href: '/houjin/' }, { name: '漫画で見る法人携帯', href: '/manga/hkeitai/' }];
+const chapters: MangaChapter[] = [
+  { id: 'ch1', title: '個人のスマホで仕事、困っていない？', panels: [
+    { img: 'p1', alt: '現場で自分のスマホで電話する若手社員のけんた。', lines: [{ who: 'けんた', text: 'はい、明日の工事の時間ですね！（また自分のスマホで受けちゃった…）' }] },
+    { img: 'p2', alt: 'レシートと明細の山を前にため息をつく経理のみゆきさん。', lines: [{ who: 'みゆき', text: '社員みんなの電話代の精算、毎月これだけで半日かかるんですよ…' }] },
+    { img: 'p3', alt: '会社を辞めるけんたと、心配そうな社長。', lines: [{ who: 'けんた', text: '今までお世話になりました！' }, { who: '社長', text: 'お客さんの連絡先、全部けんたのスマホに入ってたんだよな…', side: 'right' }] },
+  ] },
+  { id: 'ch2', title: '会社名義でまとめると', panels: [
+    { img: 'p4', alt: '会社の建物から、同じ形のスマホ数台に線がつながる図。', narration: '法人携帯（会社名義のスマホ）にまとめると、請求が1つになり、精算の手間が減ります。社員が辞めても、電話番号と連絡先を会社に残しやすくなります。' },
+    { img: 'p5', alt: 'PCで見積りを頼む入力をするみゆきさん。', lines: [{ who: 'みゆき', text: '台数と、電話が多いかどうかを伝えて、まとめて見積りを頼んでみます。' }], note: '一括見積りのサービスは、会社・個人事業主向けです。対応できる地域は、申込み後の案内で確かめます。' },
+    { img: 'p6', alt: '見積書を並べて比べる社長とみゆきさん。', lines: [{ who: '社長', text: '月額だけじゃなくて、端末代と、契約の期間も見るんだな。' }, { who: 'みゆき', text: '今のスマホをそのまま使えるかも、聞いておきます。', side: 'right' }] },
+  ] },
+  { id: 'ch3', title: '配る前に、ここを決める', panels: [
+    { img: 'p7', alt: '箱から新しいスマホを取り出して配る場面。', narration: '仕事で使うアプリや、なくしたときの連絡のしかたなど、使い方のルールを先に決めておくと安心です。' },
+    { img: 'p8', alt: '会社のスマホで現場から電話するけんたと、うなずく社長。', lines: [{ who: '社長', text: 'まずは、何台いるか数えるところから始めよう。' }] },
+  ] },
+];
+const worries = [
+  { text: '社員の電話代の精算が、毎月たいへん', chapter: 'ch1', face: 'p2', facePos: '50% 35%' },
+  { text: '辞めた社員のスマホに、顧客の連絡先が', chapter: 'ch1', face: 'p3', facePos: '50% 35%' },
+  { text: '法人携帯って、何をどう比べる？', chapter: 'ch2', face: 'p6', facePos: '50% 35%' },
+];
+const points = [
+  { title: '台数と使い方を書き出す', body: '何台いるか、電話が多い人はだれか、データをどれくらい使うかをまとめます。' },
+  { title: '見積りは2〜3社でそろえる', body: '月額・端末代・契約期間・途中でやめたときの費用を、同じ条件で比べます。' },
+  { title: '使い方のルールを決める', body: '仕事のアプリ、なくしたときの連絡、辞めるときの返し方を先に決めます。' },
+];
+const articleLd = { '@context': 'https://schema.org', '@type': 'Article', headline: '社員のスマホを会社名義にまとめる（漫画）', description, inLanguage: 'ja', mainEntityOfPage: `${SITE.url}${path}`, datePublished: '2026-11-27', dateModified: '2026-11-27', author: { '@type': 'Organization', name: SITE.operator, url: `${SITE.url}/about/` }, publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url + '/' } };
+---
+<Base title={title} description={description} jsonLd={[breadcrumbLd(SITE.url, crumbs), articleLd]}>
+  <div class="site-container">
+    <Breadcrumbs items={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))} />
+    <MangaLp
+      base="/images/manga-lp/hkeitai"
+      kicker="会社向け｜漫画で3分"
+      title="社員のスマホ、会社名義にしていますか？"
+      lead="個人のスマホで仕事、毎月の精算、辞めたときの連絡先。小さな会社の「法人携帯」の考え方を漫画で。"
+      heroAlt="事務所で、スマホを2台持つ経理のみゆきさんと社長が並んでいる。"
+      worries={worries}
+      chapters={chapters}
+      points={points}
+      cta={{ href: '/houjin/#keitai', label: '法人携帯の選び方と窓口を見る', sub: '見積りで見ること・会社向けの窓口' }}
+      sticky={{ href: '/houjin/#keitai', label: '法人携帯の選び方を見る' }}
+      speakers={{ '社長': '#3d6a8c', 'みゆき': '#b45b36', 'けんた': '#6b7c3a' }}
+      pointsTitle="まとめ：法人携帯の3つのポイント"
+      fictionNote="この漫画はフィクションです。登場人物は実在しません。料金・条件・対応地域は、会社や契約によって変わります。"
+    >
+      <div class="mlp-offers">
+        <OfferCard id="ikkatsu-keitai" heading="法人携帯をまとめて見積り（無料）" notice="対象は会社・個人事業主です。対応できる地域は、申込み後の案内で確かめてください。" />
+        <OfferCard id="houjin-keitai-com" heading="ソフトバンクの法人携帯（47都道府県対応と案内）" notice="対象は会社・個人事業主です。条件をリンク先で確認してください。" />
+      </div>
+    </MangaLp>
+  </div>
+</Base>
+<style>
+  .mlp-more { margin-top: 14px; font-size: 14px; line-height: 1.8; color: #4f6a5a; }
+  .mlp-more a { color: #175d50; font-weight: 700; text-decoration: underline; }
+  .mlp-offers { margin-top: 10px; }
+</style>

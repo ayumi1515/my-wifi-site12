@@ -1,0 +1,70 @@
+---
+// 会社向け漫画LP：お店のネットが止まったら（予備の回線）→ /hikari/houjin/ と BizAir
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import MangaLp, { type MangaChapter } from '../../components/MangaLp.astro';
+import OfferCard from '../../components/OfferCard.astro';
+import { breadcrumbLd } from '../../lib/data';
+import { SITE } from '../../site.config.mjs';
+
+const path = '/manga/mise-net/';
+const title = 'お店のネットが止まったら、レジは？｜会社・お店の回線と予備の回線を漫画で';
+const description = 'キャッシュレスのレジや予約の受付は、ネットが止まると使えなくなることがあります。お店・小さな会社の回線の選び方と、止まったときの予備の回線を縦読み漫画で3分。';
+const crumbs = [{ name: '総合トップ', href: '/' }, { name: '会社・お店の通信費と事務機器', href: '/houjin/' }, { name: '漫画で見るお店のネット', href: '/manga/mise-net/' }];
+const chapters: MangaChapter[] = [
+  { id: 'ch1', title: 'いちばん忙しい時間に、ネットが止まった', panels: [
+    { img: 'p1', alt: 'にぎやかなカフェで、レジのタブレットが固まり困る店長のまり。', lines: [{ who: 'まり', text: 'えっ、レジが動かない…カードの支払いができない！' }] },
+    { img: 'p2', alt: 'お客さんの列ができ、あわてるアルバイトのゆうと。', lines: [{ who: 'ゆうと', text: 'すみません、少々お待ちください…！' }] },
+    { img: 'p3', alt: '閉店後、ルーターの前で原因を探すまり。', lines: [{ who: 'まり', text: 'ネットが止まると、お店ごと止まっちゃうんだ…' }] },
+  ] },
+  { id: 'ch2', title: '止まったときの「予備」を用意する', panels: [
+    { img: 'p4', alt: 'お店から光回線と予備の電波の2本の線が出ている図。', narration: '保守の手厚い回線でも、故障や工事で一時的に使えなくなることはあります。止まると困るお店は、別の回線を「予備」に用意しておく方法があります。' },
+    { img: 'p5', alt: 'スマホのテザリングで、レジのタブレットをつなぐまり。', lines: [{ who: 'まり', text: 'ひとまず、スマホのテザリングでつないでみよう。' }], narration: 'テザリング（スマホを通してほかの機器をネットにつなぐこと）は手軽ですが、スマホのデータ量や電池に気をつけます。' },
+    { img: 'p6', alt: 'ノートPCで会社・お店向けの回線を比べるまり。', lines: [{ who: 'まり', text: '修理に来てもらえる時間や、固定IP（いつも同じネット上の住所）がいるかも見て選ぶんだね。' }] },
+  ] },
+  { id: 'ch3', title: '予備の回線を置いておく', panels: [
+    { img: 'p7', alt: 'カウンターの下に置いた小さな無線ルーター。', narration: '工事のいらない無線のルーターを予備に置く方法もあります。ふだん使わない月の費用も含めて考えます。' },
+    { img: 'p8', alt: 'カフェのカウンターで話すまりとゆうと。', lines: [{ who: 'まり', text: 'まずは、止まったときの手順をみんなで決めておこう。' }] },
+  ] },
+];
+const worries = [
+  { text: 'ネットが止まると、レジも予約も止まる', chapter: 'ch1', face: 'p1', facePos: '50% 35%' },
+  { text: '止まったとき、すぐできることは？', chapter: 'ch2', face: 'p5', facePos: '50% 35%' },
+  { text: '予備の回線って、どう用意する？', chapter: 'ch3', face: 'p6', facePos: '50% 35%' },
+];
+const points = [
+  { title: '止まったときの影響を書き出す', body: 'レジ・予約・電話など、ネットが止まると困るものを確かめます。' },
+  { title: '修理の時間と固定IPで回線を選ぶ', body: '夜や休日も修理に来てもらえるか、外からつなぐ機器に固定IP（いつも同じネット上の住所）が要るかを見ます。' },
+  { title: '予備の回線と手順を用意する', body: 'テザリングや無線のルーターなど、止まったときの代わりと手順を決めておきます。' },
+];
+const articleLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'お店のネット回線と予備の回線（漫画）', description, inLanguage: 'ja', mainEntityOfPage: `${SITE.url}${path}`, datePublished: '2026-11-27', dateModified: '2026-11-27', author: { '@type': 'Organization', name: SITE.operator, url: `${SITE.url}/about/` }, publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url + '/' } };
+---
+<Base title={title} description={description} jsonLd={[breadcrumbLd(SITE.url, crumbs), articleLd]}>
+  <div class="site-container">
+    <Breadcrumbs items={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))} />
+    <MangaLp
+      base="/images/manga-lp/mise-net"
+      kicker="会社・お店向け｜漫画で3分"
+      title="お店のネットが止まったら、レジはどうする？"
+      lead="キャッシュレスのレジや予約は、ネットが止まると使えなくなることがあります。お店の回線と予備の回線の考え方を漫画で。"
+      heroAlt="カフェのカウンターで、店長のまりとアルバイトのゆうとが並んでいる。"
+      worries={worries}
+      chapters={chapters}
+      points={points}
+      cta={{ href: '/hikari/houjin/', label: '会社・お店のネット回線を見る', sub: '法人向け光回線・修理の時間・固定IP' }}
+      sticky={{ href: '/hikari/houjin/', label: '会社・お店のネット回線を見る' }}
+      speakers={{ 'まり': '#b45b36', 'ゆうと': '#3d6a8c' }}
+      pointsTitle="まとめ：お店の回線の3つのポイント"
+      fictionNote="この漫画はフィクションです。登場人物は実在しません。料金・条件・対応地域は、会社や契約によって変わります。"
+    >
+      <div class="mlp-offers">
+        <OfferCard id="bizair" heading="法人・店舗向けの工事なしWi-Fi（予備にも）" notice="法人・お店向けで、個人の申込みは対象外です。使える地域と条件をリンク先で確認してください。" />
+      </div>
+    </MangaLp>
+  </div>
+</Base>
+<style>
+  .mlp-more { margin-top: 14px; font-size: 14px; line-height: 1.8; color: #4f6a5a; }
+  .mlp-more a { color: #175d50; font-weight: 700; text-decoration: underline; }
+  .mlp-offers { margin-top: 10px; }
+</style>

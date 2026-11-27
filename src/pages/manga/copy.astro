@@ -1,0 +1,71 @@
+---
+// 会社向け漫画LP：コピー機のリースと印刷代 → /houjin/#copy とコピー機の見積り
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import MangaLp, { type MangaChapter } from '../../components/MangaLp.astro';
+import OfferCard from '../../components/OfferCard.astro';
+import { breadcrumbLd } from '../../lib/data';
+import { SITE } from '../../site.config.mjs';
+
+const path = '/manga/copy/';
+const title = 'コピー機の印刷代、毎月いくら？｜リースとカウンター料金の見直しを漫画で';
+const description = 'コピー機の費用は、本体のリース料だけではありません。1枚ごとの印刷代（カウンター料金）や保守、契約期間まで、小さな事務所の見直し方を縦読み漫画で3分。';
+const crumbs = [{ name: '総合トップ', href: '/' }, { name: '会社・お店の通信費と事務機器', href: '/houjin/' }, { name: '漫画で見るコピー機', href: '/manga/copy/' }];
+const chapters: MangaChapter[] = [
+  { id: 'ch1', title: 'その印刷代、知っていますか？', panels: [
+    { img: 'p1', alt: '大量の図面を印刷するたくみ。コピー機から紙が出続けている。', lines: [{ who: 'たくみ', text: '今日の打ち合わせ用の図面、全部で何枚だっけ…' }] },
+    { img: 'p2', alt: '請求書を見て驚く所長のかとうさん。', lines: [{ who: 'かとう', text: 'えっ、コピー機の請求、リース料だけじゃないの？' }] },
+    { img: 'p3', alt: '古い契約書の束を探すたくみ。', lines: [{ who: 'たくみ', text: '契約書、ありました。1枚ごとの印刷代も入ってます…' }] },
+  ] },
+  { id: 'ch2', title: 'コピー機の費用は3つの合計', panels: [
+    { img: 'p4', alt: 'コピー機の本体・印刷した紙の束・工具の3つがプラスでつながる図。', narration: 'コピー機の費用は、本体（リース・レンタル・購入）と、印刷した枚数に応じた料金（カウンター料金）と、保守（故障したときの対応）の合計で考えます。' },
+    { img: 'p5', alt: 'PCで見積り比較のページを見るたくみ。', lines: [{ who: 'たくみ', text: '月に何枚刷っているか、白黒とカラーに分けて書き出してみます。' }] },
+    { img: 'p6', alt: '業者の人が事務所で説明し、かとうさんが聞いている。', lines: [{ who: 'かとう', text: '今のリースが残っている場合は、どうなりますか？' }], narration: 'リース（数年の契約で機械を借りるしくみ）は、途中でやめると残りの料金がかかる場合が多いです。' },
+  ] },
+  { id: 'ch3', title: '見積りは、ここをそろえる', panels: [
+    { img: 'p7', alt: '見積書2枚を見比べて丸をつけるかとうさん。', lines: [{ who: 'かとう', text: '月額と、1枚あたりの料金と、契約の期間。全部そろえて比べよう。' }] },
+    { img: 'p8', alt: 'コピー機の前で話すかとうさんとたくみ。', lines: [{ who: 'たくみ', text: 'まずは、今の契約がいつまでか確かめておきますね。' }] },
+  ] },
+];
+const worries = [
+  { text: 'コピー機の請求、なんだか高い', chapter: 'ch1', face: 'p2', facePos: '50% 35%' },
+  { text: 'リースの契約、中身を覚えていない', chapter: 'ch1', face: 'p3', facePos: '50% 35%' },
+  { text: '見積りで、どこを比べればいい？', chapter: 'ch3', face: 'p7', facePos: '50% 35%' },
+];
+const points = [
+  { title: '月に何枚刷るかを知る', body: '白黒とカラーに分けて、毎月の枚数を書き出します。' },
+  { title: '3つの合計で比べる', body: '本体のリース料、1枚ごとの印刷代、保守をまとめて比べます。' },
+  { title: '契約期間と、やめるときの費用', body: '今の契約がいつまでか、途中でやめると何が残るかを先に確かめます。' },
+];
+const articleLd = { '@context': 'https://schema.org', '@type': 'Article', headline: 'コピー機のリースと印刷代の見直し（漫画）', description, inLanguage: 'ja', mainEntityOfPage: `${SITE.url}${path}`, datePublished: '2026-11-27', dateModified: '2026-11-27', author: { '@type': 'Organization', name: SITE.operator, url: `${SITE.url}/about/` }, publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url + '/' } };
+---
+<Base title={title} description={description} jsonLd={[breadcrumbLd(SITE.url, crumbs), articleLd]}>
+  <div class="site-container">
+    <Breadcrumbs items={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))} />
+    <MangaLp
+      base="/images/manga-lp/copy"
+      kicker="会社向け｜漫画で3分"
+      title="コピー機の印刷代、毎月いくら払っていますか？"
+      lead="コピー機の費用は、リース料だけではありません。小さな事務所の見直し方を漫画で。"
+      heroAlt="コピー機の前で、所長のかとうさんと事務のたくみが並んでいる。"
+      worries={worries}
+      chapters={chapters}
+      points={points}
+      cta={{ href: '/houjin/#copy', label: 'コピー機の選び方と窓口を見る', sub: 'リース・レンタル・購入のちがい' }}
+      sticky={{ href: '/houjin/#copy', label: 'コピー機の選び方を見る' }}
+      speakers={{ 'かとう': '#b45b36', 'たくみ': '#3d6a8c' }}
+      pointsTitle="まとめ：コピー機の3つのポイント"
+      fictionNote="この漫画はフィクションです。登場人物は実在しません。料金・条件・対応地域は、会社や契約によって変わります。"
+    >
+      <div class="mlp-offers">
+        <OfferCard id="ikkatsu-copy" heading="コピー機をまとめて見積り（無料）" notice="対象は会社・個人事業主です。対応できる地域は、申込み後の案内で確かめてください。" />
+        <OfferCard id="copyki" heading="コピー機の販売・リース（全国対応と案内・離島など一部除く）" notice="離島など一部地域は対象外と案内されています。条件をリンク先で確認してください。" />
+      </div>
+    </MangaLp>
+  </div>
+</Base>
+<style>
+  .mlp-more { margin-top: 14px; font-size: 14px; line-height: 1.8; color: #4f6a5a; }
+  .mlp-more a { color: #175d50; font-weight: 700; text-decoration: underline; }
+  .mlp-offers { margin-top: 10px; }
+</style>

@@ -1,0 +1,70 @@
+---
+// 会社向け漫画LP：ランサムウェアに備える → /security/houjin/ と防犯カメラの見積り
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import MangaLp, { type MangaChapter } from '../../components/MangaLp.astro';
+import OfferCard from '../../components/OfferCard.astro';
+import { breadcrumbLd } from '../../lib/data';
+import { SITE } from '../../site.config.mjs';
+
+const path = '/manga/ransom/';
+const title = 'ある朝、パソコンが開けなくなったら？｜小さな会社のランサムウェア対策を漫画で';
+const description = 'データを使えなくして身代金を求める「ランサムウェア」。警察庁のまとめでは、2026年1〜6月の被害123件のうち約6割が中小企業でした。ネットから外す、バックアップ、更新など、小さな会社の備えを縦読み漫画で3分。';
+const crumbs = [{ name: '総合トップ', href: '/' }, { name: '会社・お店のセキュリティ対策', href: '/security/houjin/' }, { name: '漫画で見るランサムウェア対策', href: '/manga/ransom/' }];
+const chapters: MangaChapter[] = [
+  { id: 'ch1', title: 'ある朝、パソコンが開けない', panels: [
+    { img: 'p1', alt: '真っ赤な画面のパソコンを見て青ざめる所長のやまださん。', lines: [{ who: 'やまだ', text: 'なんだこれは…ファイルが全部開けない！' }] },
+    { img: 'p2', alt: 'LANケーブルを抜く職員のあやの手元。', lines: [{ who: 'あや', text: '待ってください！ まずネットから外します。' }], narration: 'ランサムウェア（データを使えなくして身代金を求めるウイルス）にかかったかもしれないときは、まずネットワーク（LANケーブル・Wi-Fi）から外し、保守会社や相談窓口の指示に従います。' },
+    { img: 'p3', alt: '電話で相談するやまださんとあや。', lines: [{ who: 'やまだ', text: '保守の会社と、相談窓口に連絡しよう。' }], narration: '契約している保守会社のほか、IPA（情報処理推進機構）の「情報セキュリティ安心相談窓口」や警察にも相談できます。' },
+  ] },
+  { id: 'ch2', title: '小さな会社もねらわれる', panels: [
+    { img: 'p4', alt: 'パソコン・外付けの記録装置・クラウドにデータがコピーされている図。', narration: '警察庁のまとめでは、2026年1〜6月に報告されたランサムウェアの被害は123件で、そのうち約6割が中小企業でした。データを2か所以上に残しておくと、もしものときに戻しやすくなります。' },
+    { img: 'p5', alt: 'パソコンの更新ボタンを押すあや。', lines: [{ who: 'あや', text: 'パソコンとソフトは、いつも最新にしておきましょう。' }], narration: 'IPAは、中小企業がまず取り組む「情報セキュリティ6か条」として、更新・ウイルス対策・パスワード・共有設定・バックアップ・手口を知ることをあげています。' },
+    { img: 'p6', alt: '外付けの記録装置をパソコンから外してしまうあや。', lines: [{ who: 'あや', text: 'バックアップを取ったら、つなぎっぱなしにしないで外しておきます。' }] },
+  ] },
+  { id: 'ch3', title: 'パソコンの外の守りも', panels: [
+    { img: 'p7', alt: '夜の事務所の入口に付いた小さな防犯カメラ。', narration: '書類や機器を置く事務所は、防犯カメラも選択肢です。録画を外から見る機器は、初期のパスワードを必ず変えます。' },
+    { img: 'p8', alt: '事務所で資料を見ながら話すやまださんとあや。', lines: [{ who: 'やまだ', text: 'まずは、6か条からみんなで確かめていこう。' }] },
+  ] },
+];
+const worries = [
+  { text: 'パソコンが開けなくなったら、どうする？', chapter: 'ch1', face: 'p1', facePos: '28% 30%' },
+  { text: 'うちみたいな小さな会社もねらわれる？', chapter: 'ch2', face: 'p4', facePos: '50% 50%' },
+  { text: 'バックアップ、どう取ればいい？', chapter: 'ch2', face: 'p6', facePos: '50% 35%' },
+];
+const points = [
+  { title: 'おかしいと思ったら、ネットから外す', body: 'ネットワークから外し、保守会社や相談窓口に連絡して、指示に従います。' },
+  { title: 'バックアップは2か所、外しておく', body: '外付けの記録装置は外しておき、クラウドなど別の場所にも残します。' },
+  { title: 'まず取り組む6か条から', body: '更新・ウイルス対策・パスワード・共有設定・バックアップ・手口を知る、の6つを確かめます。' },
+];
+const articleLd = { '@context': 'https://schema.org', '@type': 'Article', headline: '小さな会社のランサムウェア対策（漫画）', description, inLanguage: 'ja', mainEntityOfPage: `${SITE.url}${path}`, datePublished: '2026-11-27', dateModified: '2026-11-27', author: { '@type': 'Organization', name: SITE.operator, url: `${SITE.url}/about/` }, publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url + '/' } };
+---
+<Base title={title} description={description} jsonLd={[breadcrumbLd(SITE.url, crumbs), articleLd]}>
+  <div class="site-container">
+    <Breadcrumbs items={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))} />
+    <MangaLp
+      base="/images/manga-lp/ransom"
+      kicker="会社向け｜漫画で3分"
+      title="ある朝、会社のパソコンが開けなくなったら？"
+      lead="データを使えなくして身代金を求めるランサムウェア。小さな会社の備えを漫画で。"
+      heroAlt="事務所で、ノートPCを持つ職員のあやと所長のやまださんが並んでいる。"
+      worries={worries}
+      chapters={chapters}
+      points={points}
+      cta={{ href: '/security/houjin/', label: '会社のセキュリティ対策を見る', sub: '6か条・バックアップ・相談先' }}
+      sticky={{ href: '/security/houjin/', label: '会社のセキュリティ対策を見る' }}
+      speakers={{ 'やまだ': '#3d6a8c', 'あや': '#b45b36' }}
+      pointsTitle="まとめ：ランサムウェアへの3つの備え"
+      fictionNote="この漫画はフィクションです。登場人物は実在しません。被害にあったかもしれないときは、保守会社や公的な相談窓口の案内に従ってください。"
+    >
+      <div class="mlp-offers">
+        <OfferCard id="bouhan-camera-ikkatsu" heading="会社・お店の防犯カメラの見積り比較" notice="費用・対応する地域・条件をリンク先で確認してください。" />
+      </div>
+    </MangaLp>
+  </div>
+</Base>
+<style>
+  .mlp-more { margin-top: 14px; font-size: 14px; line-height: 1.8; color: #4f6a5a; }
+  .mlp-more a { color: #175d50; font-weight: 700; text-decoration: underline; }
+  .mlp-offers { margin-top: 10px; }
+</style>
