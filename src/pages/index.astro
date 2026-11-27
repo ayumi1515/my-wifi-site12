@@ -50,7 +50,8 @@ const tabs = tabDefs.map((t) => {
     })
     .filter((x) => (t.brandIds.length ? x.discounts.length > 0 : true))
     .sort((a, b) => (a.h.monthly.house ?? 99999) - (b.h.monthly.house ?? 99999))
-    .slice(0, t.brandIds.length ? 4 : 3);
+    .slice(0, t.brandIds.length ? 4 : 3)
+    .sort((a, b) => (a.h.kind === b.h.kind ? 0 : a.h.kind === 'fiber' ? -1 : 1));
   return { ...t, list };
 });
 
@@ -106,7 +107,7 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
           </ul>
           <h1>家族のスマホとネット、<br /><span>まとめて見直す。</span></h1>
           <p class="hx-lead">今のスマホの会社から、セット割が使える光回線とホームルーターを比べられます。料金・還元の条件・解約金まで、かくさず載せています。</p>
-          <a class="btn-main" href="/shindan/#setwari">30秒で通信費を診断する<span>タップで5問・名前や住所は不要</span></a>
+          <a class="btn-main" href="/shindan/#setwari" data-diag-watch="hero">30秒で通信費を診断する<span>タップで5問・名前や住所は不要</span></a>
           <p class="hx-sub"><a href="#area">住まいの地域で回線をさがす</a><a href="#carrier">スマホの会社で比べる</a></p>
         </div>
         <figure class="hx-visual">
@@ -116,7 +117,7 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
     </header>
 
     <!-- ③ 診断の1問目をここに。タップすると診断の2問目から始まる -->
-    <section class="quick site-container" aria-labelledby="quick-title">
+    <section class="quick site-container" aria-labelledby="quick-title" data-diag-watch>
       <div class="quick-card">
         <NaviTalk who="mama" text="わたしのスマホでも、セット割って使えるの？" />
         <h2 id="quick-title"><span>Q1</span>今お使いのスマホの会社は？</h2>
@@ -134,7 +135,7 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
       <p class="sec-eyebrow">光回線・ホームルーター</p>
       <h2 id="carrier-title">スマホの会社で、合う回線を絞る</h2>
       <p class="sec-lead">セット割は「スマホの会社」と「家のネット」の組み合わせで決まります。タブを選ぶと、そのスマホとセット割がある回線だけが出ます。</p>
-      <p class="sec-trust">※各社の公式情報をもとに掲載しています（{checkedMonth}確認／順位は広告の報酬ではなく条件で決めています）<a href="/about/">編集方針・掲載基準を見る →</a></p>
+      <p class="sec-trust"><svg class="trust-check" viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><circle cx="10" cy="10" r="10" fill="#175d50"/><path d="m5.5 10.3 3 3 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>各社の公式情報をもとに掲載（{checkedMonth}確認）。順位は広告の報酬ではなく、条件で決めています。<a href="/about/">編集方針・掲載基準を見る →</a></span></p>
       <div class="tabs" data-tabs>
         <div class="tab-list" role="tablist" aria-label="スマホの会社">
           {tabs.map((t, i) => <button type="button" role="tab" id={`tab-${t.key}`} aria-controls={`panel-${t.key}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{phrases(t.label).map((w) => <span class="phrase">{w}</span>)}</button>)}
@@ -158,6 +159,7 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
                       <div><dt>工事</dt><dd>{h.constructionLabel}</dd></div>
                       <div><dt>契約期間</dt><dd>{h.contractLabel}</dd></div>
                       <div><dt>向いている人</dt><dd>{h.goodFor}</dd></div>
+                      {h.benefitLabel && <div class="is-benefit"><dt>特典・条件</dt><dd>{h.benefitLabel}<small>（{h.benefitCheckedAt?.replace(/-/g, '/')}確認）</small></dd></div>}
                     </dl>
                     <div class="net-cta">
                       <AffiliateButton provider={p ?? { id: h.id, name: h.name, officialUrl: h.url, affiliate: null }} actionFirst={true} showBanner={false} building="house" ctaLabel="申込み窓口で提供エリア・条件を確認する →" notice="対象プラン・必要なオプション・提供エリアを申込先で確認してください。" />
@@ -178,7 +180,7 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
           </div>
         ))}
       </div>
-      <div class="diag-box">
+      <div class="diag-box" data-diag-watch>
         <p class="diag-kicker">どれが合うか迷ったら</p>
         <a class="diag-btn" href="/shindan/#setwari"><span class="diag-main">{phrases('家族の台数まで入れて30秒で診断する →').map((w) => <span class="phrase">{w}</span>)}</span><span>名前・住所は不要／回答は保存しません</span></a>
         <a href="/hikari/" class="text-link">光回線を一覧で比べる →</a>
@@ -228,7 +230,7 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
           <a href="/houjin/"><strong>会社・お店向け</strong><span>法人携帯・電話・コピー機・法人カード</span></a>
         </div>
         <div class="biz-manga">
-          <MangaShelf ids={bizManga} heading="会社・お店向けの通信・経費の見直し" lead="社員のスマホ、コピー機、お店のネット、ランサムウェア、法人カード。小さな会社・お店向けの漫画です。" />
+          <MangaShelf ids={bizManga} swipe moreHref="/houjin/" moreLabel="会社・お店向けの記事一覧を見る →" heading="会社・お店向けの通信・経費の見直し" lead="社員のスマホ、コピー機、お店のネット、ランサムウェア、法人カード。小さな会社・お店向けの漫画です。" />
         </div>
         <div id="learning" class="learning">
           <h3>英語学習は、目的から選ぶ</h3>
@@ -248,6 +250,12 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
       </div>
     </section>
 
+    <!-- ② スマホだけの下の追従バー：主役ボタンが画面の外に出たあと、ほかの診断の入口やフッターが見えていないときだけ出す -->
+    <div class="sticky-diag" data-sticky-diag inert aria-hidden="true">
+      <span class="sd-note">5問・名前や住所は不要</span>
+      <a class="sd-btn" href="/shindan/#setwari">30秒で通信費を診断 →</a>
+    </div>
+
     <aside class="site-container trust">
       <h2>料金だけでなく、使う条件まで比べます</h2>
       <p>公式情報をもとに、対象プラン・契約期間・追加費用・向かないケースを整理しています。各ページに確認日と出典を載せています。順位は、広告の報酬ではなく条件で決めています。</p>
@@ -257,6 +265,28 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
 </Base>
 
 <script>
+  // ② 追従バー：主役ボタンを通りすぎたあと、Q1・診断の箱・フッターのどれも見えていないときだけ出す
+  (() => {
+    const bar = document.querySelector<HTMLElement>('[data-sticky-diag]');
+    const hero = document.querySelector<HTMLElement>('[data-diag-watch="hero"]');
+    if (!bar || !hero || !('IntersectionObserver' in window)) return;
+    const watched = [...document.querySelectorAll<HTMLElement>('[data-diag-watch]'), ...document.querySelectorAll<HTMLElement>('.site-footer')];
+    // 見えているかは、そのつど位置で確かめる（大きく飛んだときに知らせが遅れても、まちがえないように）
+    const inView = (el: Element) => { const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < window.innerHeight; };
+    let shown = false;
+    const update = () => {
+      const show = hero.getBoundingClientRect().bottom < 0 && !watched.some(inView);
+      if (show === shown) return;
+      shown = show;
+      bar.classList.toggle('is-shown', show);
+      bar.toggleAttribute('inert', !show);
+      bar.setAttribute('aria-hidden', show ? 'false' : 'true');
+    };
+    const io = new IntersectionObserver(update);
+    watched.forEach((el) => io.observe(el));
+    let ticking = false;
+    window.addEventListener('scroll', () => { if (ticking) return; ticking = true; requestAnimationFrame(() => { ticking = false; update(); }); }, { passive: true });
+  })();
   // タブ（キーボードの左右でも動く）。JavaScriptが動かないときは、最初のパネルだけが見える
   document.querySelectorAll<HTMLElement>('[data-tabs]').forEach((box) => {
     const tabs = [...box.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
@@ -289,8 +319,9 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
   .sec-tint { background: var(--c-base); padding-block: 56px; margin-top: 56px; }
   .sec-eyebrow { font-size: 13px; font-weight: 800; letter-spacing: .06em; color: var(--c-main); margin-bottom: 6px; }
   .sec-lead { margin-top: 10px; font-size: 15px; line-height: 1.9; color: #4f6a5a; max-width: 760px; }
-  .sec-trust { margin-top: 8px; font-size: 13px; line-height: 1.8; color: #5d6f63; }
-  .sec-trust a { margin-left: 6px; font-weight: 700; color: var(--c-main); text-decoration: underline; text-underline-offset: 3px; }
+  .sec-trust { display: flex; align-items: flex-start; gap: 8px; margin-top: 12px; padding: 9px 14px; border: 1px solid #d5e6da; border-radius: 10px; background: #f2f7f4; font-size: 13.5px; line-height: 1.75; color: #2f4d3d; }
+  .trust-check { flex-shrink: 0; margin-top: 3px; }
+  .sec-trust a { margin-left: 6px; white-space: nowrap; font-weight: 700; color: var(--c-main); text-decoration: underline; text-underline-offset: 3px; }
   .diag-box { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; margin-top: 26px; padding: 18px 20px; border-radius: var(--radius); background: #fff7ed; border: 1px solid #f6d8bd; }
   .diag-kicker { width: 100%; font-size: 14px; font-weight: 800; color: var(--c-accent-dark); }
   .diag-btn { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; min-height: 58px; padding: 10px 22px; border-radius: 999px; background: var(--c-accent); color: #fff; font-size: 17px; font-weight: 900; text-align: center; text-decoration: none; text-wrap: balance; box-shadow: 0 6px 16px rgba(234,88,12,.28); }
@@ -307,6 +338,17 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
   .guide-list time { grid-area: date; font-size: 12px; color: #637467; }
   .gl-arrow { grid-area: arrow; font-size: 22px; color: #a3b5aa; }
   .biz-manga { margin-top: 34px; }
+  .net-compare .is-benefit dd small { display: block; margin-top: 2px; font-size: 12px; color: #6b7d71; }
+  /* ② 追従バー（スマホだけ） */
+  .sticky-diag { display: none; }
+  @media (max-width: 768px) {
+    .sticky-diag { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 60px; padding: 8px 14px calc(8px + env(safe-area-inset-bottom)); background: rgba(255,255,255,.96); border-top: 1px solid #dbe5dd; box-shadow: 0 -4px 16px rgba(23,61,43,.08); opacity: 0; transform: translateY(100%); transition: opacity .2s, transform .2s; }
+    .sticky-diag.is-shown { opacity: 1; transform: none; }
+    .sd-note { font-size: 12px; font-weight: 700; line-height: 1.5; color: #4f6a5a; }
+    .sd-btn { flex-shrink: 0; display: inline-flex; align-items: center; min-height: 44px; padding: 8px 18px; border-radius: 999px; background: var(--c-accent); color: #fff; font-size: 15px; font-weight: 800; text-decoration: none; box-shadow: 0 4px 12px rgba(234,88,12,.25); }
+    .sd-btn:focus-visible { outline: 3px solid var(--c-main); outline-offset: 2px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .sticky-diag { transition: none; } }
   .sec-links { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 22px; }
   .text-link { font-size: 15px; font-weight: 800; color: var(--c-main); text-decoration: underline; text-underline-offset: 4px; }
 

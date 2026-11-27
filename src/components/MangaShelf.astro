@@ -2,8 +2,8 @@
 // 漫画LPの入口。サイト全体を「漫画で3分 → 診断・比較・申込み」の流れにするための部品。
 // ids を渡すと、その漫画だけを出す（各分野のページ用）。heading を空にすると見出しなし。
 import data from '../data/manga-lps.json';
-interface Props { ids?: string[]; heading?: string; lead?: string; compact?: boolean; swipe?: boolean }
-const { ids, heading = '漫画で3分、まず読んでみる', lead, compact = false, swipe = false } = Astro.props;
+interface Props { ids?: string[]; heading?: string; lead?: string; compact?: boolean; swipe?: boolean; moreHref?: string; moreLabel?: string }
+const { ids, heading = '漫画で3分、まず読んでみる', lead, compact = false, swipe = false, moreHref, moreLabel } = Astro.props;
 const lps = ids ? ids.map((id) => data.lps.find((l) => l.id === id)).filter((l): l is (typeof data.lps)[number] => !!l) : data.lps.filter((l) => !('regional' in l));
 ---
 <section class:list={['manga-shelf', { 'is-compact': compact, 'is-swipe': swipe }]} aria-label={heading || '漫画で読む'}>
@@ -25,6 +25,7 @@ const lps = ids ? ids.map((id) => data.lps.find((l) => l.id === id)).filter((l):
     ))}
   </div>
   {swipe && <p class="ms-swipe-hint">← 横にスワイプして、ほかの漫画も見られます →</p>}
+  {moreHref && <p class="ms-more"><a href={moreHref}>{moreLabel ?? '一覧を見る →'}</a></p>}
 </section>
 <style>
   .manga-shelf { margin-top: 22px; }
@@ -51,6 +52,8 @@ const lps = ids ? ids.map((id) => data.lps.find((l) => l.id === id)).filter((l):
   .is-compact .ms-body { flex-direction: column; align-items: flex-start; justify-content: center; }
   /* スマホでは横にスワイプ（トップページ用）。次のカードが少し見えるようにする */
   .ms-swipe-hint { display: none; }
+  .ms-more { margin-top: 10px; font-size: 14px; font-weight: 700; }
+  .ms-more a { color: #175d50; text-decoration: underline; text-underline-offset: 3px; }
   @media (max-width: 700px) {
     .is-swipe .ms-grid { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; margin-right: -14px; padding-right: 14px; }
     .is-swipe .ms-card { flex: 0 0 78%; scroll-snap-align: start; }
