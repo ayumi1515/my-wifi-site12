@@ -368,9 +368,16 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
   }
   @media (max-width: 640px) {
     .hx-inner { padding-block: 20px 30px; }
+    /* 主役ボタンの下の2つのリンクを、スマホでも横並び1行に（押しやすい高さ44px） */
+    .hx-sub { flex-wrap: nowrap; gap: 0 14px; margin-top: 8px; }
+    .hx-sub a { display: inline-flex; align-items: center; min-height: 44px; font-size: 13.5px; white-space: nowrap; }
     .btn-main { font-size: 18px; }
     .quick-options { grid-template-columns: 1fr 1fr; }
     .guide-grid, .other-grid, .learning-grid { grid-template-columns: 1fr; }
     .sec { padding-top: 44px; }
+  }
+  /* とても狭い画面（360px未満）だけは、2つのリンクを2行に折り返す */
+  @media (max-width: 359px) {
+    .hx-sub { flex-wrap: wrap; }
   }
 </style>
