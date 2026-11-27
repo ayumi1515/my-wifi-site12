@@ -575,7 +575,13 @@
     "affiliate": {
       "href": "https://px.a8.net/svt/ejp?a8mat=4AX6CE+9ICAE2+42Y0+5ZMCH",
       "label": "auひかりの申込み窓口を見る",
-      "banner": null,
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4AX6CE+9ICAE2+42Y0+614CX",
+        "src": "https://www21.a8.net/svt/bgt?aid=260208734575&wid=002&eno=01&mid=s00000019044001013000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www18.a8.net/0.gif?a8mat=4AX6CE+9ICAE2+42Y0+614CX"
+      },
       "pixel": null
     },
     "officialUrl": "https://www.au.com/internet/",

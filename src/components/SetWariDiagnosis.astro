@@ -76,7 +76,7 @@ const homeList = homes.map((h) => ({ id: h.id, name: h.name, kind: h.kind, prefe
       <button type="button" class="sw-again" data-sw-again>はじめからやり直す</button>
     </div>
   </div>
-  {homes.map((h) => (['house', 'mansion'] as const).map((b) => { const p = providers.find((x) => x.id === h.id); return <template data-sw-template={`${h.id}:${b}`}><AffiliateButton provider={p ?? { id: h.id, name: h.name, officialUrl: h.url, affiliate: null }} building={b} actionFirst={true} showBanner={false} notice="セット割の対象プラン・必要なオプション・エリアを申込先で確認してください。" /></template>; }))}
+  {homes.map((h) => (['house', 'mansion'] as const).map((b) => { const p = providers.find((x) => x.id === h.id); return <template data-sw-template={`${h.id}:${b}`}><AffiliateButton provider={p ?? { id: h.id, name: h.name, officialUrl: h.url, affiliate: null }} building={b} actionFirst={true} showBanner={true} notice="セット割の対象プラン・必要なオプション・エリアを申込先で確認してください。" /></template>; }))}
 </section>
 
 <script>

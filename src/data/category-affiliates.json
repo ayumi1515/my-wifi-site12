@@ -89,7 +89,14 @@
     "affiliate": {
       "href": "https://px.a8.net/svt/ejp?a8mat=4BGS13+KU7Q2+5W58+5YRHE",
       "label": "楽天モバイルの料金と申込条件を確認する",
-      "pixel": "https://www18.a8.net/0.gif?a8mat=4BGS13+KU7Q2+5W58+5YRHE"
+      "pixel": "https://www18.a8.net/0.gif?a8mat=4BGS13+KU7Q2+5W58+5YRHE",
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4BGS13+KU7Q2+5W58+5ZU29",
+        "src": "https://www22.a8.net/svt/bgt?aid=261123303035&wid=002&eno=01&mid=s00000027494001007000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www11.a8.net/0.gif?a8mat=4BGS13+KU7Q2+5W58+5ZU29"
+      }
     }
   }
 }

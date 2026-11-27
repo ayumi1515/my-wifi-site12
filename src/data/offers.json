@@ -49,7 +49,13 @@
       "href": "https://px.a8.net/svt/ejp?a8mat=4BGUDZ+1F7BKQ+B4+2BCWEQ",
       "label": "BIGLOBE WiMAX +5Gの料金と条件を見る",
       "pixel": "https://www11.a8.net/0.gif?a8mat=4BGUDZ+1F7BKQ+B4+2BCWEQ",
-      "banner": null
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4BGUDZ+1F7BKQ+B4+2BSJOH",
+        "src": "https://www29.a8.net/svt/bgt?aid=261126359086&wid=002&eno=01&mid=s00000000040014074000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www19.a8.net/0.gif?a8mat=4BGUDZ+1F7BKQ+B4+2BSJOH"
+      }
     },
     "note": "工事のいらないWiMAXのサービスです。置いて使うホームルーターと、持ち歩けるモバイルルーターがあります。月額5,258円で、始めた翌月から24カ月は月1,650円の値引き。契約期間の縛りと解約金はありません。ルーター代33,264円と申込手数料3,300円は別です。電波が届くかは、公式のサービスエリアで住所を確かめてください（2026年11月26日に公式で確認）。",
     "guideSlugs": [
@@ -64,7 +70,13 @@
       "href": "https://px.a8.net/svt/ejp?a8mat=4BGUDZ+1VVGII+2BZM+354SDE",
       "label": "法人・店舗向けWi-Fiの条件を見る",
       "pixel": "https://www18.a8.net/0.gif?a8mat=4BGUDZ+1VVGII+2BZM+354SDE",
-      "banner": null
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4BGUDZ+1VVGII+2BZM+355N8H",
+        "src": "https://www24.a8.net/svt/bgt?aid=261126359114&wid=002&eno=01&mid=s00000010885019006000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www10.a8.net/0.gif?a8mat=4BGUDZ+1VVGII+2BZM+355N8H"
+      }
     },
     "note": "法人・店舗向け（個人事業主も対象）の、工事のいらない置き型Wi-Fiです。5G版は月6,248円（税込）で、契約期間は受け取った月から25カ月。WiMAXの回線を使い、申し込みから最短3日で使い始められます。電波は公式が案内するエリアマップで確かめてください（2026年11月26日に公式で確認）。",
     "guideSlugs": []
@@ -77,7 +89,13 @@
       "href": "https://px.a8.net/svt/ejp?a8mat=2ZPIW9+FT6FVE+ZXM+1BN3TU",
       "label": "引越しの料金を比べて予約する",
       "pixel": "https://www17.a8.net/0.gif?a8mat=2ZPIW9+FT6FVE+ZXM+1BN3TU",
-      "banner": null
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=2ZPIW9+FT6FVE+ZXM+1BO6EP",
+        "src": "https://www22.a8.net/svt/bgt?aid=180909801956&wid=002&eno=01&mid=s00000004657008007000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www16.a8.net/0.gif?a8mat=2ZPIW9+FT6FVE+ZXM+1BO6EP"
+      }
     },
     "note": "引越し会社の料金を比べて、ネットで予約や一括見積もりができるサービスです。引越しの日が決まったら、ネット回線の手続きと同じころに進めると、段取りがそろいます。",
     "guideSlugs": [
@@ -91,7 +109,14 @@
     "affiliate": {
       "href": "https://px.a8.net/svt/ejp?a8mat=4BGUDZ+6VOD7E+3YFI+674EQ",
       "label": "NordVPN",
-      "pixel": "https://www16.a8.net/0.gif?a8mat=4BGUDZ+6VOD7E+3YFI+674EQ"
+      "pixel": "https://www16.a8.net/0.gif?a8mat=4BGUDZ+6VOD7E+3YFI+674EQ",
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4BGUDZ+6VOD7E+3YFI+63H8H",
+        "src": "https://www25.a8.net/svt/bgt?aid=261126359416&wid=002&eno=01&mid=s00000018459001024000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www16.a8.net/0.gif?a8mat=4BGUDZ+6VOD7E+3YFI+63H8H"
+      }
     },
     "note": "通信を暗号化するVPNサービスです。料金はプランの長さとセールで変わります。返金保証の条件と、更新後の料金をリンク先で確認してください。",
     "guideSlugs": []
@@ -103,7 +128,14 @@
     "affiliate": {
       "href": "https://px.a8.net/svt/ejp?a8mat=4BGUDZ+6Z8YU2+5JSS+5YRHE",
       "label": "ExpressVPN",
-      "pixel": "https://www14.a8.net/0.gif?a8mat=4BGUDZ+6Z8YU2+5JSS+5YRHE"
+      "pixel": "https://www14.a8.net/0.gif?a8mat=4BGUDZ+6Z8YU2+5JSS+5YRHE",
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4BGUDZ+6Z8YU2+5JSS+5YZ75",
+        "src": "https://www26.a8.net/svt/bgt?aid=261126359422&wid=002&eno=01&mid=s00000025894001003000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www19.a8.net/0.gif?a8mat=4BGUDZ+6Z8YU2+5JSS+5YZ75"
+      }
     },
     "note": "通信を暗号化するVPNサービスです。料金はプランの長さとセールで変わります。返金保証の条件と、更新後の料金をリンク先で確認してください。",
     "guideSlugs": []
@@ -115,7 +147,14 @@
     "affiliate": {
       "href": "https://px.a8.net/svt/ejp?a8mat=4BGUDZ+7284UY+4LSW+BX3J6",
       "label": "Surfshark Antivirus",
-      "pixel": "https://www18.a8.net/0.gif?a8mat=4BGUDZ+7284UY+4LSW+BX3J6"
+      "pixel": "https://www18.a8.net/0.gif?a8mat=4BGUDZ+7284UY+4LSW+BX3J6",
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4BGUDZ+7284UY+4LSW+BXIYP",
+        "src": "https://www28.a8.net/svt/bgt?aid=261126359427&wid=002&eno=01&mid=s00000021488002004000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www16.a8.net/0.gif?a8mat=4BGUDZ+7284UY+4LSW+BXIYP"
+      }
     },
     "note": "ウイルス対策のSurfshark Antivirusは、VPNとのセット「Surfshark One」「One+」に入っています（VPNだけのStarterには入っていません。2026年11月26日に公式で確認）。対応するOSと台数、更新後の料金をリンク先で確認してください。",
     "guideSlugs": []
@@ -127,7 +166,14 @@
     "affiliate": {
       "href": "https://px.a8.net/svt/ejp?a8mat=4BGUDZ+7RTRVE+2LHA+354KNM",
       "label": "防犯カメラ 一括.jp",
-      "pixel": "https://www13.a8.net/0.gif?a8mat=4BGUDZ+7RTRVE+2LHA+354KNM"
+      "pixel": "https://www13.a8.net/0.gif?a8mat=4BGUDZ+7RTRVE+2LHA+354KNM",
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4BGUDZ+7RTRVE+2LHA+355N8H",
+        "src": "https://www21.a8.net/svt/bgt?aid=261126359470&wid=002&eno=01&mid=s00000012115019006000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www13.a8.net/0.gif?a8mat=4BGUDZ+7RTRVE+2LHA+355N8H"
+      }
     },
     "note": "会社・お店の防犯カメラの設置業者を紹介してもらえる見積り比較です。法人・個人事業主向けで、家庭向けではありません（2026年11月26日に広告の案内で確認）。費用や条件はリンク先で確認してください。",
     "guideSlugs": []
@@ -139,7 +185,14 @@
     "affiliate": {
       "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+A4DBRU+1MWA+44VNJ6",
       "label": "業務用コピー機・複合機",
-      "pixel": "https://www17.a8.net/0.gif?a8mat=4BGV60+A4DBRU+1MWA+44VNJ6"
+      "pixel": "https://www17.a8.net/0.gif?a8mat=4BGV60+A4DBRU+1MWA+44VNJ6",
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+A4DBRU+1MWA+44WAOH",
+        "src": "https://www28.a8.net/svt/bgt?aid=261127368612&wid=002&eno=01&mid=s00000007633025009000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www18.a8.net/0.gif?a8mat=4BGV60+A4DBRU+1MWA+44WAOH"
+      }
     },
     "note": "会社・お店向けのコピー機・複合機のリース・レンタル・中古販売の窓口（運営：株式会社ビジョン）。公式では全国対応で鹿児島県も対象、ただし離島など一部地域は除くと案内されています。月額は公式に2,400円（税込）〜とありますが、機種と条件で変わります（2026年11月27日に公式サイトで確認）。",
     "guideSlugs": []
@@ -151,7 +204,14 @@
     "affiliate": {
       "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+79YRQ2+2LHA+ZTNGY",
       "label": "コピー機 一括.jp",
-      "pixel": "https://www15.a8.net/0.gif?a8mat=4BGV60+79YRQ2+2LHA+ZTNGY"
+      "pixel": "https://www15.a8.net/0.gif?a8mat=4BGV60+79YRQ2+2LHA+ZTNGY",
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+79YRQ2+2LHA+ZUAM9",
+        "src": "https://www24.a8.net/svt/bgt?aid=261127368440&wid=002&eno=01&mid=s00000012115006020000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www19.a8.net/0.gif?a8mat=4BGV60+79YRQ2+2LHA+ZUAM9"
+      }
     },
     "note": "複数の業者から、複合機・コピー機の見積りをまとめて取れる無料の比較サービス（運営：株式会社eclore）。会社・個人事業主向けです。鹿児島で紹介できる業者がいるかは、申込み後の案内で確かめてください（2026年11月27日に公式サイトで確認）。",
     "guideSlugs": []
@@ -163,7 +223,14 @@
     "affiliate": {
       "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+AMTRIY+2LHA+3YW8WI",
       "label": "複合機の一括見積もり",
-      "pixel": "https://www13.a8.net/0.gif?a8mat=4BGV60+AMTRIY+2LHA+3YW8WI"
+      "pixel": "https://www13.a8.net/0.gif?a8mat=4BGV60+AMTRIY+2LHA+3YW8WI",
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+AMTRIY+2LHA+3YXQWX",
+        "src": "https://www25.a8.net/svt/bgt?aid=261127368643&wid=002&eno=01&mid=s00000012115024008000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www19.a8.net/0.gif?a8mat=4BGV60+AMTRIY+2LHA+3YXQWX"
+      }
     },
     "note": "条件を伝えると、合う複合機の業者（購入・リース・レンタル）を紹介してもらえる無料のサービス（運営：株式会社eclore）。会社・個人事業主向けです。対応地域は公式に書かれていません（2026年11月27日に公式サイトで確認）。",
     "guideSlugs": []
@@ -175,7 +242,14 @@
     "affiliate": {
       "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+AOM2CA+34XA+ZQ80I",
       "label": "プリント革命",
-      "pixel": "https://www11.a8.net/0.gif?a8mat=4BGV60+AOM2CA+34XA+ZQ80I"
+      "pixel": "https://www11.a8.net/0.gif?a8mat=4BGV60+AOM2CA+34XA+ZQ80I",
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+AOM2CA+34XA+ZU2WH",
+        "src": "https://www23.a8.net/svt/bgt?aid=261127368646&wid=002&eno=01&mid=s00000014635006019000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www11.a8.net/0.gif?a8mat=4BGV60+AOM2CA+34XA+ZU2WH"
+      }
     },
     "note": "プリンター・複合機の定額レンタル（運営：株式会社シー・コネクト）。公式では月額8,800円〜43,780円（税込）、初期費用とカウンター料金（1枚ごとの印刷代）は0円、最低利用期間は12か月と案内されています。対応地域は書かれていません（2026年11月27日に公式サイトで確認）。",
     "guideSlugs": []
@@ -187,7 +261,14 @@
     "affiliate": {
       "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+BOC2MY+1MWA+1HMAQQ",
       "label": "ビジフォン.com",
-      "pixel": "https://www10.a8.net/0.gif?a8mat=4BGV60+BOC2MY+1MWA+1HMAQQ"
+      "pixel": "https://www10.a8.net/0.gif?a8mat=4BGV60+BOC2MY+1MWA+1HMAQQ",
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+BOC2MY+1MWA+1HL85T",
+        "src": "https://www22.a8.net/svt/bgt?aid=261127368706&wid=002&eno=01&mid=s00000007633009001000&mc=1",
+        "width": 468,
+        "height": 60,
+        "pixel": "https://www10.a8.net/0.gif?a8mat=4BGV60+BOC2MY+1MWA+1HL85T"
+      }
     },
     "note": "ビジネスフォンの新品・中古の販売、リース、電話工事の窓口（運営：株式会社ビジョン）。公式では全国対応で鹿児島県も対象ですが、地域によって工事・訪問できる範囲が違うと案内されています（2026年11月27日に公式サイトで確認）。",
     "guideSlugs": []
@@ -199,7 +280,14 @@
     "affiliate": {
       "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+BQ4DGA+2LHA+6M5LOY",
       "label": "ビジネスホンの一括見積もり",
-      "pixel": "https://www17.a8.net/0.gif?a8mat=4BGV60+BQ4DGA+2LHA+6M5LOY"
+      "pixel": "https://www17.a8.net/0.gif?a8mat=4BGV60+BQ4DGA+2LHA+6M5LOY",
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+BQ4DGA+2LHA+6M6VZL",
+        "src": "https://www27.a8.net/svt/bgt?aid=261127368709&wid=002&eno=01&mid=s00000012115040007000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www17.a8.net/0.gif?a8mat=4BGV60+BQ4DGA+2LHA+6M6VZL"
+      }
     },
     "note": "条件を伝えると、ビジネスホンの業者を最大8社紹介してもらえる無料のサービス（運営：株式会社eclore）。会社・個人事業主向けです。対応地域は公式に書かれていません（2026年11月27日に公式サイトで確認）。",
     "guideSlugs": []
@@ -211,7 +299,14 @@
     "affiliate": {
       "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+BRB8NU+38EU+5YRHE",
       "label": "クラウドPBX「ナイセンクラウド」",
-      "pixel": "https://www10.a8.net/0.gif?a8mat=4BGV60+BRB8NU+38EU+5YRHE"
+      "pixel": "https://www10.a8.net/0.gif?a8mat=4BGV60+BRB8NU+38EU+5YRHE",
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+BRB8NU+38EU+61JSH",
+        "src": "https://www29.a8.net/svt/bgt?aid=261127368711&wid=002&eno=01&mid=s00000015087001015000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www14.a8.net/0.gif?a8mat=4BGV60+BRB8NU+38EU+61JSH"
+      }
     },
     "note": "スマホやパソコンで会社の電話番号（固定番号・050番号）を使えるクラウドの電話（運営：アイティオール株式会社）。公式の料金表では初期費用10,000円、月額2,000円（1内線）〜、違約金なし。鹿児島の市外局番が使えるかはリンク先で確かめてください（2026年11月27日に公式サイトで確認）。",
     "guideSlugs": []
@@ -223,7 +318,14 @@
     "affiliate": {
       "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+AC3YMY+3SPO+B8V6SI",
       "label": "法人携帯の窓口",
-      "pixel": "https://www12.a8.net/0.gif?a8mat=4BGV60+AC3YMY+3SPO+B8V6SI"
+      "pixel": "https://www12.a8.net/0.gif?a8mat=4BGV60+AC3YMY+3SPO+B8V6SI",
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+AC3YMY+3SPO+B8W1NL",
+        "src": "https://www28.a8.net/svt/bgt?aid=261127368625&wid=002&eno=01&mid=s00000017718068006000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www13.a8.net/0.gif?a8mat=4BGV60+AC3YMY+3SPO+B8W1NL"
+      }
     },
     "note": "ソフトバンクの販売代理店で、オンラインで全国から申し込める法人携帯の窓口（運営：株式会社Wiz）。会社の名義で1台から契約できます。月額の割引には条件と期間があるので、リンク先で確かめてください（2026年11月27日に公式サイトで確認）。",
     "guideSlugs": []
@@ -235,7 +337,14 @@
     "affiliate": {
       "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+BSI3VE+2LHA+3SXWUQ",
       "label": "法人携帯の一括お問い合わせ",
-      "pixel": "https://www11.a8.net/0.gif?a8mat=4BGV60+BSI3VE+2LHA+3SXWUQ"
+      "pixel": "https://www11.a8.net/0.gif?a8mat=4BGV60+BSI3VE+2LHA+3SXWUQ",
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+BSI3VE+2LHA+3SZMKX",
+        "src": "https://www23.a8.net/svt/bgt?aid=261127368713&wid=002&eno=01&mid=s00000012115023009000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www10.a8.net/0.gif?a8mat=4BGV60+BSI3VE+2LHA+3SZMKX"
+      }
     },
     "note": "複数の業者に、法人携帯の見積りをまとめて頼める無料の比較サービス（運営：株式会社eclore）。会社・個人事業主向けです。対応地域は公式に書かれていないので、鹿児島で紹介できる業者がいるかは申込み後の案内で確かめてください（2026年11月27日に公式サイトで確認）。",
     "guideSlugs": []
@@ -247,10 +356,18 @@
     "affiliate": {
       "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+BW2PI2+1MWA+HXD0Y",
       "label": "法人携帯ドットコム",
-      "pixel": "https://www15.a8.net/0.gif?a8mat=4BGV60+BW2PI2+1MWA+HXD0Y"
+      "pixel": "https://www15.a8.net/0.gif?a8mat=4BGV60+BW2PI2+1MWA+HXD0Y",
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4BGV60+BW2PI2+1MWA+I0D1T",
+        "src": "https://www21.a8.net/svt/bgt?aid=261127368719&wid=002&eno=01&mid=s00000007633003025000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www17.a8.net/0.gif?a8mat=4BGV60+BW2PI2+1MWA+I0D1T"
+      }
     },
     "note": "ソフトバンクの正規代理店で、ドコモ回線の格安SIMも扱う法人携帯の窓口（運営：株式会社ビジョン）。公式では47都道府県に対応（鹿児島県も対象）、法人・個人事業主が1台から使えると案内されています（2026年11月27日に公式サイトで確認）。",
-    "guideSlugs": []
+    "guideSlugs": [],
+    "bannerNote": "画像内の「当サイト限定」は、リンク先の申込み窓口（法人携帯ドットコム）の案内です。"
   },
   {
     "id": "houjin-etc",
@@ -259,7 +376,14 @@
     "affiliate": {
       "href": "https://px.a8.net/svt/ejp?a8mat=4BGV62+230NRU+3EV2+639IQ",
       "label": "簡単発行 法人ETCカード",
-      "pixel": "https://www16.a8.net/0.gif?a8mat=4BGV62+230NRU+3EV2+639IQ"
+      "pixel": "https://www16.a8.net/0.gif?a8mat=4BGV62+230NRU+3EV2+639IQ",
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4BGV62+230NRU+3EV2+60H7L",
+        "src": "https://www23.a8.net/svt/bgt?aid=261127370126&wid=002&eno=01&mid=s00000015923001010000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www15.a8.net/0.gif?a8mat=4BGV62+230NRU+3EV2+60H7L"
+      }
     },
     "note": "組合に入って使う、クレジット機能のないETCカード。法人・個人事業主向けで、公式では「クレジット審査なし」「新会社でも作れる」と案内。出資金10,000円／1社（やめるときに返金）、発行手数料550円（税込）／枚、取扱手数料550円（税込）／枚（年1回）、毎月の走行料金に8%の事務手数料（2026年11月27日に公式サイトで確認）。",
     "guideSlugs": []
@@ -271,7 +395,14 @@
     "affiliate": {
       "href": "https://px.a8.net/svt/ejp?a8mat=4BGV62+2KA8BE+3EV2+HVFKY",
       "label": "ETC協同組合のガソリンカード",
-      "pixel": "https://www12.a8.net/0.gif?a8mat=4BGV62+2KA8BE+3EV2+HVFKY"
+      "pixel": "https://www12.a8.net/0.gif?a8mat=4BGV62+2KA8BE+3EV2+HVFKY",
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4BGV62+2KA8BE+3EV2+HZAGX",
+        "src": "https://www28.a8.net/svt/bgt?aid=261127370155&wid=002&eno=01&mid=s00000015923003020000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www17.a8.net/0.gif?a8mat=4BGV62+2KA8BE+3EV2+HZAGX"
+      }
     },
     "note": "申込先は高速情報協同組合（ETCカードと同じ組合）。組合に入って使う、クレジット機能のないガソリンカード。法人・個人事業主向け。出資金はETCカードと合わせて1社1万円、カード手数料・年間手数料は無料と公式に案内（2026年11月27日に公式サイトで確認）。",
     "guideSlugs": []
@@ -283,7 +414,14 @@
     "affiliate": {
       "href": "https://px.a8.net/svt/ejp?a8mat=4BGV62+2OG9JU+40JM+1NJRXE",
       "label": "labol(ラボル) カード払い",
-      "pixel": "https://www18.a8.net/0.gif?a8mat=4BGV62+2OG9JU+40JM+1NJRXE"
+      "pixel": "https://www18.a8.net/0.gif?a8mat=4BGV62+2OG9JU+40JM+1NJRXE",
+      "banner": {
+        "href": "https://px.a8.net/svt/ejp?a8mat=4BGV62+2OG9JU+40JM+1NJZN5",
+        "src": "https://www21.a8.net/svt/bgt?aid=261127370162&wid=002&eno=01&mid=s00000018733010003000&mc=1",
+        "width": 300,
+        "height": 250,
+        "pixel": "https://www19.a8.net/0.gif?a8mat=4BGV62+2OG9JU+40JM+1NJZN5"
+      }
     },
     "note": "銀行振込が必要な支払い（請求書など）を、手持ちのカードで払えるサービス。手数料はVisa・Mastercardが3%、JCBが3.5%（税込）、11,000円未満は一律360円（税込）。自分あての振込や借金の返済には使えません（2026年11月27日に公式サイトで確認）。",
     "guideSlugs": []

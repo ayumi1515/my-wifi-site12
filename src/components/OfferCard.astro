@@ -1,24 +1,44 @@
 ---
 // 1つの広告の窓口を、説明つきのカードで出す（データは src/data/offers.json）。
+// 岩下さんの方針「基本はバナー」：A8の正式バナーがあれば、見出しのすぐ下に出す（画像はA8の発行どおり、変えない）。
+// その下に条件の説明と申込みボタン。バナーの画像の中の言葉は広告主のもの、と分かるように「PR」をつける。
 import AffiliateButton from './AffiliateButton.astro';
 import { offers } from '../lib/offers';
-interface Props { id: string; heading?: string; notice?: string }
-const { id, heading, notice = '料金・エリア・契約条件をリンク先で確認してください。' } = Astro.props;
+interface Props { id: string; heading?: string; notice?: string; showBanner?: boolean }
+const { id, heading, notice = '料金・エリア・契約条件をリンク先で確認してください。', showBanner = true } = Astro.props;
 const o = offers.find((x) => x.id === id);
+const banner = showBanner ? o?.affiliate.banner ?? null : null;
 ---
 {o && (
   <article class="offer-card">
     <p class="offer-kicker">{heading ?? 'ほかの選択肢'}</p>
     <h3>{o.name}</h3>
+    {banner && (
+      <div class="offer-banner">
+        <span class="offer-banner-label">PR・{o.name}</span>
+        <a href={banner.href} rel="sponsored noopener" target="_blank" data-affiliate-link={o.name} aria-label={`${o.name}の広告バナー（条件を確認、新しいタブで開きます）`}>
+          <img src={banner.src} width={banner.width} height={banner.height} alt={`${o.name}の広告。画像を押すと申込み窓口へ移動します`} loading="lazy" decoding="async" />
+        </a>
+        {banner.pixel && <img src={banner.pixel} width="1" height="1" alt="" class="offer-pixel" />}
+      </div>
+    )}
+    {banner && o.bannerNote && <p class="offer-banner-note">{o.bannerNote}</p>}
     <p class="offer-note">{o.note}</p>
     <AffiliateButton provider={{ name: o.name, officialUrl: o.officialUrl, affiliate: { ...o.affiliate, banner: null } }} showBanner={false} notice={notice} />
     <a class="offer-official" href={o.officialUrl} target="_blank" rel="noopener">{o.name}の公式サイト</a>
   </article>
 )}
 <style>
-  .offer-card { margin-top: 18px; padding: 18px 20px; border: 1px solid #ccdad2; border-top: 4px solid #175d50; border-radius: 8px; background: #fff; }
+  .offer-card { margin-top: 18px; padding: 18px 20px; border: 1px solid #ccdad2; border-top: 4px solid #175d50; border-radius: 8px; background: #fff; min-width: 0; }
   .offer-kicker { font-size: 13px; font-weight: 700; color: #175d50; }
   .offer-card h3 { margin-top: 4px; font-size: 20px; font-weight: 800; color: #1f3a30; }
-  .offer-note { margin: 8px 0 12px; font-size: 14px; line-height: 1.9; color: #3f5548; }
+  .offer-banner { position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px; margin-top: 12px; padding: 10px; border: 1px solid #d9e2db; border-radius: 6px; background: #fbfdfb; }
+  .offer-banner-label { align-self: flex-start; font-size: 11px; font-weight: 700; color: #617367; line-height: 1.5; }
+  .offer-banner > a { display: block; max-width: 100%; line-height: 0; }
+  .offer-banner > a > img { display: block; max-width: 100%; height: auto; }
+  .offer-banner > a:focus-visible { outline: 3px solid #175d50; outline-offset: 3px; }
+  .offer-pixel { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+  .offer-banner-note { margin-top: 6px; font-size: 12px; line-height: 1.7; color: #5b6c60; }
+  .offer-note { margin: 10px 0 12px; font-size: 14px; line-height: 1.9; color: #3f5548; }
   .offer-official { display: inline-block; margin-top: 8px; font-size: 13px; color: #175d50; text-decoration: underline; text-underline-offset: 3px; }
 </style>
