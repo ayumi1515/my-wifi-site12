@@ -18,7 +18,7 @@ const date = data.checkedAt.replace(/-/g, '/');
       <ul>{one.points.map((t) => <li>{t}</li>)}</ul>
       <p class="cc-fee">{one.fee}</p>
       {one.caution && <p class="cc-caution">{one.caution}</p>}
-      <a href={one.url} target="_blank" rel="noopener">{one.carrier}の公式でくわしく見る →</a>
+      <a href={one.url} target="_blank" rel="noopener">公式でくわしく見る →</a>
       <p class="cc-date">各社の公式サイトで{date}に確認（金額は税込）。割引は対象の料金プランだけです。</p>
     </aside>
   ) : (

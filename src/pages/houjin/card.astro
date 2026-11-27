@@ -1,0 +1,154 @@
+---
+// 会社・個人事業主のカード（法人カード・ETC・ガソリン・請求書のカード払い）の選び方と比較。
+// 大手の法人カードはA8に広告がないため、公式へのふつうのリンク。ETC・ガソリン・ラボルは広告（PR）。
+// 順位はつけない（「人気No.1」などは書かない）。目的別に分けて、条件を同じ目線で並べる。数字は公式で2026-11-27に確認。
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import OfferCard from '../../components/OfferCard.astro';
+import MangaShelf from '../../components/MangaShelf.astro';
+import { SITE } from '../../site.config.mjs';
+import { faqLd, breadcrumbLd } from '../../lib/data';
+
+const checkedAt = '2026-11-27';
+const crumbs = [
+  { name: '総合トップ', href: '/' },
+  { name: '会社・お店の通信費と事務機器', href: '/houjin/' },
+  { name: '法人カードの選び方', href: '/houjin/card/' },
+];
+const title = '法人カード・ビジネスカードの選び方｜年会費・ETC・会計ソフト連携を比較（個人事業主も）';
+const description = '会社・個人事業主向けのカードを、目的別に比較。年会費無料の法人カード、社員カードと会計ソフトの連携、クレジット機能のない法人ETCカード・ガソリンカード（公式でクレジット審査なしと案内）、請求書をカードで払うサービスまで、公式情報で条件をそろえました。';
+const cards = [
+  { name: 'JCB Biz ONE 一般', who: '法人代表者・個人事業主（副業を含む）、18歳以上', fee: '永年無料', extra: 'パートナーカード無料（最大9枚）', etc: '初年度無料。2年目以降は条件により無料（条件は公式で確認）', point: '200円（税込）で2ポイント（J-POINT）', limit: '〜500万円', soft: 'クラウド会計ソフトとAPI連携（ソフト名は公式に記載なし）', speed: '即時入会なら最短5分で番号発行（個人口座のみ）、カードは約1週間', url: 'https://www.jcb.co.jp/promotion/ordercard/corp/bizone-h/index.html', memo: '2026年10月1日〜2027年3月31日の入会で、条件を満たすとポイントの入会特典あり（公式）。' },
+  { name: 'JCB法人カード 一般', who: '法人・個人事業主（使う人は18歳以上）', fee: '1,375円（税込）。オンライン入会なら初年度無料', extra: '1名ごとに1,375円（税込）', etc: '複数枚、年会費・発行手数料無料', point: '200円（税込）で1ポイント', limit: '10万〜500万円', soft: 'freee会計・マネーフォワード クラウド会計・弥生会計など', speed: '約2〜3週間（公式内で「最短2週間」の表記も）', url: 'https://www.jcb.co.jp/corporate/houjin/ippan.html', memo: '2027年3月31日まで、新規入会と利用でポイントの入会特典あり（公式）。' },
+  { name: '三井住友カード Trunkオーナーズ', who: '法人代表者・個人事業主（副業・フリーランスを含む）、18歳以上（高校生を除く）', fee: '永年無料', extra: 'パートナーカード永年無料（18枚まで）', etc: '無料（前年度に一度も使わないと550円・税込）', point: '200円（税込）で1ポイント', limit: '〜500万円（個人カードと合算）', soft: '公式に記載なし', speed: '最短3営業日で発行、約1週間で届く', url: 'https://www.smbc-card.com/hojin/lineup/biz_owners_index.jsp', memo: '' },
+  { name: 'UPSIDER', who: '法人のみ（個人事業主は対象外。独自ドメインのメールが必要）', fee: '無料', extra: '発行枚数は無制限', etc: '年会費無料、発行手数料550円（税込）／枚', point: '基本1.0%〜（使うお店によって変わる）', limit: '口座残高などをもとに決まる（最大は月15億円と案内）', soft: 'freee会計・マネーフォワード・勘定奉行クラウド・弥生会計クラウド・PCAクラウドなど', speed: 'バーチャルカードは審査後すぐ、リアルカードは最短3営業日', url: 'https://up-sider.com/', memo: '' },
+  { name: 'アメックス・ビジネス・グリーン', who: '中小規模企業の経営者・個人事業主', fee: '13,200円（税込）', extra: '特典付きの追加カードは6,600円（税込）、特典なしの追加カードは無料', etc: '年会費・発行手数料無料（20枚まで）', point: '対象のお店で100円＝1ポイント', limit: '一律の制限なし（利用状況などで決まる）', soft: '弥生・freee会計と連携', speed: '公式に記載なし', url: 'https://www.americanexpress.com/ja-jp/credit-cards/green-business-corp-card/', memo: '' },
+  { name: 'FASIOビジネスカード', who: '法人代表者・個人事業主', fee: '永年無料', extra: '追加カード無料（本人を含め4枚まで）', etc: '1枚まで無料', point: '2,000円で1ポイント', limit: 'ショッピング枠10〜200万円', soft: '公式に記載なし', speed: 'Web申込なら最短3営業日で審査、最短7営業日程度で届く', url: 'https://fasio.biz/card/', memo: '' },
+];
+const faqs = [
+  { q: '個人事業主でも法人カードを作れますか？', a: 'このページのカードの多くは、個人事業主も申し込めます（副業を含むものもあります）。UPSIDERは法人だけが対象です。申込みの条件は、各社の公式で確かめてください。' },
+  { q: '個人のカードを仕事に使ってはいけませんか？', a: '禁止ではありませんが、私用と仕事の支払いがまざると、経理や確定申告の仕分けがたいへんになります。仕事用のカードを分けると、明細をそのまま会計ソフトに取り込みやすくなります。' },
+  { q: 'クレジットの審査が不安です。', a: 'カードには審査があります。ETCやガソリンだけなら、組合に入って使うクレジット機能のないカード（法人ETCカード・法人ガソリンカード）もあります。出資金や手数料がかかるので、合計で比べましょう。' },
+  { q: '入会特典は、どれくらいもらえますか？', a: '特典は期間と条件（入会後○か月で○円以上使う など）が決まっていて、よく変わります。このページでは額を比べず、公式の案内で確かめるようにしています。' },
+];
+const articleLd = {
+  '@context': 'https://schema.org', '@type': 'Article', headline: '法人カード・ビジネスカードの選び方', description,
+  datePublished: checkedAt, dateModified: checkedAt, inLanguage: 'ja', mainEntityOfPage: `${SITE.url}/houjin/card/`,
+  author: { '@type': 'Organization', name: SITE.operator, url: `${SITE.url}/about/` },
+  publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url + '/' },
+};
+const rows: [string, keyof (typeof cards)[number]][] = [['申し込める人', 'who'], ['年会費', 'fee'], ['追加カード', 'extra'], ['ETCカード', 'etc'], ['基本のポイント', 'point'], ['利用できる枠', 'limit'], ['会計ソフトとの連携', 'soft'], ['発行までの目安', 'speed']];
+---
+<Base title={title} description={description} jsonLd={[breadcrumbLd(SITE.url, crumbs), articleLd, faqLd(faqs)]}>
+  <div class="site-container card-page">
+    <Breadcrumbs items={crumbs.map((c, i) => (i === crumbs.length - 1 ? { name: c.name } : c))} />
+    <h1>法人カード・ビジネスカードの選び方<span>会社・個人事業主のカードを、目的別に</span></h1>
+
+    <div class="answer-box">
+      <p class="answer-label">目的別に、まず見るカード</p>
+      <ul>
+        <li><strong>年会費をかけずに始めたい</strong> → JCB Biz ONE 一般・三井住友カード Trunkオーナーズ・FASIOビジネスカード（いずれも年会費永年無料と公式に案内）。法人ならUPSIDERも年会費無料</li>
+        <li><strong>社員にカードを持たせて、会計ソフトとつなぎたい</strong> → JCB法人カード 一般・UPSIDER（法人のみ）</li>
+        <li><strong>利用の枠を大きく取りたい</strong> → UPSIDER（口座残高などで決まる）・アメックス・ビジネス・グリーン（一律の制限なし。利用状況などで決まる）</li>
+        <li><strong>クレジットの審査が不安・新しい会社でETCやガソリンを使いたい</strong> → <a href="#etc">法人ETCカード・法人ガソリンカード</a></li>
+        <li><strong>振込でしか払えない請求書をカードで払いたい</strong> → <a href="#pay">請求書・振込のカード払い</a></li>
+      </ul>
+    </div>
+    <p class="byline">各社の公式サイトで{checkedAt.replace(/-/g, '/')}に確認 ／ 書いた人：{SITE.operator}（<a href="/about/">編集方針</a>）／ このページには広告リンク（PR）があります。順位はつけていません。</p>
+
+    <section aria-labelledby="compare">
+      <h2 id="compare">法人カード6枚を、同じ目線で比べる</h2>
+      <p class="lead">基本の条件を並べました。ポイントは「最大」ではなく基本の率です（条件つきで上がるカードもあります）。審査があり、利用できる枠は会社ごとに決まります。</p>
+      <div class="table-scroll" tabindex="0" role="region" aria-label="法人カードの比較表">
+        <table>
+          <thead><tr><th scope="col">項目</th>{cards.map((c) => <th scope="col">{c.name}</th>)}</tr></thead>
+          <tbody>
+            {rows.map(([label, key]) => <tr><th scope="row">{label}</th>{cards.map((c) => <td>{c[key]}</td>)}</tr>)}
+            <tr><th scope="row">公式</th>{cards.map((c) => <td><a href={c.url} target="_blank" rel="noopener">公式で見る</a></td>)}</tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">表は横にスクロールできます。年会費・手数料は公式の表示どおり（税込の記載があるものは税込）。入会特典は期間と条件が変わるため、表には入れていません。</p>
+      <ul class="memo-list">{cards.filter((c) => c.memo).map((c) => <li><strong>{c.name}</strong>：{c.memo}</li>)}</ul>
+    </section>
+
+    <section aria-labelledby="choose">
+      <h2 id="choose">選ぶときに見る5つのこと</h2>
+      <ol class="point-list">
+        <li><strong>申し込める人</strong><span>法人だけか、個人事業主・副業も申し込めるか。</span></li>
+        <li><strong>年会費と、追加カード・ETCカードの費用</strong><span>本カードが無料でも、追加カードやETCに条件がある場合があります。</span></li>
+        <li><strong>社員に持たせる枚数</strong><span>追加カードの上限と、使える額を人ごとに決められるか。</span></li>
+        <li><strong>会計ソフトとの連携</strong><span>明細を自動で取り込めると、経理の手間が減ります。</span></li>
+        <li><strong>支払い方法と引落し口座</strong><span>法人口座か個人口座か。カードによって選べる口座がちがいます。</span></li>
+      </ol>
+    </section>
+
+    <section id="etc" aria-labelledby="etc-title">
+      <h2 id="etc-title">クレジットの審査が不安なら：法人ETCカード・法人ガソリンカード</h2>
+      <p>組合に入って使う、クレジット機能のないカードです。公式では「クレジット審査なし」「新会社でも作れる」と案内されています。出資金（やめるときに返金）や手数料がかかるので、走る量と合わせて考えましょう。</p>
+      <div class="offer-grid">
+        <OfferCard id="houjin-etc" heading="法人ETCカード（法人・個人事業主向け）" notice="出資金・手数料と条件をリンク先で確認してください。" />
+        <OfferCard id="houjin-gas" heading="法人ガソリンカード（法人・個人事業主向け）" notice="使えるお店・出資金・条件をリンク先で確認してください。" />
+      </div>
+    </section>
+
+    <section id="pay" aria-labelledby="pay-title">
+      <h2 id="pay-title">振込でしか払えない請求書を、カードで払う</h2>
+      <p>取引先がカード払いを受け付けていなくても、間に入る会社にカードで払い、その会社から振り込んでもらうサービスがあります。支払いを先にのばせる代わりに、手数料（3%前後）がかかります。</p>
+      <div class="offer-grid">
+        <OfferCard id="labol" heading="請求書・振込をカードで払う" notice="手数料と使えない支払い（自分あて・借金の返済など）をリンク先で確認してください。" />
+      </div>
+      <p class="note">同じしくみの<a href="https://go.invoy.jp/lp/settlement/pay/" target="_blank" rel="noopener">INVOY（カード払い）</a>は、手数料3%（非課税）、1万円未満は一律300円と公式に案内されています。</p>
+    </section>
+
+    <section aria-labelledby="more">
+      <h2 id="more">あわせて見直す</h2>
+      <ul class="plain-list">
+        <li><a href="/houjin/">会社・お店の通信費と事務機器（法人携帯・電話・コピー機）</a></li>
+        <li><a href="/hikari/houjin/">会社・お店のネット回線</a></li>
+        <li><a href="/security/houjin/">会社・お店のセキュリティ対策</a></li>
+      </ul>
+      <MangaShelf ids={["houjin"]} heading="" compact />
+    </section>
+
+    <section aria-labelledby="faq">
+      <h2 id="faq">よくある質問</h2>
+      {faqs.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}
+    </section>
+    <p class="sources">出典：各カードの公式サイト（表の「公式で見る」）、<a href="https://www.kousoku-etc.com/" target="_blank" rel="noopener">高速情報協同組合（法人ETCカード）</a>、<a href="https://www.kousoku-j.jp/gasoline-card/index.html" target="_blank" rel="noopener">同（ガソリンカード）</a>、<a href="https://labol.co.jp/" target="_blank" rel="noopener">ラボル</a>、<a href="https://go.invoy.jp/lp/settlement/pay/" target="_blank" rel="noopener">INVOY</a>。2026年11月27日に確認。</p>
+  </div>
+</Base>
+
+<style>
+  .card-page { padding-top: 14px; padding-bottom: 30px; color: #23352e; }
+  .card-page h1 { margin: 12px 0 16px; font-size: clamp(26px, 3.6vw, 36px); font-weight: 800; line-height: 1.45; color: #1f3a30; }
+  .card-page h1 span { display: block; font-size: .55em; color: #175d50; margin-top: 4px; }
+  .card-page h2 { margin-top: 40px; font-size: clamp(21px, 2.5vw, 26px); font-weight: 800; line-height: 1.55; scroll-margin-top: 16px; }
+  .card-page p, .card-page li { font-size: 15px; line-height: 1.95; }
+  .card-page section > p { margin-top: 8px; }
+  .card-page a { color: #175d50; }
+  .answer-box { border: 2px solid #175d50; border-radius: 10px; background: #f0f6f1; padding: 18px 20px; }
+  .answer-label { display: inline-block; background: #175d50; color: #fff; font-size: 13px !important; font-weight: 800; border-radius: 4px; padding: 2px 10px; margin-bottom: 8px; }
+  .answer-box ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+  .answer-box a, .byline a, .plain-list a, .note a, .sources a, .memo-list a { text-decoration: underline; text-underline-offset: 3px; }
+  .byline { margin-top: 10px; font-size: 13px !important; color: #637268; }
+  .lead { color: #4f6a5a; }
+  .table-scroll { overflow-x: auto; margin-top: 12px; border: 1px solid #ccd9d0; border-radius: 8px; }
+  .table-scroll table { width: 100%; min-width: 1100px; border-collapse: collapse; font-size: 13px; }
+  .table-scroll th, .table-scroll td { padding: 10px 12px; border-bottom: 1px solid #dce5de; border-right: 1px solid #edf2ee; text-align: left; vertical-align: top; line-height: 1.7; }
+  .table-scroll thead th { background: #175d50; color: #fff; }
+  .table-scroll tbody th { position: sticky; left: 0; background: #f1f6f1; color: #175d50; white-space: nowrap; }
+  .table-scroll td a { font-weight: 700; text-decoration: underline; }
+  .note { margin-top: 10px; font-size: 13px !important; color: #5d6f63; }
+  .memo-list { margin-top: 8px; padding-left: 1.2em; list-style: disc; display: grid; gap: 4px; }
+  .memo-list li { font-size: 13px; color: #4f6a5a; }
+  .point-list { margin-top: 12px; padding-left: 1.3em; display: grid; gap: 10px; }
+  .point-list strong { display: block; font-size: 16px; }
+  .point-list span { display: block; color: #4f6a5a; }
+  .offer-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 14px; align-items: start; }
+  .plain-list { margin-top: 10px; padding-left: 1.2em; display: grid; gap: 6px; list-style: disc; }
+  .card-page details { margin-top: 10px; padding: 14px 18px; border: 1px solid #d5dfd7; border-radius: 6px; }
+  .card-page summary { cursor: pointer; font-weight: 700; }
+  .sources { margin-top: 26px; font-size: 12px !important; color: #69786e; }
+  @media (max-width: 700px) { .offer-grid { grid-template-columns: 1fr; } }
+</style>

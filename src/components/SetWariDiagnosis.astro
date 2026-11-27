@@ -192,7 +192,7 @@ const homeList = homes.map((h) => ({ id: h.id, name: h.name, kind: h.kind, prefe
         if (e.fee) cb.append(el('p', e.fee, 'sw-cb-fee'));
         if (e.caution) cb.append(el('p', e.caution, 'sw-cb-caution'));
         const a = document.createElement('a'); a.href = e.url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = '公式でくわしく見る →'; cb.append(a);
-        cb.append(el('p', `各社の公式サイトで${(cardsData.checkedAt || '').replace(/-/g, '/')}に確認。割引は対象の料金プランだけです。`, 'sw-cb-date'));
+        cb.append(el('p', `各社の公式サイトで${(cardsData.checkedAt || '').replace(/-/g, '/')}に確認（金額は税込）。割引は対象の料金プランだけです。`, 'sw-cb-date'));
         cb.hidden = false;
       } else cb.hidden = true;
       result.querySelector<HTMLElement>('[data-sw-note]')!.textContent = '「実質」は、ネットの月額＋セット割に必要なオプション−スマホのセット割（最大の額）で計算した目安です。工事費・事務手数料・端末代・特典は含めていません。住所によって使えない回線があるので、申込先で住所を入れて確かめてください。セット割は、対象の料金プランと申込みが必要です。';

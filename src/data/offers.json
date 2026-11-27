@@ -251,5 +251,41 @@
     },
     "note": "ソフトバンクの正規代理店で、ドコモ回線の格安SIMも扱う法人携帯の窓口（運営：株式会社ビジョン）。公式では47都道府県に対応（鹿児島県も対象）、法人・個人事業主が1台から使えると案内されています（2026年11月27日に公式サイトで確認）。",
     "guideSlugs": []
+  },
+  {
+    "id": "houjin-etc",
+    "name": "法人ETCカード（高速情報協同組合）",
+    "officialUrl": "https://www.kousoku-etc.com/",
+    "affiliate": {
+      "href": "https://px.a8.net/svt/ejp?a8mat=4BGV62+230NRU+3EV2+639IQ",
+      "label": "簡単発行 法人ETCカード",
+      "pixel": "https://www16.a8.net/0.gif?a8mat=4BGV62+230NRU+3EV2+639IQ"
+    },
+    "note": "組合に入って使う、クレジット機能のないETCカード。法人・個人事業主向けで、公式では「クレジット審査なし」「新会社でも作れる」と案内。出資金10,000円／1社（やめるときに返金）、発行手数料550円（税込）／枚、取扱手数料550円（税込）／枚（年1回）、毎月の走行料金に8%の事務手数料（2026年11月27日に公式サイトで確認）。",
+    "guideSlugs": []
+  },
+  {
+    "id": "houjin-gas",
+    "name": "法人ガソリンカード（高速情報協同組合）",
+    "officialUrl": "https://www.kousoku-j.jp/gasoline-card/index.html",
+    "affiliate": {
+      "href": "https://px.a8.net/svt/ejp?a8mat=4BGV62+2KA8BE+3EV2+HVFKY",
+      "label": "ETC協同組合のガソリンカード",
+      "pixel": "https://www12.a8.net/0.gif?a8mat=4BGV62+2KA8BE+3EV2+HVFKY"
+    },
+    "note": "申込先は高速情報協同組合（ETCカードと同じ組合）。組合に入って使う、クレジット機能のないガソリンカード。法人・個人事業主向け。出資金はETCカードと合わせて1社1万円、カード手数料・年間手数料は無料と公式に案内（2026年11月27日に公式サイトで確認）。",
+    "guideSlugs": []
+  },
+  {
+    "id": "labol",
+    "name": "ラボル カード払い",
+    "officialUrl": "https://labol.co.jp/",
+    "affiliate": {
+      "href": "https://px.a8.net/svt/ejp?a8mat=4BGV62+2OG9JU+40JM+1NJRXE",
+      "label": "labol(ラボル) カード払い",
+      "pixel": "https://www18.a8.net/0.gif?a8mat=4BGV62+2OG9JU+40JM+1NJRXE"
+    },
+    "note": "銀行振込が必要な支払い（請求書など）を、手持ちのカードで払えるサービス。手数料はVisa・Mastercardが3%、JCBが3.5%（税込）、11,000円未満は一律360円（税込）。自分あての振込や借金の返済には使えません（2026年11月27日に公式サイトで確認）。",
+    "guideSlugs": []
   }
 ]
