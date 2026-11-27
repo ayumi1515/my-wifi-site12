@@ -1,0 +1,356 @@
+{
+  "checkedAt": "2026-11-27",
+  "note": "全国で使えるフレッツ光・光コラボ以外に、その都道府県で提供している地域の光回線（各社の公式サイトで確認）。どれも県の一部の地域だけの場合があり、最後は住所で確認する。auひかりは提供していない都道府県を公式で確かめられなかったため載せていない。",
+  "prefectures": {
+    "01": [
+      {
+        "name": "NURO 光",
+        "url": "https://www.nuro.jp/",
+        "note": "一部の地域で提供（公式）"
+      }
+    ],
+    "04": [
+      {
+        "name": "NURO 光",
+        "url": "https://www.nuro.jp/",
+        "note": "ここでは10ギガのみの提供（公式）"
+      }
+    ],
+    "06": [
+      {
+        "name": "NURO 光",
+        "url": "https://www.nuro.jp/",
+        "note": "ここでは10ギガのみの提供（公式）"
+      }
+    ],
+    "07": [
+      {
+        "name": "NURO 光",
+        "url": "https://www.nuro.jp/",
+        "note": "ここでは10ギガのみの提供（公式）"
+      }
+    ],
+    "08": [
+      {
+        "name": "NURO 光",
+        "url": "https://www.nuro.jp/",
+        "note": "一部の地域で提供（公式）"
+      }
+    ],
+    "09": [
+      {
+        "name": "NURO 光",
+        "url": "https://www.nuro.jp/",
+        "note": "一部の地域で提供（公式）"
+      }
+    ],
+    "10": [
+      {
+        "name": "NURO 光",
+        "url": "https://www.nuro.jp/",
+        "note": "一部の地域で提供（公式）"
+      }
+    ],
+    "11": [
+      {
+        "name": "NURO 光",
+        "url": "https://www.nuro.jp/",
+        "note": "一部の地域で提供（公式）"
+      }
+    ],
+    "12": [
+      {
+        "name": "NURO 光",
+        "url": "https://www.nuro.jp/",
+        "note": "一部の地域で提供（公式）"
+      }
+    ],
+    "13": [
+      {
+        "name": "NURO 光",
+        "url": "https://www.nuro.jp/",
+        "note": "一部の地域で提供（公式）"
+      }
+    ],
+    "14": [
+      {
+        "name": "NURO 光",
+        "url": "https://www.nuro.jp/",
+        "note": "一部の地域で提供（公式）"
+      }
+    ],
+    "20": [
+      {
+        "name": "コミュファ光",
+        "url": "https://area.commufa.jp/commufa/map/index.asp?option=portal&jutaku=ko",
+        "note": "住所で提供エリアを検索する方式（公式）"
+      }
+    ],
+    "18": [
+      {
+        "name": "eo光",
+        "url": "https://eonet.jp/area/",
+        "note": "福井県では小浜市・高浜町・おおい町・若狭町のみ（公式）"
+      }
+    ],
+    "21": [
+      {
+        "name": "コミュファ光",
+        "url": "https://area.commufa.jp/commufa/map/index.asp?option=portal&jutaku=ko",
+        "note": "住所で提供エリアを検索する方式（公式）"
+      },
+      {
+        "name": "NURO 光",
+        "url": "https://www.nuro.jp/",
+        "note": "一部の地域で提供（公式）"
+      }
+    ],
+    "22": [
+      {
+        "name": "コミュファ光",
+        "url": "https://area.commufa.jp/commufa/map/index.asp?option=portal&jutaku=ko",
+        "note": "住所で提供エリアを検索する方式（公式）"
+      },
+      {
+        "name": "NURO 光",
+        "url": "https://www.nuro.jp/",
+        "note": "一部の地域で提供（公式）"
+      }
+    ],
+    "23": [
+      {
+        "name": "コミュファ光",
+        "url": "https://area.commufa.jp/commufa/map/index.asp?option=portal&jutaku=ko",
+        "note": "住所で提供エリアを検索する方式（公式）"
+      },
+      {
+        "name": "NURO 光",
+        "url": "https://www.nuro.jp/",
+        "note": "一部の地域で提供（公式）"
+      }
+    ],
+    "24": [
+      {
+        "name": "コミュファ光",
+        "url": "https://area.commufa.jp/commufa/map/index.asp?option=portal&jutaku=ko",
+        "note": "住所で提供エリアを検索する方式（公式）"
+      },
+      {
+        "name": "NURO 光",
+        "url": "https://www.nuro.jp/",
+        "note": "一部の地域で提供（公式）"
+      }
+    ],
+    "25": [
+      {
+        "name": "eo光",
+        "url": "https://eonet.jp/area/",
+        "note": "一部の市町村で提供（公式）"
+      },
+      {
+        "name": "NURO 光",
+        "url": "https://www.nuro.jp/",
+        "note": "一部の地域で提供（公式）"
+      }
+    ],
+    "26": [
+      {
+        "name": "eo光",
+        "url": "https://eonet.jp/area/",
+        "note": "一部の市町村で提供（公式）"
+      },
+      {
+        "name": "NURO 光",
+        "url": "https://www.nuro.jp/",
+        "note": "一部の地域で提供（公式）"
+      }
+    ],
+    "27": [
+      {
+        "name": "eo光",
+        "url": "https://eonet.jp/area/",
+        "note": "一部の市町村で提供（公式）"
+      },
+      {
+        "name": "NURO 光",
+        "url": "https://www.nuro.jp/",
+        "note": "一部の地域で提供（公式）"
+      }
+    ],
+    "28": [
+      {
+        "name": "eo光",
+        "url": "https://eonet.jp/area/",
+        "note": "一部の市町村で提供（公式）"
+      },
+      {
+        "name": "NURO 光",
+        "url": "https://www.nuro.jp/",
+        "note": "一部の地域で提供（公式）"
+      }
+    ],
+    "29": [
+      {
+        "name": "eo光",
+        "url": "https://eonet.jp/area/",
+        "note": "一部の市町村で提供（公式）"
+      },
+      {
+        "name": "NURO 光",
+        "url": "https://www.nuro.jp/",
+        "note": "一部の地域で提供（公式）"
+      }
+    ],
+    "30": [
+      {
+        "name": "eo光",
+        "url": "https://eonet.jp/area/",
+        "note": "一部の市町村で提供（公式）"
+      }
+    ],
+    "31": [
+      {
+        "name": "メガ・エッグ",
+        "url": "https://www.megaegg.jp/area/megaegg/?svc=1",
+        "note": "中国5県で提供。建物や周辺の状況で使えない場合あり（公式）"
+      }
+    ],
+    "32": [
+      {
+        "name": "メガ・エッグ",
+        "url": "https://www.megaegg.jp/area/megaegg/?svc=1",
+        "note": "中国5県で提供。建物や周辺の状況で使えない場合あり（公式）"
+      }
+    ],
+    "35": [
+      {
+        "name": "メガ・エッグ",
+        "url": "https://www.megaegg.jp/area/megaegg/?svc=1",
+        "note": "中国5県で提供。建物や周辺の状況で使えない場合あり（公式）"
+      }
+    ],
+    "33": [
+      {
+        "name": "メガ・エッグ",
+        "url": "https://www.megaegg.jp/area/megaegg/?svc=1",
+        "note": "中国5県で提供。建物や周辺の状況で使えない場合あり（公式）"
+      },
+      {
+        "name": "NURO 光",
+        "url": "https://www.nuro.jp/",
+        "note": "一部の地域で提供（公式）"
+      }
+    ],
+    "34": [
+      {
+        "name": "メガ・エッグ",
+        "url": "https://www.megaegg.jp/area/megaegg/?svc=1",
+        "note": "中国5県で提供。建物や周辺の状況で使えない場合あり（公式）"
+      },
+      {
+        "name": "NURO 光",
+        "url": "https://www.nuro.jp/",
+        "note": "一部の地域で提供（公式）"
+      }
+    ],
+    "36": [
+      {
+        "name": "ピカラ光",
+        "url": "https://www.pikara.jp/net/area.html",
+        "note": "一部の市町村で提供。10ギガは1ギガより狭い範囲（公式）"
+      }
+    ],
+    "37": [
+      {
+        "name": "ピカラ光",
+        "url": "https://www.pikara.jp/net/area.html",
+        "note": "一部の市町村で提供。10ギガは1ギガより狭い範囲（公式）"
+      }
+    ],
+    "38": [
+      {
+        "name": "ピカラ光",
+        "url": "https://www.pikara.jp/net/area.html",
+        "note": "一部の市町村で提供。10ギガは1ギガより狭い範囲（公式）"
+      }
+    ],
+    "39": [
+      {
+        "name": "ピカラ光",
+        "url": "https://www.pikara.jp/net/area.html",
+        "note": "一部の市町村で提供。10ギガは1ギガより狭い範囲（公式）"
+      }
+    ],
+    "40": [
+      {
+        "name": "BBIQ",
+        "url": "https://www.bbiq.jp/hikari/",
+        "note": "九州の各県で1ギガを提供（住所によっては使えません）。6ギガ・10ギガは福岡・長崎・宮崎の一部と熊本県御船町だけ（公式）"
+      },
+      {
+        "name": "NURO 光",
+        "url": "https://www.nuro.jp/",
+        "note": "一部の地域で提供（公式）"
+      }
+    ],
+    "41": [
+      {
+        "name": "BBIQ",
+        "url": "https://www.bbiq.jp/hikari/",
+        "note": "九州の各県で1ギガを提供（住所によっては使えません）。6ギガ・10ギガは福岡・長崎・宮崎の一部と熊本県御船町だけ（公式）"
+      },
+      {
+        "name": "NURO 光",
+        "url": "https://www.nuro.jp/",
+        "note": "一部の地域で提供（公式）"
+      }
+    ],
+    "43": [
+      {
+        "name": "BBIQ",
+        "url": "https://www.bbiq.jp/hikari/",
+        "note": "九州の各県で1ギガを提供（住所によっては使えません）。6ギガ・10ギガは福岡・長崎・宮崎の一部と熊本県御船町だけ（公式）"
+      },
+      {
+        "name": "NURO 光",
+        "url": "https://www.nuro.jp/",
+        "note": "ここでは10ギガのみの提供（公式）"
+      }
+    ],
+    "42": [
+      {
+        "name": "BBIQ",
+        "url": "https://www.bbiq.jp/hikari/",
+        "note": "九州の各県で1ギガを提供（住所によっては使えません）。6ギガ・10ギガは福岡・長崎・宮崎の一部と熊本県御船町だけ（公式）"
+      }
+    ],
+    "44": [
+      {
+        "name": "BBIQ",
+        "url": "https://www.bbiq.jp/hikari/",
+        "note": "九州の各県で1ギガを提供（住所によっては使えません）。6ギガ・10ギガは福岡・長崎・宮崎の一部と熊本県御船町だけ（公式）"
+      }
+    ],
+    "45": [
+      {
+        "name": "BBIQ",
+        "url": "https://www.bbiq.jp/hikari/",
+        "note": "九州の各県で1ギガを提供（住所によっては使えません）。6ギガ・10ギガは福岡・長崎・宮崎の一部と熊本県御船町だけ（公式）"
+      }
+    ],
+    "46": [
+      {
+        "name": "BBIQ",
+        "url": "https://www.bbiq.jp/hikari/",
+        "note": "九州の各県で1ギガを提供（住所によっては使えません）。6ギガ・10ギガは福岡・長崎・宮崎の一部と熊本県御船町だけ（公式）"
+      }
+    ],
+    "47": [
+      {
+        "name": "auひかり ちゅら",
+        "url": "https://okinawa-cellular.jp/personal/hikari/",
+        "note": "沖縄向けのサービス。使えるかは住所で検索（公式）"
+      }
+    ]
+  }
+}

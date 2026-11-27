@@ -3,6 +3,8 @@ import Base from '../../../../layouts/Base.astro';
 import ConnectivityManga from '../../../../components/ConnectivityManga.astro';
 import Breadcrumbs from '../../../../components/Breadcrumbs.astro';
 import NationalInternetChecks from '../../../../components/NationalInternetChecks.astro';
+import MunicipalityLocalFacts from '../../../../components/MunicipalityLocalFacts.astro';
+import ftthCoverage from '../../../../data/ftth-coverage-municipalities.json';
 import { breadcrumbLd, jpDate } from '../../../../lib/data';
 import { getExistingMunicipalityPath, getMunicipalityKindLabel, getMunicipalityPath, getMunicipalityPrimaryPath, getPrefecturePath, nationalAreaSource, nttAreaChecks, prefectures, type NationalMunicipality, type NationalPrefecture } from '../../../../lib/national-areas';
 import { SITE } from '../../../../site.config.mjs';
@@ -20,9 +22,11 @@ const wards = p.municipalities.filter((ward) => ward.parentCityCode === m.code);
 const otherMunicipalities = p.municipalities.filter((other) => other.code !== m.code && other.kind !== 'designated-ward').slice(0, 8);
 const existingDetail = getExistingMunicipalityPath(p, m);
 const sourceDate = nationalAreaSource.asOf ?? nationalAreaSource.checkedAt;
+const localCovRaw = (ftthCoverage.municipalities as Record<string, { coverage: number }>)[m.code]?.coverage;
+const localCov = localCovRaw == null ? null : (Number.isInteger(localCovRaw) ? `${localCovRaw}` : localCovRaw.toFixed(1));
 const crumbs = [{ name: '総合トップ', href: '/' }, { name: '全国の提供エリア確認', href: '/hikari/area/' }, { name: p.name, href: getPrefecturePath(p) }, { name: m.name, href: getMunicipalityPath(p, m) }];
 ---
-<Base title={`${p.name}${m.name}のWi-Fi・光回線｜公式の住所別エリア確認`} description={`${p.name}${m.name}でネット回線を探す方へ。${ntt.name}を原則とする確認先、光回線・ホームルーターの公式エリア案内、戸建てと集合住宅の確認手順を掲載。市区町村名だけでは提供可否は確定しません。`} pr={false} noindex={!indexedCodes.has(m.code)} jsonLd={[breadcrumbLd(SITE.url, crumbs)]}>
+<Base title={`${p.name}${m.name}のWi-Fi・光回線｜公式の住所別エリア確認`} description={`${p.name}${m.name}でネット回線を探す方へ。${localCov ? `光回線を使える世帯は推計${localCov}%（総務省・2025年3月末）。` : ''}${ntt.name}を原則とする確認先、光回線・ホームルーターの公式エリア案内、戸建てと集合住宅の確認手順を掲載。市区町村名だけでは提供可否は確定しません。`} pr={false} noindex={!indexedCodes.has(m.code)} jsonLd={[breadcrumbLd(SITE.url, crumbs)]}>
   <div class="municipality-area-page site-container">
     <Breadcrumbs items={crumbs.map((c, i) => i === crumbs.length - 1 ? { name: c.name } : c)} />
     <header class="municipality-area-header">
@@ -43,6 +47,7 @@ const crumbs = [{ name: '総合トップ', href: '/' }, { name: '全国の提供
       </dl>
       {parentCity && <p>この行政区は{parentCity.name}内です。<a href={getMunicipalityPrimaryPath(p, parentCity)}>{parentCity.name}全体の確認ページを見る</a></p>}
     </section>
+    <MunicipalityLocalFacts p={p} m={m} />
     {existingDetail && <aside class="existing-area-detail"><h2>{m.name}の詳しい地域情報もあります</h2><p>この地域の既存ページでは、公式の提供エリア情報と回線の選び方をまとめています。</p><a href={existingDetail}>{m.name}の地域情報・選び方を見る</a></aside>}
     {wards.length > 0 && <section class="city-wards" aria-labelledby="city-wards-title"><h2 id="city-wards-title">{m.name}の行政区から選ぶ</h2><ul>{wards.map((ward) => <li><a href={getMunicipalityPath(p, ward)}>{ward.name}</a></li>)}</ul></section>}
     <NationalInternetChecks region={p.nttRegion} />

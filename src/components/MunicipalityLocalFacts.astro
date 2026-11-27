@@ -1,0 +1,82 @@
+---
+// 市区町村ページに「その地名だけ」の情報を出す部品。
+// 光回線カバー率は総務省の市区町村別データ（src/data/ftth-coverage-municipalities.json）。
+// 県で選べる地域の光回線は、各社の公式サイトで確かめた一覧（src/data/regional-fiber.json）。広告リンクではなく公式へのふつうのリンク。
+import coverage from '../data/ftth-coverage-municipalities.json';
+import regional from '../data/regional-fiber.json';
+import type { NationalMunicipality, NationalPrefecture } from '../lib/national-areas';
+import { getMunicipalityPath } from '../lib/national-areas';
+
+interface Props { p: NationalPrefecture; m: NationalMunicipality }
+const { p, m } = Astro.props;
+const cov = (coverage.municipalities as Record<string, { coverage: number; rank: number; ties: number }>)[m.code];
+const prefAvg = (coverage.prefectures as Record<string, number>)[p.name];
+const prefCount = (coverage.prefectureCounts as Record<string, number>)[p.name];
+const wards = p.municipalities.filter((w) => w.parentCityCode === m.code);
+const wardCov = wards.map((w) => ({ w, c: (coverage.municipalities as Record<string, { coverage: number }>)[w.code]?.coverage })).filter((x) => x.c != null);
+const lines = (regional.prefectures as Record<string, { name: string; url: string; note?: string }[]>)[p.code] ?? [];
+const fmt = (n: number) => (Number.isInteger(n) ? `${n}` : n.toFixed(1));
+let comment = '';
+if (cov) {
+  if (cov.coverage >= 99.95) comment = `${m.name}は、総務省の推計ではほぼすべての世帯が光回線のエリアに入っています。ただし、建物の設備や番地によって使えない場合もあるので、最後は住所で確かめましょう。`;
+  else if (prefAvg != null && Math.abs(cov.coverage - prefAvg) < 0.5) comment = `${m.name}は、${p.name}の平均（${fmt(prefAvg)}%）とほぼ同じ水準です。多くの住所で光回線が候補になりますが、エリアの外の住所もあるので、住所で確かめましょう。`;
+  else if (prefAvg != null && cov.coverage >= prefAvg) comment = `${m.name}は、${p.name}の平均（${fmt(prefAvg)}%）と同じか高い水準です。多くの住所で光回線が候補になりますが、エリアの外の住所もあるので、住所で確かめましょう。`;
+  else comment = `${m.name}は、${p.name}の平均（${fmt(prefAvg)}%）より低めです。光回線が引けない住所もあるため、工事のいらないホームルーターも候補に入れて確かめると安心です。`;
+}
+---
+{(cov || wardCov.length > 0 || lines.length > 0) && (
+  <section class="local-facts" aria-labelledby="local-facts-title">
+    <h2 id="local-facts-title">{m.name}の光回線の整いぐあい</h2>
+    {cov && (
+      <>
+        <div class="lf-figs">
+          <div class="lf-main"><span>光回線を使える世帯の割合（推計）</span><strong><b>{fmt(cov.coverage)}</b>%</strong></div>
+          {prefAvg != null && <div><span>{p.name}の平均</span><strong><b>{fmt(prefAvg)}</b>%</strong></div>}
+          {prefCount && <div><span>{p.name}の{prefCount}市区町村・区のうち</span><strong>{cov.ties > 1 ? <>同率<b>{cov.rank}</b>位（{cov.ties}市区町村）</> : <>高いほうから<b>{cov.rank}</b>番目</>}</strong></div>}
+        </div>
+        <p class="lf-comment">{comment}</p>
+        {cov.coverage < 99.95 && <p class="lf-link"><a href="/hikari/home-router/">工事のいらないホームルーターの選び方を見る →</a></p>}
+      </>
+    )}
+    {!cov && wardCov.length > 0 && (
+      <>
+        <p class="lf-comment">{m.name}の光回線カバー率は、総務省のデータでは区ごとに公表されています。</p>
+        <ul class="lf-wards">{wardCov.map(({ w, c }) => <li><a href={getMunicipalityPath(p, w)}>{w.name}</a><span>{fmt(c as number)}%</span></li>)}</ul>
+      </>
+    )}
+    {lines.length > 0 && (
+      <div class="lf-lines">
+        <h3>{p.name}で選べる、地域の光回線</h3>
+        <p>全国で使えるフレッツ光・光コラボ（ドコモ光など）のほかに、{p.name}では次の地域の光回線も候補になります。提供していない地区もあるので、公式サイトで住所を入れて確かめてください。</p>
+        <ul>{lines.map((l) => <li><a href={l.url} target="_blank" rel="noopener">{l.name}</a>{l.note && <span>{l.note}</span>}</li>)}</ul>
+      </div>
+    )}
+    <p class="lf-source">FTTH＝光ファイバーの回線（光回線）のことです。出典：<a href={coverage.sourceUrl} target="_blank" rel="noopener">{coverage.sourceLabel}</a>（{coverage.asOf.slice(0, 4)}年3月末時点）。{coverage.note}{lines.length > 0 && ` 地域の光回線は各社の公式サイトで${regional.checkedAt.replace(/-/g, '/')}に確認。`}</p>
+  </section>
+)}
+<style>
+  .local-facts { margin-top: 28px; padding: 20px; border: 2px solid #175d50; border-radius: 10px; background: #f4faf5; }
+  .local-facts h2 { font-size: clamp(20px, 2.4vw, 24px); font-weight: 800; line-height: 1.55; color: #173d2b; }
+  .lf-figs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+  .lf-figs > div { padding: 12px 14px; border-radius: 8px; background: #fff; border: 1px solid #cfe0d4; }
+  .lf-figs span { display: block; font-size: 12px; line-height: 1.6; color: #5d6f63; }
+  .lf-figs strong { display: block; font-size: 15px; font-weight: 700; color: #2f4a3a; margin-top: 2px; }
+  .lf-figs b { font-size: 26px; font-weight: 800; color: #175d50; margin-right: 2px; }
+  .lf-main b { font-size: 34px; }
+  .lf-comment { margin-top: 12px; font-size: 15px; line-height: 1.95; color: #2f4a3a; }
+  .lf-link a { display: inline-block; margin-top: 6px; font-size: 14px; font-weight: 700; color: #175d50; text-decoration: underline; text-underline-offset: 3px; }
+  .lf-wards { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; list-style: none; padding: 0; margin: 10px 0 0; }
+  .lf-wards li { display: flex; justify-content: space-between; gap: 8px; padding: 8px 10px; background: #fff; border: 1px solid #cfe0d4; border-radius: 6px; font-size: 14px; }
+  .lf-wards a { color: #175d50; text-decoration: underline; }
+  .lf-wards span { font-weight: 700; color: #2f4a3a; }
+  .lf-lines { margin-top: 16px; padding-top: 14px; border-top: 1px dashed #c4d8ca; }
+  .lf-lines h3 { font-size: 17px; font-weight: 800; color: #173d2b; }
+  .lf-lines p { margin-top: 6px; font-size: 14px; line-height: 1.85; color: #4f6a5a; }
+  .lf-lines ul { margin: 8px 0 0; padding-left: 1.2em; list-style: disc; display: grid; gap: 4px; }
+  .lf-lines li { font-size: 15px; line-height: 1.8; }
+  .lf-lines a { color: #175d50; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+  .lf-lines li span { display: block; font-size: 13px; color: #5d6f63; }
+  .lf-source { margin-top: 14px; font-size: 12px; line-height: 1.8; color: #69786e; }
+  .lf-source a { color: #175d50; text-decoration: underline; }
+  @media (max-width: 700px) { .local-facts { padding: 16px; } .lf-figs { grid-template-columns: 1fr; } }
+</style>
