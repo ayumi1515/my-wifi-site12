@@ -11,7 +11,7 @@ export const brands = [
 ];
 export type Plan = { id: string; brandId: string; name: string; bundleIds: string[]; bundleDiscount: number; excludeFamilyWithBundle?: boolean; validThrough?: string; familyDiscount?: number[]; familyMode?: string };
 export const plans = (planData.plans as Plan[]).filter((p) => !p.validThrough || p.validThrough >= today);
-export const homes = homeData.homes as { id: string; name: string; kind: 'fiber' | 'router'; prefectures: string[] | null; buildings: string[]; monthly: Record<string, number | null>; decemberMonthly?: Record<string, number | null>; requiredBundleOptionMonthly?: number; contractMonths: number; url: string; constructionLabel?: string; contractLabel?: string; goodFor?: string; benefitLabel?: string; benefitCheckedAt?: string; priceNote?: string }[];
+export const homes = homeData.homes as { id: string; name: string; kind: 'fiber' | 'router'; prefectures: string[] | null; buildings: string[]; monthly: Record<string, number | null>; decemberMonthly?: Record<string, number | null>; requiredBundleOptionMonthly?: number; contractMonths: number; url: string; constructionLabel?: string; contractLabel?: string; goodFor?: string; benefitLabel?: string; benefitCheckedAt?: string; priceNote?: string; ctaNote?: string; officialNote?: string }[];
 export const brandInfo = Object.fromEntries(brands.map((b) => {
   const own = plans.filter((p) => p.brandId === b.id && p.bundleDiscount > 0);
   // 家族割と一緒に使えないプラン（ワイモバイル・UQなど）は、その家族割の額も持っておき、差だけを「得」として見せる

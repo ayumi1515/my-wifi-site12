@@ -7,6 +7,8 @@
 import AffiliateButton from './AffiliateButton.astro';
 import regional from '../data/regional-fiber.json';
 import { areaTiers, resolveList, resolveProduct } from '../lib/products';
+import { phrases } from '../lib/phrases';
+const ph = (t: string) => phrases(t).map((w) => `<span class="phrase">${w}</span>`).join('');
 
 interface Props { prefCode: string; prefName: string; placeName: string }
 const { prefCode, prefName, placeName } = Astro.props;
@@ -21,17 +23,18 @@ const shortTerm = resolveList(areaTiers.shortTerm.items as string[]);
 ---
 <section class="area-tiers" aria-labelledby="area-tiers-title">
   <h2 id="area-tiers-title">{placeName}で使い方から選ぶ、ネット回線の3つの種類</h2>
-  <p class="at-lead">住所で使えるかを確かめたら、家族の人数・住む期間・工事ができるかで種類を決めます。料金は公式・申込み窓口で確かめた通常の月額です。</p>
+  <p class="at-lead"><strong>{placeName}で迷ったら、決め手は3つ。何年住むか、工事ができるか、家族のスマホの会社。</strong>下の3つから、いまの暮らしに近いものを選んでください。（料金は、公式・申込み窓口で確かめた通常の月額）</p>
 
   <div class="at-tier">
-    <h3><span>1</span>{areaTiers.fixed.title}</h3>
+    <h3><span class="at-num">1</span><span set:html={ph(areaTiers.fixed.title)} /></h3>
+    <p class="at-pick">{areaTiers.fixed.lead}</p>
     {regionalLines.length > 0 && (
       <div class="at-regional">
         <p class="at-sub">{prefName}で提供されている地域の光回線（各社の公式サイトで{regionalChecked}に確認。提供は一部の地域の場合があります）</p>
         <ul>
           {regionalLines.map((l) => (
             bbiqAd && l.name === 'BBIQ'
-              ? <li class="at-card"><strong>{bbiqAd.name}</strong><span class="at-line">{bbiqAd.line}</span><AffiliateButton provider={bbiqAd} actionFirst={true} showBanner={false} building="house" ctaLabel="申込み窓口で提供エリア・条件を確認する →" notice="戸建ての特典には、開通の期限・利用期間・口座登録などの条件があります。申込先で確認してください。" /></li>
+              ? <li class="at-card"><strong>{bbiqAd.name}</strong><span class="at-line">{bbiqAd.line}</span><AffiliateButton provider={bbiqAd} actionFirst={true} showBanner={false} building="house" ctaLabel="申込み窓口で提供エリア・条件を確認する →" notice="押しただけでは申込みになりません。戸建ての特典には、開通の期限・利用期間・口座登録などの条件があります。申込先で確認してください。" /></li>
               : <li class="at-card"><strong>{l.name}</strong>{l.note && <span class="at-line">{l.note}</span>}<a class="at-official" href={l.url} target="_blank" rel="noopener">公式サイトで{placeName}の<span class="at-nowrap">提供エリアを確認する&nbsp;↗</span></a></li>
           ))}
         </ul>
@@ -44,22 +47,22 @@ const shortTerm = resolveList(areaTiers.shortTerm.items as string[]);
           <strong>{c.name}</strong>
           {c.setwari && <span class="at-tag">{c.setwari}のスマホとセット割</span>}
           <span class="at-line">{c.line}</span>
-          <AffiliateButton provider={c} actionFirst={true} showBanner={false} building="house" ctaLabel="申込み窓口で提供エリア・条件を確認する →" notice="対象プラン・必要なオプション・提供エリアを申込先で確認してください。" />
+          <AffiliateButton provider={c} actionFirst={true} showBanner={false} building="house" ctaLabel="申込み窓口で提供エリア・条件を確認する →" notice="押しただけでは申込みになりません。対象プラン・必要なオプション・提供エリアを申込先で確認してください。" officialNote="押しただけでは申込みになりません。" />
         </li>
       ))}
     </ul>
   </div>
 
   <div class="at-tier">
-    <h3><span>2</span>{areaTiers.homeRouter.title}</h3>
-    <p class="at-sub">コンセントに挿して使います。電波が届くかは、公式の電波エリアと設置する住所で確かめてください。</p>
+    <h3><span class="at-num">2</span><span set:html={ph(areaTiers.homeRouter.title)} /></h3>
+    <p class="at-pick">{areaTiers.homeRouter.lead}</p>
     <ul class="at-grid">
       {routers.map((c) => (
         <li class="at-card">
           <strong>{c.name}</strong>
           {c.setwari && <span class="at-tag">{c.setwari}のスマホとセット割</span>}
           <span class="at-line">{c.line}</span>
-          <AffiliateButton provider={c} actionFirst={true} showBanner={false} ctaLabel="申込み窓口で電波エリア・条件を確認する →" notice="端末代・契約期間・途中でやめるときの支払いを申込先で確認してください。" />
+          <AffiliateButton provider={c} actionFirst={true} showBanner={false} ctaLabel="申込み窓口で電波エリア・条件を確認する →" notice="押しただけでは申込みになりません。端末代・契約期間・途中でやめるときの支払いを申込先で確認してください。" officialNote={c.id === 'home5g' ? '広告ではありません。公式サイトで、住所の電波エリアを先に確かめられます。' : '押しただけでは申込みになりません。'} />
         </li>
       ))}
     </ul>
@@ -68,10 +71,11 @@ const shortTerm = resolveList(areaTiers.shortTerm.items as string[]);
 
   {shortTerm.length > 0 && (
     <div class="at-tier">
-      <h3><span>3</span>{areaTiers.shortTerm.title}</h3>
+      <h3><span class="at-num">3</span><span set:html={ph(areaTiers.shortTerm.title)} /></h3>
+      <p class="at-pick">{areaTiers.shortTerm.lead}</p>
       <ul class="at-grid">
         {shortTerm.map((c) => (
-          <li class="at-card"><strong>{c.name}</strong><span class="at-line">{c.line}</span><AffiliateButton provider={c} actionFirst={true} showBanner={false} ctaLabel="申込み窓口で料金・受け取り・返し方を確認する →" /></li>
+          <li class="at-card"><strong>{c.name}</strong><span class="at-line">{c.line}</span><AffiliateButton provider={c} actionFirst={true} showBanner={false} ctaLabel="申込み窓口で料金・受け取り・返し方を確認する →" notice="押しただけでは申込みになりません。" /></li>
         ))}
       </ul>
     </div>
@@ -83,14 +87,16 @@ const shortTerm = resolveList(areaTiers.shortTerm.items as string[]);
   .at-lead { margin-top: 8px; font-size: 15px; line-height: 1.9; color: #4f6658; }
   .at-tier { margin-top: 20px; padding: 18px; border: 1px solid #d2e0d6; border-radius: 10px; background: #fff; }
   .at-tier h3 { display: flex; align-items: center; gap: 10px; font-size: 19px; font-weight: 800; line-height: 1.6; color: #173d2b; }
-  .at-tier h3 span { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: #175d50; color: #fff; font-size: 15px; flex-shrink: 0; }
+  .at-tier h3 .at-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: #175d50; color: #fff; font-size: 15px; flex-shrink: 0; }
+  .at-tier h3 :global(.phrase) { white-space: nowrap; }
+  .at-pick { margin-top: 8px; font-size: 14.5px; line-height: 1.85; color: #2f4d3d; font-weight: 600; }
   .at-sub { margin-top: 10px; font-size: 14px; line-height: 1.8; color: #5d6f63; }
   .at-regional ul, .at-grid { list-style: none; padding: 0; margin: 10px 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; align-items: start; }
   .at-card { display: flex; flex-direction: column; gap: 6px; padding: 14px; border: 1px solid #e1e9e3; border-radius: 8px; background: #f8fbf9; min-width: 0; }
   .at-card strong { font-size: 17px; color: #173d2b; }
   .at-tag { width: fit-content; font-size: 12px; font-weight: 700; color: #8b4c24; background: #fff3e2; border-radius: 6px; padding: 1px 8px; }
   .at-line { font-size: 13.5px; line-height: 1.75; color: #3f5548; }
-  .at-official { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; font-weight: 700; color: #175d50; text-decoration: underline; text-underline-offset: 3px; }
+  .at-official { display: inline-block; padding: 10px 0; min-height: 44px; font-size: 14px; font-weight: 700; color: #175d50; text-decoration: underline; text-underline-offset: 3px; }
   .at-card :global(.application-cta) { font-size: 14.5px; padding: 10px 12px; min-height: 52px; }
   .at-nowrap { white-space: nowrap; }
   .at-more { display: inline-block; margin-top: 12px; min-height: 44px; padding: 10px 0; font-size: 14px; font-weight: 700; color: #175d50; text-decoration: underline; text-underline-offset: 3px; }

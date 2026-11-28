@@ -8,7 +8,7 @@ interface Affiliate {
   /** ASPの提携条件で「指定バナーの掲載が必須」の案件は true。ボタンだけの表示の場所でも、バナーを出す */
   bannerRequired?: boolean;
 }
-const { provider, showBanner = true, actionFirst = false, building, ctaLabel, notice = '特典はプラン・追加オプション・受取手続き等の条件があります。申込先で最新条件を確認してください。' } = Astro.props as {
+const { provider, showBanner = true, actionFirst = false, building, ctaLabel, officialNote, notice = '特典はプラン・追加オプション・受取手続き等の条件があります。申込先で最新条件を確認してください。' } = Astro.props as {
   provider: { id?: string; name: string; officialUrl: string; affiliate: Affiliate | null };
   showBanner?: boolean;
   actionFirst?: boolean;
@@ -16,6 +16,8 @@ const { provider, showBanner = true, actionFirst = false, building, ctaLabel, no
   notice?: string;
   /** actionFirst のボタンの文言をかえる（例：「申込み窓口で提供エリア・条件を確認する」） */
   ctaLabel?: string;
+  /** 広告ではない公式リンクのボタンの下に出す一言（事実で確かめたことだけ） */
+  officialNote?: string;
 };
 import { phrases } from '../lib/phrases';
 const a = provider.id === 'bbiq' && building === 'mansion' ? null : provider.affiliate;
@@ -49,6 +51,7 @@ const banner = showBanner || a?.bannerRequired ? a?.banner : null;
       {actionFirst ? <span>{phrases(ctaLabel ? ctaLabel.replace('申込み窓口', '公式サイト') : provider.name + 'の公式申込みを確認').map((w) => <span class="phrase">{w}</span>)}</span> : provider.name + 'の公式サイトを見る'}
       {!actionFirst && <span aria-hidden="true">↗</span>}
     </a>
+    {officialNote && <p class="text-[13px] leading-relaxed text-gray-600">{officialNote}</p>}
     </>
   )}
 </div>

@@ -141,7 +141,7 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
     <section id="carrier" class="sec site-container" aria-labelledby="carrier-title">
       <p class="sec-eyebrow">光回線・ホームルーター</p>
       <h2 id="carrier-title">スマホの会社で、合う回線を絞る</h2>
-      <p class="sec-lead">セット割は「スマホの会社」と「家のネット」の組み合わせで決まります。タブを選ぶと、そのスマホとセット割がある回線だけが出ます。</p>
+      <p class="sec-lead"><strong>家のネットは、家族のスマホの会社で決まります。</strong>ドコモのスマホが家族に3台あれば、セット割は最大で月3,630円（1台1,210円×3台）。いま使っているスマホの会社から選んでください。</p>
       <p class="sec-trust"><svg class="trust-check" viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><circle cx="10" cy="10" r="10" fill="#175d50"/><path d="m5.5 10.3 3 3 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>各社の公式情報をもとに掲載（{checkedMonth}確認）。順位は広告の報酬ではなく、条件で決めています。<a href="/about/">編集方針・掲載基準を見る →</a></span></p>
       <div class="tabs" data-tabs>
         <div class="tab-list" role="tablist" aria-label="スマホの会社">
@@ -170,7 +170,7 @@ const collectionLd = { '@context': 'https://schema.org', '@type': 'CollectionPag
                       {h.benefitLabel && <div class="is-benefit"><dt>特典・条件</dt><dd>{h.benefitLabel}<small>（{h.benefitCheckedAt?.replace(/-/g, '/')}確認）</small></dd></div>}
                     </dl>
                     <div class="net-cta">
-                      <AffiliateButton provider={p ?? { id: h.id, name: h.name, officialUrl: h.url, affiliate: null }} actionFirst={true} showBanner={false} building="house" ctaLabel="申込み窓口で提供エリア・条件を確認する →" notice="対象プラン・必要なオプション・提供エリアを申込先で確認してください。" />
+                      <AffiliateButton provider={p ?? { id: h.id, name: h.name, officialUrl: h.url, affiliate: null }} actionFirst={true} showBanner={false} building="house" ctaLabel="申込み窓口で提供エリア・条件を確認する →" notice={h.ctaNote ?? "対象プラン・必要なオプション・提供エリアを申込先で確認してください。"} officialNote={h.officialNote} />
                     </div>
                     <details class="net-more">
                       <summary>料金・セット割の条件の詳細を見る</summary>
